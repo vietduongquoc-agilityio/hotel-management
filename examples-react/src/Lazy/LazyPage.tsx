@@ -9,11 +9,13 @@ export default function MarkdownEditor() {
   return (
     <>
       <textarea
+        className="content"
         value={markdown}
         onChange={(e) => setMarkdown(e.target.value)}
       />
       <label>
         <input
+          className="input"
           type="checkbox"
           checked={showPreview}
           onChange={(e) => setShowPreview(e.target.checked)}

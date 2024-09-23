@@ -1,0 +1,12 @@
+.content {
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+    color: red;
+    border-radius: 10px;
+}
+
+.content:hover {
+    border-color: blue;
+}
