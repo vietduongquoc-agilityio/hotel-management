@@ -35,10 +35,20 @@ function ThemedComponent() {
       style={{
         background: theme === "light" ? "#fff" : "#333",
         color: theme === "light" ? "#000" : "#fff",
+        width: 1000,
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center"
       }}
     >
       <p>Current theme: {theme}</p>
-      <button onClick={() => setTheme(theme === "light" ? "dark" : "light")}>
+      <button 
+        style={{
+            width: 100,
+            height: 50,
+        }}
+        onClick={() => setTheme(theme === "light" ? "dark" : "light")}>
         Toggle Theme
       </button>
     </div>
