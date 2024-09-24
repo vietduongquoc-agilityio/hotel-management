@@ -1,6 +1,5 @@
 import { useState, Suspense, lazy } from "react";
 import Loading from "../Common/Loading.tsx";
-
 const MarkdownPreview = lazy(() => delayForDemo(import("./Lazy.tsx")));
 
 export default function MarkdownEditor() {
