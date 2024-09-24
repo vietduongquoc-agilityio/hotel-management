@@ -15,18 +15,28 @@ interface ButtonProps {
 export default function UseContextPage() {
   const [theme, setTheme] = useState("light");
   return (
-    <>
+    <div
+      style={{
+        background: theme === "light" ? "#fff" : "#333",
+        color: theme === "light" ? "#000" : "#fff",
+        width: 1000,
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+      }}
+    >
       <ThemeContext.Provider value={theme}>
         <Form />
+        <Button
+          onClick={() => {
+            setTheme(theme === "dark" ? "light" : "dark");
+          }}
+        >
+          Toggle theme
+        </Button>
       </ThemeContext.Provider>
-      <Button
-        onClick={() => {
-          setTheme(theme === "dark" ? "light" : "dark");
-        }}
-      >
-        Toggle theme
-      </Button>
-    </>
+    </div>
   );
 }
 
