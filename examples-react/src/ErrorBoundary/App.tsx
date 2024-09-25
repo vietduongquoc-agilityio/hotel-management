@@ -1,5 +1,5 @@
 import ErrorBoundary from './ErrorBoundary';
-import MyComponent from './Error';
+import MyComponent from './Components';
 
 function AppError() {
   return (
