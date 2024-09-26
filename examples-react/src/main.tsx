@@ -6,6 +6,8 @@ import ContextPage from "./Context/ContextApp.tsx";
 import AppDL from "./UseContext/App.tsx";
 import UseContextPage from "./UseContext/ContextPage.tsx";
 import AppError from "./ErrorBoundary/App.tsx";
+import UseMemoApp from "./UseMemo/UseMemoApp.tsx";
+import AppUseMemo from "./UseMemo/ExamplesUseMemo.tsx";
 
 createRoot(document.getElementById("root") as HTMLElement).render(
   <StrictMode>
@@ -15,5 +17,7 @@ createRoot(document.getElementById("root") as HTMLElement).render(
       <AppDL />
       <UseContextPage />
       <AppError />
+      <UseMemoApp />
+      <AppUseMemo />
   </StrictMode>
 );
