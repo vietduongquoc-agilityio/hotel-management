@@ -12,6 +12,8 @@ import AppProfiler from "./Profiler/ProfilerApp.tsx";
 import Input from "./Input/Input.tsx";
 import FormSubmit from "./Input/FormSubmit.tsx";
 import EditPost from "./Select/Select.tsx";
+import MyFormSelectVegetables from "./Select/SelectApp.tsx";
+import TextAreaApp from "./TextArea/TextAreaApp.tsx";
 
 createRoot(document.getElementById("root") as HTMLElement).render(
   <StrictMode>
@@ -32,5 +34,9 @@ createRoot(document.getElementById("root") as HTMLElement).render(
       <FormSubmit />
       <hr />
       <EditPost />
+      <hr />
+      <MyFormSelectVegetables />
+      <hr />
+      <TextAreaApp />
   </StrictMode>
 );
