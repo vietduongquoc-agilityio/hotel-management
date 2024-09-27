@@ -11,6 +11,7 @@ import AppUseMemo from "./UseMemo/ExamplesUseMemo.tsx";
 import AppProfiler from "./Profiler/ProfilerApp.tsx";
 import Input from "./Input/Input.tsx";
 import FormSubmit from "./Input/FormSubmit.tsx";
+import EditPost from "./Select/Select.tsx";
 
 createRoot(document.getElementById("root") as HTMLElement).render(
   <StrictMode>
@@ -29,5 +30,7 @@ createRoot(document.getElementById("root") as HTMLElement).render(
       <Input />
       <hr />
       <FormSubmit />
+      <hr />
+      <EditPost />
   </StrictMode>
 );
