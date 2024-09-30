@@ -14,12 +14,14 @@ import FormSubmit from "./Input/FormSubmit.tsx";
 import EditPost from "./Select/Select.tsx";
 import MyFormSelectVegetables from "./Select/SelectApp.tsx";
 import TextAreaApp from "./TextArea/TextAreaApp.tsx";
+import AppStatus from "./CustomHooks/SaveButton.tsx";
+import ChatApp from "./CustomHooks/Exams/App.tsx";
 
 createRoot(document.getElementById("root") as HTMLElement).render(
   <StrictMode>
+      {/* <ContextPage /> */}
       <MarkdownEditor />
       <App />
-      {/* <ContextPage /> */}
       <AppDL />
       <UseContextPage />
       <AppError />
@@ -38,5 +40,9 @@ createRoot(document.getElementById("root") as HTMLElement).render(
       <MyFormSelectVegetables />
       <hr />
       <TextAreaApp />
+      <hr />
+      <AppStatus />
+      <hr />
+      <ChatApp />
   </StrictMode>
 );
