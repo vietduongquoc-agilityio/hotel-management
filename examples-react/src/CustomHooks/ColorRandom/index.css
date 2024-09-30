@@ -1,0 +1,10 @@
+.big-circle{
+    display: flex;
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    align-items: center;
+    justify-content: center;
+    color: aliceblue;
+    margin: 0 auto;
+}

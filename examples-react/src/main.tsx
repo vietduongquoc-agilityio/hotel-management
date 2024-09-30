@@ -16,6 +16,7 @@ import MyFormSelectVegetables from "./Select/SelectApp.tsx";
 import TextAreaApp from "./TextArea/TextAreaApp.tsx";
 import AppStatus from "./CustomHooks/SaveButton.tsx";
 import ChatApp from "./CustomHooks/Exams/App.tsx";
+import BigCircle from "./CustomHooks/ColorRandom/ColorApp.tsx";
 
 createRoot(document.getElementById("root") as HTMLElement).render(
   <StrictMode>
@@ -44,5 +45,7 @@ createRoot(document.getElementById("root") as HTMLElement).render(
       <AppStatus />
       <hr />
       <ChatApp />
+      <hr />
+      <BigCircle />
   </StrictMode>
 );
