@@ -1,23 +1,27 @@
 import { ReactNode } from "react";
 
-interface StackProps {
+export interface TitleProps {
   children: ReactNode;
   spacing: number;
   direction: "row" | "column" | "row-reverse" | "column-reverse";
-  wrap: "wrap" | "nowrap";
+  color: string;
 }
 
-export default function Stack({
+export default function Title({
   children,
-  spacing = 2,
+  spacing = 1,
   direction = "row",
-  wrap = "nowrap",
-}: StackProps) {
+  color = "rgb(84, 82, 82)",
+}: TitleProps) {
   const style = {
     display: "flex",
     gap: `${spacing * 0.25}rem`,
-    flexWrap: wrap,
     flexDirection: direction,
+    color,
   };
-  return <div style={style}>{children}</div>;
+  return (
+    <div style={style}>
+      <h1>{children}</h1>
+    </div>
+  );
 }
