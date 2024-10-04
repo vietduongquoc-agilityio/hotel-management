@@ -55,6 +55,7 @@
 .link-login {
     color: orangered;
     margin-left: 5px;
+    text-decoration: none;
 }
 
 .link-login:hover {
@@ -81,4 +82,9 @@
     background-color: rgba(228, 93, 44, 0.957);
     color: white;
     cursor: pointer;
+}
+
+.successMessage {
+    color: rgb(6, 184, 6);
+    font-weight: 700;
 }

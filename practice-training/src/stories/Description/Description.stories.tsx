@@ -44,3 +44,30 @@ CustomColor.args = {
   color: "blue",
   fontsize: "lg",
 };
+
+export const TextFooter = Template.bind({});
+TextFooter.args = {
+  children: "New User? Register Here",
+  spacing: 1,
+  direction: "row",
+  color: "orangered",
+  fontsize: "lg",
+};
+
+export const TextFooterHover = Template.bind({});
+TextFooterHover.args = {
+  children: "Register Here",
+  spacing: 1,
+  direction: "row",
+  color: "Blue",
+  fontsize: "lg",
+};
+
+export const successMessage = Template.bind({});
+successMessage.args = {
+  children: "Login successful!",
+  spacing: 1,
+  direction: "row",
+  color: "rgb(6, 184, 6)",
+  fontsize: "lg",
+};

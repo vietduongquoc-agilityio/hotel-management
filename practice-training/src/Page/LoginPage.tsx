@@ -9,6 +9,7 @@ const LoginPage: React.FC = () => {
   const [isFormValid, setIsFormValid] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -39,7 +40,7 @@ const LoginPage: React.FC = () => {
     try {
       const response = await loginUser(email, password);
       if (response.data) {
-        alert("Login successful!");
+        setSuccessMessage("Login successful!");
         navigate("/");
       } else {
         setErrorMessage("Login failed. Please check your login information.");
@@ -94,6 +95,11 @@ const LoginPage: React.FC = () => {
           >
             {isSubmitting ? "Logging in..." : "Login"}
           </button>
+          {successMessage && (
+            <div className="successMessage">
+              <p>{successMessage}</p>
+            </div>
+          )}
           <div className="wrap-link-login">
             <span className="text-login">New User?</span>
             <a className="link-login" href="/login">
