@@ -2,10 +2,10 @@ import { ReactNode } from "react";
 
 export interface DescriptionProps {
   children: ReactNode;
-  spacing: number;
-  direction: "row" | "column" | "row-reverse" | "column-reverse";
-  color: string;
-  fontsize: "md" | "lg" | "sm";
+  spacing?: number;
+  direction?: "row" | "column" | "row-reverse" | "column-reverse";
+  color?: string;
+  fontsize?: "md" | "lg" | "sm";
 }
 
 export default function Description({

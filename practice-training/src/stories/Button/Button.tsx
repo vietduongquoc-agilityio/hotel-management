@@ -2,11 +2,11 @@ import { MouseEventHandler } from "react";
 
 export interface ButtonProps {
   label: string;
-  backgroundColor: string;
-  size: "md" | "lg" | "sm";
+  backgroundColor?: string;
+  size?: "md" | "lg" | "sm";
   handleClick: MouseEventHandler<HTMLButtonElement>;
-  borderRadius: number;
-  color: string
+  borderRadius?: number;
+  color?: string;
 }
 
 export default function Button({
@@ -14,19 +14,23 @@ export default function Button({
   backgroundColor = "red",
   size = "sm",
   handleClick,
-  borderRadius,
-  color,
+  borderRadius = 4,
+  color = "white",
 }: ButtonProps) {
-  let width = 20;
-  if (size === "sm") width = 15;
-  if (size === "lg") width = 25;
+  let padding = "5px 10px";
+
+  if (size === "lg") padding = "10px 20px";
+  else if (size === "md") padding = "7px 15px";
+
   const style = {
     backgroundColor,
-    padding: `${width * 0.5}px ${width * 1}px`,
+    padding,
     border: "none",
-    borderRadius,
-    color
+    borderRadius: `${borderRadius}px`,
+    color,
+    cursor: "pointer",
   };
+
   return (
     <button onClick={handleClick} style={style}>
       {label}

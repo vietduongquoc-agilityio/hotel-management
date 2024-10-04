@@ -2,7 +2,7 @@ import React, { useState } from "react";
 
 export interface FormProps {
   onSubmit: (formData: Record<string, string>) => void;
-  size: "md" | "lg" | "sm";
+  size?: "md" | "lg" | "sm";
   borderRadius?: number;
   width?: string;
 }
@@ -32,8 +32,8 @@ const Form: React.FC<FormProps> = ({
     border: "1px solid #ccc",
     padding: "20px",
     borderRadius: `${borderRadius}px`,
-    size,
     width,
+    size
   };
 
   return (

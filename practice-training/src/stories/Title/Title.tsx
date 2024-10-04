@@ -2,9 +2,9 @@ import { ReactNode } from "react";
 
 export interface TitleProps {
   children: ReactNode;
-  spacing: number;
-  direction: "row" | "column" | "row-reverse" | "column-reverse";
-  color: string;
+  spacing?: number; 
+  direction?: "row" | "column" | "row-reverse" | "column-reverse"; 
+  color?: string; 
 }
 
 export default function Title({
@@ -19,6 +19,7 @@ export default function Title({
     flexDirection: direction,
     color,
   };
+
   return (
     <div style={style}>
       <h1>{children}</h1>
