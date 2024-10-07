@@ -1,3 +1,5 @@
+import React from "react";
+
 export interface TitleProps {
   titleText: string;
   spacing?: number; 

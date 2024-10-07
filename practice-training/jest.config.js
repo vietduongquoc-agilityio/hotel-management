@@ -1,6 +1,6 @@
-module.exports = {
+export default {
   transform: {
-    "^.+\\.tsx?$": "babel-jest", 
+    "^.+\\.tsx?$": "babel-jest",
   },
   moduleFileExtensions: ["ts", "tsx", "js", "jsx", "json", "node"],
   testEnvironment: "jsdom",

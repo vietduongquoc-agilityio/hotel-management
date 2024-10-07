@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1728273107773" clover="3.2.0">
-  <project timestamp="1728273107773" name="All files">
+<coverage generated="1728292765021" clover="3.2.0">
+  <project timestamp="1728292765021" name="All files">
     <metrics statements="27" coveredstatements="27" conditionals="32" coveredconditionals="31" methods="8" coveredmethods="8" elements="67" coveredelements="66" complexity="0" loc="27" ncloc="27" packages="5" files="5" classes="5"/>
     <package name="Button">
       <metrics statements="5" coveredstatements="5" conditionals="8" coveredconditionals="7" methods="1" coveredmethods="1"/>
-      <file name="Button.tsx" path="D:\react-training\practice-training\src\stories\Button\Button.tsx">
+      <file name="Button.tsx" path="D:\react-training\practice-training\src\Components\Button\Button.tsx">
         <metrics statements="5" coveredstatements="5" conditionals="8" coveredconditionals="7" methods="1" coveredmethods="1"/>
         <line num="20" count="16" type="stmt"/>
         <line num="22" count="16" type="cond" truecount="2" falsecount="0"/>
@@ -15,7 +15,7 @@
     </package>
     <package name="Description">
       <metrics statements="5" coveredstatements="5" conditionals="8" coveredconditionals="8" methods="1" coveredmethods="1"/>
-      <file name="Description.tsx" path="D:\react-training\practice-training\src\stories\Description\Description.tsx">
+      <file name="Description.tsx" path="D:\react-training\practice-training\src\Components\Description\Description.tsx">
         <metrics statements="5" coveredstatements="5" conditionals="8" coveredconditionals="8" methods="1" coveredmethods="1"/>
         <line num="18" count="8" type="stmt"/>
         <line num="19" count="8" type="cond" truecount="2" falsecount="0"/>
@@ -26,7 +26,7 @@
     </package>
     <package name="Input">
       <metrics statements="5" coveredstatements="5" conditionals="10" coveredconditionals="10" methods="1" coveredmethods="1"/>
-      <file name="input.tsx" path="D:\react-training\practice-training\src\stories\Input\input.tsx">
+      <file name="input.tsx" path="D:\react-training\practice-training\src\Components\Input\input.tsx">
         <metrics statements="5" coveredstatements="5" conditionals="10" coveredconditionals="10" methods="1" coveredmethods="1"/>
         <line num="28" count="16" type="stmt"/>
         <line num="29" count="16" type="cond" truecount="2" falsecount="0"/>
@@ -37,7 +37,7 @@
     </package>
     <package name="Pages">
       <metrics statements="10" coveredstatements="10" conditionals="3" coveredconditionals="3" methods="4" coveredmethods="4"/>
-      <file name="Form.tsx" path="D:\react-training\practice-training\src\stories\Pages\Form.tsx">
+      <file name="Form.tsx" path="D:\react-training\practice-training\src\Components\Pages\Form.tsx">
         <metrics statements="10" coveredstatements="10" conditionals="3" coveredconditionals="3" methods="4" coveredmethods="4"/>
         <line num="10" count="1" type="stmt"/>
         <line num="16" count="5" type="stmt"/>
@@ -53,10 +53,10 @@
     </package>
     <package name="Title">
       <metrics statements="2" coveredstatements="2" conditionals="3" coveredconditionals="3" methods="1" coveredmethods="1"/>
-      <file name="Title.tsx" path="D:\react-training\practice-training\src\stories\Title\Title.tsx">
+      <file name="Title.tsx" path="D:\react-training\practice-training\src\Components\Title\Title.tsx">
         <metrics statements="2" coveredstatements="2" conditionals="3" coveredconditionals="3" methods="1" coveredmethods="1"/>
-        <line num="14" count="12" type="stmt"/>
-        <line num="21" count="12" type="stmt"/>
+        <line num="16" count="3" type="stmt"/>
+        <line num="23" count="3" type="stmt"/>
       </file>
     </package>
   </project>

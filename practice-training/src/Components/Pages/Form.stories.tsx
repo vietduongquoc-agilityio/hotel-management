@@ -1,5 +1,6 @@
 import { Meta, StoryFn } from "@storybook/react";
 import Form, { FormProps } from "./Form";
+import React from "react";
 
 export default {
   title: "Components/Form",

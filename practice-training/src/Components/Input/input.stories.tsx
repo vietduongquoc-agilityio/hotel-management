@@ -1,3 +1,4 @@
+import React from "react";
 import Input, { InputProps } from "./input";
 import { Meta, StoryFn } from "@storybook/react";
 

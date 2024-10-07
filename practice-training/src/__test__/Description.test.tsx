@@ -1,6 +1,6 @@
 import React from "react";
 import { render, screen } from "@testing-library/react";
-import Description from "./Description";
+import Description from "../Components/Description/Description";
 
 describe("Description Component", () => {
   test("renders with default props", () => {

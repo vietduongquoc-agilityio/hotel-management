@@ -1,1 +1,0 @@
-{"root":["./src/main.tsx","./src/vite-env.d.ts","./src/page/loginpage.tsx","./src/router/app.tsx","./src/services/userservice.ts","./src/stories/button/button.stories.tsx","./src/stories/button/button.tsx","./src/stories/stack/stack.stories.tsx","./src/stories/stack/stack.tsx"],"errors":true,"version":"5.6.2"}

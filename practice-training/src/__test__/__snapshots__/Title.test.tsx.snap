@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Title Component matches the snapshot 1`] = `
+<DocumentFragment>
+  <div
+    style="display: flex; gap: 0.25rem; flex-direction: row; color: rgb(84, 82, 82);"
+  >
+    <h1>
+      Snapshot Title hahahahah
+    </h1>
+  </div>
+</DocumentFragment>
+`;

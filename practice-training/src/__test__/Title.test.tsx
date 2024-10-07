@@ -1,7 +1,7 @@
-// import React from "react";
+import React from "react";
 import { render } from "@testing-library/react";
 import "@testing-library/jest-dom";
-import Title from "./Title";
+import Title from "../Components/Title/Title";
 
 describe("Title Component", () => {
   test("renders correctly with default props", () => {

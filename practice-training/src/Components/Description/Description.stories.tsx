@@ -1,5 +1,6 @@
 import { Meta, StoryFn } from "@storybook/react";
 import Description, { DescriptionProps } from "./Description";
+import React from "react";
 
 export default {
   title: "Components/Description",

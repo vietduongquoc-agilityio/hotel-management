@@ -1,6 +1,6 @@
 import React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
-import Form from "./Form";
+import Form from "../Components/Pages/Form";
 
 describe("Form Component", () => {
   test("renders with default props", () => {
