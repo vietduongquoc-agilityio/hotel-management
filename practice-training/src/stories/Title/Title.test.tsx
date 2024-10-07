@@ -1,11 +1,11 @@
-import React from "react";
+// import React from "react";
 import { render } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import Title from "./Title";
 
 describe("Title Component", () => {
   test("renders correctly with default props", () => {
-    const { getByText } = render(<Title>Welcome Back!</Title>);
+    const { getByText } = render(<Title titleText="Welcome Back" />);
 
     const titleElement = getByText("Welcome Back!");
     expect(titleElement).toBeInTheDocument();
@@ -16,9 +16,12 @@ describe("Title Component", () => {
 
   test("applies custom spacing, direction, and color", () => {
     const { getByText } = render(
-      <Title spacing={2} direction="column" color="blue">
-        Custom Title
-      </Title>
+      <Title
+        spacing={2}
+        direction="column"
+        color="blue"
+        titleText="Custom Title"
+      />
     );
 
     const titleElement = getByText("Custom Title");
@@ -29,7 +32,7 @@ describe("Title Component", () => {
   });
 
   test("matches the snapshot", () => {
-    const { asFragment } = render(<Title>Snapshot Title</Title>);
+    const { asFragment } = render(<Title titleText="Snapshot Title" />);
     expect(asFragment()).toMatchSnapshot();
   });
 });
