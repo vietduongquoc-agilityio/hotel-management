@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Button Component matches the snapshot 1`] = `
+<DocumentFragment>
+  <button
+    style="background-color: red; padding: 5px 10px; border-radius: 4px; color: white; cursor: pointer;"
+  >
+    Snapshot
+  </button>
+</DocumentFragment>
+`;

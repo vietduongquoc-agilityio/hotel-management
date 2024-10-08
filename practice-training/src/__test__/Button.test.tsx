@@ -1,6 +1,7 @@
 import React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
 import Button from "../Components/Button/Button";
+import "@testing-library/jest-dom";
 
 describe("Button Component", () => {
   test("renders correctly with default props", () => {
@@ -25,7 +26,7 @@ describe("Button Component", () => {
         size="lg"
         borderRadius={8}
         color="yellow"
-      />
+      />,
     );
 
     const buttonElement = screen.getByRole("button", { name: /submit/i });
@@ -49,10 +50,24 @@ describe("Button Component", () => {
   test("applies border-radius correctly", () => {
     const handleClick = jest.fn();
     render(
-      <Button label="Rounded" handleClick={handleClick} borderRadius={12} />
+      <Button label="Rounded" handleClick={handleClick} borderRadius={12} />,
     );
 
     const buttonElement = screen.getByRole("button", { name: /rounded/i });
     expect(buttonElement).toHaveStyle("border-radius: 12px");
+  });
+  test("renders a button with text", () => {
+    const handleClick = jest.fn();
+    render(<Button label="Click Me" handleClick={handleClick} />);
+    const buttonElement = screen.getByText(/click me/i);
+    expect(buttonElement).toBeInTheDocument();
+  });
+
+  test("matches the snapshot", () => {
+    const handleClick = jest.fn();
+    const { asFragment } = render(
+      <Button label="Snapshot" handleClick={handleClick} />,
+    );
+    expect(asFragment()).toMatchSnapshot();
   });
 });

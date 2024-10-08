@@ -21,7 +21,7 @@ const Template: StoryFn<TitleProps> = (args) => <Title {...args} />;
 
 export const Default = Template.bind({});
 Default.args = {
-  children: "Welcome Back!",
+  titleText: "Welcome Back!",
   spacing: 1,
   direction: "row",
   color: "grey",
@@ -29,7 +29,7 @@ Default.args = {
 
 export const CustomColor = Template.bind({});
 CustomColor.args = {
-  children: "Welcome Back!",
+  titleText: "Welcome Back!",
   spacing: 1,
   direction: "row",
   color: "blue",
