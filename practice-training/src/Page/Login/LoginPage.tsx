@@ -1,13 +1,15 @@
 import { useEffect, useState } from "react";
 import "./Login.css";
 import { useNavigate } from "react-router-dom";
-import { loginUser } from "../Services/UserService";
+import { loginUser } from "../../Services/UserService";
+import React from "react";
 
 const LoginPage: React.FC = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isFormValid, setIsFormValid] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [errorMessage, setErrorMessage] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
   const navigate = useNavigate();
@@ -102,7 +104,7 @@ const LoginPage: React.FC = () => {
           )}
           <div className="wrap-link-login">
             <span className="text-login">New User?</span>
-            <a className="link-login" href="/login">
+            <a className="link-login" href="/register">
               Register Here
             </a>
           </div>

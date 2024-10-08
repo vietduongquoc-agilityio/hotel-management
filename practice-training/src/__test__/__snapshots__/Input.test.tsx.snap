@@ -1,0 +1,17 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Input Component Matches the snapshot 1`] = `
+<DocumentFragment>
+  <div>
+    <label>
+      Test label
+    </label>
+    <input
+      placeholder="Text"
+      style="display: flex; flex-direction: row; background-color: black; padding: 10px; border-radius: 5px; color: white; border: 1px solid #ccc;"
+      type="text"
+      value=" "
+    />
+  </div>
+</DocumentFragment>
+`;
