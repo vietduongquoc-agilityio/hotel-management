@@ -1,5 +1,5 @@
-import axios from "axios";
-import type { AxiosError } from "axios";
+// import axios from "axios";
+import axios, { AxiosError } from 'axios';
 
 const USERS_API_URL = "https://66f122ec41537919154fae44.mockapi.io/albums";
 
@@ -7,13 +7,13 @@ interface LoginResponse {
   custom_attributes?: string;
 }
 
-function isAxiosError(error: any): error is AxiosError {
-  return error.isAxiosError === true;
+function isAxiosError(error: unknown): error is AxiosError {
+  return (error as AxiosError).isAxiosError === true;
 }
 
 export const loginUser = async (
   email: string,
-  password: string
+  password: string,
 ): Promise<{ data: LoginResponse }> => {
   try {
     const response = await axios.post<{ data: LoginResponse }>(
@@ -21,7 +21,7 @@ export const loginUser = async (
       {
         email,
         password,
-      }
+      },
     );
 
     const { data } = response.data;
