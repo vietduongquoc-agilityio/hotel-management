@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Description Component matches the snapshot 1`] = `
+<DocumentFragment>
+  <div
+    style="display: flex; gap: 0.5rem; flex-direction: column; color: blue; font-size: 25px;"
+  >
+    <p>
+      Snapshot Description
+    </p>
+  </div>
+</DocumentFragment>
+`;

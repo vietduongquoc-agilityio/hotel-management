@@ -1,8 +1,7 @@
-import { ReactNode } from "react";
 import React from "react";
 
 export interface DescriptionProps {
-  children: ReactNode;
+  descriptionText: string;
   spacing?: number;
   direction?: "row" | "column" | "row-reverse" | "column-reverse";
   color?: string;
@@ -11,7 +10,7 @@ export interface DescriptionProps {
 
 export default function Description({
   fontsize = "sm",
-  children,
+  descriptionText,
   spacing = 1,
   direction = "row",
   color = "grey",
@@ -28,7 +27,7 @@ export default function Description({
   };
   return (
     <div style={style}>
-      <p>{children}</p>
+      <p>{descriptionText}</p>
     </div>
   );
 }
