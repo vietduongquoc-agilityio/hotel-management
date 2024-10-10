@@ -1,5 +1,5 @@
 import React from "react";
-import Button, { ButtonProps } from "./Button";
+import Button, { ButtonProps } from "../Components/Button/Button";
 import { Meta, StoryFn } from "@storybook/react";
 
 export default {

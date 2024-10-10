@@ -22,7 +22,7 @@ export default function Description({
     display: "flex",
     gap: `${spacing * 0.25}rem`,
     flexDirection: direction,
-    color,
+    color: color,
     fontSize: scale,
   };
   return (

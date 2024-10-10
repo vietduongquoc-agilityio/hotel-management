@@ -1,5 +1,5 @@
 import { Meta, StoryFn } from "@storybook/react";
-import Description, { DescriptionProps } from "./Description";
+import Description, { DescriptionProps } from "../Components/Description/Description";
 import React from "react";
 
 export default {
@@ -21,7 +21,7 @@ const Template: StoryFn<DescriptionProps> = (args) => <Description {...args} />;
 
 export const Default = Template.bind({});
 Default.args = {
-  children: "Sign in to continue to your Digital Library",
+  descriptionText: "Sign in to continue to your Digital Library",
   spacing: 1,
   direction: "row",
   color: "rgb(84, 82, 82)",
@@ -30,7 +30,7 @@ Default.args = {
 
 export const SmallFontSize = Template.bind({});
 SmallFontSize.args = {
-  children: "Sign in to continue to your Digital Library",
+  descriptionText: "Sign in to continue to your Digital Library",
   spacing: 2,
   direction: "column",
   color: "rgb(84, 82, 82)",
@@ -39,7 +39,7 @@ SmallFontSize.args = {
 
 export const CustomColor = Template.bind({});
 CustomColor.args = {
-  children: "Sign in to continue to your Digital Library",
+  descriptionText: "Sign in to continue to your Digital Library",
   spacing: 1,
   direction: "row",
   color: "blue",
@@ -48,7 +48,7 @@ CustomColor.args = {
 
 export const TextFooter = Template.bind({});
 TextFooter.args = {
-  children: "New User? Register Here",
+  descriptionText: "New User? Register Here",
   spacing: 1,
   direction: "row",
   color: "orangered",
@@ -57,7 +57,7 @@ TextFooter.args = {
 
 export const TextFooterHover = Template.bind({});
 TextFooterHover.args = {
-  children: "Register Here",
+  descriptionText: "Register Here",
   spacing: 1,
   direction: "row",
   color: "Blue",
@@ -66,7 +66,7 @@ TextFooterHover.args = {
 
 export const successMessage = Template.bind({});
 successMessage.args = {
-  children: "Login successful!",
+  descriptionText: "Login successful!",
   spacing: 1,
   direction: "row",
   color: "rgb(6, 184, 6)",

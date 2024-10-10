@@ -1,5 +1,5 @@
 import { Meta, StoryFn } from "@storybook/react";
-import Title, { TitleProps } from "./Title";
+import Title, { TitleProps } from "../Components/Title/Title";
 import React from "react";
 
 export default {

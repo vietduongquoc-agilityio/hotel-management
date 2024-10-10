@@ -28,6 +28,15 @@ describe("loginUser service", () => {
     expect(result).toEqual({ data: {} });
   });
 
+  test("should return empty data when login response is empty", async () => {
+    mock
+      .onPost("https://66f122ec41537919154fae44.mockapi.io/albums/user")
+      .reply(200, {});
+
+    const result = await loginUser("test@example.com", "password");
+    expect(result).toEqual({ data: {} });
+  });
+
   test("should throw error when login fails", async () => {
     mock
       .onPost("https://66f122ec41537919154fae44.mockapi.io/albums/user")
@@ -35,6 +44,15 @@ describe("loginUser service", () => {
 
     await expect(loginUser("test@example.com", "password")).rejects.toThrow(
       "Login Fail",
+    );
+  });
+
+  test("should throw error for unknown error type", async () => {
+    const error = new Error("Some random error");
+    jest.spyOn(axios, "post").mockRejectedValueOnce(error);
+
+    await expect(loginUser("test@example.com", "password")).rejects.toThrow(
+      "Unexpected error.",
     );
   });
 });

@@ -1,5 +1,5 @@
 import React from "react";
-import Input, { InputProps } from "./input";
+import Input, { InputProps } from "../Components/Input/input";
 import { Meta, StoryFn } from "@storybook/react";
 
 export default {

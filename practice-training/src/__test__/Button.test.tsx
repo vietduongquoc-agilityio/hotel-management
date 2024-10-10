@@ -70,4 +70,27 @@ describe("Button Component", () => {
     );
     expect(asFragment()).toMatchSnapshot();
   });
+  test("applies correct padding for size sm", () => {
+    const handleClick = jest.fn();
+    render(<Button label="Small" size="sm" handleClick={handleClick} />);
+
+    const buttonElement = screen.getByRole("button", { name: /small/i });
+    expect(buttonElement).toHaveStyle("padding: 5px 10px");
+  });
+
+  test("applies correct padding for size md", () => {
+    const handleClick = jest.fn();
+    render(<Button label="Medium" size="md" handleClick={handleClick} />);
+
+    const buttonElement = screen.getByRole("button", { name: /medium/i });
+    expect(buttonElement).toHaveStyle("padding: 7px 15px");
+  });
+
+  test("applies correct padding for size lg", () => {
+    const handleClick = jest.fn();
+    render(<Button label="Large" size="lg" handleClick={handleClick} />);
+
+    const buttonElement = screen.getByRole("button", { name: /large/i });
+    expect(buttonElement).toHaveStyle("padding: 10px 20px");
+  });
 });
