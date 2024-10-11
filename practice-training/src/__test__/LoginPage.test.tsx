@@ -1,5 +1,3 @@
-import "@testing-library/jest-dom";
-
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 import LoginPage from "../Page/Login/LoginPage";
@@ -7,7 +5,7 @@ import { loginUser } from "../Services/UserService";
 import React from "react";
 
 jest.mock("react-router-dom", () => ({
-  ...jest.requireActual("react-router-dom"), // Giữ lại tất cả các import khác
+  ...jest.requireActual("react-router-dom"),
   useNavigate: jest.fn(),
 }));
 

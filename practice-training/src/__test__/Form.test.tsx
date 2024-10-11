@@ -1,6 +1,7 @@
 import React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
-import Form from "../Components/Pages/Form";
+import Form from "../Components/Forms/loginForm";
+import "@testing-library/jest-dom";
 
 describe("Form Component", () => {
   test("renders with default props", () => {
