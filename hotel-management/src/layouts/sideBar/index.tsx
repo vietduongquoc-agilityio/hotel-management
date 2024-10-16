@@ -2,7 +2,6 @@ import room from '../../assets/icons/room.png'
 import logo from '../../assets/icons/logo.png'
 import rate from '../../assets/icons/rate.png'
 import { Link } from 'react-router-dom';
-import React from 'react';
 
 const Sidebar = () => {
     return (
