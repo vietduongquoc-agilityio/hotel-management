@@ -2,7 +2,7 @@ import { Meta, StoryFn } from "@storybook/react";
 import Header, { HeaderProps } from "./index";
 
 export default {
-  title: "Components/Header",
+  title: "Layouts/Header",
   component: Header,
   argTypes: {
     placeholder: { control: "text" },
