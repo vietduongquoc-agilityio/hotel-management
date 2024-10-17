@@ -1,6 +1,4 @@
 .header-container {
-  display: flex;
-  justify-content: center;
   padding: 28px 0 28px 20px;
 }
 
@@ -11,9 +9,10 @@
   border-radius: 4px;
   /* Grey/Grey 50 */
   background: var(--color-secondary-50);
-  padding: 0.5rem 1rem;
+  padding: 3px 0 2px 15px;
   width: 400px;
-  background-color: var(--color-transparent);
+  height: 40px;
+  background-color: var(--color-secondary-50);
 }
 
 .form-search:hover {

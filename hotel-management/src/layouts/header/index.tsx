@@ -33,6 +33,7 @@ export default function Header({
           size="md"
           border="none"
           borderRadius={4}
+          backgroundColor="#f0f1f3"
         />
       </form>
     </header>
