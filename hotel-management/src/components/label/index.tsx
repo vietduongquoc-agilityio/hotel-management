@@ -1,11 +1,12 @@
+import React from "react";
 import "./index.css";
 import Button from "../button";
 
-export default function Label() {
-  const handleClick = () => {
-    console.log("Button clicked");
-  };
+export interface LabelProps {
+  handleClick: () => void;
+}
 
+const Label: React.FC<LabelProps> = ({ handleClick }) => {
   return (
     <div className="wrap-label-title">
       <div className="wrap-label-title-text">
@@ -27,4 +28,6 @@ export default function Label() {
       </div>
     </div>
   );
-}
+};
+
+export default Label;

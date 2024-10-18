@@ -28,7 +28,7 @@ Default.args = {
 
 export const CustomColor = Template.bind({});
 CustomColor.args = {
-  titleText: "Welcome Back!",
+  titleText: "Room",
   spacing: 1,
   direction: "row",
   color: "blue",
