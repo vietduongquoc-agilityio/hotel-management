@@ -9,6 +9,7 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build",
     "serve-storybook": "serve storybook-static",
     "test": "jest",
     "coverage": "jest --coverage"
