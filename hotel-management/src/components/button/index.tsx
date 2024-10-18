@@ -1,4 +1,4 @@
-import { MouseEventHandler } from "react";
+import { MouseEventHandler, memo } from "react";
 
 export interface ButtonProps {
   className: string;
@@ -11,10 +11,10 @@ export interface ButtonProps {
   fontSize?: string;
   fontWeight?: string;
   width?: number;
-  height?: number
+  height?: number;
 }
 
-export default function Button({
+function Button({
   className,
   label,
   backgroundColor,
@@ -51,3 +51,5 @@ export default function Button({
     </button>
   );
 }
+
+export default memo(Button);

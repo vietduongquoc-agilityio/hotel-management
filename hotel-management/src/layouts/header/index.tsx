@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, memo } from "react";
 import searchIcon from "../../assets/icons/search.svg";
 import "./index.css";
 import Input from "../../components/input";
@@ -8,9 +8,7 @@ export interface HeaderProps {
   search?: string;
 }
 
-export default function Header({
-  placeholder = "Search for rooms and offers",
-}: HeaderProps) {
+function Header({ placeholder = "Search for rooms and offers" }: HeaderProps) {
   const [searchValue, setSearchValue] = useState<string>("");
 
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -39,3 +37,5 @@ export default function Header({
     </header>
   );
 }
+
+export default memo(Header);

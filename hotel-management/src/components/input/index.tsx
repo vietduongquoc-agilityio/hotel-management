@@ -1,4 +1,4 @@
-import { ChangeEventHandler } from "react";
+import { ChangeEventHandler, memo } from "react";
 
 export interface InputProps {
   border: string;
@@ -15,7 +15,7 @@ export interface InputProps {
   direction?: "row" | "column" | "row-reverse" | "column-reverse";
 }
 
-export default function Input({
+function Input({
   className,
   label,
   placeholder = "Text",
@@ -57,3 +57,5 @@ export default function Input({
     </div>
   );
 }
+
+export default memo(Input);

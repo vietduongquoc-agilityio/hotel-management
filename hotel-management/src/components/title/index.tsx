@@ -1,3 +1,5 @@
+import { memo } from "react";
+
 export interface TitleProps {
   titleText: string;
   spacing?: number;
@@ -8,7 +10,7 @@ export interface TitleProps {
   className?: string;
 }
 
-export default function Title({
+function Title({
   titleText,
   spacing = 1,
   direction = "row",
@@ -33,3 +35,5 @@ export default function Title({
     </div>
   );
 }
+
+export default memo(Title);
