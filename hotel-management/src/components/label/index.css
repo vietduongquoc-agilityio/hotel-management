@@ -11,6 +11,8 @@
   width: 100%;
   max-width: 417px;
   justify-content: space-between;
+  margin: 0;
+  padding: 0;
 }
 
 .label-title-one {

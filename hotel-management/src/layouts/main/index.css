@@ -1,5 +1,9 @@
 .main-layout-container {
   display: flex;
+  margin: 0 auto;
+  width: 100%;
+  max-width: 1280px;
+  padding-top: 32px;
 }
 
 .content-container {

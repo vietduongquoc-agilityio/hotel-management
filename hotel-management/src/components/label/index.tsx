@@ -1,4 +1,3 @@
-import React from "react";
 import "./index.css";
 import Button from "../button";
 
@@ -6,14 +5,14 @@ export interface LabelProps {
   handleClick: () => void;
 }
 
-const Label: React.FC<LabelProps> = ({ handleClick }) => {
+export default function Label({ handleClick }: LabelProps) {
   return (
     <div className="wrap-label-title">
-      <div className="wrap-label-title-text">
-        <p className="label-title label-title-one">All room(100)</p>
-        <p className="label-title label-title-second">Available room(20)</p>
-        <p className="label-title label-title-third">Booked(80)</p>
-      </div>
+      <ul className="wrap-label-title-text">
+        <li className="label-title label-title-one">All room(100)</li>
+        <li className="label-title label-title-second">Available room(20)</li>
+        <li className="label-title label-title-third">Booked(80)</li>
+      </ul>
       <div className="label-action">
         <Button
           className="btn-action-add"
@@ -28,6 +27,4 @@ const Label: React.FC<LabelProps> = ({ handleClick }) => {
       </div>
     </div>
   );
-};
-
-export default Label;
+}

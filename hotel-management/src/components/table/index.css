@@ -1,0 +1,40 @@
+.wrap-table {
+  padding-top: 20px;
+}
+
+.wrap-table-title {
+  display: flex;
+  width: 100%;
+  max-width: 1020px;
+  padding: 0;
+  list-style: none;
+  background-color: var(--color-primary-100);
+  /* Primary/Primary 50 */
+  border: 1px solid #d4e5fa;
+  border-radius: var(--border-radius-sm);
+  padding: 10px 24px;
+  margin: 0;
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-secondary-500);
+}
+
+.table-title-one {
+  width: 15%;
+}
+
+.table-title-second {
+  width: 20%;
+}
+
+.table-title-third {
+  width: 15%;
+}
+
+.table-title-four {
+  width: 28%;
+}
+
+.table-title-five {
+  width: 22%;
+}
