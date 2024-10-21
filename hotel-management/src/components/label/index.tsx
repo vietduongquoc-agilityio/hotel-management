@@ -23,6 +23,7 @@ export default function Label({ handleClick }: LabelProps) {
           size="lg"
           width={115}
           height={40}
+          border="none"
         />
       </div>
     </div>

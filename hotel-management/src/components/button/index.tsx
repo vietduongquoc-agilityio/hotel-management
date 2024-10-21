@@ -1,7 +1,7 @@
 import { MouseEventHandler, memo } from "react";
 
 export interface ButtonProps {
-  className: string;
+  className?: string;
   label: string;
   backgroundColor?: string;
   size?: "lg" | "md" | "sm";
@@ -12,41 +12,46 @@ export interface ButtonProps {
   fontWeight?: string;
   width?: number;
   height?: number;
+  disabled?: boolean;
+  border?: string;
+  padding?: number;
 }
 
 function Button({
-  className,
+  className = "",
   label,
   backgroundColor,
-  size,
   handleClick,
   borderRadius,
   color = "white",
   width,
   height,
+  fontSize,
+  fontWeight,
+  disabled,
+  border,
+  padding,
 }: ButtonProps) {
-  let padding = "10px 24px";
-
-  if (size === "sm") padding = "5px 15px";
-  else if (size === "md") padding = "7px 20px";
-
   const style = {
-    fontSize: "14px",
-    className,
     backgroundColor,
-    padding,
-    border: "none",
+
+    border,
     borderRadius: `${borderRadius}px`,
     color,
-    cursor: "pointer",
-    size: "lg",
-    fontWeight: "500",
+    cursor: disabled ? "not-allowed" : "pointer",
+    fontSize,
+    fontWeight,
     width: `${width}px`,
     height: `${height}px`,
+    padding: `${padding}px`,
   };
-
   return (
-    <button onClick={handleClick} style={style}>
+    <button
+      onClick={handleClick}
+      style={style}
+      className={className}
+      disabled={disabled}
+    >
       {label}
     </button>
   );
