@@ -7,14 +7,17 @@
     "build": "strapi build",
     "deploy": "strapi deploy",
     "develop": "strapi develop",
+    "seed:example": "node ./scripts/seed.js",
     "start": "strapi start",
     "strapi": "strapi"
   },
   "dependencies": {
-    "@strapi/plugin-cloud": "5.0.6",
-    "@strapi/plugin-users-permissions": "5.0.6",
-    "@strapi/strapi": "5.0.6",
-    "better-sqlite3": "9.4.3",
+    "@strapi/plugin-cloud": "5.1.0",
+    "@strapi/plugin-users-permissions": "5.1.0",
+    "@strapi/strapi": "5.1.0",
+    "better-sqlite3": "11.3.0",
+    "fs-extra": "^10.0.0",
+    "mime-types": "^2.1.27",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
     "react-router-dom": "^6.0.0",
@@ -27,10 +30,10 @@
     "typescript": "^5"
   },
   "engines": {
-    "node": ">=18.0.0 <=20.x.x",
+    "node": ">=18.0.0 <=22.x.x",
     "npm": ">=6.0.0"
   },
   "strapi": {
-    "uuid": "6b58afa2-df3c-4ba1-abba-d65cd6f9daed"
+    "uuid": "3e5d946d-1de4-4d22-88b5-a88b1b7a7f94"
   }
 }
