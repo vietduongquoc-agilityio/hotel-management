@@ -5,7 +5,7 @@ import rateIcon from "../../assets/icons/rate.svg";
 import search from "../../assets/icons/search.svg";
 import Header from "../header";
 import "./index.css";
-import RoomPage from "../../page/room";
+import { Outlet } from "react-router-dom";
 
 const MainLayout = () => {
   return (
@@ -13,7 +13,7 @@ const MainLayout = () => {
       <Sidebar room={roomIcon} logo={logoIcon} rate={rateIcon} />
       <main className="content-container">
         <Header search={search} />
-        <RoomPage />
+        <Outlet />
       </main>
     </div>
   );

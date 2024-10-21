@@ -23,7 +23,7 @@ export default function Sidebar({ room, logo, rate }: SidebarProps) {
           </Link>
         </li>
         <li className="wrap-sidebar-link">
-          <Link to="/" className="sidebar-link">
+          <Link to="/rate" className="sidebar-link">
             <img src={rate} alt="Rate" className="sidebar-icon" />
             <span className="sidebar-title-rate">Rate</span>
           </Link>

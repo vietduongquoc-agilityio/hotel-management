@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { useEffect, useState } from "react";
-import { getRooms } from "../../services/roomService";
-import "./index.css";
+import { getRooms } from "../../../services/roomService";
+import "../index.css";
 
 interface RoomData {
   id: string;

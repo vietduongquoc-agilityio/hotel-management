@@ -1,6 +1,6 @@
 import Title from "../../components/title";
 import Label from "../../components/label";
-import TableRoom from "../../components/table";
+import TableRoom from "../../components/table/room";
 import Pagination from "../../components/pagination/pagination";
 import "./index.css";
 
