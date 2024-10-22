@@ -45,9 +45,9 @@ function Button({
     cursor: disabled ? "not-allowed" : "pointer",
     fontSize,
     fontWeight,
-    width: width ? `${width}px` : undefined,
-    height: height ? `${height}px` : undefined,
-    padding: padding ? `${padding}px` : undefined,
+    width: `${width}px`,
+    height: `${height}px`,
+    padding: `${padding}px`,
   };
 
   const handleToggle = (event: React.MouseEvent<HTMLButtonElement>) => {
