@@ -42,3 +42,8 @@
   font-size: var(--font-size-md);
   font-weight: var(--font-weight-regular);
 }
+
+.btn-toggle:hover {
+  background-color: var(--color-primary-100) !important;
+  border-radius: 10px;
+}

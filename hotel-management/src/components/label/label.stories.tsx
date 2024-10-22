@@ -1,5 +1,5 @@
 import { StoryFn } from "@storybook/react";
-import Label, { LabelProps } from "./index";
+import Label, { LabelProps } from "./labelRoom";
 import { BrowserRouter as Router } from "react-router-dom";
 
 export default {

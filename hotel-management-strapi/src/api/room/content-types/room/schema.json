@@ -28,17 +28,15 @@
       "type": "text",
       "required": true
     },
-    "available": {
+    "Available": {
       "type": "enumeration",
       "enum": [
-        "available",
-        "booked",
-        "reserved",
-        "waitlist",
-        "blocked"
-      ],
-      "required": true,
-      "default": "available"
+        "Available",
+        "Booked",
+        "Waitlist",
+        "Blocked",
+        "Reserved"
+      ]
     }
   }
 }

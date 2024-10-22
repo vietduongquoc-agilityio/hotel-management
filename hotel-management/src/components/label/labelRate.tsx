@@ -18,17 +18,6 @@ export default function LabelRate({ handleClick }: LabelProps) {
         height={40}
         border="none"
       />
-      <Button
-        className="btn-action-filter"
-        label="Filter"
-        borderRadius={8}
-        backgroundColor="#ffffff"
-        handleClick={handleClick}
-        width={95}
-        height={40}
-        border="1px solid #667085"
-        color="#667085"
-      />
     </div>
   );
 }

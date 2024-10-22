@@ -48,9 +48,18 @@
   border: 1px solid rgb(21, 112, 239);
   background: var(--color-primary-100);
   color: var(--color-primary-600);
+  transition: background-color 0.3s ease;
 }
 
 .wrap-label-btn {
   justify-content: flex-end;
   gap: 20px;
+}
+
+.btn-action-add {
+  transition: background-color 0.3s ease;
+}
+
+.btn-action-add:hover {
+  background-color: var(--color-primary-800) !important;
 }

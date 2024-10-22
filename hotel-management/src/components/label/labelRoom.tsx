@@ -15,7 +15,7 @@ export default function Label({ handleClick }: LabelProps) {
       </ul>
       <div className="label-action">
         <Button
-          className="btn-action-add"
+          className="btn btn-action-add"
           label="Add room"
           borderRadius={8}
           backgroundColor="#1570ef"

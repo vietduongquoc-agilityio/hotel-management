@@ -73,4 +73,31 @@
   padding: 27px 24px;
 }
 
+.dropdown-menu {
+  position: absolute;
+  background-color: var(--color-transparent);
+  border: 1px solid #ddd;
+  padding: 10px;
+  box-shadow: 0px 4px 8px rgba(57, 56, 56, 0.466);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  z-index: 100;
+  border-radius: var(--border-radius-sm);
+}
 
+.action-btn {
+  padding: 4px 8px;
+  cursor: pointer;
+  background-color: var(--color-primary-500);
+  color: var(--color-transparent);
+  border: none;
+  border-radius: 4px;
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-regular);
+  transition: background-color 0.3s ease;
+}
+
+.action-btn:hover {
+  background-color:  var(--color-primary-800);
+}
