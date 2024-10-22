@@ -11,6 +11,8 @@ export interface SelectProps {
   value: string;
   label?: string;
   width?: number;
+  height?: number;
+  padding?: number;
 }
 
 export default function Select({
@@ -19,14 +21,19 @@ export default function Select({
   value,
   label,
   width,
+  height,
+  padding,
 }: SelectProps) {
   const style = {
     width: `${width}px`,
+    height: `${height}px`,
+    padding: `${padding}`,
   };
   return (
-    <div className="select-container" style={style}>
+    <div className="select-container">
       {label && <label className="select-label">{label}</label>}
       <select
+        style={style}
         className="select-element"
         value={value}
         onChange={(e) => onChange(e.target.value)}

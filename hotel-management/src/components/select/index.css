@@ -6,13 +6,16 @@
 
 .select-label {
   margin-bottom: 5px;
-  font-size: 14px;
-  color: #555;
+  font-size: var(--font-size-md);
+  font-family: var(--font-weight-medium);
+  color: var(--color-secondary-800);
 }
 
 .select-element {
   padding: 10px;
-  font-size: 14px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+  font-size: var(--font-size-md);
+  box-sizing: border-box;
+  /* Grey/Grey 200 */
+  border: 1px solid rgb(185, 189, 199);
+  border-radius: 8px;
 }

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import "./index.css";
 import Button from "../../../button";
+import Select, { Option } from "../../../select";
 
 interface AddRoomModalProps {
   onClose: () => void;
@@ -16,6 +17,26 @@ export default function AddRoomModal({
   const [status, setStatus] = useState("");
   const [facilityDescription, setFacilityDescription] = useState("");
 
+  const bedTypeOptions: Option[] = [
+    { value: "Single", label: "Single" },
+    { value: "Double", label: "Double" },
+    { value: "Queen", label: "Queen" },
+    { value: "King", label: "King" },
+  ];
+
+  const floorOptions: Option[] = [
+    { value: "Ground Floor", label: "Ground Floor" },
+    { value: "1st Floor", label: "1st Floor" },
+    { value: "2nd Floor", label: "2nd Floor" },
+  ];
+
+  const statusOptions: Option[] = [
+    { value: "Available", label: "Available" },
+    { value: "Occupied", label: "Occupied" },
+    { value: "Under Maintenance", label: "Under Maintenance" },
+    { value: "Out of Order", label: "Out of Order" },
+  ];
+
   const handleSubmit = () => {
     if (!bedType || !floor || !status) {
       alert("Please fill in all required fields.");
@@ -29,72 +50,76 @@ export default function AddRoomModal({
 
   return (
     <div className="modal">
-      <div className="modal-content">
+      <div className="wrap-modal-content">
         <h2 className="modal-content-title">Add New Room</h2>
-        <form>
-          <div>
-            <label>Bed type</label>
-            <select
+        <form className="modal-content">
+          <div className="modal-content-row-one">
+            <Select
+              width={320}
+              options={bedTypeOptions}
               value={bedType}
-              onChange={(e) => setBedType(e.target.value)}
-            >
-              <option value="">Select bed type</option>
-              <option value="Single">Single</option>
-              <option value="Double">Double</option>
-              <option value="Queen">Queen</option>
-              <option value="King">King</option>
-            </select>
+              onChange={setBedType}
+              label="Bed type"
+              height={40}
+            />
+            <Select
+              width={320}
+              options={floorOptions}
+              value={floor}
+              onChange={setFloor}
+              label="Room floor"
+              height={40}
+            />
           </div>
-          <div>
-            <label>Room floor</label>
-            <select value={floor} onChange={(e) => setFloor(e.target.value)}>
-              <option value="">Select floor</option>
-              <option value="Ground Floor">Ground Floor</option>
-              <option value="1st Floor">1st Floor</option>
-              <option value="2nd Floor">2nd Floor</option>
-            </select>
-          </div>
-          <div>
-            <label>Status</label>
-            <select value={status} onChange={(e) => setStatus(e.target.value)}>
-              <option value="">Select status</option>
-              <option value="Available">Available</option>
-              <option value="Occupied">Occupied</option>
-              <option value="Under Maintenance">Under Maintenance</option>
-              <option value="Out of Order">Out of Order</option>
-            </select>
-          </div>
-          <div>
-            <label>Room facility</label>
-            <textarea
-              value={facilityDescription}
-              onChange={(e) => setFacilityDescription(e.target.value)}
-              maxLength={500}
+          <div className="modal-content-row-two">
+            <div>
+              <label className="select-label">Room facility</label>
+              <textarea
+                className="modal-content-row-two-desc"
+                value={facilityDescription}
+                onChange={(e) => setFacilityDescription(e.target.value)}
+                maxLength={500}
+                placeholder="Enter a description...."
+              />
+            </div>
+            <Select
+              options={statusOptions}
+              value={status}
+              onChange={setStatus}
+              label="Status"
+              width={320}
+              height={40}
             />
           </div>
         </form>
         <div className="modal-actions">
           <Button
+            className="btn-cancel"
             label="Cancel"
             handleClick={onClose}
-            borderRadius={4}
-            backgroundColor="#f0f1f3"
-            color="#000"
+            borderRadius={8}
+            backgroundColor="#ffffff"
+            color="#667085"
             size="md"
             width={100}
             height={40}
-            border="none"
+            border="1px solid #667085"
+            fontSize="14"
+            fontWeight="500"
           />
           <Button
+            className="btn-add"
             label="Add"
             handleClick={handleSubmit}
-            borderRadius={4}
+            borderRadius={8}
             backgroundColor="#1570ef"
-            color="#fff"
+            color="#ffffff"
             size="md"
             width={100}
             height={40}
             border="none"
+            fontSize="14"
+            fontWeight="500"
           />
         </div>
       </div>
