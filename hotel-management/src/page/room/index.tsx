@@ -3,7 +3,7 @@ import { Box, Heading } from "@chakra-ui/react";
 import TableRoom from "../../components/table/room";
 import AddRoomModal from "../../components/modal/rateModal/add";
 import Label from "../../components/label/labelRoom";
-import Pagination from "../../components/pagination/pagination";
+import Pagination from "../../components/pagination";
 
 export default function RoomPage() {
   const [isAddRoomOpen, setIsAddRoomOpen] = useState(false);
