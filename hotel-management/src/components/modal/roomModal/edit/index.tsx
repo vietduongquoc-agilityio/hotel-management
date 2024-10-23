@@ -1,3 +1,15 @@
+import {
+  Text,
+  Button,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
+} from "@chakra-ui/react";
+
 interface EditRoomProps {
   room: { id: string; roomNumber: string };
   onClose: () => void;
@@ -5,9 +17,20 @@ interface EditRoomProps {
 
 export default function EditRoom({ room, onClose }: EditRoomProps) {
   return (
-    <div className="modal">
-      <h2>Edit Room {room.roomNumber}</h2>
-      <button onClick={onClose}>Close</button>
-    </div>
+    <Modal isOpen={true} onClose={onClose}>
+      <ModalOverlay />
+      <ModalContent>
+        <ModalHeader>Edit Room</ModalHeader>
+        <ModalCloseButton />
+        <ModalBody>
+          <Text>Edit Room {room.roomNumber}</Text>
+        </ModalBody>
+        <ModalFooter>
+          <Button variant="ghost" onClick={onClose}>
+            Close
+          </Button>
+        </ModalFooter>
+      </ModalContent>
+    </Modal>
   );
 }

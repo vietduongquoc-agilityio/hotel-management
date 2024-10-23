@@ -1,34 +1,65 @@
-import { Link } from "react-router-dom";
-import "./index.css";
+import { VStack, Image, Link, List, ListItem } from "@chakra-ui/react";
+import { Link as RouterLink } from "react-router-dom";
+import roomIcon from "../../assets/icons/room.svg";
+import logoIcon from "../../assets/icons/logo.svg";
+import rateIcon from "../../assets/icons/rate.svg";
+import { borderRadius } from "../../themes/base/metrics";
 
-export interface SidebarProps {
-  room: string;
-  logo: string;
-  rate: string;
-}
-
-export default function Sidebar({ room, logo, rate }: SidebarProps) {
+export default function Sidebar() {
   return (
-    <aside className="sidebar-container">
-      <figure className="sidebar-logo">
-        <Link className="link-homepage" to="/">
-          <img src={logo} alt="Logo" className="logo-icon" />
-        </Link>
-      </figure>
-      <ul className="list-sidebar-link">
-        <li className="wrap-sidebar-link">
-          <Link to="/" className="sidebar-link">
-            <img src={room} alt="Room" className="sidebar-icon" />
-            <span className="sidebar-title-room">Room</span>
+    <VStack
+      as="aside"
+      w="220px"
+      bg="white.200"
+      gap="32px"
+      alignItems="flex-start"
+    >
+      <Link w="196px" h="40px" as={RouterLink} to="/">
+        <Image src={logoIcon} alt="Logo" />
+      </Link>
+      <List
+        spacing="15px"
+        textColor="grey.600"
+        fontSize="14px"
+        fontWeight="500"
+      >
+        <ListItem _hover="red">
+          <Link
+            as={RouterLink}
+            to="/"
+            display="flex"
+            alignItems="center"
+            _hover={{
+              backgroundColor: "blue.100",
+              borderRadius: borderRadius.md,
+              textColor: "blue.600",
+            }}
+            w="196px"
+            p="8px 12px"
+          >
+            <Image src={roomIcon} alt="Room" mr="15px" />
+            Room
           </Link>
-        </li>
-        <li className="wrap-sidebar-link">
-          <Link to="/rate" className="sidebar-link">
-            <img src={rate} alt="Rate" className="sidebar-icon" />
-            <span className="sidebar-title-rate">Rate</span>
+        </ListItem>
+        <ListItem>
+          <Link
+            as={RouterLink}
+            to="/rate"
+            display="flex"
+            alignItems="center"
+            _hover={{
+              backgroundColor: "blue.100",
+              borderRadius: borderRadius.md,
+              textColor: "blue.600",
+            }}
+            w="196px"
+            p="8px 12px"
+          >
+            <Image src={rateIcon} alt="Rate" mr="15px" />
+            Rate
           </Link>
-        </li>
-      </ul>
-    </aside>
+        </ListItem>
+      </List>
+    </VStack>
   );
 }

@@ -1,10 +1,17 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { useEffect, useState } from "react";
+import {
+  Box,
+  Text,
+  Button,
+  UnorderedList,
+  ListItem,
+  Spinner,
+  Alert,
+} from "@chakra-ui/react";
 import { getRooms } from "../../../services/roomService";
-import Button from "../../button";
 import EditRoom from "../../modal/roomModal/edit";
 import DeleteRoom from "../../modal/roomModal/delete";
-import "./index.css";
 
 interface RoomData {
   id: string;
@@ -58,51 +65,33 @@ export default function TableRoom() {
     setActiveRoomId((prev) => (prev === roomId ? null : roomId));
   };
 
-  if (loading) return <div>Loading...</div>;
-  if (error) return <div>{error}</div>;
+  if (loading) return <Spinner />;
+  if (error) return <Alert status="error">{error}</Alert>;
 
   return (
-    <div className="wrap-table">
-      <ul className="wrap-table-title">
-        <li className="table-row-one">Room number</li>
-        <li className="table-row-second">Bed type</li>
-        <li className="table-row-third">Room floor</li>
-        <li className="table-row-four">Room facility</li>
-        <li className="table-row-five">Status</li>
-      </ul>
+    <Box>
+      <UnorderedList>
+        <ListItem>Room number</ListItem>
+        <ListItem>Bed type</ListItem>
+        <ListItem>Room floor</ListItem>
+        <ListItem>Room facility</ListItem>
+        <ListItem>Status</ListItem>
+      </UnorderedList>
       {rooms.map((room) => (
-        <ul key={room.id} className="wrap-table-content">
-          <li className="item table-row-one">{room.roomNumber}</li>
-          <li className="item table-row-second">{room.bedType}</li>
-          <li className="item table-row-third">{room.roomFloor}</li>
-          <li className="item table-row-four">{room.roomFacility}</li>
-          <li className="item table-row-five">{room.Available}</li>
-          <li className="action">
-            <Button
-              label="⋮"
-              toggle
-              handleClick={() => toggleMenu(room.id)}
-              className="btn-toggle"
-              backgroundColor="#ffffff"
-              border="none"
-              color="#5d6679"
-            />
-
-            {activeRoomId === room.id && (
-              <div className="dropdown-menu">
-                <button className="action-btn" onClick={() => handleEdit(room)}>
-                  Edit
-                </button>
-                <button
-                  className="action-btn"
-                  onClick={() => handleDelete(room)}
-                >
-                  Delete
-                </button>
-              </div>
-            )}
-          </li>
-        </ul>
+        <Box key={room.id}>
+          <Text>{room.roomNumber}</Text>
+          <Text>{room.bedType}</Text>
+          <Text>{room.roomFloor}</Text>
+          <Text>{room.roomFacility}</Text>
+          <Text>{room.Available}</Text>
+          <Button onClick={() => toggleMenu(room.id)}>⋮</Button>
+          {activeRoomId === room.id && (
+            <Box>
+              <Button onClick={() => handleEdit(room)}>Edit</Button>
+              <Button onClick={() => handleDelete(room)}>Delete</Button>
+            </Box>
+          )}
+        </Box>
       ))}
 
       {isEditOpen && selectedRoom && (
@@ -114,6 +103,6 @@ export default function TableRoom() {
           onClose={() => setIsDeleteOpen(false)}
         />
       )}
-    </div>
+    </Box>
   );
 }

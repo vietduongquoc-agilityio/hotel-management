@@ -1,6 +1,5 @@
-import Title from "../../components/title";
+import { Box, Heading } from "@chakra-ui/react";
 import LabelRate from "../../components/label/labelRate";
-import "./index.css";
 import TableRate from "../../components/table/rate";
 
 export default function RatePage() {
@@ -9,10 +8,12 @@ export default function RatePage() {
   };
 
   return (
-    <article className="room-page-container">
-      <Title titleText="Guests" className="title" />
+    <Box>
+      <Heading as="h1" mb={4}>
+        Guests
+      </Heading>
       <LabelRate handleClick={handleClick} />
       <TableRate />
-    </article>
+    </Box>
   );
 }

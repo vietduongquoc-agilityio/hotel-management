@@ -1,5 +1,4 @@
-import "./index.css";
-import Button from "../button";
+import { Button, Box } from "@chakra-ui/react";
 
 export interface LabelProps {
   handleClick: () => void;
@@ -7,17 +6,16 @@ export interface LabelProps {
 
 export default function LabelRate({ handleClick }: LabelProps) {
   return (
-    <div className="wrap-label-title wrap-label-btn">
+    <Box display="flex" justifyContent="flex-end" mb={4}>
       <Button
-        className="btn-action-add"
-        label="Add rate"
+        onClick={handleClick}
+        colorScheme="blue"
         borderRadius={8}
-        backgroundColor="#1570ef"
-        handleClick={handleClick}
-        width={115}
-        height={40}
-        border="none"
-      />
-    </div>
+        width="115px"
+        height="40px"
+      >
+        Add Rate
+      </Button>
+    </Box>
   );
 }

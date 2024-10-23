@@ -1,10 +1,17 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { useEffect, useState } from "react";
+import {
+  Box,
+  Text,
+  UnorderedList,
+  ListItem,
+  Button,
+  Spinner,
+  Alert,
+} from "@chakra-ui/react";
 import { getRates } from "../../../services/rateServices";
-import Button from "../../button";
 import EditRate from "../../modal/rateModal/edit";
 import DeleteRate from "../../modal/rateModal/delete";
-import "./index.css";
 
 interface RateData {
   id: string;
@@ -60,54 +67,35 @@ export default function TableRate() {
     setActiveRateId((prev) => (prev === rateId ? null : rateId));
   };
 
-  if (loading) return <div>Loading...</div>;
-  if (error) return <div>{error}</div>;
+  if (loading) return <Spinner />;
+  if (error) return <Alert status="error">{error}</Alert>;
 
   return (
-    <div className="wrap-table">
-      <ul className="wrap-rate-table-title">
-        <li className="rate-table-row-one">Room type</li>
-        <li className="rate-table-row-second">Deals</li>
-        <li className="rate-table-row-third">Cancellation policy</li>
-        <li className="rate-table-row-four">Deal price</li>
-        <li className="rate-table-row-five">Rate</li>
-        <li className="rate-table-row-six">Availability</li>
-      </ul>
+    <Box>
+      <UnorderedList>
+        <ListItem>Room type</ListItem>
+        <ListItem>Deals</ListItem>
+        <ListItem>Cancellation policy</ListItem>
+        <ListItem>Deal price</ListItem>
+        <ListItem>Rate</ListItem>
+        <ListItem>Availability</ListItem>
+      </UnorderedList>
       {rates.map((rate) => (
-        <ul key={rate.id} className="wrap-table-content">
-          <li className="item rate-table-row-one">{rate.roomType}</li>
-          <li className="item rate-table-row-second">{rate.deals}</li>
-          <li className="item rate-table-row-third">
-            {rate.cancellationPolicy}
-          </li>
-          <li className="item rate-table-row-four">{rate.dealPrice}</li>
-          <li className="item rate-table-row-five">{rate.rate}</li>
-          <li className="item rate-table-row-six">{rate.availability}</li>
-          <li className="rate-action">
-            <Button
-              className="btn-toggle"
-              label="⋮"
-              toggle
-              handleClick={() => toggleMenu(rate.id)}
-              backgroundColor="#ffffff"
-              border="none"
-              color="#5d6679"
-            />
-            {activeRateId === rate.id && (
-              <div className="dropdown-menu">
-                <button className="action-btn" onClick={() => handleEdit(rate)}>
-                  Edit
-                </button>
-                <button
-                  className="action-btn"
-                  onClick={() => handleDelete(rate)}
-                >
-                  Delete
-                </button>
-              </div>
-            )}
-          </li>
-        </ul>
+        <Box key={rate.id}>
+          <Text>{rate.roomType}</Text>
+          <Text>{rate.deals}</Text>
+          <Text>{rate.cancellationPolicy}</Text>
+          <Text>{rate.dealPrice}</Text>
+          <Text>{rate.rate}</Text>
+          <Text>{rate.availability}</Text>
+          <Button onClick={() => toggleMenu(rate.id)}>⋮</Button>
+          {activeRateId === rate.id && (
+            <Box>
+              <Button onClick={() => handleEdit(rate)}>Edit</Button>
+              <Button onClick={() => handleDelete(rate)}>Delete</Button>
+            </Box>
+          )}
+        </Box>
       ))}
 
       {isEditOpen && selectedRate && (
@@ -119,6 +107,6 @@ export default function TableRate() {
           onClose={() => setIsDeleteOpen(false)}
         />
       )}
-    </div>
+    </Box>
   );
 }

@@ -1,6 +1,5 @@
-import React, { useState } from "react";
-import Button from "../button";
-import "./index.css";
+import { useState } from "react";
+import { Button, HStack } from "@chakra-ui/react";
 
 const Pagination: React.FC = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -24,53 +23,43 @@ const Pagination: React.FC = () => {
 
   const renderPageNumbers = () => {
     const pageNumbers = [];
-    for (let i = 1; i <= 7; i++) {
+    for (let i = 1; i <= totalPages; i++) {
       pageNumbers.push(
         <Button
           key={i}
-          className={`page-btn ${currentPage === i ? "active" : ""}`}
-          label={i.toString()}
-          backgroundColor={currentPage === i ? "#f0f1f3" : "#ffffff"}
-          color={currentPage === i ? "#1366d9" : "#667085"}
-          handleClick={() => handlePageClick(i)}
-          borderRadius={8}
-          fontSize="14px"
-          fontWeight="500"
-          border="none"
-        />
+          size="sm"
+          colorScheme={currentPage === i ? "blue" : "gray"}
+          onClick={() => handlePageClick(i)}
+          variant={currentPage === i ? "solid" : "outline"}
+          mx={1} // Adds some margin between the buttons
+        >
+          {i}
+        </Button>
       );
     }
     return pageNumbers;
   };
 
   return (
-    <div className="pagination-container">
+    <HStack spacing={4} justify="center" mt={4}>
       <Button
-        className="prev-btn"
-        label="< Previous"
-        backgroundColor="#ffffff"
-        color="#667085"
-        handleClick={handlePrevious}
-        borderRadius={8}
-        fontSize="14px"
-        fontWeight="500"
-        disabled={currentPage === 1}
-        border="1px solid #667085"
-      />
-      <div className="wrap-page-btn">{renderPageNumbers()}</div>
+        size="sm"
+        colorScheme="gray"
+        onClick={handlePrevious}
+        isDisabled={currentPage === 1}
+      >
+        &lt; Previous
+      </Button>
+      <HStack>{renderPageNumbers()}</HStack>
       <Button
-        className="next-btn"
-        label="Next >"
-        backgroundColor="#ffffff"
-        color="#667085"
-        handleClick={handleNext}
-        borderRadius={8}
-        fontSize="14px"
-        fontWeight="500"
-        disabled={currentPage === totalPages}
-        border="1px solid #667085"
-      />
-    </div>
+        size="sm"
+        colorScheme="gray"
+        onClick={handleNext}
+        isDisabled={currentPage === totalPages}
+      >
+        Next &gt;
+      </Button>
+    </HStack>
   );
 };
 
