@@ -1,3 +1,4 @@
+/* eslint-disable react-refresh/only-export-components */
 import { useState } from "react";
 import {
   Modal,
@@ -9,79 +10,57 @@ import {
   Button,
   FormControl,
   FormLabel,
-  Select,
-  Textarea,
+  Input,
 } from "@chakra-ui/react";
+import withModal from "../../withModal";
 
-interface AddRoomModalProps {
+interface AddRateModalProps {
   onClose: () => void;
-  onAddRoom: (roomData: any) => void;
+  onAddRate: (rateData: any) => void;
 }
 
-export default function AddRoomModal({
-  onClose,
-  onAddRoom,
-}: AddRoomModalProps) {
-  const [bedType, setBedType] = useState("");
-  const [floor, setFloor] = useState("");
-  const [status, setStatus] = useState("");
-  const [facilityDescription, setFacilityDescription] = useState("");
+function AddRateModal({ onClose, onAddRate }: AddRateModalProps) {
+  const [rateType, setRateType] = useState("");
+  const [deal, setDeal] = useState("");
+  const [price, setPrice] = useState("");
+  const [availability, setAvailability] = useState("");
 
   const handleSubmit = () => {
-    if (!bedType || !floor || !status) {
-      alert("Please fill in all required fields.");
+    if (!rateType || !deal || !price || !availability) {
+      alert("Please fill in all fields.");
       return;
     }
-
-    const newRoomData = { bedType, floor, status, facilityDescription };
-    onAddRoom(newRoomData);
+    const newRateData = { rateType, deal, price, availability };
+    onAddRate(newRateData);
     onClose();
   };
 
   return (
     <Modal isOpen onClose={onClose}>
       <ModalOverlay />
-      <ModalContent>
-        <ModalHeader>Add New Room</ModalHeader>
+      <ModalContent bg="white.200">
+        <ModalHeader>Add New Rate</ModalHeader>
         <ModalBody>
           <FormControl mb={4}>
-            <FormLabel>Bed Type</FormLabel>
-            <Select
-              value={bedType}
-              onChange={(e) => setBedType(e.target.value)}
-            >
-              <option value="">Select bed type</option>
-              <option value="Single">Single</option>
-              <option value="Double">Double</option>
-              <option value="Queen">Queen</option>
-              <option value="King">King</option>
-            </Select>
+            <FormLabel>Rate Type</FormLabel>
+            <Input
+              value={rateType}
+              onChange={(e) => setRateType(e.target.value)}
+            />
           </FormControl>
           <FormControl mb={4}>
-            <FormLabel>Room Floor</FormLabel>
-            <Select value={floor} onChange={(e) => setFloor(e.target.value)}>
-              <option value="">Select floor</option>
-              <option value="Ground Floor">Ground Floor</option>
-              <option value="1st Floor">1st Floor</option>
-              <option value="2nd Floor">2nd Floor</option>
-            </Select>
+            <FormLabel>Deal</FormLabel>
+            <Input value={deal} onChange={(e) => setDeal(e.target.value)} />
           </FormControl>
           <FormControl mb={4}>
-            <FormLabel>Status</FormLabel>
-            <Select value={status} onChange={(e) => setStatus(e.target.value)}>
-              <option value="">Select status</option>
-              <option value="Available">Available</option>
-              <option value="Occupied">Occupied</option>
-              <option value="Under Maintenance">Under Maintenance</option>
-              <option value="Out of Order">Out of Order</option>
-            </Select>
+            <FormLabel>Price</FormLabel>
+            <Input value={price} onChange={(e) => setPrice(e.target.value)} />
           </FormControl>
           <FormControl mb={4}>
-            <FormLabel>Room Facility</FormLabel>
-            <Textarea
-              value={facilityDescription}
-              onChange={(e) => setFacilityDescription(e.target.value)}
-              maxLength={500}
+            <FormLabel>Availability</FormLabel>
+            <Input
+              value={availability}
+              onChange={(e) => setAvailability(e.target.value)}
             />
           </FormControl>
         </ModalBody>
@@ -97,3 +76,5 @@ export default function AddRoomModal({
     </Modal>
   );
 }
+
+export default withModal(AddRateModal, "Add rate")

@@ -17,7 +17,7 @@ export const Fonts = () => (
     styles={`
       
       @font-face {
-        font-family: 'inter regular';
+        font-family: 'Inter Regular';
         font-style: normal;
         font-weight: 400;
         font-display: swap;
@@ -25,7 +25,7 @@ export const Fonts = () => (
       }
       
       @font-face {
-        font-family: 'inter medium';
+        font-family: 'Inter Medium';
         font-style: normal;
         font-weight: 500;
         font-display: swap;
@@ -33,7 +33,7 @@ export const Fonts = () => (
       }
 
        @font-face {
-        font-family: 'inter semibold';
+        font-family: 'Inter Semibold';
         font-style: normal;
         font-weight: 600;
         font-display: swap;

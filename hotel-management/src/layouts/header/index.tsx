@@ -34,10 +34,6 @@ function Header({ placeholder = "Search for rooms and offers" }: HeaderProps) {
             placeholder={placeholder}
             border="1px solid rgb(238, 240, 242)"
             borderRadius={4}
-            _hover={{
-              borderLeft: "1px solid f0f1f3",
-              border: "2px solid #1366d9",
-            }}
           />
         </InputGroup>
       </Box>

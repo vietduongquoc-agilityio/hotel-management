@@ -1,18 +1,14 @@
 import { Box, Heading } from "@chakra-ui/react";
-import LabelRate from "../../components/label/labelRate";
+import LabelRate from "../../components/label/rate/labelRate";
 import TableRate from "../../components/table/rate";
 
 export default function RatePage() {
-  const handleClick = () => {
-    console.log("Button clicked");
-  };
-
   return (
     <Box>
-      <Heading as="h1" mb={4}>
+      <Heading mb="16px" fontSize="12px" fontWeight="500" color="grey.500">
         Guests
       </Heading>
-      <LabelRate handleClick={handleClick} />
+      <LabelRate />
       <TableRate />
     </Box>
   );

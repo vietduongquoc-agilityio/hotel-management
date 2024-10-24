@@ -29,10 +29,12 @@ export default function Sidebar() {
             to="/"
             display="flex"
             alignItems="center"
+            borderRadius="borderRadius.md"
             _hover={{
               backgroundColor: "blue.100",
               borderRadius: borderRadius.md,
               textColor: "blue.600",
+              transition: "background-color 0.2s ease",
             }}
             w="196px"
             p="8px 12px"
@@ -47,9 +49,11 @@ export default function Sidebar() {
             to="/rate"
             display="flex"
             alignItems="center"
+            borderRadius="borderRadius.md"
             _hover={{
               backgroundColor: "blue.100",
               borderRadius: borderRadius.md,
+              transition: "background-color 0.2s ease",
               textColor: "blue.600",
             }}
             w="196px"

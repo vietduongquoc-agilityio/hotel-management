@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   Box,
   Text,
@@ -28,10 +28,8 @@ export default function TableRate() {
   const [rates, setRates] = useState<RateData[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [selectedRate, setSelectedRate] = useState<RateData | null>(null);
-  const [isEditOpen, setIsEditOpen] = useState(false);
-  const [isDeleteOpen, setIsDeleteOpen] = useState(false);
   const [activeRateId, setActiveRateId] = useState<string | null>(null);
+  const menuRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const fetchRateData = async () => {
@@ -51,17 +49,18 @@ export default function TableRate() {
     fetchRateData();
   }, []);
 
-  const handleEdit = (rate: RateData) => {
-    setSelectedRate(rate);
-    setIsEditOpen(true);
-    setActiveRateId(null);
-  };
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
+        setActiveRateId(null);
+      }
+    };
 
-  const handleDelete = (rate: RateData) => {
-    setSelectedRate(rate);
-    setIsDeleteOpen(true);
-    setActiveRateId(null);
-  };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [menuRef]);
 
   const toggleMenu = (rateId: string) => {
     setActiveRateId((prev) => (prev === rateId ? null : rateId));
@@ -71,42 +70,95 @@ export default function TableRate() {
   if (error) return <Alert status="error">{error}</Alert>;
 
   return (
-    <Box>
-      <UnorderedList>
-        <ListItem>Room type</ListItem>
-        <ListItem>Deals</ListItem>
-        <ListItem>Cancellation policy</ListItem>
-        <ListItem>Deal price</ListItem>
-        <ListItem>Rate</ListItem>
-        <ListItem>Availability</ListItem>
+    <Box
+      borderTopLeftRadius="8px"
+      borderTopRightRadius="8px"
+      border="1px solid #d4e5fa"
+    >
+      <UnorderedList
+        display="flex"
+        maxW="1020px"
+        w="100%"
+        m="0"
+        bg="grey.50"
+        fontSize="12px"
+        fontWeight="500"
+        color="grey.500"
+        borderTopLeftRadius="8px"
+        borderTopRightRadius="8px"
+        p="10px 24px"
+      >
+        <ListItem listStyleType="none" w="15%">
+          Room type
+        </ListItem>
+        <ListItem listStyleType="none" w="15%">
+          Deals
+        </ListItem>
+        <ListItem listStyleType="none" w="15%">
+          Cancellation policy
+        </ListItem>
+        <ListItem listStyleType="none" w="15%">
+          Deal price
+        </ListItem>
+        <ListItem listStyleType="none" w="15%">
+          Rate
+        </ListItem>
+        <ListItem listStyleType="none" w="26%">
+          Availability
+        </ListItem>
       </UnorderedList>
       {rates.map((rate) => (
-        <Box key={rate.id}>
-          <Text>{rate.roomType}</Text>
-          <Text>{rate.deals}</Text>
-          <Text>{rate.cancellationPolicy}</Text>
-          <Text>{rate.dealPrice}</Text>
-          <Text>{rate.rate}</Text>
-          <Text>{rate.availability}</Text>
-          <Button onClick={() => toggleMenu(rate.id)}>⋮</Button>
+        <Box
+          fontSize="14px"
+          fontWeight="400"
+          key={rate.id}
+          display="flex"
+          maxW="1020px"
+          w="100%"
+          p="17px 24px"
+          position="relative"
+          border="1px solid #d4e5fa"
+        >
+          <Text w="15%" color="grey.900">
+            {rate.roomType}
+          </Text>
+          <Text w="15%">{rate.deals}</Text>
+          <Text w="15%">{rate.cancellationPolicy}</Text>
+          <Text w="15%">{rate.dealPrice}</Text>
+          <Text w="15%">{rate.rate}</Text>
+          <Text w="20%">{rate.availability}</Text>
+          <Button
+            bg="white.200"
+            color="grey.800"
+            _hover={{ bg: "white.200" }}
+            height="15px"
+            onClick={() => toggleMenu(rate.id)}
+          >
+            ⋮
+          </Button>
           {activeRateId === rate.id && (
-            <Box>
-              <Button onClick={() => handleEdit(rate)}>Edit</Button>
-              <Button onClick={() => handleDelete(rate)}>Delete</Button>
+            <Box
+              ref={menuRef}
+              top="25px"
+              right="55px"
+              position="absolute"
+              background-color="white.200"
+              border=" 1px solid #989fad"
+              p="7px"
+              boxShadow="0px 4px 8px rgba(57, 56, 56, 0.466)"
+              display="flex"
+              flexDirection="column"
+              gap="10px"
+              zIndex="100"
+              borderRadius="8px"
+              w="80px"
+            >
+              <EditRate></EditRate>
+              <DeleteRate></DeleteRate>
             </Box>
           )}
         </Box>
       ))}
-
-      {isEditOpen && selectedRate && (
-        <EditRate rate={selectedRate} onClose={() => setIsEditOpen(false)} />
-      )}
-      {isDeleteOpen && selectedRate && (
-        <DeleteRate
-          rate={selectedRate}
-          onClose={() => setIsDeleteOpen(false)}
-        />
-      )}
     </Box>
   );
 }

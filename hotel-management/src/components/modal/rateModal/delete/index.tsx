@@ -1,3 +1,4 @@
+/* eslint-disable react-refresh/only-export-components */
 import {
   Text,
   Button,
@@ -9,17 +10,21 @@ import {
   ModalBody,
   ModalCloseButton,
 } from "@chakra-ui/react";
+import withModal from "../../withModal";
 
 interface DeleteRateProps {
   rate: { id: string; rateNumber: string };
   onClose: () => void;
 }
 
-export default function DeleteRate({ rate, onClose }: DeleteRateProps) {
+const DeleteRate: React.FC<DeleteRateProps> = ({
+  rate = { id: "", rateNumber: "" },
+  onClose,
+}) => {
   return (
     <Modal isOpen={true} onClose={onClose}>
       <ModalOverlay />
-      <ModalContent>
+      <ModalContent bg="white.200">
         <ModalHeader>Delete Rate</ModalHeader>
         <ModalCloseButton />
         <ModalBody>
@@ -36,4 +41,6 @@ export default function DeleteRate({ rate, onClose }: DeleteRateProps) {
       </ModalContent>
     </Modal>
   );
-}
+};
+
+export default withModal(DeleteRate, "Delete");

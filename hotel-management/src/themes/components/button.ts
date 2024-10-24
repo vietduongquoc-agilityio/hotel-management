@@ -38,6 +38,15 @@ export const Button = defineStyleConfig({
         bg: "blue.100",
       },
     },
+    solids: {
+      bg: "blue.100",
+      color: "blue.800",
+      hover: {
+        bg: "blue.100",
+        border: "1px solid #1570ef",
+        color: "blue.900",
+      },
+    },
   },
   defaultProps: {
     size: "md",

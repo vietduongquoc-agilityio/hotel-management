@@ -1,3 +1,4 @@
+/* eslint-disable react-refresh/only-export-components */
 import {
   Text,
   Button,
@@ -9,17 +10,21 @@ import {
   ModalBody,
   ModalCloseButton,
 } from "@chakra-ui/react";
+import withModal from "../../withModal";
 
 interface DeleteRoomProps {
-  room: { id: string; roomNumber: string }; // Change this to match the interface
+  room: { id: string; roomNumber: string };
   onClose: () => void;
 }
 
-export default function DeleteRoom({ room, onClose }: DeleteRoomProps) {
+const DeleteRoom: React.FC<DeleteRoomProps> = ({
+  room = { id: "", roomNumber: "" },
+  onClose,
+}) => {
   return (
     <Modal isOpen={true} onClose={onClose}>
       <ModalOverlay />
-      <ModalContent>
+      <ModalContent bg="white.200">
         <ModalHeader>Delete Room</ModalHeader>
         <ModalCloseButton />
         <ModalBody>
@@ -36,4 +41,6 @@ export default function DeleteRoom({ room, onClose }: DeleteRoomProps) {
       </ModalContent>
     </Modal>
   );
-}
+};
+
+export default withModal(DeleteRoom, "Delete");

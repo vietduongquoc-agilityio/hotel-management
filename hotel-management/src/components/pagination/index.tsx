@@ -26,12 +26,19 @@ const Pagination: React.FC = () => {
     for (let i = 1; i <= totalPages; i++) {
       pageNumbers.push(
         <Button
+          _hover={{
+            bg: "blue.100",
+            border: "1px solid #1570ef",
+            color: "blue.500",
+          }}
+          border="1px solid #ffffff"
           key={i}
           size="sm"
-          colorScheme={currentPage === i ? "blue" : "gray"}
+          h="40px"
+          w="40px"
+          color="grey.400"
           onClick={() => handlePageClick(i)}
-          variant={currentPage === i ? "solid" : "outline"}
-          mx={1} // Adds some margin between the buttons
+          variant={currentPage === i ? "solids" : "outline"}
         >
           {i}
         </Button>
@@ -41,21 +48,49 @@ const Pagination: React.FC = () => {
   };
 
   return (
-    <HStack spacing={4} justify="center" mt={4}>
+    <HStack
+      padding="13px 24px"
+      justifyContent={"space-between"}
+      spacing={4}
+      justify="center"
+      mt={4}
+      fontSize="12px"
+      fontWeight="400"
+    >
       <Button
-        size="sm"
-        colorScheme="gray"
+        border="1px solid #667085"
+        borderRadius="8px"
+        size="md"
+        bg="white.200"
         onClick={handlePrevious}
         isDisabled={currentPage === 1}
+        color="grey.500"
+        _hover={{
+          bg: "blue.100",
+          border: "1px solid #1570ef",
+          color: "blue.500",
+        }}
+        w="90px"
+        h="36px"
       >
         &lt; Previous
       </Button>
       <HStack>{renderPageNumbers()}</HStack>
       <Button
-        size="sm"
-        colorScheme="gray"
+        size="md"
+        bg="white.200"
         onClick={handleNext}
         isDisabled={currentPage === totalPages}
+        border="1px solid #667085"
+        borderRadius="8px"
+        color="grey.500"
+        _hover={{
+          bg: "blue.100",
+          border: "1px solid #1570ef",
+          color: "blue.500",
+        }}
+        w="84px"
+        h="36px"
       >
         Next &gt;
       </Button>
