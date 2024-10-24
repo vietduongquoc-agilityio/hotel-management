@@ -46,6 +46,7 @@ export default function TableRoom() {
     };
     fetchRoomData();
   }, []);
+
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
@@ -105,10 +106,9 @@ export default function TableRoom() {
       </UnorderedList>
       {rooms.map((room) => (
         <Box
-          ref={menuRef}
+          key={room.id}
           fontSize="14px"
           fontWeight="400"
-          key={room.id}
           display="flex"
           maxW="1020px"
           w="100%"
@@ -137,11 +137,12 @@ export default function TableRoom() {
           </Button>
           {activeRoomId === room.id && (
             <Box
+              ref={menuRef}
               top="25px"
               right="55px"
               position="absolute"
               background-color="white.200"
-              border=" 1px solid #989fad"
+              border="1px solid #989fad"
               p="7px"
               boxShadow="0px 4px 8px rgba(57, 56, 56, 0.466)"
               display="flex"

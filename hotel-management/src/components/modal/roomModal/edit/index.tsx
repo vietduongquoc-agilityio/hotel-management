@@ -1,5 +1,5 @@
 /* eslint-disable react-refresh/only-export-components */
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import withModal from "../../withModal";
 import {
   Modal,
@@ -16,26 +16,57 @@ import {
 } from "@chakra-ui/react";
 
 interface EditRoomModalProps {
-  roomData: any;
   onClose: () => void;
-  onSaveRoom: (updatedRoomData: any) => void;
+  onEditRoom: (roomData: any) => void;
+  initialRoomData: {
+    roomNumber: string;
+    bedType: string;
+    roomFloor: string;
+    roomFacility: string;
+    status: string;
+  };
 }
 
-const EditRoomModal: React.FC<EditRoomModalProps> = ({
-  roomData = {},
+function EditRoomModal({
+  initialRoomData = {
+    roomNumber: "",
+    bedType: "",
+    roomFloor: "",
+    roomFacility: "",
+    status: "",
+  },
   onClose,
-  onSaveRoom,
-}) => {
-  const [bedType, setBedType] = useState(roomData.bedType || "");
-  const [floor, setFloor] = useState(roomData.floor || "");
-  const [status, setStatus] = useState(roomData.status || "");
+  onEditRoom,
+}: EditRoomModalProps) {
+  const [roomNumber, setRoomNumber] = useState(
+    initialRoomData.roomNumber || ""
+  );
+  const [bedType, setBedType] = useState(initialRoomData.bedType || "");
+  const [floor, setFloor] = useState(initialRoomData.roomFloor || "");
+  const [status, setStatus] = useState(initialRoomData.status || "");
   const [facilityDescription, setFacilityDescription] = useState(
-    roomData.facilityDescription || ""
+    initialRoomData.roomFacility || ""
   );
 
+  useEffect(() => {
+    if (initialRoomData) {
+      setRoomNumber(initialRoomData.roomNumber);
+      setBedType(initialRoomData.roomNumber || "");
+      setFloor(initialRoomData.bedType || "");
+      setStatus(initialRoomData.roomFloor || "");
+      setFacilityDescription(initialRoomData.roomFacility || "");
+    }
+  }, [initialRoomData]);
+
   const handleSubmit = () => {
-    const updatedRoomData = { bedType, floor, status, facilityDescription };
-    onSaveRoom(updatedRoomData);
+    const updatedRoomData = {
+      roomNumber,
+      bedType,
+      floor,
+      status,
+      facilityDescription,
+    };
+    onEditRoom(updatedRoomData);
     onClose();
   };
 
@@ -43,7 +74,7 @@ const EditRoomModal: React.FC<EditRoomModalProps> = ({
     <Modal isOpen onClose={onClose}>
       <ModalOverlay />
       <ModalContent bg="white.200">
-        <ModalHeader>Edit Room {roomData.roomNumber}</ModalHeader>
+        <ModalHeader>Edit Room {initialRoomData.roomNumber}</ModalHeader>
         <ModalBody bg="white.200">
           <FormControl mb={4}>
             <FormLabel>Bed Type</FormLabel>
@@ -97,6 +128,6 @@ const EditRoomModal: React.FC<EditRoomModalProps> = ({
       </ModalContent>
     </Modal>
   );
-};
+}
 
 export default withModal(EditRoomModal, "Edit");
