@@ -1,4 +1,4 @@
-import { ButtonProps } from "@chakra-ui/react"; // Đảm bảo rằng bạn đang import đúng các kiểu dữ liệu
+import { ButtonProps } from "@chakra-ui/react";
 
 export type ButtonType =
   | "first"
@@ -51,6 +51,10 @@ const paginationButton: ButtonProps = {
   size: "sm",
   width: "40px",
   color: "grey.400",
+  _hover: { color: "blue.500", bg: "blue.100" },
+  _active: {
+    color: "blue.500",
+  },
 };
 
 const cancelButton: ButtonProps = {

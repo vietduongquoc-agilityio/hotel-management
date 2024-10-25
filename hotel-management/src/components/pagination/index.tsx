@@ -32,6 +32,7 @@ const Pagination: React.FC = () => {
           text={`${i}`}
           variant={currentPage === i ? "pagination" : "outline"}
           buttonType={"paginationButton"}
+          sx={currentPage === i ? { bg: "blue.100", color: "blue.500" } : {}}
         ></Button>
       );
     }

@@ -40,10 +40,11 @@ export const Button = defineStyleConfig({
     },
     pagination: {
       bg: "blue.100",
-      color: "blue.800",
+      _active: {
+        color: "blue.800",
+      },
       _hover: {
         bg: "blue.100",
-        border: "1px solid #1570ef",
         color: "blue.500",
       },
     },
