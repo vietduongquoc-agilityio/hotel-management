@@ -1,5 +1,6 @@
 import { Button as ButtonUI, ButtonProps } from "@chakra-ui/react";
 import { getStyleButton } from "./buttonStyle";
+import { memo } from "react";
 
 export type buttonType =
   | "first"
@@ -25,4 +26,4 @@ const Button = (ButtonTypeProps: buttonTypeProps) => {
   return <ButtonUI {...propsStyle}>{text}</ButtonUI>;
 };
 
-export default Button;
+export default memo(Button);

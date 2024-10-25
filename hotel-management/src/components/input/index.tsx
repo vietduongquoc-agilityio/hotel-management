@@ -1,5 +1,6 @@
 import { Input as InputUI, InputProps } from "@chakra-ui/react";
 import { getStyleInput } from "./inputStyle";
+import { memo } from "react";
 
 export type inputType = "first" | "second";
 
@@ -21,4 +22,4 @@ const Input = (InputTypeProps: inputTypeProps) => {
   return <InputUI {...propsStyle} />;
 };
 
-export default Input;
+export default memo(Input);

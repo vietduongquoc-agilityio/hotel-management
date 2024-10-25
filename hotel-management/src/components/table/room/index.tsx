@@ -151,8 +151,8 @@ export default function TableRoom() {
               borderRadius="8px"
               w="80px"
             >
-              <EditRoomModal text="Edit"></EditRoomModal>
-              <DeleteRoom text="Delete"></DeleteRoom>
+              <EditRoomModal></EditRoomModal>
+              <DeleteRoom></DeleteRoom>
             </Box>
           )}
         </Box>
