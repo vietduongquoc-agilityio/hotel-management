@@ -7,13 +7,13 @@ import {
   ModalHeader,
   ModalBody,
   ModalFooter,
-  Button,
   FormControl,
   FormLabel,
   Select,
   Textarea,
 } from "@chakra-ui/react";
 import withModal from "../../withModal";
+import Button from "../../../button";
 
 interface AddRoomModalProps {
   onClose: () => void;
@@ -86,12 +86,12 @@ const AddRoomModal = ({ onClose, onAddRoom }: AddRoomModalProps) => {
           </FormControl>
         </ModalBody>
         <ModalFooter>
-          <Button colorScheme="gray" mr={3} onClick={onClose}>
-            Cancel
-          </Button>
-          <Button colorScheme="blue" onClick={handleSubmit}>
-            Add
-          </Button>
+          <Button
+            onClick={onClose}
+            text={"Cancel"}
+            buttonType={"cancelButton"}
+          />
+          <Button onClick={handleSubmit} text={"Add"} buttonType={"first"} />
         </ModalFooter>
       </ModalContent>
     </Modal>

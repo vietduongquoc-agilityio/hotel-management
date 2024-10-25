@@ -4,7 +4,6 @@ import EditRoomModal from "../../modal/roomModal/edit";
 import {
   Box,
   Text,
-  Button,
   UnorderedList,
   ListItem,
   Spinner,
@@ -12,6 +11,7 @@ import {
 } from "@chakra-ui/react";
 import { getRooms } from "../../../services/roomService";
 import DeleteRoom from "../../modal/roomModal/delete";
+import Button from "../../button";
 
 interface RoomData {
   id: string;
@@ -126,15 +126,14 @@ export default function TableRoom() {
             {room.Available}
           </Text>
           <Button
-            p="0"
             onClick={() => toggleMenu(room.id)}
             bg="white.200"
             color="grey.800"
             _hover={{ bg: "white.200" }}
             height="15px"
-          >
-            ⋮
-          </Button>
+            text={"⋮"}
+            buttonType={"first"}
+          />
           {activeRoomId === room.id && (
             <Box
               ref={menuRef}
@@ -152,8 +151,8 @@ export default function TableRoom() {
               borderRadius="8px"
               w="80px"
             >
-              <EditRoomModal></EditRoomModal>
-              <DeleteRoom></DeleteRoom>
+              <EditRoomModal text="Edit"></EditRoomModal>
+              <DeleteRoom text="Delete"></DeleteRoom>
             </Box>
           )}
         </Box>

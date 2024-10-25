@@ -31,7 +31,7 @@ export default function Sidebar() {
             alignItems="center"
             borderRadius="borderRadius.md"
             _hover={{
-              backgroundColor: "blue.100",
+              bg: "blue.100",
               borderRadius: borderRadius.md,
               textColor: "blue.600",
               transition: "background-color 0.2s ease",
@@ -51,7 +51,7 @@ export default function Sidebar() {
             alignItems="center"
             borderRadius="borderRadius.md"
             _hover={{
-              backgroundColor: "blue.100",
+              bg: "blue.100",
               borderRadius: borderRadius.md,
               transition: "background-color 0.2s ease",
               textColor: "blue.600",

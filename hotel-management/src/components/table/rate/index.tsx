@@ -5,13 +5,13 @@ import {
   Text,
   UnorderedList,
   ListItem,
-  Button,
   Spinner,
   Alert,
 } from "@chakra-ui/react";
 import { getRates } from "../../../services/rateServices";
 import EditRate from "../../modal/rateModal/edit";
 import DeleteRate from "../../modal/rateModal/delete";
+import Button from "../../button";
 
 interface RateData {
   id: string;
@@ -133,9 +133,9 @@ export default function TableRate() {
             _hover={{ bg: "white.200" }}
             height="15px"
             onClick={() => toggleMenu(rate.id)}
-          >
-            ⋮
-          </Button>
+            text={" ⋮"}
+            buttonType={"first"}
+          />
           {activeRateId === rate.id && (
             <Box
               ref={menuRef}

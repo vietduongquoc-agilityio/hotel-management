@@ -6,8 +6,8 @@ import {
   ModalHeader,
   ModalBody,
   ModalFooter,
-  Button,
 } from "@chakra-ui/react";
+import Button from "../button";
 
 const withModal =
   (WrappedComponent: React.ComponentType<any>, modalTitle: string) =>
@@ -17,7 +17,13 @@ const withModal =
 
     return (
       <>
-        <Button onClick={toggleModal}>{modalTitle}</Button>
+        <Button
+          onClick={toggleModal}
+          text={`${modalTitle}`}
+          buttonType={"first"}
+        >
+          {modalTitle}
+        </Button>
         <Modal isOpen={isOpen} onClose={toggleModal}>
           <ModalOverlay />
           <ModalContent>
@@ -26,9 +32,13 @@ const withModal =
               <WrappedComponent {...props} onClose={toggleModal} />
             </ModalBody>
             <ModalFooter>
-              <Button colorScheme="blue" mr={3} onClick={toggleModal}>
-                Close
-              </Button>
+              <Button
+                colorScheme="blue"
+                mr={3}
+                onClick={toggleModal}
+                text={"Close"}
+                buttonType={"first"}
+              />
             </ModalFooter>
           </ModalContent>
         </Modal>

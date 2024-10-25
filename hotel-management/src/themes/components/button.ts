@@ -27,7 +27,7 @@ export const Button = defineStyleConfig({
       bg: "blue.500",
       color: "white",
       _hover: {
-        bg: "blue.600",
+        bg: "blue.800",
       },
     },
     outline: {
@@ -38,13 +38,13 @@ export const Button = defineStyleConfig({
         bg: "blue.100",
       },
     },
-    solids: {
+    pagination: {
       bg: "blue.100",
       color: "blue.800",
-      hover: {
+      _hover: {
         bg: "blue.100",
         border: "1px solid #1570ef",
-        color: "blue.900",
+        color: "blue.500",
       },
     },
   },

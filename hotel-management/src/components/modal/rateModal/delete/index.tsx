@@ -1,7 +1,6 @@
 /* eslint-disable react-refresh/only-export-components */
 import {
   Text,
-  Button,
   Modal,
   ModalOverlay,
   ModalContent,
@@ -11,6 +10,7 @@ import {
   ModalCloseButton,
 } from "@chakra-ui/react";
 import withModal from "../../withModal";
+import Button from "../../../button";
 
 interface DeleteRateProps {
   rate: { id: string; rateNumber: string };
@@ -31,12 +31,15 @@ const DeleteRate: React.FC<DeleteRateProps> = ({
           <Text>Are you sure you want to delete rate {rate.rateNumber}?</Text>
         </ModalBody>
         <ModalFooter>
-          <Button variant="ghost" onClick={onClose}>
-            Cancel
-          </Button>
-          <Button colorScheme="red" ml={3}>
-            Confirm Delete
-          </Button>
+          <Button
+            onClick={onClose}
+            text={"Cancel"}
+            buttonType={"cancelButton"}
+          />
+          <Button
+            text={"Confirm Delete"}
+            buttonType={"deleteButton"}
+          />
         </ModalFooter>
       </ModalContent>
     </Modal>

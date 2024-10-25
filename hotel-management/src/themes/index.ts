@@ -13,7 +13,7 @@ export const theme = extendTheme({
     global: {
       "html, body": {
         fontFamily: "body",
-        backgroundColor: "background.200",
+        bg: "background.200",
       },
     },
   },

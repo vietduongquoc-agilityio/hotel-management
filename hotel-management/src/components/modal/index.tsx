@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import Button from "../button";
 
 const Modal = ({ buttonName = "" }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -7,7 +8,11 @@ const Modal = ({ buttonName = "" }) => {
 
   return (
     <React.Fragment>
-      {buttonName && <button onClick={toggleModal}>{buttonName}</button>}
+      {buttonName && (
+        <Button onClick={toggleModal} text={""} buttonType={"first"}>
+          {buttonName}
+        </Button>
+      )}
       {isOpen && (
         <div className="modalWrapper">
           <div className="modalHeader">
@@ -19,7 +24,9 @@ const Modal = ({ buttonName = "" }) => {
               <p>Modal Body Content</p>
             </div>
             <div className="modalFooter">
-              <button onClick={toggleModal}>Close</button>
+              <Button onClick={toggleModal} text={""} buttonType={"first"}>
+                Close
+              </Button>
             </div>
           </div>
         </div>

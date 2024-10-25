@@ -7,12 +7,12 @@ import {
   ModalHeader,
   ModalBody,
   ModalFooter,
-  Button,
   FormControl,
   FormLabel,
-  Input,
 } from "@chakra-ui/react";
 import withModal from "../../withModal";
+import Button from "../../../button";
+import Input from "../../../input";
 
 interface AddRateModalProps {
   onClose: () => void;
@@ -46,35 +46,49 @@ function AddRateModal({ onClose, onAddRate }: AddRateModalProps) {
             <Input
               value={rateType}
               onChange={(e) => setRateType(e.target.value)}
+              placeHolder={""}
+              inputType={"first"}
             />
           </FormControl>
           <FormControl mb={4}>
             <FormLabel>Deal</FormLabel>
-            <Input value={deal} onChange={(e) => setDeal(e.target.value)} />
+            <Input
+              value={deal}
+              onChange={(e) => setDeal(e.target.value)}
+              placeHolder={""}
+              inputType={"first"}
+            />
           </FormControl>
           <FormControl mb={4}>
             <FormLabel>Price</FormLabel>
-            <Input value={price} onChange={(e) => setPrice(e.target.value)} />
+            <Input
+              value={price}
+              onChange={(e) => setPrice(e.target.value)}
+              placeHolder={""}
+              inputType={"first"}
+            />
           </FormControl>
           <FormControl mb={4}>
             <FormLabel>Availability</FormLabel>
             <Input
               value={availability}
               onChange={(e) => setAvailability(e.target.value)}
+              placeHolder={""}
+              inputType={"first"}
             />
           </FormControl>
         </ModalBody>
         <ModalFooter>
-          <Button colorScheme="gray" mr={3} onClick={onClose}>
-            Cancel
-          </Button>
-          <Button colorScheme="blue" onClick={handleSubmit}>
-            Add
-          </Button>
+          <Button
+            onClick={onClose}
+            text={"Cancel"}
+            buttonType={"cancelButton"}
+          />
+          <Button onClick={handleSubmit} text={"Add"} buttonType={"first"} />
         </ModalFooter>
       </ModalContent>
     </Modal>
   );
 }
 
-export default withModal(AddRateModal, "Add rate")
+export default withModal(AddRateModal, "Add rate");
