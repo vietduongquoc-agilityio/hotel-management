@@ -12,6 +12,7 @@ import RateData from "../../interfaceTypes/rateTypes";
 import EditRate from "../../modal/rateModal/edit";
 import DeleteRate from "../../modal/rateModal/delete";
 import Button from "../../button";
+import { getRates } from "../../../services/rateServices";
 
 interface TableRateProps {
   rates: RateData[];
@@ -22,24 +23,35 @@ interface TableRateProps {
 export default function TableRate({ rates, loading, error }: TableRateProps) {
   const [activeRateId, setActiveRateId] = useState<string | null>(null);
   const menuRef = useRef<HTMLDivElement>(null);
+  const [rate, setRates] = useState<RateData[]>([]);
 
   const toggleMenu = (rateId: string) => {
     setActiveRateId((prev) => (prev === rateId ? null : rateId));
   };
 
   // Close the menu when clicking outside
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
-        setActiveRateId(null);
-      }
-    };
+  // useEffect(() => {
+  //   const handleClickOutside = (event: MouseEvent) => {
+  //     if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
+  //       setActiveRateId(null);
+  //     }
+  //   };
 
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, [menuRef]);
+  //   document.addEventListener("mousedown", handleClickOutside);
+  //   return () => {
+  //     document.removeEventListener("mousedown", handleClickOutside);
+  //   };
+  // }, [menuRef]);
+
+  // const fetchRates = async () => {
+  //   try {
+  //     console.log("Fetching rates...");
+  //     const data = await getRates(1, 10, "roomType:ASC");
+  //     setRates(data.data);
+  //   } catch (error) {
+  //     console.error("Error fetching rates:", error);
+  //   }
+  // };
 
   if (loading) return <Spinner />;
   if (error) return <Alert status="error">{error}</Alert>;
@@ -65,6 +77,10 @@ export default function TableRate({ rates, loading, error }: TableRateProps) {
         borderTopRightRadius="8px"
         p="10px 24px"
       >
+        {" "}
+        <ListItem listStyleType="none" w="15%">
+          ID
+        </ListItem>
         <ListItem listStyleType="none" w="15%">
           Room type
         </ListItem>
@@ -97,6 +113,9 @@ export default function TableRate({ rates, loading, error }: TableRateProps) {
           border="1px solid #d4e5fa"
         >
           <Text w="15%" color="grey.900">
+            {rate.id}
+          </Text>
+          <Text w="15%" color="grey.900">
             {rate.roomType}
           </Text>
           <Text w="15%">{rate.deals}</Text>
@@ -110,7 +129,7 @@ export default function TableRate({ rates, loading, error }: TableRateProps) {
             _hover={{ bg: "white.200" }}
             height="15px"
             onClick={() => toggleMenu(rate.id)}
-            text={" ⋮"}
+            text={"⋮"}
             buttonType={"first"}
           />
           {activeRateId === rate.id && (
@@ -131,7 +150,7 @@ export default function TableRate({ rates, loading, error }: TableRateProps) {
               w="80px"
             >
               <EditRate />
-              <DeleteRate />
+              <DeleteRate rateId={rate.id} />
             </Box>
           )}
         </Box>

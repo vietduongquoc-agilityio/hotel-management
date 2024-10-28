@@ -16,49 +16,52 @@ import Button from "../../../button";
 import { deleteRate } from "../../../../services/rateServices";
 
 interface DeleteRateProps {
-  rate: { id: string };
-  onClose: () => void;
-  onRateDeleted: () => void;
+  rateId: string ;
+  // onClose: () => void;
+  // onRateDeleted: () => void;
 }
 
 const DeleteRate: React.FC<DeleteRateProps> = ({
-  rate,
-  onClose,
-  onRateDeleted,
+  rateId,
+  // onClose,
+  // onRateDeleted,
 }) => {
   const [error, setError] = useState("");
-  console.log("rate.id", rate.id);
+  console.log("rate.id", rateId);
 
   const handleDelete = async () => {
     try {
-      await deleteRate(rate.id);
-      onRateDeleted();
-      onClose();
+      console.log("Attempting to delete rate with ID:",rateId);
+      await deleteRate(rateId);
+      console.log("Rate deleted successfully");
+      // onRateDeleted();
+      // onClose();
     } catch (error) {
+      console.error("Deletion error:", error);
       setError("This rate is associated with existing rooms.");
     }
   };
 
   return (
-    <Modal isOpen={true} onClose={onClose}>
+    <Modal isOpen={true} onClose={()=> null}>
       <ModalOverlay />
       <ModalContent bg="white.200">
         <ModalHeader>Delete Rate</ModalHeader>
         <ModalCloseButton />
         <ModalBody>
-          <Text>Are you sure you want to delete rate {rate.id}?</Text>
+          <Text>Are you sure you want to delete rate {rateId}?</Text>
           {error && <Text color="red.500">{error}</Text>}
         </ModalBody>
         <ModalFooter>
           <Button
-            onClick={onClose}
+            // onClick={onClose}
             text={"Cancel"}
             buttonType={"cancelButton"}
           />
           <Button
             onClick={handleDelete}
-            text={"Confirm Delete"}
-            buttonType={"deleteButton"}
+            text="Confirm Delete"
+            buttonType="deleteButton"
           />
         </ModalFooter>
       </ModalContent>

@@ -38,7 +38,7 @@ export const createRate = async (rateData: RateData) => {
   const { id, ...data } = rateData;
   try {
     const response = await axios.post(`${BASE_URL}/rates`, {
-      data: { ...data },
+      data: data,
     });
     return response.data;
   } catch (error) {
@@ -59,13 +59,7 @@ export const updateRate = async (id: string, rateData: RateData) => {
   }
 };
 
-export const deleteRate = async (id: string) => {
-  try {
-    if (!id) throw new Error("Rate ID is required for deletion.");
-    const response = await axios.delete(`${BASE_URL}/rates/${id}`);
-    return response.data;
-  } catch (error) {
-    console.error("Error in deleteRate:", error);
-    throw error;
-  }
+export const deleteRate = async (rateId: string) => {
+  const response = await axios.delete(`${BASE_URL}/rates/:${rateId}`);
+  return response.data;
 };

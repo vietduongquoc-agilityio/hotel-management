@@ -27,8 +27,6 @@ export default function Label() {
     }
   };
 
-  console.log("handleOpenAddRoomModal", handleOpenAddRoomModal);
-
   const handleCloseAddRoomModal = () => {
     setIsAddRoomModalOpen(false);
   };

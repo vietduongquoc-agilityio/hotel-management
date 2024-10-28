@@ -19,6 +19,9 @@ export default function RatePage() {
     }
   };
 
+  console.log("rates", rates);
+  
+
   useEffect(() => {
     fetchRates();
   }, []);

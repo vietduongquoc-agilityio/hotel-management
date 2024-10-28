@@ -47,6 +47,8 @@ export default function TableRoom() {
     fetchRoomData();
   }, []);
 
+  console.log("setRooms", rooms);
+
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
