@@ -1,7 +1,38 @@
-import { Box, UnorderedList, ListItem, Text } from "@chakra-ui/react";
+import { Box, UnorderedList, ListItem, Text, Button } from "@chakra-ui/react";
+import { useState, useEffect } from "react";
 import AddRoomModal from "../../modal/roomModal/add/index";
+import { getRates } from "../../../services/rateServices";
 
 export default function Label() {
+  const [rates, setRates] = useState([]);
+  const [isAddRoomModalOpen, setIsAddRoomModalOpen] = useState(false);
+
+  useEffect(() => {
+    const fetchRates = async () => {
+      try {
+        const data = await getRates(1, 10, "asc");
+        setRates(data);
+        console.log(data, "data");
+        
+      } catch (error) {
+        console.error("Error fetching rates", error);
+      }
+    };
+    fetchRates();
+  }, []);
+
+  const handleOpenAddRoomModal = () => {
+    if (rates.length > 0) {
+      setIsAddRoomModalOpen(true);
+    }
+  };
+
+  console.log("handleOpenAddRoomModal", handleOpenAddRoomModal);
+
+  const handleCloseAddRoomModal = () => {
+    setIsAddRoomModalOpen(false);
+  };
+
   return (
     <Box
       display="flex"
@@ -11,58 +42,19 @@ export default function Label() {
     >
       <UnorderedList styleType="none" m={0} display="flex" gap={4}>
         <ListItem>
-          <Text
-            fontSize="md"
-            fontWeight="500"
-            border="1px solid #989fad"
-            borderRadius="100px"
-            p="8px 16px"
-            _hover={{
-              color: "blue.600",
-              bg: "blue.100",
-              border: "1px solid #1570ef",
-            }}
-            transition="background-color 0.3s ease"
-          >
-            All room (100)
-          </Text>
+          <Text>All room (100)</Text>
         </ListItem>
         <ListItem>
-          <Text
-            transition="background-color 0.3s ease"
-            fontSize="md"
-            fontWeight="500"
-            border="1px solid #989fad"
-            borderRadius="100px"
-            p="8px 16px"
-            _hover={{
-              color: "blue.600",
-              bg: "blue.100",
-              border: "1px solid #1570ef",
-            }}
-          >
-            Available room (20)
-          </Text>
+          <Text>Available room (20)</Text>
         </ListItem>
         <ListItem>
-          <Text
-            transition="background-color 0.3s ease"
-            fontSize="md"
-            fontWeight="500"
-            border="1px solid #989fad"
-            borderRadius="100px"
-            p="8px 16px"
-            _hover={{
-              color: "blue.600",
-              bg: "blue.100",
-              border: "1px solid #1570ef",
-            }}
-          >
-            Booked (80)
-          </Text>
+          <Text>Booked (80)</Text>
         </ListItem>
       </UnorderedList>
-      <AddRoomModal></AddRoomModal>
+      <Button onClick={handleOpenAddRoomModal} isDisabled={rates.length === 0}>
+        Add Room
+      </Button>
+      {isAddRoomModalOpen && <AddRoomModal onClose={handleCloseAddRoomModal} />}
     </Box>
   );
 }

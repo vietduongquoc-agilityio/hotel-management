@@ -8,47 +8,26 @@ import {
   Spinner,
   Alert,
 } from "@chakra-ui/react";
-import { getRates } from "../../../services/rateServices";
+import RateData from "../../interfaceTypes/rateTypes";
 import EditRate from "../../modal/rateModal/edit";
 import DeleteRate from "../../modal/rateModal/delete";
 import Button from "../../button";
 
-interface RateData {
-  id: string;
-  roomType: string;
-  cancellationPolicy: string;
-  deals: string;
-  dealPrice: string;
-  rate: string;
-  availability: string;
-  rateNumber: string;
+interface TableRateProps {
+  rates: RateData[];
+  loading: boolean;
+  error?: string | null;
 }
 
-export default function TableRate() {
-  const [rates, setRates] = useState<RateData[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+export default function TableRate({ rates, loading, error }: TableRateProps) {
   const [activeRateId, setActiveRateId] = useState<string | null>(null);
   const menuRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    const fetchRateData = async () => {
-      try {
-        const data = await getRates(1, 10, "roomType:ASC");
-        if (data && Array.isArray(data.data)) {
-          setRates(data.data);
-        } else {
-          setError("Unexpected data format");
-        }
-      } catch (error) {
-        setError("Failed to fetch rate data");
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchRateData();
-  }, []);
+  const toggleMenu = (rateId: string) => {
+    setActiveRateId((prev) => (prev === rateId ? null : rateId));
+  };
 
+  // Close the menu when clicking outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
@@ -62,12 +41,10 @@ export default function TableRate() {
     };
   }, [menuRef]);
 
-  const toggleMenu = (rateId: string) => {
-    setActiveRateId((prev) => (prev === rateId ? null : rateId));
-  };
-
   if (loading) return <Spinner />;
   if (error) return <Alert status="error">{error}</Alert>;
+  if (rates.length === 0)
+    return <Alert status="info">No rates available.</Alert>;
 
   return (
     <Box
@@ -142,8 +119,8 @@ export default function TableRate() {
               top="25px"
               right="55px"
               position="absolute"
-              background-color="white.200"
-              border=" 1px solid #989fad"
+              backgroundColor="white.200"
+              border="1px solid #989fad"
               p="7px"
               boxShadow="0px 4px 8px rgba(57, 56, 56, 0.466)"
               display="flex"
@@ -153,8 +130,8 @@ export default function TableRate() {
               borderRadius="8px"
               w="80px"
             >
-              <EditRate></EditRate>
-              <DeleteRate></DeleteRate>
+              <EditRate />
+              <DeleteRate />
             </Box>
           )}
         </Box>

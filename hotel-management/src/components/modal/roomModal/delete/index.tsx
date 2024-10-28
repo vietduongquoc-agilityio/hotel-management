@@ -1,4 +1,6 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable react-refresh/only-export-components */
+import { useState } from "react";
 import {
   Text,
   Modal,
@@ -11,16 +13,35 @@ import {
 } from "@chakra-ui/react";
 import withModal from "../../withModal";
 import Button from "../../../button";
+import { deleteRoom } from "../../../../services/roomService";
 
 interface DeleteRoomProps {
-  room: { id: string; roomNumber: string };
+  room: { roomId: string; roomNumber: string; status: string };
   onClose: () => void;
+  onRoomDeleted: () => void;
 }
 
 const DeleteRoom: React.FC<DeleteRoomProps> = ({
-  room = { id: "", roomNumber: "" },
+  room,
   onClose,
+  onRoomDeleted,
 }) => {
+  const [error, setError] = useState("");
+
+  const handleDelete = async () => {
+    if (room.status !== "Available") {
+      setError("Room must be 'Available' to delete.");
+      return;
+    }
+    try {
+      await deleteRoom(room.roomId);
+      onRoomDeleted();
+      onClose();
+    } catch (error) {
+      setError("Failed to delete room.");
+    }
+  };
+
   return (
     <Modal isOpen={true} onClose={onClose}>
       <ModalOverlay />
@@ -29,6 +50,7 @@ const DeleteRoom: React.FC<DeleteRoomProps> = ({
         <ModalCloseButton />
         <ModalBody>
           <Text>Are you sure you want to delete room {room.roomNumber}?</Text>
+          {error && <Text color="red.500">{error}</Text>}
         </ModalBody>
         <ModalFooter>
           <Button
@@ -36,7 +58,11 @@ const DeleteRoom: React.FC<DeleteRoomProps> = ({
             text={"Cancel"}
             buttonType={"cancelButton"}
           />
-          <Button text={"Confirm Delete"} buttonType={"deleteButton"} />
+          <Button
+            onClick={handleDelete}
+            text={"Confirm Delete"}
+            buttonType={"deleteButton"}
+          />
         </ModalFooter>
       </ModalContent>
     </Modal>

@@ -18,40 +18,45 @@ interface EditRateModalProps {
   onClose: () => void;
   onEditRate: (rateData: any) => void;
   initialRateData: {
-    rateType: string;
-    deal: string;
+    roomType: string;
+    rooms: string;
     price: string;
-    availability: string;
+    cancellationPolicy: string;
   };
 }
 
 function EditRateModal({
   onClose,
   onEditRate,
-  initialRateData = { rateType: "", deal: "", price: "", availability: "" },
+  initialRateData = {
+    roomType: "",
+    rooms: "",
+    price: "",
+    cancellationPolicy: "",
+  },
 }: EditRateModalProps) {
-  const [rateType, setRateType] = useState(initialRateData.rateType || "");
-  const [deal, setDeal] = useState(initialRateData.deal || "");
+  const [roomType, setRoomType] = useState(initialRateData.roomType || "");
+  const [rooms, setRooms] = useState(initialRateData.rooms || "");
   const [price, setPrice] = useState(initialRateData.price || "");
-  const [availability, setAvailability] = useState(
-    initialRateData.availability || ""
+  const [cancellationPolicy, setCancellationPolicy] = useState(
+    initialRateData.cancellationPolicy || ""
   );
 
   useEffect(() => {
     if (initialRateData) {
-      setRateType(initialRateData.rateType || "");
-      setDeal(initialRateData.deal || "");
+      setRoomType(initialRateData.roomType || "");
+      setRooms(initialRateData.rooms || "");
       setPrice(initialRateData.price || "");
-      setAvailability(initialRateData.availability || "");
+      setCancellationPolicy(initialRateData.cancellationPolicy || "");
     }
   }, [initialRateData]);
 
   const handleSubmit = () => {
-    if (!rateType || !deal || !price || !availability) {
+    if (!roomType || !rooms || !price || !cancellationPolicy) {
       alert("Please fill in all fields.");
       return;
     }
-    const updatedRateData = { rateType, deal, price, availability };
+    const updatedRateData = { roomType, rooms, price, cancellationPolicy };
     onEditRate(updatedRateData);
     onClose();
   };
@@ -65,18 +70,27 @@ function EditRateModal({
           <FormControl mb={4}>
             <FormLabel>Rate Type</FormLabel>
             <Input
-              value={rateType}
-              onChange={(e) => setRateType(e.target.value)}
-              placeHolder={""}
+              value={roomType}
+              onChange={(e) => setRoomType(e.target.value)}
+              placeHolder={"Enter room type"}
               inputType={"first"}
             />
           </FormControl>
           <FormControl mb={4}>
-            <FormLabel>Deal</FormLabel>
+            <FormLabel>Cancellation Policy</FormLabel>
             <Input
-              value={deal}
-              onChange={(e) => setDeal(e.target.value)}
-              placeHolder={""}
+              value={cancellationPolicy}
+              onChange={(e) => setCancellationPolicy(e.target.value)}
+              placeHolder={"Enter cancellation policy"}
+              inputType={"first"}
+            />
+          </FormControl>
+          <FormControl mb={4}>
+            <FormLabel>Rooms</FormLabel>
+            <Input
+              value={rooms}
+              onChange={(e) => setRooms(e.target.value)}
+              placeHolder={"Enter total number of rooms"}
               inputType={"first"}
             />
           </FormControl>
@@ -85,16 +99,7 @@ function EditRateModal({
             <Input
               value={price}
               onChange={(e) => setPrice(e.target.value)}
-              placeHolder={""}
-              inputType={"first"}
-            />
-          </FormControl>
-          <FormControl mb={4}>
-            <FormLabel>Availability</FormLabel>
-            <Input
-              value={availability}
-              onChange={(e) => setAvailability(e.target.value)}
-              placeHolder={""}
+              placeHolder={"Enter room price"}
               inputType={"first"}
             />
           </FormControl>

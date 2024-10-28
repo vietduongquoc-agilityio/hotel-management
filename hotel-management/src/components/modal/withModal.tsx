@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import {
   Modal,
   ModalOverlay,
@@ -6,24 +6,21 @@ import {
   ModalHeader,
   ModalBody,
   ModalFooter,
+  Button as ChakraButton,
 } from "@chakra-ui/react";
 import Button from "../button";
 
-const withModal =
-  (WrappedComponent: React.ComponentType<any>, modalTitle: string) =>
-  (props: any) => {
+const withModal = (
+  WrappedComponent: React.ComponentType<any>,
+  modalTitle: string
+) => {
+  return (props: any) => {
     const [isOpen, setIsOpen] = useState(false);
     const toggleModal = () => setIsOpen(!isOpen);
 
     return (
       <>
-        <Button
-          onClick={toggleModal}
-          text={`${modalTitle}`}
-          buttonType={"first"}
-        >
-          {modalTitle}
-        </Button>
+        <Button onClick={toggleModal} text={modalTitle} buttonType="first" />
         <Modal isOpen={isOpen} onClose={toggleModal}>
           <ModalOverlay />
           <ModalContent>
@@ -32,18 +29,15 @@ const withModal =
               <WrappedComponent {...props} onClose={toggleModal} />
             </ModalBody>
             <ModalFooter>
-              <Button
-                colorScheme="blue"
-                mr={3}
-                onClick={toggleModal}
-                text={"Close"}
-                buttonType={"first"}
-              />
+              <ChakraButton colorScheme="blue" onClick={toggleModal}>
+                Close
+              </ChakraButton>
             </ModalFooter>
           </ModalContent>
         </Modal>
       </>
     );
   };
+};
 
 export default withModal;
