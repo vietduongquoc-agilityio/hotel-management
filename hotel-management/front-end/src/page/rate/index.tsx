@@ -5,12 +5,14 @@ import TableRate from "../../components/table/rate";
 import { getRates } from "../../services/rateServices";
 import RateData from "../../components/interfaceTypes/rateTypes";
 
-export default function RatePage() {
+const RatePage = () => {
   const [rates, setRates] = useState<RateData[]>([]);
   const [loading, setLoading] = useState(true);
+
   const fetchRates = async () => {
+    setLoading(true);
     try {
-      const data = await getRates(1, 10, "roomType:ASC");
+      const data = await getRates(1, 10);
       setRates(data.data);
     } catch (error) {
       console.error("Error fetching rates:", error);
@@ -19,23 +21,20 @@ export default function RatePage() {
     }
   };
 
-  console.log("rates", rates);
-
   useEffect(() => {
     fetchRates();
   }, []);
 
-  const handleAddRate = () => {
-    fetchRates();
-  };
 
   return (
     <Box>
       <Heading mb="16px" fontSize="12px" fontWeight="500" color="grey.500">
         Rates
       </Heading>
-      <LabelRate onAddRate={handleAddRate} />
+      <LabelRate onAddRate={fetchRates} />
       <TableRate rates={rates} loading={loading} />
     </Box>
   );
-}
+};
+
+export default RatePage;

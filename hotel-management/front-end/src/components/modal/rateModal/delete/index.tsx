@@ -20,9 +20,8 @@ interface DeleteRateProps {
   onClose: () => void;
 }
 
-const DeleteRate: React.FC<DeleteRateProps> = ({ rateId, onClose }) => {
+function DeleteRate({ rateId, onClose }: DeleteRateProps) {
   const [error, setError] = useState("");
-  console.log("rate.id", rateId);
 
   const handleDelete = async () => {
     try {
@@ -61,6 +60,6 @@ const DeleteRate: React.FC<DeleteRateProps> = ({ rateId, onClose }) => {
       </ModalContent>
     </Modal>
   );
-};
+}
 
 export default withModal(DeleteRate, "Delete");

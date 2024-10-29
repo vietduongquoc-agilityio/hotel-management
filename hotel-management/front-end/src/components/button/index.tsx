@@ -15,12 +15,12 @@ interface buttonTypeProps extends ButtonProps {
 }
 
 const Button = (ButtonTypeProps: buttonTypeProps) => {
-  const { text, buttonType } = ButtonTypeProps;
+  const { text, buttonType, ...styleProps } = ButtonTypeProps;
   const styleFirst = getStyleButton(buttonType);
 
   const propsStyle = {
     ...styleFirst,
-    ...ButtonTypeProps,
+    ...styleProps,
   };
 
   return <ButtonUI {...propsStyle}>{text}</ButtonUI>;

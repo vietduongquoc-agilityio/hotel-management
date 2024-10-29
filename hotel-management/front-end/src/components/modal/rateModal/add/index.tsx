@@ -34,13 +34,13 @@ function AddRateModal({ onClose, onAddRate }: AddRateModalProps) {
     }
 
     const newRateData: RateData = {
-      id: "1",
       roomType,
       cancellationPolicy,
       deals: "Family Deal",
       dealPrice: price,
       rate: price,
       availability: "Available",
+      documentId: "",
     };
 
     try {
