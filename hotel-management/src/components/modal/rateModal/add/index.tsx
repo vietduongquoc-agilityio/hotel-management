@@ -34,7 +34,7 @@ function AddRateModal({ onClose, onAddRate }: AddRateModalProps) {
     }
 
     const newRateData: RateData = {
-      id: "",
+      id: "1",
       roomType,
       cancellationPolicy,
       deals: "Family Deal",

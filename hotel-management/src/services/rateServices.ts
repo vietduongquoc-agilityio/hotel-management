@@ -60,6 +60,6 @@ export const updateRate = async (id: string, rateData: RateData) => {
 };
 
 export const deleteRate = async (rateId: string) => {
-  const response = await axios.delete(`${BASE_URL}/rates/:${rateId}`);
+  const response = await axios.delete(`${BASE_URL}/rates/${rateId}`);
   return response.data;
 };

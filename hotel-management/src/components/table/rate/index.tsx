@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import {
   Box,
   Text,
@@ -12,7 +12,6 @@ import RateData from "../../interfaceTypes/rateTypes";
 import EditRate from "../../modal/rateModal/edit";
 import DeleteRate from "../../modal/rateModal/delete";
 import Button from "../../button";
-import { getRates } from "../../../services/rateServices";
 
 interface TableRateProps {
   rates: RateData[];
@@ -22,8 +21,7 @@ interface TableRateProps {
 
 export default function TableRate({ rates, loading, error }: TableRateProps) {
   const [activeRateId, setActiveRateId] = useState<string | null>(null);
-  const menuRef = useRef<HTMLDivElement>(null);
-  const [rate, setRates] = useState<RateData[]>([]);
+  // const menuRef = useRef<HTMLDivElement>(null);
 
   const toggleMenu = (rateId: string) => {
     setActiveRateId((prev) => (prev === rateId ? null : rateId));
@@ -42,16 +40,6 @@ export default function TableRate({ rates, loading, error }: TableRateProps) {
   //     document.removeEventListener("mousedown", handleClickOutside);
   //   };
   // }, [menuRef]);
-
-  // const fetchRates = async () => {
-  //   try {
-  //     console.log("Fetching rates...");
-  //     const data = await getRates(1, 10, "roomType:ASC");
-  //     setRates(data.data);
-  //   } catch (error) {
-  //     console.error("Error fetching rates:", error);
-  //   }
-  // };
 
   if (loading) return <Spinner />;
   if (error) return <Alert status="error">{error}</Alert>;
@@ -134,7 +122,7 @@ export default function TableRate({ rates, loading, error }: TableRateProps) {
           />
           {activeRateId === rate.id && (
             <Box
-              ref={menuRef}
+              // ref={menuRef}
               top="25px"
               right="55px"
               position="absolute"

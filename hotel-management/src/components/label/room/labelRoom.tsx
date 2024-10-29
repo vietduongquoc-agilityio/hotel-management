@@ -12,7 +12,6 @@ export default function Label() {
       try {
         const data = await getRates(1, 10, "asc");
         setRates(data);
-        console.log(data, "data");
         
       } catch (error) {
         console.error("Error fetching rates", error);
