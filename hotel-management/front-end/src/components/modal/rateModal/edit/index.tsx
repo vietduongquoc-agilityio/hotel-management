@@ -118,3 +118,6 @@ function EditRateModal({
 }
 
 export default withModal(EditRateModal, "Edit");
+
+
+

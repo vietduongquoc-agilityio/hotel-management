@@ -21,11 +21,7 @@ interface DeleteRoomProps {
   onRoomDeleted: () => void;
 }
 
-const DeleteRoom: React.FC<DeleteRoomProps> = ({
-  room,
-  onClose,
-  onRoomDeleted,
-}) => {
+function DeleteRoom({ room, onClose, onRoomDeleted }: DeleteRoomProps) {
   const [error, setError] = useState("");
 
   const handleDelete = async () => {
@@ -67,6 +63,6 @@ const DeleteRoom: React.FC<DeleteRoomProps> = ({
       </ModalContent>
     </Modal>
   );
-};
+}
 
 export default withModal(DeleteRoom, "Delete");

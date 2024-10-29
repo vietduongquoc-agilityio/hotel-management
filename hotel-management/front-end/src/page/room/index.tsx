@@ -5,7 +5,7 @@ import AddRoomModal from "../../components/modal/roomModal/add";
 import Label from "../../components/label/room/labelRoom";
 import Pagination from "../../components/pagination";
 
-export default function RoomPage() {
+const RoomPage = () => {
   const [isAddRoomOpen, setIsAddRoomOpen] = useState(false);
   const [rooms, setRooms] = useState<any[]>([]);
 
@@ -27,4 +27,6 @@ export default function RoomPage() {
       )}
     </Box>
   );
-}
+};
+
+export default RoomPage;

@@ -5,14 +5,10 @@ import RateData from "../components/interfaceTypes/rateTypes";
 const BASE_URL = "http://localhost:1337/api";
 
 // Rate Service
-export const getRates = async (
-  page: number,
-  pageSize: number,
-  sort: string
-) => {
+export const getRates = async (page: number, pageSize: number) => {
   try {
     const response = await axios.get(`${BASE_URL}/rates`, {
-      params: { _page: page, _pageSize: pageSize, _sort: sort },
+      params: { _page: page, _pageSize: pageSize },
     });
     return response.data;
   } catch (error) {
@@ -35,7 +31,7 @@ export const getRoomsUsingRate = async (rateId: string) => {
 };
 
 export const createRate = async (rateData: RateData) => {
-  const { id, ...data } = rateData;
+  const { documentId, ...data } = rateData;
   try {
     const response = await axios.post(`${BASE_URL}/rates`, {
       data: data,
@@ -47,10 +43,10 @@ export const createRate = async (rateData: RateData) => {
   }
 };
 
-export const updateRate = async (id: string, rateData: RateData) => {
+export const updateRate = async (rateId: string, rateData: RateData) => {
   try {
-    if (!id) throw new Error("Rate ID is required for updating.");
-    const response = await axios.put(`${BASE_URL}/rates/${id}`, rateData);
+    if (!rateId) throw new Error("Rate ID is required for updating.");
+    const response = await axios.put(`${BASE_URL}/rates/${rateId}`, rateData);
     console.log("response.data", response.data);
     return response.data;
   } catch (error) {

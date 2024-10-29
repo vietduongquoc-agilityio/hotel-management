@@ -23,7 +23,7 @@ export default function Sidebar() {
         fontSize="14px"
         fontWeight="500"
       >
-        <ListItem _hover="red">
+        <ListItem>
           <Link
             as={RouterLink}
             to="/"
