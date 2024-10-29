@@ -1,61 +1,25 @@
-import { ChangeEventHandler, memo } from "react";
+import { Input as InputUI, InputProps } from "@chakra-ui/react";
+import { getStyleInput } from "./inputStyle";
+import { memo } from "react";
 
-export interface InputProps {
-  border: string;
-  className: string;
-  label: string;
-  placeholder?: string;
-  type: string;
-  value: string | number;
-  backgroundColor?: string;
-  size?: "md" | "lg" | "sm";
-  borderRadius?: number;
-  color?: string;
-  onChange: ChangeEventHandler<HTMLInputElement>;
-  direction?: "row" | "column" | "row-reverse" | "column-reverse";
+export type inputType = "first" | "second";
+
+interface inputTypeProps extends InputProps {
+  placeHolder: string;
+  inputType: inputType;
 }
 
-function Input({
-  className,
-  label,
-  placeholder = "Text",
-  type,
-  value,
-  backgroundColor = "#fff",
-  size = "lg",
-  borderRadius = 4,
-  color = "#000",
-  onChange,
-  direction = "column",
-}: InputProps) {
-  let padding = "10px";
-  if (size === "sm") padding = "5px";
-  if (size === "lg") padding = "15px";
+const Input = (InputTypeProps: inputTypeProps) => {
+  const { placeHolder, inputType, ...restProps } = InputTypeProps;
+  const styleFirst = getStyleInput(inputType);
 
-  const style = {
-    className: "",
-    display: "flex",
-    flexDirection: direction,
-    backgroundColor,
-    padding,
-    borderRadius: `${borderRadius}px`,
-    color,
-    border: "none",
+  const propsStyle = {
+    ...styleFirst,
+    placeholder: placeHolder,
+    ...restProps,
   };
 
-  return (
-    <div>
-      <label>{label}</label>
-      <input
-        className={className}
-        type={type}
-        placeholder={placeholder}
-        value={value}
-        onChange={onChange}
-        style={style}
-      />
-    </div>
-  );
-}
+  return <InputUI {...propsStyle} />;
+};
 
 export default memo(Input);

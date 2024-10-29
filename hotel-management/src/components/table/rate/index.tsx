@@ -1,124 +1,148 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { useEffect, useState } from "react";
-import { getRates } from "../../../services/rateServices";
-import Button from "../../button";
+import { useState } from "react";
+import {
+  Box,
+  Text,
+  UnorderedList,
+  ListItem,
+  Spinner,
+  Alert,
+} from "@chakra-ui/react";
+import RateData from "../../interfaceTypes/rateTypes";
 import EditRate from "../../modal/rateModal/edit";
 import DeleteRate from "../../modal/rateModal/delete";
-import "./index.css";
+import Button from "../../button";
 
-interface RateData {
-  id: string;
-  roomType: string;
-  cancellationPolicy: string;
-  deals: string;
-  dealPrice: string;
-  rate: string;
-  availability: string;
-  rateNumber: string;
+interface TableRateProps {
+  rates: RateData[];
+  loading: boolean;
+  error?: string | null;
 }
 
-export default function TableRate() {
-  const [rates, setRates] = useState<RateData[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-  const [selectedRate, setSelectedRate] = useState<RateData | null>(null);
-  const [isEditOpen, setIsEditOpen] = useState(false);
-  const [isDeleteOpen, setIsDeleteOpen] = useState(false);
+export default function TableRate({ rates, loading, error }: TableRateProps) {
   const [activeRateId, setActiveRateId] = useState<string | null>(null);
-
-  useEffect(() => {
-    const fetchRateData = async () => {
-      try {
-        const data = await getRates(1, 10, "roomType:ASC");
-        if (data && Array.isArray(data.data)) {
-          setRates(data.data);
-        } else {
-          setError("Unexpected data format");
-        }
-      } catch (error) {
-        setError("Failed to fetch rate data");
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchRateData();
-  }, []);
-
-  const handleEdit = (rate: RateData) => {
-    setSelectedRate(rate);
-    setIsEditOpen(true);
-    setActiveRateId(null);
-  };
-
-  const handleDelete = (rate: RateData) => {
-    setSelectedRate(rate);
-    setIsDeleteOpen(true);
-    setActiveRateId(null);
-  };
+  // const menuRef = useRef<HTMLDivElement>(null);
 
   const toggleMenu = (rateId: string) => {
     setActiveRateId((prev) => (prev === rateId ? null : rateId));
   };
 
-  if (loading) return <div>Loading...</div>;
-  if (error) return <div>{error}</div>;
+  // Close the menu when clicking outside
+  // useEffect(() => {
+  //   const handleClickOutside = (event: MouseEvent) => {
+  //     if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
+  //       setActiveRateId(null);
+  //     }
+  //   };
+
+  //   document.addEventListener("mousedown", handleClickOutside);
+  //   return () => {
+  //     document.removeEventListener("mousedown", handleClickOutside);
+  //   };
+  // }, [menuRef]);
+
+  if (loading) return <Spinner />;
+  if (error) return <Alert status="error">{error}</Alert>;
+  if (rates.length === 0)
+    return <Alert status="info">No rates available.</Alert>;
 
   return (
-    <div className="wrap-table">
-      <ul className="wrap-rate-table-title">
-        <li className="rate-table-row-one">Room type</li>
-        <li className="rate-table-row-second">Deals</li>
-        <li className="rate-table-row-third">Cancellation policy</li>
-        <li className="rate-table-row-four">Deal price</li>
-        <li className="rate-table-row-five">Rate</li>
-        <li className="rate-table-row-six">Availability</li>
-      </ul>
+    <Box
+      borderTopLeftRadius="8px"
+      borderTopRightRadius="8px"
+      border="1px solid #d4e5fa"
+    >
+      <UnorderedList
+        display="flex"
+        maxW="1020px"
+        w="100%"
+        m="0"
+        bg="grey.50"
+        fontSize="12px"
+        fontWeight="500"
+        color="grey.500"
+        borderTopLeftRadius="8px"
+        borderTopRightRadius="8px"
+        p="10px 24px"
+      >
+        {" "}
+        <ListItem listStyleType="none" w="15%">
+          ID
+        </ListItem>
+        <ListItem listStyleType="none" w="15%">
+          Room type
+        </ListItem>
+        <ListItem listStyleType="none" w="15%">
+          Deals
+        </ListItem>
+        <ListItem listStyleType="none" w="15%">
+          Cancellation policy
+        </ListItem>
+        <ListItem listStyleType="none" w="15%">
+          Deal price
+        </ListItem>
+        <ListItem listStyleType="none" w="15%">
+          Rate
+        </ListItem>
+        <ListItem listStyleType="none" w="26%">
+          Availability
+        </ListItem>
+      </UnorderedList>
       {rates.map((rate) => (
-        <ul key={rate.id} className="wrap-table-content">
-          <li className="item rate-table-row-one">{rate.roomType}</li>
-          <li className="item rate-table-row-second">{rate.deals}</li>
-          <li className="item rate-table-row-third">
-            {rate.cancellationPolicy}
-          </li>
-          <li className="item rate-table-row-four">{rate.dealPrice}</li>
-          <li className="item rate-table-row-five">{rate.rate}</li>
-          <li className="item rate-table-row-six">{rate.availability}</li>
-          <li className="rate-action">
-            <Button
-              className="btn-toggle"
-              label="⋮"
-              toggle
-              handleClick={() => toggleMenu(rate.id)}
-              backgroundColor="#ffffff"
-              border="none"
-              color="#5d6679"
-            />
-            {activeRateId === rate.id && (
-              <div className="dropdown-menu">
-                <button className="action-btn" onClick={() => handleEdit(rate)}>
-                  Edit
-                </button>
-                <button
-                  className="action-btn"
-                  onClick={() => handleDelete(rate)}
-                >
-                  Delete
-                </button>
-              </div>
-            )}
-          </li>
-        </ul>
+        <Box
+          fontSize="14px"
+          fontWeight="400"
+          key={rate.id}
+          display="flex"
+          maxW="1020px"
+          w="100%"
+          p="17px 24px"
+          position="relative"
+          border="1px solid #d4e5fa"
+        >
+          <Text w="15%" color="grey.900">
+            {rate.id}
+          </Text>
+          <Text w="15%" color="grey.900">
+            {rate.roomType}
+          </Text>
+          <Text w="15%">{rate.deals}</Text>
+          <Text w="15%">{rate.cancellationPolicy}</Text>
+          <Text w="15%">{rate.dealPrice}</Text>
+          <Text w="15%">{rate.rate}</Text>
+          <Text w="20%">{rate.availability}</Text>
+          <Button
+            bg="white.200"
+            color="grey.800"
+            _hover={{ bg: "white.200" }}
+            height="15px"
+            onClick={() => toggleMenu(rate.id)}
+            text={"⋮"}
+            buttonType={"first"}
+          />
+          {activeRateId === rate.id && (
+            <Box
+              // ref={menuRef}
+              top="25px"
+              right="55px"
+              position="absolute"
+              backgroundColor="white.200"
+              border="1px solid #989fad"
+              p="7px"
+              boxShadow="0px 4px 8px rgba(57, 56, 56, 0.466)"
+              display="flex"
+              flexDirection="column"
+              gap="10px"
+              zIndex="100"
+              borderRadius="8px"
+              w="80px"
+            >
+              <EditRate />
+              <DeleteRate rateId={rate.id} />
+            </Box>
+          )}
+        </Box>
       ))}
-
-      {isEditOpen && selectedRate && (
-        <EditRate rate={selectedRate} onClose={() => setIsEditOpen(false)} />
-      )}
-      {isDeleteOpen && selectedRate && (
-        <DeleteRate
-          rate={selectedRate}
-          onClose={() => setIsDeleteOpen(false)}
-        />
-      )}
-    </div>
+    </Box>
   );
 }

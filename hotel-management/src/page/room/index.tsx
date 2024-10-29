@@ -1,37 +1,30 @@
 import { useState } from "react";
-import Title from "../../components/title";
-import Label from "../../components/label/labelRoom";
+import { Box, Heading } from "@chakra-ui/react";
 import TableRoom from "../../components/table/room";
-import Pagination from "../../components/pagination/pagination";
-import AddRoomModal from "../../components/modal/rateModal/add";
-import "./index.css";
+import AddRoomModal from "../../components/modal/roomModal/add";
+import Label from "../../components/label/room/labelRoom";
+import Pagination from "../../components/pagination";
 
 export default function RoomPage() {
   const [isAddRoomOpen, setIsAddRoomOpen] = useState(false);
   const [rooms, setRooms] = useState<any[]>([]);
 
-  const handleAddRoomClick = () => {
-    setIsAddRoomOpen(true); 
-  };
-
-  const closeAddRoomModal = () => {
-    setIsAddRoomOpen(false);
-  };
-
+  const closeAddRoomModal = () => setIsAddRoomOpen(false);
   const handleAddRoom = (roomData: any) => {
-    setRooms([...rooms, roomData]); 
-    console.log("Room added:", roomData);
+    setRooms([...rooms, roomData]);
   };
 
   return (
-    <article className="room-page-container">
-      <Title titleText="Room" className="title" />
-      <Label handleClick={handleAddRoomClick} />
+    <Box>
+      <Heading mb="16px" fontSize="12px" fontWeight="500" color="grey.500">
+        Room
+      </Heading>
+      <Label />
       <TableRoom />
       <Pagination />
       {isAddRoomOpen && (
         <AddRoomModal onClose={closeAddRoomModal} onAddRoom={handleAddRoom} />
       )}
-    </article>
+    </Box>
   );
 }

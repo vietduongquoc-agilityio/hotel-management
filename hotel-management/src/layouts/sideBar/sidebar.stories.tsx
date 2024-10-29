@@ -1,15 +1,15 @@
 import { StoryFn } from "@storybook/react";
-import Label, { LabelProps } from "./labelRoom";
+import Sidebar from "./index";
 import { BrowserRouter as Router } from "react-router-dom";
 
 export default {
-  title: "Components/Label",
-  component: Label,
+  title: "Layouts/Sidebar",
+  component: Sidebar,
 };
 
-const Template: StoryFn<LabelProps> = (args) => (
+const Template: StoryFn = (args: any) => (
   <Router>
-    <Label {...args} />
+    <Sidebar {...args} />
   </Router>
 );
 

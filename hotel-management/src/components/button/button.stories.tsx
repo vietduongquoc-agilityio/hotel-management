@@ -1,64 +1,57 @@
-import { StoryFn } from "@storybook/react";
-import Button, { ButtonProps } from "./index";
+import { Meta, StoryFn } from "@storybook/react";
+import Button, { buttonType } from "./index";
 
 export default {
   title: "Components/Button",
   component: Button,
   argTypes: {
-    backgroundColor: { control: "color" },
-    size: { control: "select", options: ["lg", "md", "sm"] },
-    borderRadius: { control: "number" },
-    color: { control: "color" },
-    fontSize: { control: "text" },
-    fontWeight: { control: "text" },
-    width: { control: "number" },
-    height: { control: "number" },
-    border: { control: "text" },
+    text: { control: "text" },
+    buttonType: {
+      control: {
+        type: "radio",
+        options: [
+          "first",
+          "nextButton",
+          "paginationButton",
+          "cancelButton",
+          "deleteButton",
+        ],
+      },
+    },
+    onClick: { action: "clicked" },
   },
-};
+} as Meta<typeof Button>;
 
-const Template: StoryFn<ButtonProps> = (args: ButtonProps) => (
-  <Button {...args} />
+const Template: StoryFn = (args) => (
+  <Button text={""} buttonType={"first"} {...args} />
 );
 
-export const Large = Template.bind({});
-Large.args = {
-  className: "btn-large",
-  label: "Large Button",
-  size: "lg",
-  backgroundColor: "#1570ef",
-  borderRadius: 8,
-  color: "white",
-  width: 150,
-  height: 50,
-  handleClick: () => console.log("Large Button clicked"),
-  border: "none",
+export const First = Template.bind({});
+First.args = {
+  text: "First Button",
+  buttonType: "first" as buttonType,
 };
 
-export const Medium = Template.bind({});
-Medium.args = {
-  className: "btn-medium",
-  label: "Medium Button",
-  size: "md",
-  backgroundColor: "#1570ef",
-  borderRadius: 8,
-  color: "white",
-  width: 130,
-  height: 45,
-  handleClick: () => console.log("Medium Button clicked"),
-  border: "none",
+export const Next = Template.bind({});
+Next.args = {
+  text: "Next Button",
+  buttonType: "nextButton" as buttonType,
 };
 
-export const Small = Template.bind({});
-Small.args = {
-  className: "btn-small",
-  label: "Small Button",
-  size: "sm",
-  backgroundColor: "#1570ef",
-  borderRadius: 8,
-  color: "white",
-  width: 110,
-  height: 40,
-  handleClick: () => console.log("Small Button clicked"),
-  border: "none",
+export const Pagination = Template.bind({});
+Pagination.args = {
+  text: "1",
+  buttonType: "paginationButton" as buttonType,
+};
+
+export const Cancel = Template.bind({});
+Cancel.args = {
+  text: "Cancel Button",
+  buttonType: "cancelButton" as buttonType,
+};
+
+export const Delete = Template.bind({});
+Delete.args = {
+  text: "Delete Button",
+  buttonType: "deleteButton" as buttonType,
 };

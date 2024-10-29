@@ -1,21 +1,17 @@
+import { Box, Flex } from "@chakra-ui/react";
 import Sidebar from "../sideBar";
-import roomIcon from "../../assets/icons/room.svg";
-import logoIcon from "../../assets/icons/logo.svg";
-import rateIcon from "../../assets/icons/rate.svg";
-import search from "../../assets/icons/search.svg";
 import Header from "../header";
-import "./index.css";
 import { Outlet } from "react-router-dom";
 
 const MainLayout = () => {
   return (
-    <div className="main-layout-container">
-      <Sidebar room={roomIcon} logo={logoIcon} rate={rateIcon} />
-      <main className="content-container">
-        <Header search={search} />
+    <Flex p="32px 15px" m="0 auto" w="1280px">
+      <Sidebar />
+      <Box w="1020px" ml="20px">
+        <Header />
         <Outlet />
-      </main>
-    </div>
+      </Box>
+    </Flex>
   );
 };
 

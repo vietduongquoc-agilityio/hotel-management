@@ -1,11 +1,9 @@
 import { useState, memo } from "react";
-import searchIcon from "../../assets/icons/search.svg";
-import "./index.css";
-import Input from "../../components/input";
+import { Box, Input, InputGroup, InputLeftAddon } from "@chakra-ui/react";
+import { SearchIcon } from "@chakra-ui/icons";
 
 export interface HeaderProps {
   placeholder?: string;
-  search?: string;
 }
 
 function Header({ placeholder = "Search for rooms and offers" }: HeaderProps) {
@@ -16,25 +14,30 @@ function Header({ placeholder = "Search for rooms and offers" }: HeaderProps) {
   };
 
   return (
-    <header className="header-container">
-      <form className="form-search" action="#" method="get">
-        <div className="search-icon">
-          <img src={searchIcon} alt="search" className="search-icon" />
-        </div>
-        <Input
-          className="search-input"
-          type="text"
-          value={searchValue}
-          onChange={handleSearchChange}
-          placeholder={placeholder}
-          label=""
-          size="md"
-          border="none"
-          borderRadius={4}
-          backgroundColor="#f0f1f3"
-        />
-      </form>
-    </header>
+    <Box as="header" className="header-container" mb="30px">
+      <Box as="form" className="form-search">
+        <InputGroup
+          w="400px"
+          h="40px"
+          borderRadius={8}
+        >
+          <InputLeftAddon
+            bg="grey.50"
+            border="1px solid rgb(238, 240, 242);"
+            children={<SearchIcon color="grey.500" />}
+          />
+          <Input
+            bg="grey.50"
+            type="text"
+            value={searchValue}
+            onChange={handleSearchChange}
+            placeholder={placeholder}
+            border="1px solid rgb(238, 240, 242)"
+            borderRadius={4}
+          />
+        </InputGroup>
+      </Box>
+    </Box>
   );
 }
 

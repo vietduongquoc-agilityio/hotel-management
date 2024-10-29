@@ -1,128 +1,107 @@
+/* eslint-disable react-refresh/only-export-components */
 import { useState } from "react";
-import "./index.css";
+import {
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
+  FormControl,
+  FormLabel,
+} from "@chakra-ui/react";
+import withModal from "../../withModal";
 import Button from "../../../button";
-import Select, { Option } from "../../../select";
+import Input from "../../../input";
+import RateData from "../../../interfaceTypes/rateTypes";
+import { createRate } from "../../../../services/rateServices";
 
-interface AddRoomModalProps {
+interface AddRateModalProps {
   onClose: () => void;
-  onAddRoom: (roomData: any) => void;
+  onAddRate: (rateData: RateData) => void;
 }
 
-export default function AddRoomModal({
-  onClose,
-  onAddRoom,
-}: AddRoomModalProps) {
-  const [bedType, setBedType] = useState("");
-  const [floor, setFloor] = useState("");
-  const [status, setStatus] = useState("");
-  const [facilityDescription, setFacilityDescription] = useState("");
+function AddRateModal({ onClose, onAddRate }: AddRateModalProps) {
+  const [roomType, setRoomType] = useState("");
+  const [cancellationPolicy, setCancellationPolicy] = useState("");
+  const [rooms, setRooms] = useState("");
+  const [price, setPrice] = useState("");
 
-  const bedTypeOptions: Option[] = [
-    { value: "Single", label: "Single" },
-    { value: "Double", label: "Double" },
-    { value: "Queen", label: "Queen" },
-    { value: "King", label: "King" },
-  ];
-
-  const floorOptions: Option[] = [
-    { value: "Ground Floor", label: "Ground Floor" },
-    { value: "1st Floor", label: "1st Floor" },
-    { value: "2nd Floor", label: "2nd Floor" },
-  ];
-
-  const statusOptions: Option[] = [
-    { value: "Available", label: "Available" },
-    { value: "Occupied", label: "Occupied" },
-    { value: "Under Maintenance", label: "Under Maintenance" },
-    { value: "Out of Order", label: "Out of Order" },
-  ];
-
-  const handleSubmit = () => {
-    if (!bedType || !floor || !status) {
-      alert("Please fill in all required fields.");
+  const handleSubmit = async () => {
+    if (!roomType || !rooms || !price || !cancellationPolicy) {
+      alert("Please fill in all fields.");
       return;
     }
 
-    const newRoomData = { bedType, floor, status, facilityDescription };
-    onAddRoom(newRoomData);
-    onClose();
+    const newRateData: RateData = {
+      id: "1",
+      roomType,
+      cancellationPolicy,
+      deals: "Family Deal",
+      dealPrice: price,
+      rate: price,
+      availability: "Available",
+    };
+
+    try {
+      const createdRate = await createRate(newRateData);
+      onAddRate(createdRate);
+      onClose();
+    } catch (error) {
+      console.error("Failed to create rate:", error);
+    }
   };
 
   return (
-    <div className="modal">
-      <div className="wrap-modal-content">
-        <h2 className="modal-content-title">Add New Room</h2>
-        <form className="modal-content">
-          <div className="modal-content-row-one">
-            <Select
-              width={320}
-              options={bedTypeOptions}
-              value={bedType}
-              onChange={setBedType}
-              label="Bed type"
-              height={40}
+    <Modal isOpen onClose={onClose}>
+      <ModalOverlay />
+      <ModalContent bg="white.200">
+        <ModalHeader>Add New Rate</ModalHeader>
+        <ModalBody>
+          <FormControl mb={4}>
+            <FormLabel>Rate Type</FormLabel>
+            <Input
+              value={roomType}
+              onChange={(e) => setRoomType(e.target.value)}
+              placeHolder="Enter room type"
+              inputType="first"
             />
-            <Select
-              width={320}
-              options={floorOptions}
-              value={floor}
-              onChange={setFloor}
-              label="Room floor"
-              height={40}
+          </FormControl>
+          <FormControl mb={4}>
+            <FormLabel>Cancellation Policy</FormLabel>
+            <Input
+              value={cancellationPolicy}
+              onChange={(e) => setCancellationPolicy(e.target.value)}
+              placeHolder="Enter cancellation policy"
+              inputType="first"
             />
-          </div>
-          <div className="modal-content-row-two">
-            <div>
-              <label className="select-label">Room facility</label>
-              <textarea
-                className="modal-content-row-two-desc"
-                value={facilityDescription}
-                onChange={(e) => setFacilityDescription(e.target.value)}
-                maxLength={500}
-                placeholder="Enter a description...."
-              />
-            </div>
-            <Select
-              options={statusOptions}
-              value={status}
-              onChange={setStatus}
-              label="Status"
-              width={320}
-              height={40}
+          </FormControl>
+          <FormControl mb={4}>
+            <FormLabel>Rooms</FormLabel>
+            <Input
+              value={rooms}
+              onChange={(e) => setRooms(e.target.value)}
+              placeHolder="Enter total number of rooms"
+              inputType="first"
             />
-          </div>
-        </form>
-        <div className="modal-actions">
-          <Button
-            className="btn-cancel"
-            label="Cancel"
-            handleClick={onClose}
-            borderRadius={8}
-            backgroundColor="#ffffff"
-            color="#667085"
-            size="md"
-            width={100}
-            height={40}
-            border="1px solid #667085"
-            fontSize="14"
-            fontWeight="500"
-          />
-          <Button
-            className="btn-add"
-            label="Add"
-            handleClick={handleSubmit}
-            borderRadius={8}
-            backgroundColor="#1570ef"
-            color="#ffffff"
-            size="md"
-            width={100}
-            height={40}
-            border="none"
-            fontSize="14"
-            fontWeight="500"
-          />
-        </div>
-      </div>
-    </div>
+          </FormControl>
+          <FormControl mb={4}>
+            <FormLabel>Price</FormLabel>
+            <Input
+              value={price}
+              onChange={(e) => setPrice(e.target.value)}
+              placeHolder="Enter room price"
+              inputType="first"
+            />
+          </FormControl>
+        </ModalBody>
+        <ModalFooter>
+          <Button onClick={onClose} text="Cancel" buttonType="cancelButton" />
+          <Button onClick={handleSubmit} text="Add" buttonType="first" />
+        </ModalFooter>
+      </ModalContent>
+    </Modal>
   );
 }
+
+export default withModal(AddRateModal, "Add rate");

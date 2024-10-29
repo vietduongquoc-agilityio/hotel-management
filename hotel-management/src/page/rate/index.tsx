@@ -1,18 +1,41 @@
-import Title from "../../components/title";
-import LabelRate from "../../components/label/labelRate";
-import "./index.css";
+import { useState, useEffect } from "react";
+import { Box, Heading } from "@chakra-ui/react";
+import LabelRate from "../../components/label/rate/labelRate";
 import TableRate from "../../components/table/rate";
+import { getRates } from "../../services/rateServices";
+import RateData from "../../components/interfaceTypes/rateTypes";
 
 export default function RatePage() {
-  const handleClick = () => {
-    console.log("Button clicked");
+  const [rates, setRates] = useState<RateData[]>([]);
+  const [loading, setLoading] = useState(true);
+  const fetchRates = async () => {
+    try {
+      const data = await getRates(1, 10, "roomType:ASC");
+      setRates(data.data);
+    } catch (error) {
+      console.error("Error fetching rates:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  console.log("rates", rates);
+
+  useEffect(() => {
+    fetchRates();
+  }, []);
+
+  const handleAddRate = () => {
+    fetchRates();
   };
 
   return (
-    <article className="room-page-container">
-      <Title titleText="Guests" className="title" />
-      <LabelRate handleClick={handleClick} />
-      <TableRate />
-    </article>
+    <Box>
+      <Heading mb="16px" fontSize="12px" fontWeight="500" color="grey.500">
+        Rates
+      </Heading>
+      <LabelRate onAddRate={handleAddRate} />
+      <TableRate rates={rates} loading={loading} />
+    </Box>
   );
 }
