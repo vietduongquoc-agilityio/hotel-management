@@ -21,10 +21,15 @@ const RatePage = () => {
     }
   };
 
+  const handleDeleteRate = (deletedRateId: string) => {
+    setRates((prevRates) =>
+      prevRates.filter((rate) => rate.documentId !== deletedRateId)
+    );
+  };
+
   useEffect(() => {
     fetchRates();
   }, []);
-
 
   return (
     <Box>
@@ -32,7 +37,11 @@ const RatePage = () => {
         Rates
       </Heading>
       <LabelRate onAddRate={fetchRates} />
-      <TableRate rates={rates} loading={loading} />
+      <TableRate
+        rates={rates}
+        loading={loading}
+        onDeleteRate={handleDeleteRate}
+      />
     </Box>
   );
 };

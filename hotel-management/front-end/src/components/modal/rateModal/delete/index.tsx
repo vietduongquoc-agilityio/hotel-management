@@ -1,5 +1,4 @@
 /* eslint-disable react-refresh/only-export-components */
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { useState } from "react";
 import { Text, ModalFooter, ModalBody } from "@chakra-ui/react";
 import withModal from "../../modalHoc";
@@ -9,16 +8,17 @@ import { deleteRate } from "../../../../services/rateServices";
 interface DeleteRateProps {
   rateId: string;
   onClose: () => void;
+  onDeleteRate: (rateId: string) => void;
 }
 
-const DeleteRate = ({ rateId, onClose }: DeleteRateProps) => {
+const DeleteRate = ({ rateId, onClose, onDeleteRate }: DeleteRateProps) => {
   const [error, setError] = useState("");
 
   const handleDelete = async () => {
     try {
-      console.log("Attempting to delete rate with ID:", rateId);
       await deleteRate(rateId);
       console.log("Rate deleted successfully");
+      onDeleteRate(rateId);
       onClose();
     } catch (error) {
       console.error("Deletion error:", error);

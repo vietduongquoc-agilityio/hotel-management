@@ -15,30 +15,41 @@ import {
 } from "@chakra-ui/react";
 import withModal from "../../modalHoc";
 import Button from "../../../button";
+import RoomData from "../../../interfaceTypes/roomTypes";
+import { createRoom } from "../../../../services/roomService";
 
 interface AddRoomModalProps {
   onClose: () => void;
-  onAddRoom: (roomData: any) => void;
+  onAddRoom: (roomData: RoomData) => void;
 }
 
 const AddRoomModal = ({ onClose, onAddRoom }: AddRoomModalProps) => {
   const [bedType, setBedType] = useState("");
   const [floor, setFloor] = useState("");
-  const [facilityDescription, setFacilityDescription] = useState("");
+  const [roomFacility, setRoomFacility] = useState("");
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (!bedType || !floor) {
       alert("Please fill in all required fields.");
       return;
     }
-    const newRoomData = {
+    const newRoomData: RoomData = {
       bedType,
-      floor,
+      roomFloor: floor,
       status: "Available",
-      facilityDescription,
+      roomFacility,
+      documentId: "",
+      roomNumber: "",
+      available: "",
     };
-    onAddRoom(newRoomData);
-    onClose();
+
+    try {
+      const createdRoom = await createRoom(newRoomData);
+      onAddRoom(createdRoom);
+      onClose();
+    } catch (error) {
+      console.error("Failed to create rate:", error);
+    }
   };
 
   return (
@@ -65,18 +76,19 @@ const AddRoomModal = ({ onClose, onAddRoom }: AddRoomModalProps) => {
               <FormLabel>Room Floor</FormLabel>
               <Select value={floor} onChange={(e) => setFloor(e.target.value)}>
                 <option value="">Select floor</option>
-                <option value="Ground Floor">Ground Floor</option>
-                <option value="1st Floor">1st Floor</option>
                 <option value="2nd Floor">2nd Floor</option>
+                <option value="3rd Floor">3rd Floor</option>
+                <option value="4th Floor">4th Floor</option>\
+                <option value="5th Floor">5th Floor</option>
               </Select>
             </FormControl>
           </Box>
           <FormControl mt="32px" mb="32px">
             <FormLabel>Room Facility</FormLabel>
             <Textarea
-              placeholder="Enter a description...."
-              value={facilityDescription}
-              onChange={(e) => setFacilityDescription(e.target.value)}
+              placeholder="AC, shower, Double bed, towel bathtub, TV"
+              value={roomFacility}
+              onChange={(e) => setRoomFacility(e.target.value)}
               maxLength={500}
             />
           </FormControl>

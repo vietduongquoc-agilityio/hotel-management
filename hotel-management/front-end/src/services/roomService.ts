@@ -1,16 +1,14 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import axios from "axios";
+import RoomData from "../components/interfaceTypes/roomTypes";
 
 const BASE_URL = "http://localhost:1337/api";
 
 // Room Service
-export const getRooms = async (
-  page: number,
-  pageSize: number,
-  sort: string
-) => {
+export const getRooms = async (page: number, pageSize: number) => {
   try {
     const response = await axios.get(`${BASE_URL}/rooms`, {
-      params: { _page: page, _pageSize: pageSize, _sort: sort },
+      params: { _page: page, _pageSize: pageSize },
     });
     return response.data;
   } catch (error) {
@@ -19,9 +17,17 @@ export const getRooms = async (
   }
 };
 
-export const createRoom = async (roomData: any) => {
-  const response = await axios.post(`${BASE_URL}/rooms`, roomData);
-  return response.data;
+export const createRoom = async (roomData: RoomData) => {
+  const { documentId, ...data } = roomData;
+  try {
+    const response = await axios.post(`${BASE_URL}/rooms`, {
+      data: data,
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error in createRate:", error);
+    throw error;
+  }
 };
 
 export const getRoomById = (roomId: string) =>

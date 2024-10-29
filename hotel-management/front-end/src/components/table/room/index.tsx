@@ -9,56 +9,19 @@ import {
   Spinner,
   Alert,
 } from "@chakra-ui/react";
-import { getRooms } from "../../../services/roomService";
 import DeleteRoom from "../../modal/roomModal/delete";
 import Button from "../../button";
+import RoomData from "../../interfaceTypes/roomTypes";
 
-interface RoomData {
-  id: string;
-  roomNumber: string;
-  bedType: string;
-  roomFloor: string;
-  roomFacility: string;
-  Available: string;
+interface TableRoomProps {
+  rooms: RoomData[];
+  loading: boolean;
+  error?: string | null;
+  onDeleteRoom: (rateId: string) => void;
 }
 
-export default function TableRoom() {
-  const [rooms, setRooms] = useState<RoomData[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+const TableRoom = ({ rooms, loading, error, onDeleteRoom }: TableRoomProps) => {
   const [activeRoomId, setActiveRoomId] = useState<string | null>(null);
-  const menuRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const fetchRoomData = async () => {
-      try {
-        const data = await getRooms(1, 10, "bedType:ASC");
-        if (data && Array.isArray(data.data)) {
-          setRooms(data.data);
-        } else {
-          setError("Unexpected data format");
-        }
-      } catch (error) {
-        setError("Failed to fetch room data");
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchRoomData();
-  }, []);
-
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
-        setActiveRoomId(null);
-      }
-    };
-
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, [menuRef]);
 
   const toggleMenu = (roomId: string) => {
     setActiveRoomId((prev) => (prev === roomId ? null : roomId));
@@ -106,7 +69,7 @@ export default function TableRoom() {
       </UnorderedList>
       {rooms.map((room) => (
         <Box
-          key={room.id}
+          key={room.documentId}
           fontSize="14px"
           fontWeight="400"
           display="flex"
@@ -123,10 +86,10 @@ export default function TableRoom() {
           <Text w="15%">{room.roomFloor}</Text>
           <Text w="27%">{room.roomFacility}</Text>
           <Text w="16%" pl="48px" mr="20px">
-            {room.Available}
+            {room.available}
           </Text>
           <Button
-            onClick={() => toggleMenu(room.id)}
+            onClick={() => toggleMenu(room.documentId)}
             bg="white.200"
             color="grey.800"
             _hover={{ bg: "white.200" }}
@@ -134,9 +97,8 @@ export default function TableRoom() {
             text={"⋮"}
             buttonType={"first"}
           />
-          {activeRoomId === room.id && (
+          {activeRoomId === room.documentId && (
             <Box
-              ref={menuRef}
               top="25px"
               right="55px"
               position="absolute"
@@ -152,11 +114,16 @@ export default function TableRoom() {
               w="80px"
             >
               <EditRoomModal></EditRoomModal>
-              <DeleteRoom></DeleteRoom>
+              <DeleteRoom
+                roomId={room.documentId}
+                onDeleteRoom={onDeleteRoom}
+              ></DeleteRoom>
             </Box>
           )}
         </Box>
       ))}
     </Box>
   );
-}
+};
+
+export default TableRoom;

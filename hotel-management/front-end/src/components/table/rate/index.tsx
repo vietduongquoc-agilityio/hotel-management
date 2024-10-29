@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { useState } from "react";
 import {
   Box,
@@ -17,9 +16,10 @@ interface TableRateProps {
   rates: RateData[];
   loading: boolean;
   error?: string | null;
+  onDeleteRate: (rateId: string) => void;
 }
 
-const TableRate = ({ rates, loading, error }: TableRateProps) => {
+const TableRate = ({ rates, loading, error, onDeleteRate }: TableRateProps) => {
   const [activeRateId, setActiveRateId] = useState<string | null>(null);
 
   const toggleMenu = (rateId: string) => {
@@ -86,8 +86,8 @@ const TableRate = ({ rates, loading, error }: TableRateProps) => {
           </Text>
           <Text w="15%">{rate.deals}</Text>
           <Text w="15%">{rate.cancellationPolicy}</Text>
-          <Text w="15%">{rate.dealPrice}</Text>
-          <Text w="15%">{rate.rate}</Text>
+          <Text w="15%">{rate.dealPrice}$</Text>
+          <Text w="15%">{rate.rate}$</Text>
           <Text w="20%">{rate.availability}</Text>
           <Button
             bg="white.200"
@@ -114,8 +114,11 @@ const TableRate = ({ rates, loading, error }: TableRateProps) => {
               borderRadius="8px"
               w="80px"
             >
-              <EditRate />
-              <DeleteRate rateId={rate.documentId} />
+              <EditRate rateId={rate.documentId} RateData />
+              <DeleteRate
+                rateId={rate.documentId}
+                onDeleteRate={onDeleteRate}
+              />
             </Box>
           )}
         </Box>
