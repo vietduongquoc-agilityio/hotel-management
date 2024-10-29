@@ -5,7 +5,7 @@ import logoIcon from "../../assets/icons/logo.svg";
 import rateIcon from "../../assets/icons/rate.svg";
 import { borderRadius } from "../../themes/base/metrics";
 
-export default function Sidebar() {
+const Sidebar = () => {
   return (
     <VStack
       as="aside"
@@ -66,4 +66,6 @@ export default function Sidebar() {
       </List>
     </VStack>
   );
-}
+};
+
+export default Sidebar;

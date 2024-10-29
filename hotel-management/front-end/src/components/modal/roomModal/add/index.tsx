@@ -13,7 +13,7 @@ import {
   Textarea,
   Box,
 } from "@chakra-ui/react";
-import withModal from "../../withModal";
+import withModal from "../../modalHoc";
 import Button from "../../../button";
 
 interface AddRoomModalProps {

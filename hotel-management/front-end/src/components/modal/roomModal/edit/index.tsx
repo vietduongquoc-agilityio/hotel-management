@@ -1,6 +1,6 @@
 /* eslint-disable react-refresh/only-export-components */
 import { useEffect, useState } from "react";
-import withModal from "../../withModal";
+import withModal from "../../modalHoc";
 import {
   Modal,
   ModalOverlay,
@@ -28,7 +28,7 @@ interface EditRoomModalProps {
   };
 }
 
-function EditRoomModal({
+const EditRoomModal = ({
   initialRoomData = {
     roomNumber: "",
     bedType: "",
@@ -38,7 +38,7 @@ function EditRoomModal({
   },
   onClose,
   onEditRoom,
-}: EditRoomModalProps) {
+}: EditRoomModalProps) => {
   const [roomNumber, setRoomNumber] = useState(
     initialRoomData.roomNumber || ""
   );
@@ -131,6 +131,6 @@ function EditRoomModal({
       </ModalContent>
     </Modal>
   );
-}
+};
 
 export default withModal(EditRoomModal, "Edit");

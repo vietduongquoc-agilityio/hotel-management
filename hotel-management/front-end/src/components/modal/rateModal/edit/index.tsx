@@ -1,16 +1,7 @@
 /* eslint-disable react-refresh/only-export-components */
 import { useState, useEffect } from "react";
-import {
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalBody,
-  ModalFooter,
-  FormControl,
-  FormLabel,
-} from "@chakra-ui/react";
-import withModal from "../../withModal";
+import { ModalFooter, FormControl, FormLabel } from "@chakra-ui/react";
+import withModal from "../../modalHoc";
 import Button from "../../../button";
 import Input from "../../../input";
 
@@ -25,7 +16,7 @@ interface EditRateModalProps {
   };
 }
 
-function EditRateModal({
+const EditRateModal = ({
   onClose,
   onEditRate,
   initialRateData = {
@@ -34,7 +25,7 @@ function EditRateModal({
     price: "",
     cancellationPolicy: "",
   },
-}: EditRateModalProps) {
+}: EditRateModalProps) => {
   const [roomType, setRoomType] = useState(initialRateData.roomType || "");
   const [rooms, setRooms] = useState(initialRateData.rooms || "");
   const [price, setPrice] = useState(initialRateData.price || "");
@@ -62,62 +53,49 @@ function EditRateModal({
   };
 
   return (
-    <Modal isOpen onClose={onClose}>
-      <ModalOverlay />
-      <ModalContent bg="white.200">
-        <ModalHeader>Edit Rate</ModalHeader>
-        <ModalBody>
-          <FormControl mb={4}>
-            <FormLabel>Rate Type</FormLabel>
-            <Input
-              value={roomType}
-              onChange={(e) => setRoomType(e.target.value)}
-              placeHolder={"Enter room type"}
-              inputType={"first"}
-            />
-          </FormControl>
-          <FormControl mb={4}>
-            <FormLabel>Cancellation Policy</FormLabel>
-            <Input
-              value={cancellationPolicy}
-              onChange={(e) => setCancellationPolicy(e.target.value)}
-              placeHolder={"Enter cancellation policy"}
-              inputType={"first"}
-            />
-          </FormControl>
-          <FormControl mb={4}>
-            <FormLabel>Rooms</FormLabel>
-            <Input
-              value={rooms}
-              onChange={(e) => setRooms(e.target.value)}
-              placeHolder={"Enter total number of rooms"}
-              inputType={"first"}
-            />
-          </FormControl>
-          <FormControl mb={4}>
-            <FormLabel>Price</FormLabel>
-            <Input
-              value={price}
-              onChange={(e) => setPrice(e.target.value)}
-              placeHolder={"Enter room price"}
-              inputType={"first"}
-            />
-          </FormControl>
-        </ModalBody>
-        <ModalFooter>
-          <Button
-            onClick={onClose}
-            text={"Cancel"}
-            buttonType={"cancelButton"}
-          />
-          <Button onClick={handleSubmit} text={"Add"} buttonType={"first"} />
-        </ModalFooter>
-      </ModalContent>
-    </Modal>
+    <>
+      <FormControl mb={4}>
+        <FormLabel>Rate Type</FormLabel>
+        <Input
+          value={roomType}
+          onChange={(e) => setRoomType(e.target.value)}
+          placeHolder={"Enter room type"}
+          inputType={"first"}
+        />
+      </FormControl>
+      <FormControl mb={4}>
+        <FormLabel>Cancellation Policy</FormLabel>
+        <Input
+          value={cancellationPolicy}
+          onChange={(e) => setCancellationPolicy(e.target.value)}
+          placeHolder={"Enter cancellation policy"}
+          inputType={"first"}
+        />
+      </FormControl>
+      <FormControl mb={4}>
+        <FormLabel>Rooms</FormLabel>
+        <Input
+          value={rooms}
+          onChange={(e) => setRooms(e.target.value)}
+          placeHolder={"Enter total number of rooms"}
+          inputType={"first"}
+        />
+      </FormControl>
+      <FormControl mb={4}>
+        <FormLabel>Price</FormLabel>
+        <Input
+          value={price}
+          onChange={(e) => setPrice(e.target.value)}
+          placeHolder={"Enter room price"}
+          inputType={"first"}
+        />
+      </FormControl>
+      <ModalFooter>
+        <Button onClick={onClose} text={"Cancel"} buttonType={"cancelButton"} />
+        <Button onClick={handleSubmit} text={"Edit"} buttonType={"first"} />
+      </ModalFooter>
+    </>
   );
-}
+};
 
 export default withModal(EditRateModal, "Edit");
-
-
-

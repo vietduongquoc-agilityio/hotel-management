@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import {
   Box,
   Text,
@@ -14,23 +14,16 @@ import DeleteRate from "../../modal/rateModal/delete";
 import Button from "../../button";
 
 interface TableRateProps {
-  onClose: () => void;
   rates: RateData[];
   loading: boolean;
   error?: string | null;
 }
 
-export default function TableRate({
-  rates,
-  loading,
-  error,
-  onClose,
-}: TableRateProps) {
+const TableRate = ({ rates, loading, error }: TableRateProps) => {
   const [activeRateId, setActiveRateId] = useState<string | null>(null);
 
   const toggleMenu = (rateId: string) => {
     setActiveRateId((prev) => (prev === rateId ? null : rateId));
-    onClose()
   };
 
   if (loading) return <Spinner />;
@@ -129,4 +122,6 @@ export default function TableRate({
       ))}
     </Box>
   );
-}
+};
+
+export default TableRate;

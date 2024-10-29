@@ -6,7 +6,9 @@ export interface HeaderProps {
   placeholder?: string;
 }
 
-function Header({ placeholder = "Search for rooms and offers" }: HeaderProps) {
+const Header = ({
+  placeholder = "Search for rooms and offers",
+}: HeaderProps) => {
   const [searchValue, setSearchValue] = useState<string>("");
 
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -16,11 +18,7 @@ function Header({ placeholder = "Search for rooms and offers" }: HeaderProps) {
   return (
     <Box as="header" className="header-container" mb="30px">
       <Box as="form" className="form-search">
-        <InputGroup
-          w="400px"
-          h="40px"
-          borderRadius={8}
-        >
+        <InputGroup w="400px" h="40px" borderRadius={8}>
           <InputLeftAddon
             bg="grey.50"
             border="1px solid rgb(238, 240, 242);"
@@ -39,6 +37,6 @@ function Header({ placeholder = "Search for rooms and offers" }: HeaderProps) {
       </Box>
     </Box>
   );
-}
+};
 
 export default memo(Header);

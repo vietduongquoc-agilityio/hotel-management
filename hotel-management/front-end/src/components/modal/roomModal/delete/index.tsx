@@ -11,7 +11,7 @@ import {
   ModalBody,
   ModalCloseButton,
 } from "@chakra-ui/react";
-import withModal from "../../withModal";
+import withModal from "../../modalHoc";
 import Button from "../../../button";
 import { deleteRoom } from "../../../../services/roomService";
 
@@ -21,7 +21,7 @@ interface DeleteRoomProps {
   onRoomDeleted: () => void;
 }
 
-function DeleteRoom({ room, onClose, onRoomDeleted }: DeleteRoomProps) {
+const DeleteRoom = ({ room, onClose, onRoomDeleted }: DeleteRoomProps) => {
   const [error, setError] = useState("");
 
   const handleDelete = async () => {
@@ -63,6 +63,6 @@ function DeleteRoom({ room, onClose, onRoomDeleted }: DeleteRoomProps) {
       </ModalContent>
     </Modal>
   );
-}
+};
 
 export default withModal(DeleteRoom, "Delete");
