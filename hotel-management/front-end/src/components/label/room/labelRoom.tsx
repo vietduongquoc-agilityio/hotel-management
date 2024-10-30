@@ -2,17 +2,21 @@ import { Box, UnorderedList, ListItem, Text, Button } from "@chakra-ui/react";
 import { useState, useEffect } from "react";
 import AddRoomModal from "../../modal/roomModal/add/index";
 import { getRates } from "../../../services/rateServices";
+import RoomData from "../../interfaceTypes/roomTypes";
 
-export default function Label() {
+const LabelRoom = ({
+  onAddRoom,
+}: {
+  onAddRoom: (roomData: RoomData) => void;
+}) => {
   const [rates, setRates] = useState([]);
   const [isAddRoomModalOpen, setIsAddRoomModalOpen] = useState(false);
 
   useEffect(() => {
     const fetchRates = async () => {
       try {
-        const data = await getRates(1, 10, "asc");
-        setRates(data);
-        
+        const data = await getRates(1, 10);
+        setRates(data.data);
       } catch (error) {
         console.error("Error fetching rates", error);
       }
@@ -39,19 +43,31 @@ export default function Label() {
     >
       <UnorderedList styleType="none" m={0} display="flex" gap={4}>
         <ListItem>
-          <Text>All room (100)</Text>
+          <Text>All rooms (100)</Text>
         </ListItem>
         <ListItem>
-          <Text>Available room (20)</Text>
+          <Text>Available rooms (20)</Text>
         </ListItem>
         <ListItem>
           <Text>Booked (80)</Text>
         </ListItem>
       </UnorderedList>
-      <Button onClick={handleOpenAddRoomModal} isDisabled={rates.length === 0}>
-        Add Room
-      </Button>
-      {isAddRoomModalOpen && <AddRoomModal onClose={handleCloseAddRoomModal} />}
+
+      {!isAddRoomModalOpen && (
+        <Button
+          onClick={handleOpenAddRoomModal}
+          disabled={rates.length === 0}
+          cursor={rates.length === 0 ? "not-allowed" : "pointer"}
+        >
+          Add room
+        </Button>
+      )}
+
+      {isAddRoomModalOpen && (
+        <AddRoomModal onAddRoom={onAddRoom} onClose={handleCloseAddRoomModal} />
+      )}
     </Box>
   );
-}
+};
+
+export default LabelRoom;

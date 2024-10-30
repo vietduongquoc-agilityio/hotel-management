@@ -11,9 +11,10 @@ import {
   ModalBody,
   ModalCloseButton,
 } from "@chakra-ui/react";
-import withModal from "../../withModal";
+import withModal from "../../modalHoc";
 import Button from "../../../button";
 import { deleteRoom } from "../../../../services/roomService";
+import Spinner from "../../../spinner";
 
 interface DeleteRoomProps {
   room: { roomId: string; roomNumber: string; status: string };
@@ -21,10 +22,12 @@ interface DeleteRoomProps {
   onRoomDeleted: () => void;
 }
 
-function DeleteRoom({ room, onClose, onRoomDeleted }: DeleteRoomProps) {
+const DeleteRoom = ({ room, onClose, onRoomDeleted }: DeleteRoomProps) => {
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const handleDelete = async () => {
+    setLoading(true);
     if (room.status !== "Available") {
       setError("Room must be 'Available' to delete.");
       return;
@@ -35,6 +38,8 @@ function DeleteRoom({ room, onClose, onRoomDeleted }: DeleteRoomProps) {
       onClose();
     } catch (error) {
       setError("Failed to delete room.");
+    } finally {
+      setLoading(true);
     }
   };
 
@@ -54,15 +59,19 @@ function DeleteRoom({ room, onClose, onRoomDeleted }: DeleteRoomProps) {
             text={"Cancel"}
             buttonType={"cancelButton"}
           />
-          <Button
-            onClick={handleDelete}
-            text={"Confirm Delete"}
-            buttonType={"deleteButton"}
-          />
+          {loading ? (
+            <Spinner />
+          ) : (
+            <Button
+              onClick={handleDelete}
+              text={"Confirm Delete"}
+              buttonType={"deleteButton"}
+            />
+          )}
         </ModalFooter>
       </ModalContent>
     </Modal>
   );
-}
+};
 
 export default withModal(DeleteRoom, "Delete");

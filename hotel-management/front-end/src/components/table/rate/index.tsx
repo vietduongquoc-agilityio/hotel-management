@@ -1,39 +1,23 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { useEffect, useState } from "react";
-import {
-  Box,
-  Text,
-  UnorderedList,
-  ListItem,
-  Spinner,
-  Alert,
-} from "@chakra-ui/react";
+import { useState } from "react";
+import { Box, Text, UnorderedList, ListItem, Alert } from "@chakra-ui/react";
 import RateData from "../../interfaceTypes/rateTypes";
 import EditRate from "../../modal/rateModal/edit";
 import DeleteRate from "../../modal/rateModal/delete";
 import Button from "../../button";
 
 interface TableRateProps {
-  onClose: () => void;
   rates: RateData[];
-  loading: boolean;
   error?: string | null;
+  onDeleteRate: (rateId: string) => void;
 }
 
-export default function TableRate({
-  rates,
-  loading,
-  error,
-  onClose,
-}: TableRateProps) {
+const TableRate = ({ rates, error, onDeleteRate }: TableRateProps) => {
   const [activeRateId, setActiveRateId] = useState<string | null>(null);
 
   const toggleMenu = (rateId: string) => {
     setActiveRateId((prev) => (prev === rateId ? null : rateId));
-    onClose()
   };
 
-  if (loading) return <Spinner />;
   if (error) return <Alert status="error">{error}</Alert>;
   if (rates.length === 0)
     return <Alert status="info">No rates available.</Alert>;
@@ -93,8 +77,8 @@ export default function TableRate({
           </Text>
           <Text w="15%">{rate.deals}</Text>
           <Text w="15%">{rate.cancellationPolicy}</Text>
-          <Text w="15%">{rate.dealPrice}</Text>
-          <Text w="15%">{rate.rate}</Text>
+          <Text w="15%">{rate.dealPrice}$</Text>
+          <Text w="15%">{rate.rate}$</Text>
           <Text w="20%">{rate.availability}</Text>
           <Button
             bg="white.200"
@@ -121,12 +105,17 @@ export default function TableRate({
               borderRadius="8px"
               w="80px"
             >
-              <EditRate />
-              <DeleteRate rateId={rate.documentId} />
+              <EditRate rateId={rate.documentId} RateData />
+              <DeleteRate
+                rateId={rate.documentId}
+                onDeleteRate={onDeleteRate}
+              />
             </Box>
           )}
         </Box>
       ))}
     </Box>
   );
-}
+};
+
+export default TableRate;
