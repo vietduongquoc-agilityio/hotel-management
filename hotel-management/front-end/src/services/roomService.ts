@@ -2,7 +2,7 @@
 import axios from "axios";
 import RoomData from "../components/interfaceTypes/roomTypes";
 
-const BASE_URL = "http://localhost:1337/api";
+const BASE_URL = "https://dynamic-cheese-3118c582a4.strapiapp.com/api";
 
 export const getRooms = async (page: number, pageSize: number) => {
   try {
@@ -26,20 +26,6 @@ export const getRooms = async (page: number, pageSize: number) => {
     throw error;
   }
 };
-
-// export const createRoom = async (roomData: RoomData) => {
-//   const { documentId, ...data } = roomData;
-//   try {
-//     const response = await axios.post(`${BASE_URL}/rooms`, {
-//       data: data,
-//     });
-//     return response.data;
-//   } catch (error) {
-//     console.error("Error in createRate:", error);
-//     throw error;
-//   }
-// };
-
 
 export const createRoom = async (roomData: RoomData) => {
   const response = await axios.post(`${BASE_URL}/rooms`, roomData); 

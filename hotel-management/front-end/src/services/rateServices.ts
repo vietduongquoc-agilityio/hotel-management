@@ -2,7 +2,7 @@
 import axios from "axios";
 import RateData from "../components/interfaceTypes/rateTypes";
 
-const BASE_URL = "http://localhost:1337/api";
+const BASE_URL = "https://dynamic-cheese-3118c582a4.strapiapp.com/api";
 
 // Rate Service
 export const getRates = async (page: number, pageSize: number) => {
