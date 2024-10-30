@@ -1,12 +1,5 @@
 import { useState } from "react";
-import {
-  Box,
-  Text,
-  UnorderedList,
-  ListItem,
-  Spinner,
-  Alert,
-} from "@chakra-ui/react";
+import { Box, Text, UnorderedList, ListItem, Alert } from "@chakra-ui/react";
 import RateData from "../../interfaceTypes/rateTypes";
 import EditRate from "../../modal/rateModal/edit";
 import DeleteRate from "../../modal/rateModal/delete";
@@ -14,19 +7,17 @@ import Button from "../../button";
 
 interface TableRateProps {
   rates: RateData[];
-  loading: boolean;
   error?: string | null;
   onDeleteRate: (rateId: string) => void;
 }
 
-const TableRate = ({ rates, loading, error, onDeleteRate }: TableRateProps) => {
+const TableRate = ({ rates, error, onDeleteRate }: TableRateProps) => {
   const [activeRateId, setActiveRateId] = useState<string | null>(null);
 
   const toggleMenu = (rateId: string) => {
     setActiveRateId((prev) => (prev === rateId ? null : rateId));
   };
 
-  if (loading) return <Spinner />;
   if (error) return <Alert status="error">{error}</Alert>;
   if (rates.length === 0)
     return <Alert status="info">No rates available.</Alert>;

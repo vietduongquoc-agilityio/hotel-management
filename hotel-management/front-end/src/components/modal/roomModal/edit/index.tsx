@@ -13,8 +13,10 @@ import {
   Select,
   Textarea,
   Box,
+  useToast,
 } from "@chakra-ui/react";
 import Button from "../../../button";
+import Spinner from "../../../spinner";
 
 interface EditRoomModalProps {
   onClose: () => void;
@@ -39,36 +41,63 @@ const EditRoomModal = ({
   onClose,
   onEditRoom,
 }: EditRoomModalProps) => {
-  const [roomNumber, setRoomNumber] = useState(
-    initialRoomData.roomNumber || ""
-  );
+  const [roomNumber, setRoomNumber] = useState(initialRoomData.roomNumber || "");
   const [bedType, setBedType] = useState(initialRoomData.bedType || "");
   const [floor, setFloor] = useState(initialRoomData.roomFloor || "");
   const [status, setStatus] = useState(initialRoomData.status || "");
-  const [facilityDescription, setFacilityDescription] = useState(
-    initialRoomData.roomFacility || ""
-  );
+  const [facilityDescription, setFacilityDescription] = useState(initialRoomData.roomFacility || "");
+  const [loading, setLoading] = useState(false);
+  const toast = useToast();
 
   useEffect(() => {
-    if (initialRoomData) {
-      setRoomNumber(initialRoomData.roomNumber);
-      setBedType(initialRoomData.roomNumber || "");
-      setFloor(initialRoomData.bedType || "");
-      setStatus(initialRoomData.roomFloor || "");
-      setFacilityDescription(initialRoomData.roomFacility || "");
-    }
+    setRoomNumber(initialRoomData.roomNumber);
+    setBedType(initialRoomData.bedType);
+    setFloor(initialRoomData.roomFloor);
+    setStatus(initialRoomData.status);
+    setFacilityDescription(initialRoomData.roomFacility);
   }, [initialRoomData]);
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
+    if (!bedType || !floor || !status || !facilityDescription) {
+      toast({
+        title: "All fields are required.",
+        status: "warning",
+        duration: 3000,
+        isClosable: true,
+      });
+      return;
+    }
+
     const updatedRoomData = {
       roomNumber,
       bedType,
-      floor,
+      roomFloor: floor,
       status,
-      facilityDescription,
+      roomFacility: facilityDescription,
     };
-    onEditRoom(updatedRoomData);
-    onClose();
+
+    setLoading(true);
+    try {
+      await onEditRoom(updatedRoomData);
+      toast({
+        title: "Room updated successfully.",
+        status: "success",
+        duration: 3000,
+        isClosable: true,
+      });
+      onClose();
+    } catch (error) {
+      toast({
+        title: "Failed to update room.",
+        description: "An error occurred while updating the room.",
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+      });
+      console.error("Error updating room:", error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -80,10 +109,7 @@ const EditRoomModal = ({
           <Box display="flex" justifyContent="space-between">
             <FormControl mb={4} maxW="320px">
               <FormLabel>Bed Type</FormLabel>
-              <Select
-                value={bedType}
-                onChange={(e) => setBedType(e.target.value)}
-              >
+              <Select value={bedType} onChange={(e) => setBedType(e.target.value)}>
                 <option value="">Select bed type</option>
                 <option value="Single">Single</option>
                 <option value="Double">Double</option>
@@ -95,9 +121,10 @@ const EditRoomModal = ({
               <FormLabel>Room Floor</FormLabel>
               <Select value={floor} onChange={(e) => setFloor(e.target.value)}>
                 <option value="">Select floor</option>
-                <option value="Ground Floor">Ground Floor</option>
-                <option value="1st Floor">1st Floor</option>
                 <option value="2nd Floor">2nd Floor</option>
+                <option value="3rd Floor">3rd Floor</option>
+                <option value="4th Floor">4th Floor</option>
+                <option value="5th Floor">5th Floor</option>
               </Select>
             </FormControl>
           </Box>
@@ -121,12 +148,12 @@ const EditRoomModal = ({
           </FormControl>
         </ModalBody>
         <ModalFooter>
-          <Button
-            onClick={onClose}
-            text={"Cancel"}
-            buttonType={"cancelButton"}
-          />
-          <Button onClick={handleSubmit} text={"Add"} buttonType={"first"} />
+          <Button onClick={onClose} text={"Cancel"} buttonType={"cancelButton"} />
+          {loading ? (
+            <Spinner />
+          ) : (
+            <Button onClick={handleSubmit} text={"Edit"} buttonType={"first"} />
+          )}
         </ModalFooter>
       </ModalContent>
     </Modal>

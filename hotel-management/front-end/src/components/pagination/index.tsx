@@ -1,21 +1,24 @@
-import { useState } from "react";
-import { HStack } from "@chakra-ui/react";
+import { HStack, VStack } from "@chakra-ui/react";
 import Button from "../button";
 
-const Pagination: React.FC = () => {
-  const [currentPage, setCurrentPage] = useState(1);
-  const totalPages = 7;
+interface PaginationProps {
+  currentPage: number;
+  setCurrentPage: React.Dispatch<React.SetStateAction<number>>;
+  pageSize: number;
+  pageCount: number;
+}
 
+const Pagination: React.FC<PaginationProps> = ({
+  currentPage,
+  setCurrentPage,
+  pageCount,
+}) => {
   const handlePrevious = () => {
-    if (currentPage > 1) {
-      setCurrentPage(currentPage - 1);
-    }
+    if (currentPage > 1) setCurrentPage(currentPage - 1);
   };
 
   const handleNext = () => {
-    if (currentPage < totalPages) {
-      setCurrentPage(currentPage + 1);
-    }
+    if (currentPage < pageCount) setCurrentPage(currentPage + 1);
   };
 
   const handlePageClick = (pageNumber: number) => {
@@ -24,45 +27,39 @@ const Pagination: React.FC = () => {
 
   const renderPageNumbers = () => {
     const pageNumbers = [];
-    for (let i = 1; i <= totalPages; i++) {
+    for (let i = 1; i <= pageCount; i++) {
       pageNumbers.push(
         <Button
           key={i}
           onClick={() => handlePageClick(i)}
           text={`${i}`}
           variant={currentPage === i ? "pagination" : "outline"}
-          buttonType={"paginationButton"}
+          buttonType="paginationButton"
           sx={currentPage === i ? { bg: "blue.100", color: "blue.500" } : {}}
-        ></Button>
+        />
       );
     }
     return pageNumbers;
   };
 
   return (
-    <HStack
-      padding="13px 24px"
-      justifyContent={"space-between"}
-      spacing={4}
-      justify="center"
-      mt={4}
-      fontSize="12px"
-      fontWeight="400"
-    >
-      <Button
-        onClick={handlePrevious}
-        isDisabled={currentPage === 1}
-        text={"< Previous"}
-        buttonType={"nextButton"}
-      />
-      <HStack>{renderPageNumbers()}</HStack>
-      <Button
-        onClick={handleNext}
-        isDisabled={currentPage === totalPages}
-        text={"Next >"}
-        buttonType={"nextButton"}
-      />
-    </HStack>
+    <VStack spacing={4} align="center">
+      <HStack justify="center" spacing={4}>
+        <Button
+          onClick={handlePrevious}
+          isDisabled={currentPage === 1}
+          text="< Previous"
+          buttonType="nextButton"
+        />
+        <HStack>{renderPageNumbers()}</HStack>
+        <Button
+          onClick={handleNext}
+          isDisabled={currentPage === pageCount}
+          text="Next >"
+          buttonType="nextButton"
+        />
+      </HStack>
+    </VStack>
   );
 };
 

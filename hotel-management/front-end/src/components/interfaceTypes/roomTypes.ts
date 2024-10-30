@@ -2,7 +2,7 @@ interface RoomData {
   bedType: string;
   roomFacility: string;
   roomFloor: string;
-  status: string;
+  roomStatus: string;
   documentId: string;
   roomNumber: string;
   available: string;

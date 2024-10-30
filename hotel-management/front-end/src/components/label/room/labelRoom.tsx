@@ -2,8 +2,13 @@ import { Box, UnorderedList, ListItem, Text, Button } from "@chakra-ui/react";
 import { useState, useEffect } from "react";
 import AddRoomModal from "../../modal/roomModal/add/index";
 import { getRates } from "../../../services/rateServices";
+import RoomData from "../../interfaceTypes/roomTypes";
 
-export default function Label() {
+const LabelRoom = ({
+  onAddRoom,
+}: {
+  onAddRoom: (roomData: RoomData) => void;
+}) => {
   const [rates, setRates] = useState([]);
   const [isAddRoomModalOpen, setIsAddRoomModalOpen] = useState(false);
 
@@ -58,7 +63,11 @@ export default function Label() {
         </Button>
       )}
 
-      {isAddRoomModalOpen && <AddRoomModal onClose={handleCloseAddRoomModal} />}
+      {isAddRoomModalOpen && (
+        <AddRoomModal onAddRoom={onAddRoom} onClose={handleCloseAddRoomModal} />
+      )}
     </Box>
   );
-}
+};
+
+export default LabelRoom;

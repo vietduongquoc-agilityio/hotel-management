@@ -1,23 +1,36 @@
 import { useEffect, useState } from "react";
-import { Box, Heading } from "@chakra-ui/react";
+import { Box, Heading, useToast } from "@chakra-ui/react";
 import TableRoom from "../../components/table/room";
 import AddRoomModal from "../../components/modal/roomModal/add";
-import Label from "../../components/label/room/labelRoom";
 import Pagination from "../../components/pagination";
 import { getRooms } from "../../services/roomService";
+import LabelRoom from "../../components/label/room/labelRoom";
+import Spinner from "../../components/spinner/index";
 
 const RoomPage = () => {
   const [isAddRoomOpen, setIsAddRoomOpen] = useState(false);
   const [rooms, setRooms] = useState<any[]>([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const pageSize = 10;
+  const [pageCount, setPageCount] = useState(1);
   const [loading, setLoading] = useState(true);
+  const toast = useToast();
 
-  const fetchRooms = async () => {
+  const fetchRooms = async (page = 1) => {
     setLoading(true);
     try {
-      const data = await getRooms(1, 10);
-      setRooms(data.data);
+      const { rooms, pagination } = await getRooms(page, pageSize);
+      setRooms(rooms);
+      setPageCount(pagination.pageCount);
     } catch (error) {
-      console.error("Error fetching rates:", error);
+      toast({
+        title: "Error fetching rooms",
+        description: "There was an issue retrieving the room data.",
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+      });
+      console.error("Error fetching rooms:", error);
     } finally {
       setLoading(false);
     }
@@ -29,27 +42,32 @@ const RoomPage = () => {
   };
 
   const handleDeleteRoom = (deletedRoomId: string) => {
-    setRooms((prevRates) =>
-      prevRates.filter((room) => room.documentId !== deletedRoomId)
+    setRooms((prevRooms) =>
+      prevRooms.filter((room) => room.documentId !== deletedRoomId)
     );
   };
 
   useEffect(() => {
-    fetchRooms();
-  }, []);
+    fetchRooms(currentPage);
+  }, [currentPage]);
 
   return (
     <Box>
       <Heading mb="16px" fontSize="12px" fontWeight="500" color="grey.500">
         Room
       </Heading>
-      <Label />
-      <TableRoom
-        rooms={rooms}
-        loading={loading}
-        onDeleteRoom={handleDeleteRoom}
+      <LabelRoom onAddRoom={handleAddRoom} />
+      {loading ? (
+        <Spinner />
+      ) : (
+        <TableRoom rooms={rooms} onDeleteRoom={handleDeleteRoom} />
+      )}
+      <Pagination
+        currentPage={currentPage}
+        setCurrentPage={setCurrentPage}
+        pageSize={pageSize}
+        pageCount={pageCount}
       />
-      <Pagination />
       {isAddRoomOpen && (
         <AddRoomModal onClose={closeAddRoomModal} onAddRoom={handleAddRoom} />
       )}

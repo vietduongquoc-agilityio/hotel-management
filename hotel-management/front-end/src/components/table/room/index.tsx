@@ -1,12 +1,11 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import EditRoomModal from "../../modal/roomModal/edit";
 import {
   Box,
   Text,
   UnorderedList,
   ListItem,
-  Spinner,
   Alert,
 } from "@chakra-ui/react";
 import DeleteRoom from "../../modal/roomModal/delete";
@@ -15,19 +14,17 @@ import RoomData from "../../interfaceTypes/roomTypes";
 
 interface TableRoomProps {
   rooms: RoomData[];
-  loading: boolean;
   error?: string | null;
   onDeleteRoom: (rateId: string) => void;
 }
 
-const TableRoom = ({ rooms, loading, error, onDeleteRoom }: TableRoomProps) => {
+const TableRoom = ({ rooms, error, onDeleteRoom }: TableRoomProps) => {
   const [activeRoomId, setActiveRoomId] = useState<string | null>(null);
 
   const toggleMenu = (roomId: string) => {
     setActiveRoomId((prev) => (prev === roomId ? null : roomId));
   };
 
-  if (loading) return <Spinner />;
   if (error) return <Alert status="error">{error}</Alert>;
 
   return (
@@ -86,7 +83,7 @@ const TableRoom = ({ rooms, loading, error, onDeleteRoom }: TableRoomProps) => {
           <Text w="15%">{room.roomFloor}</Text>
           <Text w="27%">{room.roomFacility}</Text>
           <Text w="16%" pl="48px" mr="20px">
-            {room.available}
+            {room.roomStatus}
           </Text>
           <Button
             onClick={() => toggleMenu(room.documentId)}
