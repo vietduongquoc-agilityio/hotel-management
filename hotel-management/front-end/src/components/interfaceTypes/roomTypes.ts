@@ -3,7 +3,6 @@ interface RoomData {
   roomFacility: string;
   roomFloor: string;
   roomStatus: string;
-  documentId: string;
   roomNumber: string;
 }
 

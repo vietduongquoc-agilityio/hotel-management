@@ -9,7 +9,6 @@ import RateData from "../../../interfaceTypes/rateTypes";
 import { createRate } from "../../../../services/rateServices";
 import Spinner from "../../../spinner";
 import useFormValidation from "../../../validate";
-import { fontSizes } from "../../../../themes/base/typography";
 
 interface AddRateModalProps {
   onClose: () => void;
