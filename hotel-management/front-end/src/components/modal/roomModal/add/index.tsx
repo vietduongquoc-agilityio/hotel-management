@@ -44,6 +44,7 @@ const AddRoomModal = ({ onClose, onAddRoom }: AddRoomModalProps) => {
       roomFloor: data.roomFloor,
       roomFacility: data.roomFacility,
       roomStatus: "Available",
+      documentID: "",
     };
 
     setLoading(true);
@@ -73,7 +74,7 @@ const AddRoomModal = ({ onClose, onAddRoom }: AddRoomModalProps) => {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <FormControl onSubmit={handleSubmit(onSubmit)}>
       <Box display="flex" justifyContent="space-between">
         <FormControl mb={4} maxW="320px" isInvalid={!!errors.bedType}>
           <FormLabel>Bed Type</FormLabel>
@@ -137,7 +138,7 @@ const AddRoomModal = ({ onClose, onAddRoom }: AddRoomModalProps) => {
           <Button type="submit" text="Add" buttonType="first" />
         )}
       </ModalFooter>
-    </form>
+    </FormControl>
   );
 };
 

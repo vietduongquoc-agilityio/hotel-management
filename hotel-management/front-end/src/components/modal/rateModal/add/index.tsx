@@ -73,7 +73,7 @@ const AddRateModal = ({ onClose, onAddRate }: AddRateModalProps) => {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <FormControl onSubmit={handleSubmit(onSubmit)}>
       <FormControl mb={4}>
         <FormLabel>Rate Type</FormLabel>
         <Input
@@ -151,7 +151,7 @@ const AddRateModal = ({ onClose, onAddRate }: AddRateModalProps) => {
           <Button type="submit" text="Add" buttonType="first" />
         )}
       </ModalFooter>
-    </form>
+    </FormControl>
   );
 };
 

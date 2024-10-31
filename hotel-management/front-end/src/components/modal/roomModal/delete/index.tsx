@@ -3,9 +3,6 @@
 import { useState } from "react";
 import {
   Text,
-  Modal,
-  ModalOverlay,
-  ModalContent,
   ModalHeader,
   ModalFooter,
   ModalBody,
@@ -44,33 +41,26 @@ const DeleteRoom = ({ room, onClose, onRoomDeleted }: DeleteRoomProps) => {
   };
 
   return (
-    <Modal isOpen={true} onClose={onClose}>
-      <ModalOverlay />
-      <ModalContent bg="white.200">
-        <ModalHeader>Delete Room</ModalHeader>
-        <ModalCloseButton />
-        <ModalBody>
-          <Text>Are you sure you want to delete room {room.roomNumber}?</Text>
-          {error && <Text color="red.500">{error}</Text>}
-        </ModalBody>
-        <ModalFooter>
+    <>
+      <ModalHeader>Delete Room</ModalHeader>
+      <ModalCloseButton />
+      <ModalBody>
+        <Text>Are you sure you want to delete room {room.roomNumber}?</Text>
+        {error && <Text color="red.500">{error}</Text>}
+      </ModalBody>
+      <ModalFooter>
+        <Button onClick={onClose} text={"Cancel"} buttonType={"cancelButton"} />
+        {loading ? (
+          <Spinner />
+        ) : (
           <Button
-            onClick={onClose}
-            text={"Cancel"}
-            buttonType={"cancelButton"}
+            onClick={handleDelete}
+            text={"Confirm Delete"}
+            buttonType={"deleteButton"}
           />
-          {loading ? (
-            <Spinner />
-          ) : (
-            <Button
-              onClick={handleDelete}
-              text={"Confirm Delete"}
-              buttonType={"deleteButton"}
-            />
-          )}
-        </ModalFooter>
-      </ModalContent>
-    </Modal>
+        )}
+      </ModalFooter>
+    </>
   );
 };
 
