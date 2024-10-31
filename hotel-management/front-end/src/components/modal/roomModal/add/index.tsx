@@ -44,7 +44,7 @@ const AddRoomModal = ({ onClose, onAddRoom }: AddRoomModalProps) => {
       roomFacility,
       documentId: "",
       roomNumber: "",
-      available: "",
+      // available: "",
     };
 
     setLoading(true);

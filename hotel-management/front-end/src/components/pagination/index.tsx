@@ -43,8 +43,14 @@ const Pagination: React.FC<PaginationProps> = ({
   };
 
   return (
-    <VStack spacing={4} align="center">
-      <HStack justify="center" spacing={4}>
+    <VStack spacing={4} w="100%">
+      <HStack
+        justifyContent="space-between"
+        spacing={4}
+        w="100%"
+        maxW="1020px"
+        padding="0 25px"
+      >
         <Button
           onClick={handlePrevious}
           isDisabled={currentPage === 1}

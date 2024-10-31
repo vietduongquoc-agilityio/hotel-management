@@ -28,7 +28,7 @@ export const getRooms = async (page: number, pageSize: number) => {
 };
 
 export const createRoom = async (roomData: RoomData) => {
-  const response = await axios.post(`${BASE_URL}/rooms`, roomData); 
+  const response = await axios.post(`${BASE_URL}/rooms`, {data:roomData}); 
   return response.data;
 };
 
