@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Box, Heading, useToast } from "@chakra-ui/react";
 import TableRoom from "../../components/table/room";
 import AddRoomModal from "../../components/modal/roomModal/add";
@@ -6,39 +6,44 @@ import Pagination from "../../components/pagination";
 import { getRooms } from "../../services/roomService";
 import LabelRoom from "../../components/label/room/labelRoom";
 import Spinner from "../../components/spinner/index";
+import RoomData from "../../components/constants/interfaceTypes/roomTypes";
 
 const RoomPage = () => {
   const [isAddRoomOpen, setIsAddRoomOpen] = useState(false);
-  const [rooms, setRooms] = useState<any[]>([]);
+  const [rooms, setRooms] = useState<RoomData[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const pageSize = 10;
   const [pageCount, setPageCount] = useState(1);
   const [loading, setLoading] = useState(true);
   const toast = useToast();
 
-  const fetchRooms = async (page = 1) => {
-    setLoading(true);
-    try {
-      const { rooms, pagination } = await getRooms(page, pageSize);
-      setRooms(rooms);
-      setPageCount(pagination.pageCount);
-    } catch (error) {
-      toast({
-        title: "Error fetching rooms",
-        description: "There was an issue retrieving the room data.",
-        status: "error",
-        duration: 3000,
-        isClosable: true,
-      });
-      console.error("Error fetching rooms:", error);
-    } finally {
-      setLoading(false);
-    }
-  };
+  const fetchRooms = useCallback(
+    async (page = 1) => {
+      setLoading(true);
+      try {
+        const { rooms, pagination } = await getRooms(page, pageSize);
+        setRooms(rooms);
+        setPageCount(pagination.pageCount);
+      } catch (error) {
+        toast({
+          title: "Error fetching rooms",
+          description: "There was an issue retrieving the room data.",
+          status: "error",
+          duration: 3000,
+          isClosable: true,
+        });
+        console.error("Error fetching rooms:", error);
+      } finally {
+        setLoading(false);
+      }
+    },
+    [pageSize, toast]
+  );
 
   const closeAddRoomModal = () => setIsAddRoomOpen(false);
-  const handleAddRoom = (roomData: any) => {
-    setRooms([...rooms, roomData]);
+
+  const handleAddRoom = (roomData: RoomData) => {
+    setRooms((prevRooms) => [...prevRooms, roomData]);
   };
 
   const handleDeleteRoom = (deletedRoomId: string) => {
@@ -47,9 +52,17 @@ const RoomPage = () => {
     );
   };
 
+  const handleEditRoom = async (updatedRoomData: RoomData) => {
+    setRooms((prevRooms) =>
+      prevRooms.map((room) =>
+        room.documentId === updatedRoomData.documentId ? updatedRoomData : room
+      )
+    );
+  };
+
   useEffect(() => {
     fetchRooms(currentPage);
-  }, [currentPage]);
+  }, [fetchRooms, currentPage]);
 
   return (
     <Box>
@@ -60,7 +73,11 @@ const RoomPage = () => {
       {loading ? (
         <Spinner />
       ) : (
-        <TableRoom rooms={rooms} onDeleteRoom={handleDeleteRoom} />
+        <TableRoom
+          onEditRoom={handleEditRoom}
+          rooms={rooms}
+          onDeleteRoom={handleDeleteRoom}
+        />
       )}
       <Pagination
         currentPage={currentPage}

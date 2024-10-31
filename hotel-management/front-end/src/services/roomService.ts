@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import axios from "axios";
-import RoomData from "../components/interfaceTypes/roomTypes";
+import RoomData from "../components/constants/interfaceTypes/roomTypes";
+import RateData from "../components/constants/interfaceTypes/rateTypes";
 
 const BASE_URL = "https://dynamic-cheese-3118c582a4.strapiapp.com/api";
 
@@ -28,23 +29,27 @@ export const getRooms = async (page: number, pageSize: number) => {
 };
 
 export const createRoom = async (roomData: RoomData) => {
-  const response = await axios.post(`${BASE_URL}/rooms`, {data:roomData}); 
-  return response.data;
+  const { documentId, ...data } = roomData;
+  try {
+    const response = await axios.post(`${BASE_URL}/rooms`, {
+      data: data,
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error in createRoom:", error);
+    throw error;
+  }
 };
 
 export const getRoomById = (roomId: string) =>
   axios.get(`${BASE_URL}/rooms/${roomId}`).then((response) => response.data);
 
-export const updateRoom = (roomId: string, roomData: any) =>
+export const updateRoom = (roomId: string, roomData: RoomData) =>
   axios
     .put(`${BASE_URL}/rooms/${roomId}`, roomData)
     .then((response) => response.data);
 
 export const deleteRoom = async (roomId: string) => {
-  const room = await getRoomById(roomId);
-  if (room.status !== "Available") {
-    throw new Error("Room must be 'Available' to delete.");
-  }
   const response = await axios.delete(`${BASE_URL}/rooms/${roomId}`);
   return response.data;
 };

@@ -13,16 +13,12 @@ import {
 import { useForm } from "react-hook-form";
 import Button from "../../../button";
 import Spinner from "../../../spinner";
+import RoomData from "../../../constants/interfaceTypes/roomTypes";
 
 interface EditRoomModalProps {
   onClose: () => void;
-  onEditRoom: (roomData: any) => void;
-  initialRoomData: {
-    bedType: string;
-    roomFloor: string;
-    roomFacility: string;
-    status: string;
-  };
+  onEditRoom: (roomData: RoomData) => void;
+  initialRoomData: RoomData;
 }
 
 const EditRoomModal = ({
@@ -36,12 +32,7 @@ const EditRoomModal = ({
     formState: { errors },
     reset,
   } = useForm({
-    defaultValues: {
-      bedType: initialRoomData.bedType,
-      roomFloor: initialRoomData.roomFloor,
-      roomFacility: initialRoomData.roomFacility,
-      status: initialRoomData.status,
-    },
+    defaultValues: initialRoomData,
   });
 
   const [loading, setLoading] = useState(false);
@@ -52,7 +43,7 @@ const EditRoomModal = ({
     reset(initialRoomData);
   }, [initialRoomData, reset]);
 
-  const onSubmit = async (data: any) => {
+  const onSubmit = async (data: RoomData) => {
     setLoading(true);
     try {
       await onEditRoom(data);
@@ -78,7 +69,7 @@ const EditRoomModal = ({
   };
 
   return (
-    <FormControl onSubmit={handleSubmit(onSubmit)}>
+ <form  onSubmit={handleSubmit(onSubmit)}>
       <Box display="flex" justifyContent="space-between">
         <FormControl mb={4} maxW="320px" isInvalid={!!errors.bedType}>
           <FormLabel>Bed Type</FormLabel>
@@ -152,7 +143,7 @@ const EditRoomModal = ({
           <Button type="submit" text="Edit" buttonType="first" />
         )}
       </ModalFooter>
-    </FormControl>
+    </form>
   );
 };
 
