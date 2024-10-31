@@ -9,12 +9,12 @@ import {
   Box,
   useToast,
 } from "@chakra-ui/react";
+import { useForm } from "react-hook-form";
 import withModal from "../../modalHoc";
 import Button from "../../../button";
 import Spinner from "../../../spinner";
 import RoomData from "../../../interfaceTypes/roomTypes";
 import { createRoom } from "../../../../services/roomService";
-import useFormValidation from "../../../validate";
 
 interface AddRoomModalProps {
   onClose: () => void;
@@ -22,31 +22,27 @@ interface AddRoomModalProps {
 }
 
 const AddRoomModal = ({ onClose, onAddRoom }: AddRoomModalProps) => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    reset,
+  } = useForm({
+    defaultValues: {
+      bedType: "",
+      roomFloor: "",
+      roomFacility: "",
+    },
+  });
   const [loading, setLoading] = useState(false);
   const toast = useToast();
 
-  const [formData, setFormData] = useState({
-    bedType: "",
-    roomFloor: "",
-    roomFacility: "",
-  });
-
-  const { errors, validate } = useFormValidation(formData);
-
-  const handleSubmit = async () => {
-    const { isValid } = validate(formData, [
-      "bedType",
-      "roomFloor",
-      "roomFacility",
-    ]);
-
-    if (!isValid) return;
-
+  const onSubmit = async (data: any) => {
     const newRoomData: RoomData = {
       roomNumber: "ID",
-      bedType: formData.bedType,
-      roomFloor: formData.roomFloor,
-      roomFacility: formData.roomFacility,
+      bedType: data.bedType,
+      roomFloor: data.roomFloor,
+      roomFacility: data.roomFacility,
       roomStatus: "Available",
     };
 
@@ -60,6 +56,7 @@ const AddRoomModal = ({ onClose, onAddRoom }: AddRoomModalProps) => {
         duration: 3000,
         isClosable: true,
       });
+      reset();
       onClose();
     } catch (error) {
       toast({
@@ -75,23 +72,13 @@ const AddRoomModal = ({ onClose, onAddRoom }: AddRoomModalProps) => {
     }
   };
 
-  const handleChange = (
-    e: React.ChangeEvent<HTMLSelectElement | HTMLTextAreaElement>
-  ) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-    validate({ ...formData, [name]: value }, [name]);
-  };
-
   return (
-    <>
+    <form onSubmit={handleSubmit(onSubmit)}>
       <Box display="flex" justifyContent="space-between">
-        <FormControl mb={4} maxW="320px">
+        <FormControl mb={4} maxW="320px" isInvalid={!!errors.bedType}>
           <FormLabel>Bed Type</FormLabel>
           <Select
-            name="bedType"
-            value={formData.bedType}
-            onChange={handleChange}
+            {...register("bedType", { required: "Bed type is required" })}
             placeholder="Select bed type"
           >
             <option value="Single">Single</option>
@@ -99,14 +86,15 @@ const AddRoomModal = ({ onClose, onAddRoom }: AddRoomModalProps) => {
             <option value="Queen">Queen</option>
             <option value="King">King</option>
           </Select>
-          {errors.bedType && <p style={{ color: "red" }}>{errors.bedType}</p>}
+          {errors.bedType && (
+            <p style={{ color: "red" }}>{errors.bedType.message}</p>
+          )}
         </FormControl>
-        <FormControl mb={4} maxW="320px">
+
+        <FormControl mb={4} maxW="320px" isInvalid={!!errors.roomFloor}>
           <FormLabel>Room Floor</FormLabel>
           <Select
-            name="roomFloor"
-            value={formData.roomFloor}
-            onChange={handleChange}
+            {...register("roomFloor", { required: "Room floor is required" })}
             placeholder="Select floor"
           >
             <option value="2nd Floor">2nd Floor</option>
@@ -115,23 +103,25 @@ const AddRoomModal = ({ onClose, onAddRoom }: AddRoomModalProps) => {
             <option value="5th Floor">5th Floor</option>
           </Select>
           {errors.roomFloor && (
-            <p style={{ color: "red" }}>{errors.roomFloor}</p>
+            <p style={{ color: "red" }}>{errors.roomFloor.message}</p>
           )}
         </FormControl>
       </Box>
-      <FormControl mt="32px" mb="32px">
+
+      <FormControl mt="32px" mb="32px" isInvalid={!!errors.roomFacility}>
         <FormLabel>Room Facility</FormLabel>
         <Textarea
-          name="roomFacility"
+          {...register("roomFacility", {
+            required: "Room facility is required",
+          })}
           placeholder="AC, shower, Double bed, towel, bathtub, TV"
-          value={formData.roomFacility}
-          onChange={handleChange}
           maxLength={500}
         />
         {errors.roomFacility && (
-          <p style={{ color: "red" }}>{errors.roomFacility}</p>
+          <p style={{ color: "red" }}>{errors.roomFacility.message}</p>
         )}
       </FormControl>
+
       <FormControl mb={4}>
         <FormLabel>Status</FormLabel>
         <Select value="Available" disabled>
@@ -144,10 +134,10 @@ const AddRoomModal = ({ onClose, onAddRoom }: AddRoomModalProps) => {
         {loading ? (
           <Spinner />
         ) : (
-          <Button onClick={handleSubmit} text="Add" buttonType="first" />
+          <Button type="submit" text="Add" buttonType="first" />
         )}
       </ModalFooter>
-    </>
+    </form>
   );
 };
 
