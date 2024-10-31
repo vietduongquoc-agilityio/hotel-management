@@ -32,7 +32,6 @@ export const createRoom = async (roomData: RoomData) => {
   return response.data;
 };
 
-
 export const getRoomById = (roomId: string) =>
   axios.get(`${BASE_URL}/rooms/${roomId}`).then((response) => response.data);
 
