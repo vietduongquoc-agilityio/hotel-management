@@ -1,51 +1,53 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable react-refresh/only-export-components */
 import { useState } from "react";
-import { FormControl, FormLabel, useToast } from "@chakra-ui/react";
+import { useForm } from "react-hook-form";
+import {
+  FormControl,
+  FormLabel,
+  ModalFooter,
+  useToast,
+} from "@chakra-ui/react";
 import withModal from "../../modalHoc";
 import Button from "../../../button";
 import Input from "../../../input";
-import RateData from "../../../interfaceTypes/rateTypes";
+import RateData from "../../../constants/interfaceTypes/rateTypes";
 import { createRate } from "../../../../services/rateServices";
 import Spinner from "../../../spinner";
-import useFormValidation from "../../../validate";
-import { fontSizes } from "../../../../themes/base/typography";
+import {
+  validationRules,
+} from "../../../constants/validate";
 
 interface AddRateModalProps {
   onClose: () => void;
   onAddRate: (rateData: RateData) => void;
 }
 
+interface FormData {
+  roomType: string;
+  cancellationPolicy: string;
+  price: string;
+  availability: string;
+}
+
 const AddRateModal = ({ onClose, onAddRate }: AddRateModalProps) => {
   const [loading, setLoading] = useState(false);
   const toast = useToast();
 
-  const [formData, setFormData] = useState({
-    roomType: "",
-    cancellationPolicy: "",
-    price: "",
-    availability: "",
-  });
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormData>();
 
-  const { errors, validate } = useFormValidation(formData);
-
-  const handleSubmit = async () => {
-    const { isValid } = validate(formData, [
-      "roomType",
-      "cancellationPolicy",
-      "price",
-      "availability",
-    ]);
-
-    if (!isValid) return;
-
+  const onSubmit = async (data: FormData) => {
     const newRateData: RateData = {
-      roomType: formData.roomType,
-      cancellationPolicy: formData.cancellationPolicy,
+      roomType: data.roomType,
+      cancellationPolicy: data.cancellationPolicy,
       deals: "Family Deal",
-      dealPrice: formData.price,
-      rate: formData.price,
-      availability: formData.availability,
+      dealPrice: data.price,
+      rate: data.price,
+      availability: data.availability,
       documentId: "",
     };
 
@@ -73,78 +75,78 @@ const AddRateModal = ({ onClose, onAddRate }: AddRateModalProps) => {
     }
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-    validate({ ...formData, [name]: value }, [name]);
-  };
-
   return (
-    <>
+    <form onSubmit={handleSubmit(onSubmit)}>
       <FormControl mb={4}>
         <FormLabel>Rate Type</FormLabel>
         <Input
-          name="roomType"
-          value={formData.roomType}
-          onChange={handleChange}
+          {...register("roomType", validationRules.required)}
           placeHolder="Enter room type"
           inputType="first"
         />
         {errors.roomType && (
-          <p style={{ color: "red", fontSize: "14px" }}> {errors.roomType}</p>
+          <p style={{ color: "red", fontSize: "14px" }}>
+            {errors.roomType.message}
+          </p>
         )}
       </FormControl>
+
       <FormControl mb={4}>
         <FormLabel>Cancellation Policy</FormLabel>
         <Input
-          name="cancellationPolicy"
-          value={formData.cancellationPolicy}
-          onChange={handleChange}
+          {...register("cancellationPolicy", validationRules.required)}
           placeHolder="Enter cancellation policy"
           inputType="first"
         />
         {errors.cancellationPolicy && (
           <p style={{ color: "red", fontSize: "14px" }}>
-            {errors.cancellationPolicy}
+            {errors.cancellationPolicy.message}
           </p>
         )}
       </FormControl>
+
       <FormControl mb={4}>
         <FormLabel>Availability Room</FormLabel>
         <Input
-          name="availability"
-          value={formData.availability}
-          onChange={handleChange}
+          {...register("availability", {
+            ...validationRules.required,
+            ...validationRules.numeric,
+          })}
           placeHolder="Enter number of rooms"
           inputType="first"
         />
         {errors.availability && (
           <p style={{ color: "red", fontSize: "14px" }}>
-            {errors.availability}
+            {errors.availability.message}
           </p>
         )}
       </FormControl>
+
       <FormControl mb={4}>
         <FormLabel>Price</FormLabel>
         <Input
-          name="price"
-          value={formData.price}
-          onChange={handleChange}
+          {...register("price", {
+            ...validationRules.required,
+            ...validationRules.numeric,
+          })}
           placeHolder="Enter room price"
           inputType="first"
         />
         {errors.price && (
-          <p style={{ color: "red", fontSize: "14px" }}>{errors.price}</p>
+          <p style={{ color: "red", fontSize: "14px" }}>
+            {errors.price.message}
+          </p>
         )}
       </FormControl>
-
-      <Button onClick={onClose} text="Cancel" buttonType="cancelButton" />
-      {loading ? (
-        <Spinner />
-      ) : (
-        <Button onClick={handleSubmit} text="Add" buttonType="first" />
-      )}
-    </>
+      <ModalFooter>
+        <Button onClick={onClose} text="Cancel" buttonType="cancelButton" />
+        {loading ? (
+          <Spinner />
+        ) : (
+          <Button type="submit" text="Add" buttonType="first" />
+        )}
+      </ModalFooter>
+    </form>
   );
 };
 

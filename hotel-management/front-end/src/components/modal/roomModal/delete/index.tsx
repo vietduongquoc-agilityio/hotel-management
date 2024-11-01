@@ -3,9 +3,6 @@
 import { useState } from "react";
 import {
   Text,
-  Modal,
-  ModalOverlay,
-  ModalContent,
   ModalHeader,
   ModalFooter,
   ModalBody,
@@ -17,60 +14,50 @@ import { deleteRoom } from "../../../../services/roomService";
 import Spinner from "../../../spinner";
 
 interface DeleteRoomProps {
-  room: { roomId: string; roomNumber: string; status: string };
+  roomId: string;
   onClose: () => void;
-  onRoomDeleted: () => void;
+  onDeleteRoom: (roomId: string) => void;
 }
 
-const DeleteRoom = ({ room, onClose, onRoomDeleted }: DeleteRoomProps) => {
+const DeleteRoom = ({ roomId, onClose, onDeleteRoom }: DeleteRoomProps) => {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
   const handleDelete = async () => {
     setLoading(true);
-    if (room.status !== "Available") {
-      setError("Room must be 'Available' to delete.");
-      return;
-    }
+
     try {
-      await deleteRoom(room.roomId);
-      onRoomDeleted();
+      await deleteRoom(roomId);
+      onDeleteRoom(roomId);
       onClose();
     } catch (error) {
       setError("Failed to delete room.");
     } finally {
-      setLoading(true);
+      setLoading(false);
     }
   };
 
   return (
-    <Modal isOpen={true} onClose={onClose}>
-      <ModalOverlay />
-      <ModalContent bg="white.200">
-        <ModalHeader>Delete Room</ModalHeader>
-        <ModalCloseButton />
-        <ModalBody>
-          <Text>Are you sure you want to delete room {room.roomNumber}?</Text>
-          {error && <Text color="red.500">{error}</Text>}
-        </ModalBody>
-        <ModalFooter>
+    <>
+      <ModalHeader>Delete Room</ModalHeader>
+      <ModalCloseButton />
+      <ModalBody>
+        <Text>Are you sure you want to delete this room?</Text>
+        {error && <Text color="red.500">{error}</Text>}
+      </ModalBody>
+      <ModalFooter>
+        <Button onClick={onClose} text={"Cancel"} buttonType={"cancelButton"} />
+        {loading ? (
+          <Spinner />
+        ) : (
           <Button
-            onClick={onClose}
-            text={"Cancel"}
-            buttonType={"cancelButton"}
+            onClick={handleDelete}
+            text={"Confirm Delete"}
+            buttonType={"deleteButton"}
           />
-          {loading ? (
-            <Spinner />
-          ) : (
-            <Button
-              onClick={handleDelete}
-              text={"Confirm Delete"}
-              buttonType={"deleteButton"}
-            />
-          )}
-        </ModalFooter>
-      </ModalContent>
-    </Modal>
+        )}
+      </ModalFooter>
+    </>
   );
 };
 

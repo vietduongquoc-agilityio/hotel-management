@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Box, Text, UnorderedList, ListItem, Alert } from "@chakra-ui/react";
-import RateData from "../../interfaceTypes/rateTypes";
-import EditRate from "../../modal/rateModal/edit";
+import RateData from "../../constants/interfaceTypes/rateTypes";
+import EditRateModal from "../../modal/rateModal/edit";
 import DeleteRate from "../../modal/rateModal/delete";
 import Button from "../../button";
 
@@ -9,13 +9,24 @@ interface TableRateProps {
   rates: RateData[];
   error?: string | null;
   onDeleteRate: (rateId: string) => void;
+  onEditRate: (updatedRateData: RateData) => Promise<void>;
 }
 
-const TableRate = ({ rates, error, onDeleteRate }: TableRateProps) => {
+const TableRate = ({
+  rates,
+  error,
+  onDeleteRate,
+  onEditRate,
+}: TableRateProps) => {
   const [activeRateId, setActiveRateId] = useState<string | null>(null);
+  const [selectedRate, setSelectedRate] = useState<RateData | null>(null);
 
   const toggleMenu = (rateId: string) => {
     setActiveRateId((prev) => (prev === rateId ? null : rateId));
+  };
+
+  const handleEditRate = (rate: RateData) => {
+    setSelectedRate(rate);
   };
 
   if (error) return <Alert status="error">{error}</Alert>;
@@ -105,7 +116,18 @@ const TableRate = ({ rates, error, onDeleteRate }: TableRateProps) => {
               borderRadius="8px"
               w="80px"
             >
-              <EditRate rateId={rate.documentId} RateData />
+              <Button
+                onClick={() => handleEditRate(rate)}
+                text="Edit"
+                buttonType={"first"}
+              ></Button>
+              {selectedRate && (
+                <EditRateModal
+                  initialRateData={selectedRate}
+                  onClose={() => setSelectedRate(null)}
+                  onEditRate={onEditRate}
+                />
+              )}
               <DeleteRate
                 rateId={rate.documentId}
                 onDeleteRate={onDeleteRate}

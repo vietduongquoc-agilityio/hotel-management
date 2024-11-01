@@ -1,9 +1,8 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import axios from "axios";
-import RateData from "../components/interfaceTypes/rateTypes";
+import RateData from "../components/constants/interfaceTypes/rateTypes";
 
-const BASE_URL = "https://dynamic-cheese-3118c582a4.strapiapp.com/api";
-
+const BASE_URL = process.env.VITE_BASE_URL;
 // Rate Service
 export const getRates = async (page: number, pageSize: number) => {
   try {
@@ -43,17 +42,10 @@ export const createRate = async (rateData: RateData) => {
   }
 };
 
-export const updateRate = async (rateId: string, rateData: RateData) => {
-  try {
-    if (!rateId) throw new Error("Rate ID is required for updating.");
-    const response = await axios.put(`${BASE_URL}/rates/${rateId}`, rateData);
-    console.log("response.data", response.data);
-    return response.data;
-  } catch (error) {
-    console.error("Error in updateRate:", error);
-    throw error;
-  }
-};
+export const updateRate = (rateId: string, rateData: RateData) =>
+  axios
+    .put(`${BASE_URL}/rooms/${rateId}`, rateData)
+    .then((response) => response.data);
 
 export const deleteRate = async (rateId: string) => {
   const response = await axios.delete(`${BASE_URL}/rates/${rateId}`);

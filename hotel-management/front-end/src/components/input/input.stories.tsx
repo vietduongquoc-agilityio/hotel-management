@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Meta, StoryFn } from "@storybook/react";
-import Input, { inputType } from "./index";
+import Input, { InputType } from "./index";
 
 export default {
   title: "Components/Input",
@@ -35,5 +35,5 @@ const Template: StoryFn = (args) => {
 export const Default = Template.bind({});
 Default.args = {
   placeHolder: "Enter text...",
-  inputType: "first" as inputType,
+  inputType: "first" as InputType,
 };
