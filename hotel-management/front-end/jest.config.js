@@ -1,12 +1,8 @@
-module.exports = {
-  preset: "ts-jest",
-  testEnvironment: "jsdom",
+export default {
   transform: {
-    "^.+\\.tsx?$": "ts-jest",
+    "^.+\\.tsx?$": "babel-jest",
   },
   moduleFileExtensions: ["ts", "tsx", "js", "jsx", "json", "node"],
-  moduleNameMapper: {
-    "\\.(css|less)$": "identity-obj-proxy", // Mock CSS imports
-    "\\.(svg|jpg|jpeg|png|gif)$": "<rootDir>/__mocks__/fileMock.js", // Mock image imports
-  },
+  testEnvironment: "jsdom",
+  setupFilesAfterEnv: ["@testing-library/jest-dom"],
 };

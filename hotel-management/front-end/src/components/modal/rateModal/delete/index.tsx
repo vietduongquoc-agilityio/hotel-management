@@ -1,19 +1,28 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable react-refresh/only-export-components */
-import { Text, ModalFooter, ModalBody, useToast } from "@chakra-ui/react";
-import withModal from "../../modalHoc";
-import Button from "../../../button";
-import Spinner from "../../../spinner";
-import { deleteRate } from "../../../../services/rateServices";
 import { useState } from "react";
+import {
+  AlertDialog,
+  AlertDialogOverlay,
+  AlertDialogContent,
+  AlertDialogHeader,
+  AlertDialogBody,
+  AlertDialogFooter,
+  useDisclosure,
+  useToast,
+} from "@chakra-ui/react";
+import { deleteRate } from "../../../../services/rateServices";
+import Spinner from "../../../spinner";
+import React from "react";
+import Button from "../../../button";
 
 interface DeleteRateProps {
   rateId: string;
-  onClose: () => void;
   onDeleteRate: (rateId: string) => void;
 }
 
-const DeleteRate = ({ rateId, onClose, onDeleteRate }: DeleteRateProps) => {
+const DeleteRate = ({ rateId, onDeleteRate }: DeleteRateProps) => {
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const cancelRef = React.useRef(null);
   const toast = useToast();
   const [loading, setLoading] = useState(false);
 
@@ -44,23 +53,45 @@ const DeleteRate = ({ rateId, onClose, onDeleteRate }: DeleteRateProps) => {
 
   return (
     <>
-      <ModalBody>
-        <Text>Are you sure you want to delete this rate?</Text>
-      </ModalBody>
-      <ModalFooter>
-        <Button onClick={onClose} text="Cancel" buttonType="cancelButton" />
-        {loading ? (
-          <Spinner />
-        ) : (
-          <Button
-            onClick={handleDelete}
-            text="Confirm Delete"
-            buttonType="deleteButton"
-          />
-        )}
-      </ModalFooter>
+      <Button onClick={onOpen} text="Delete" buttonType="first"></Button>
+
+      <AlertDialog
+        isOpen={isOpen}
+        leastDestructiveRef={cancelRef}
+        onClose={onClose}
+      >
+        <AlertDialogOverlay>
+          <AlertDialogContent bg="white.200">
+            <AlertDialogHeader fontSize="lg" fontWeight="bold">
+              Delete Rate
+            </AlertDialogHeader>
+
+            <AlertDialogBody>
+              Are you sure you want to delete this rate?
+            </AlertDialogBody>
+
+            <AlertDialogFooter>
+              <Button
+                text="Cancel"
+                buttonType="cancelButton"
+                onClick={onClose}
+              />
+              {loading ? (
+                <Spinner />
+              ) : (
+                <Button
+                  onClick={handleDelete}
+                  ml={3}
+                  text="Confirm Delete"
+                  buttonType="deleteButton"
+                />
+              )}
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialogOverlay>
+      </AlertDialog>
     </>
   );
 };
 
-export default withModal(DeleteRate, "Delete");
+export default DeleteRate;
