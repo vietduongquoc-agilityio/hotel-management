@@ -1,5 +1,5 @@
 /* eslint-disable react-refresh/only-export-components */
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import withModal from "../../modalHoc";
 import {
   ModalFooter,
@@ -16,44 +16,34 @@ import Spinner from "../../../spinner";
 import RoomData from "../../../constants/interfaceTypes/roomTypes";
 
 interface EditRoomModalProps {
-  onClose: () => void;
-  onEditRoom: (roomData: RoomData) => void;
+  onClose?: () => void;
+  onEditRoom?: (roomData: RoomData) => void;
   initialRoomData: RoomData;
 }
 
-const EditRoomModal = ({
-  initialRoomData,
-  onClose,
-  onEditRoom,
-}: EditRoomModalProps) => {
+const EditRoomModal = ({ initialRoomData, onClose }: EditRoomModalProps) => {
   const {
     register,
     handleSubmit,
     formState: { errors },
-    reset,
   } = useForm({
     defaultValues: initialRoomData,
   });
 
+  console.log("initialRoomData", initialRoomData);
+
   const [loading, setLoading] = useState(false);
   const toast = useToast();
 
-  useEffect(() => {
-    // Reset form values when initialRoomData changes
-    reset(initialRoomData);
-  }, [initialRoomData, reset]);
-
-  const onSubmit = async (data: RoomData) => {
+  const onSubmit = async () => {
     setLoading(true);
     try {
-      await onEditRoom(data);
       toast({
         title: "Room updated successfully.",
         status: "success",
         duration: 3000,
         isClosable: true,
       });
-      onClose();
     } catch (error) {
       toast({
         title: "Failed to update room.",
@@ -69,14 +59,11 @@ const EditRoomModal = ({
   };
 
   return (
- <form  onSubmit={handleSubmit(onSubmit)}>
+    <form onSubmit={handleSubmit(onSubmit)}>
       <Box display="flex" justifyContent="space-between">
         <FormControl mb={4} maxW="320px" isInvalid={!!errors.bedType}>
           <FormLabel>Bed Type</FormLabel>
-          <Select
-            {...register("bedType", { required: "Bed type is required" })}
-            placeholder="Select bed type"
-          >
+          <Select {...register("bedType")}>
             <option value="Single">Single</option>
             <option value="Double">Double</option>
             <option value="Queen">Queen</option>
@@ -89,12 +76,7 @@ const EditRoomModal = ({
 
         <FormControl mb={4} maxW="320px" isInvalid={!!errors.roomFloor}>
           <FormLabel>Room Floor</FormLabel>
-          <Select
-            {...register("roomFloor", {
-              required: "Room floor is required",
-            })}
-            placeholder="Select floor"
-          >
+          <Select {...register("roomFloor")} placeholder="Select floor">
             <option value="2nd Floor">2nd Floor</option>
             <option value="3rd Floor">3rd Floor</option>
             <option value="4th Floor">4th Floor</option>

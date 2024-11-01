@@ -16,20 +16,15 @@ const TableRoom = ({
   rooms,
   error,
   onDeleteRoom,
-  onEditRoom,
 }: TableRoomProps) => {
   const [activeRoomId, setActiveRoomId] = useState<string | null>(null);
-  const [selectedRoom, setSelectedRoom] = useState<RoomData | null>(null);
+ 
 
   const toggleMenu = (roomId: string) => {
     setActiveRoomId((prev) => (prev === roomId ? null : roomId));
   };
 
   if (error) return <Alert status="error">{error}</Alert>;
-
-  const handleEditRoom = (room: RoomData) => {
-    setSelectedRoom(room);
-  };
 
   return (
     <Box
@@ -114,21 +109,10 @@ const TableRoom = ({
               borderRadius="8px"
               w="80px"
             >
-              <Button
-                onClick={() => handleEditRoom(room)}
-                text={"Edit"}
-                buttonType={"first"}
-              ></Button>
-              {selectedRoom && (
-                <EditRoomModal
-                  initialRoomData={selectedRoom}
-                  onClose={() => setSelectedRoom(null)}
-                  onEditRoom={async (updatedRoomData: RoomData) => {
-                    await onEditRoom(updatedRoomData);
-                    setSelectedRoom(null);
-                  }}
-                />
-              )}
+              <EditRoomModal
+                initialRoomData={room}
+              />
+
               <DeleteRoom
                 roomId={room.documentId}
                 onDeleteRoom={onDeleteRoom}
