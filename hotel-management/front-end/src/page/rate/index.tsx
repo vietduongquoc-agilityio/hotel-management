@@ -3,7 +3,7 @@ import { Box, Heading, useToast } from "@chakra-ui/react";
 import LabelRate from "../../components/label/rate/labelRate";
 import TableRate from "../../components/table/rate";
 import { getRates } from "../../services/rateServices";
-import RateData from "../../components/interfaceTypes/rateTypes";
+import RateData from "../../components/constants/interfaceTypes/rateTypes";
 import Spinner from "../../components/spinner";
 
 const RatePage = () => {
@@ -30,6 +30,14 @@ const RatePage = () => {
     }
   };
 
+  const handleEditRate = async (updatedRateData: RateData) => {
+    setRates((prevRates) =>
+      prevRates.map((rate) =>
+        rate.documentId === updatedRateData.documentId ? updatedRateData : rate
+      )
+    );
+  };
+
   const handleDeleteRate = (deletedRateId: string) => {
     setRates((prevRates) =>
       prevRates.filter((rate) => rate.documentId !== deletedRateId)
@@ -49,7 +57,11 @@ const RatePage = () => {
       {loading ? (
         <Spinner />
       ) : (
-        <TableRate rates={rates} onDeleteRate={handleDeleteRate} />
+        <TableRate
+          onEditRate={handleEditRate}
+          rates={rates}
+          onDeleteRate={handleDeleteRate}
+        />
       )}
     </Box>
   );

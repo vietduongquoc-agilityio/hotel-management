@@ -4,6 +4,8 @@ interface RoomData {
   roomFloor: string;
   roomStatus: string;
   roomNumber: string;
+  documentId: string;
+  status: string;
 }
 
 export default RoomData;

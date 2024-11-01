@@ -1,6 +1,6 @@
-import { inputType } from ".";
+import { InputType } from ".";
 
-export const getStyleInput = (type: inputType) => {
+export const getStyleInput = (type: InputType) => {
   switch (type) {
     case "first": {
       return first;

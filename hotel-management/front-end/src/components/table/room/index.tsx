@@ -1,31 +1,35 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { useState } from "react";
 import EditRoomModal from "../../modal/roomModal/edit";
-import {
-  Box,
-  Text,
-  UnorderedList,
-  ListItem,
-  Alert,
-} from "@chakra-ui/react";
+import { Box, Text, UnorderedList, ListItem, Alert } from "@chakra-ui/react";
 import DeleteRoom from "../../modal/roomModal/delete";
 import Button from "../../button";
-import RoomData from "../../interfaceTypes/roomTypes";
+import RoomData from "../../constants/interfaceTypes/roomTypes";
 
 interface TableRoomProps {
   rooms: RoomData[];
   error?: string | null;
-  onDeleteRoom: (rateId: string) => void;
+  onDeleteRoom: (roomId: string) => void;
+  onEditRoom: (roomData: RoomData) => Promise<void>;
 }
 
-const TableRoom = ({ rooms, error, onDeleteRoom }: TableRoomProps) => {
+const TableRoom = ({
+  rooms,
+  error,
+  onDeleteRoom,
+  onEditRoom,
+}: TableRoomProps) => {
   const [activeRoomId, setActiveRoomId] = useState<string | null>(null);
+  const [selectedRoom, setSelectedRoom] = useState<RoomData | null>(null);
 
   const toggleMenu = (roomId: string) => {
     setActiveRoomId((prev) => (prev === roomId ? null : roomId));
   };
 
   if (error) return <Alert status="error">{error}</Alert>;
+
+  const handleEditRoom = (room: RoomData) => {
+    setSelectedRoom(room);
+  };
 
   return (
     <Box
@@ -99,7 +103,7 @@ const TableRoom = ({ rooms, error, onDeleteRoom }: TableRoomProps) => {
               top="25px"
               right="55px"
               position="absolute"
-              background-color="white.200"
+              backgroundColor="white.200"
               border="1px solid #989fad"
               p="7px"
               boxShadow="0px 4px 8px rgba(57, 56, 56, 0.466)"
@@ -110,11 +114,25 @@ const TableRoom = ({ rooms, error, onDeleteRoom }: TableRoomProps) => {
               borderRadius="8px"
               w="80px"
             >
-              <EditRoomModal></EditRoomModal>
+              <Button
+                onClick={() => handleEditRoom(room)}
+                text={"Edit"}
+                buttonType={"first"}
+              ></Button>
+              {selectedRoom && (
+                <EditRoomModal
+                  initialRoomData={selectedRoom}
+                  onClose={() => setSelectedRoom(null)}
+                  onEditRoom={async (updatedRoomData: RoomData) => {
+                    await onEditRoom(updatedRoomData);
+                    setSelectedRoom(null);
+                  }}
+                />
+              )}
               <DeleteRoom
                 roomId={room.documentId}
                 onDeleteRoom={onDeleteRoom}
-              ></DeleteRoom>
+              />
             </Box>
           )}
         </Box>

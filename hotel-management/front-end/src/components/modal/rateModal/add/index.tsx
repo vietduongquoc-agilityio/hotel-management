@@ -11,9 +11,12 @@ import {
 import withModal from "../../modalHoc";
 import Button from "../../../button";
 import Input from "../../../input";
-import RateData from "../../../interfaceTypes/rateTypes";
+import RateData from "../../../constants/interfaceTypes/rateTypes";
 import { createRate } from "../../../../services/rateServices";
 import Spinner from "../../../spinner";
+import {
+  validationRules,
+} from "../../../constants/validate";
 
 interface AddRateModalProps {
   onClose: () => void;
@@ -77,7 +80,7 @@ const AddRateModal = ({ onClose, onAddRate }: AddRateModalProps) => {
       <FormControl mb={4}>
         <FormLabel>Rate Type</FormLabel>
         <Input
-          {...register("roomType", { required: "Room type is required" })}
+          {...register("roomType", validationRules.required)}
           placeHolder="Enter room type"
           inputType="first"
         />
@@ -91,9 +94,7 @@ const AddRateModal = ({ onClose, onAddRate }: AddRateModalProps) => {
       <FormControl mb={4}>
         <FormLabel>Cancellation Policy</FormLabel>
         <Input
-          {...register("cancellationPolicy", {
-            required: "Cancellation policy is required",
-          })}
+          {...register("cancellationPolicy", validationRules.required)}
           placeHolder="Enter cancellation policy"
           inputType="first"
         />
@@ -108,11 +109,8 @@ const AddRateModal = ({ onClose, onAddRate }: AddRateModalProps) => {
         <FormLabel>Availability Room</FormLabel>
         <Input
           {...register("availability", {
-            required: "Availability is required",
-            pattern: {
-              value: /^[0-9]*$/,
-              message: "Availability must be a number",
-            },
+            ...validationRules.required,
+            ...validationRules.numeric,
           })}
           placeHolder="Enter number of rooms"
           inputType="first"
@@ -128,11 +126,8 @@ const AddRateModal = ({ onClose, onAddRate }: AddRateModalProps) => {
         <FormLabel>Price</FormLabel>
         <Input
           {...register("price", {
-            required: "Price is required",
-            pattern: {
-              value: /^[0-9]*$/,
-              message: "Price must be a number",
-            },
+            ...validationRules.required,
+            ...validationRules.numeric,
           })}
           placeHolder="Enter room price"
           inputType="first"
