@@ -1,4 +1,9 @@
 /* eslint-disable react-refresh/only-export-components */
+import {
+  bedTypeOptions,
+  roomFloorOptions,
+  roomStatusOptions,
+} from "../../../constants/selectOptions/selectOption";
 import { useState } from "react";
 import withModal from "../../modalHoc";
 import {
@@ -13,7 +18,7 @@ import {
 import { useForm } from "react-hook-form";
 import Button from "../../../button";
 import Spinner from "../../../spinner";
-import RoomData from "../../../constants/interfaceTypes/roomTypes";
+import { RoomData } from "../../../constants/interfaceTypes/roomTypes";
 
 interface EditRoomModalProps {
   onClose?: () => void;
@@ -29,8 +34,6 @@ const EditRoomModal = ({ initialRoomData, onClose }: EditRoomModalProps) => {
   } = useForm({
     defaultValues: initialRoomData,
   });
-
-  console.log("initialRoomData", initialRoomData);
 
   const [loading, setLoading] = useState(false);
   const toast = useToast();
@@ -63,11 +66,12 @@ const EditRoomModal = ({ initialRoomData, onClose }: EditRoomModalProps) => {
       <Box display="flex" justifyContent="space-between">
         <FormControl mb={4} maxW="320px" isInvalid={!!errors.bedType}>
           <FormLabel>Bed Type</FormLabel>
-          <Select {...register("bedType")}>
-            <option value="Single">Single</option>
-            <option value="Double">Double</option>
-            <option value="Queen">Queen</option>
-            <option value="King">King</option>
+          <Select value={initialRoomData.bedType}>
+            {bedTypeOptions.map((option) => (
+              <option key={option.value} value={option.value}>
+                {option.label}
+              </option>
+            ))}
           </Select>
           {errors.bedType && (
             <p style={{ color: "red" }}>{errors.bedType.message}</p>
@@ -76,11 +80,12 @@ const EditRoomModal = ({ initialRoomData, onClose }: EditRoomModalProps) => {
 
         <FormControl mb={4} maxW="320px" isInvalid={!!errors.roomFloor}>
           <FormLabel>Room Floor</FormLabel>
-          <Select {...register("roomFloor")} placeholder="Select floor">
-            <option value="2nd Floor">2nd Floor</option>
-            <option value="3rd Floor">3rd Floor</option>
-            <option value="4th Floor">4th Floor</option>
-            <option value="5th Floor">5th Floor</option>
+          <Select value={initialRoomData.roomFloor}>
+            {roomFloorOptions.map((option) => (
+              <option key={option.value} value={option.value}>
+                {option.label}
+              </option>
+            ))}
           </Select>
           {errors.roomFloor && (
             <p style={{ color: "red" }}>{errors.roomFloor.message}</p>
@@ -91,9 +96,7 @@ const EditRoomModal = ({ initialRoomData, onClose }: EditRoomModalProps) => {
       <FormControl mb={4} isInvalid={!!errors.roomFacility}>
         <FormLabel>Room Facility</FormLabel>
         <Textarea
-          {...register("roomFacility", {
-            required: "Room facility is required",
-          })}
+          {...register("roomFacility")}
           placeholder="Enter a description...."
           maxLength={500}
         />
@@ -102,18 +105,17 @@ const EditRoomModal = ({ initialRoomData, onClose }: EditRoomModalProps) => {
         )}
       </FormControl>
 
-      <FormControl mb={4} isInvalid={!!errors.status}>
+      <FormControl mb={4} isInvalid={!!errors.roomStatus}>
         <FormLabel>Status</FormLabel>
-        <Select
-          {...register("status", { required: "Room status is required" })}
-          placeholder="Select status"
-        >
-          <option value="Available">Available</option>
-          <option value="Occupied">Occupied</option>
-          <option value="Under Maintenance">Under Maintenance</option>
+        <Select value={initialRoomData.roomStatus}>
+          {roomStatusOptions.map((option) => (
+            <option key={option.value} value={option.value}>
+              {option.label}
+            </option>
+          ))}
         </Select>
-        {errors.status && (
-          <p style={{ color: "red" }}>{errors.status.message}</p>
+        {errors.roomStatus && (
+          <p style={{ color: "red" }}>{errors.roomStatus.message}</p>
         )}
       </FormControl>
 

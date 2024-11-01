@@ -3,7 +3,7 @@ import EditRoomModal from "../../modal/roomModal/edit";
 import { Box, Text, UnorderedList, ListItem, Alert } from "@chakra-ui/react";
 import DeleteRoom from "../../modal/roomModal/delete";
 import Button from "../../button";
-import RoomData from "../../constants/interfaceTypes/roomTypes";
+import { RoomData } from "../../constants/interfaceTypes/roomTypes";
 
 interface TableRoomProps {
   rooms: RoomData[];
@@ -12,16 +12,22 @@ interface TableRoomProps {
   onEditRoom: (roomData: RoomData) => Promise<void>;
 }
 
-const TableRoom = ({
-  rooms,
-  error,
-  onDeleteRoom,
-}: TableRoomProps) => {
+const TableRoom = ({ rooms, error, onDeleteRoom }: TableRoomProps) => {
   const [activeRoomId, setActiveRoomId] = useState<string | null>(null);
- 
+  const [isDeleteDialogOpen, setDeleteDialogOpen] = useState(false);
 
   const toggleMenu = (roomId: string) => {
     setActiveRoomId((prev) => (prev === roomId ? null : roomId));
+  };
+
+  const openDeleteDialog = (roomId: string) => {
+    setActiveRoomId(roomId);
+    setDeleteDialogOpen(true);
+  };
+
+  const closeDeleteDialog = () => {
+    setDeleteDialogOpen(false);
+    setActiveRoomId(null);
   };
 
   if (error) return <Alert status="error">{error}</Alert>;
@@ -78,8 +84,8 @@ const TableRoom = ({
           <Text w="15%" color="grey.900">
             {room.roomNumber}
           </Text>
-          <Text w="20%">{room.bedType}</Text>
-          <Text w="15%">{room.roomFloor}</Text>
+          <Text w="20%">{room.bedType} Bed</Text>
+          <Text w="15%">{room.roomFloor} Floor</Text>
           <Text w="27%">{room.roomFacility}</Text>
           <Text w="16%" pl="48px" mr="20px">
             {room.roomStatus}
@@ -109,13 +115,18 @@ const TableRoom = ({
               borderRadius="8px"
               w="80px"
             >
-              <EditRoomModal
-                initialRoomData={room}
+              <EditRoomModal initialRoomData={room} />
+              <Button
+                text="Delete"
+                buttonType="deleteButton"
+                onClick={() => openDeleteDialog(room.documentId)}
               />
 
               <DeleteRoom
                 roomId={room.documentId}
                 onDeleteRoom={onDeleteRoom}
+                isOpen={isDeleteDialogOpen}
+                onClose={closeDeleteDialog}
               />
             </Box>
           )}

@@ -6,7 +6,7 @@ import Pagination from "../../components/pagination";
 import { getRooms } from "../../services/roomService";
 import LabelRoom from "../../components/label/room/labelRoom";
 import Spinner from "../../components/spinner/index";
-import RoomData from "../../components/constants/interfaceTypes/roomTypes";
+import { RoomData } from "../../components/constants/interfaceTypes/roomTypes";
 
 const RoomPage = () => {
   const [isAddRoomOpen, setIsAddRoomOpen] = useState(false);

@@ -12,21 +12,22 @@ interface TableRateProps {
   onEditRate: (updatedRateData: RateData) => Promise<void>;
 }
 
-const TableRate = ({
-  rates,
-  error,
-  onDeleteRate,
-  onEditRate,
-}: TableRateProps) => {
+const TableRate = ({ rates, error, onDeleteRate }: TableRateProps) => {
   const [activeRateId, setActiveRateId] = useState<string | null>(null);
-  const [selectedRate, setSelectedRate] = useState<RateData | null>(null);
+  const [isDeleteDialogOpen, setDeleteDialogOpen] = useState(false);
 
   const toggleMenu = (rateId: string) => {
     setActiveRateId((prev) => (prev === rateId ? null : rateId));
   };
 
-  const handleEditRate = (rate: RateData) => {
-    setSelectedRate(rate);
+  const openDeleteDialog = (rateId: string) => {
+    setActiveRateId(rateId);
+    setDeleteDialogOpen(true);
+  };
+
+  const closeDeleteDialog = () => {
+    setDeleteDialogOpen(false);
+    setActiveRateId(null);
   };
 
   if (error) return <Alert status="error">{error}</Alert>;
@@ -116,20 +117,16 @@ const TableRate = ({
               borderRadius="8px"
               w="80px"
             >
+              <EditRateModal initialRateData={rate} />
               <Button
-                onClick={() => handleEditRate(rate)}
-                text="Edit"
-                buttonType={"first"}
-              ></Button>
-              {selectedRate && (
-                <EditRateModal
-                  initialRateData={selectedRate}
-                  onClose={() => setSelectedRate(null)}
-                  onEditRate={onEditRate}
-                />
-              )}
+                text="Delete"
+                buttonType="deleteButton"
+                onClick={() => openDeleteDialog(rate.documentId)}
+              />
               <DeleteRate
                 rateId={rate.documentId}
+                isOpen={isDeleteDialogOpen}
+                onClose={closeDeleteDialog}
                 onDeleteRate={onDeleteRate}
               />
             </Box>
