@@ -28,7 +28,6 @@ interface EditRoomModalProps {
 
 const EditRoomModal = ({ initialRoomData, onClose }: EditRoomModalProps) => {
   const {
-    register,
     handleSubmit,
     formState: { errors },
   } = useForm({
@@ -66,7 +65,7 @@ const EditRoomModal = ({ initialRoomData, onClose }: EditRoomModalProps) => {
       <Box display="flex" justifyContent="space-between">
         <FormControl mb={4} maxW="320px" isInvalid={!!errors.bedType}>
           <FormLabel>Bed Type</FormLabel>
-          <Select value={initialRoomData.bedType}>
+          <Select defaultValue={initialRoomData.bedType}>
             {bedTypeOptions.map((option) => (
               <option key={option.value} value={option.value}>
                 {option.label}
@@ -80,7 +79,7 @@ const EditRoomModal = ({ initialRoomData, onClose }: EditRoomModalProps) => {
 
         <FormControl mb={4} maxW="320px" isInvalid={!!errors.roomFloor}>
           <FormLabel>Room Floor</FormLabel>
-          <Select value={initialRoomData.roomFloor}>
+          <Select defaultValue={initialRoomData.roomFloor}>
             {roomFloorOptions.map((option) => (
               <option key={option.value} value={option.value}>
                 {option.label}
@@ -95,11 +94,7 @@ const EditRoomModal = ({ initialRoomData, onClose }: EditRoomModalProps) => {
 
       <FormControl mb={4} isInvalid={!!errors.roomFacility}>
         <FormLabel>Room Facility</FormLabel>
-        <Textarea
-          {...register("roomFacility")}
-          placeholder="Enter a description...."
-          maxLength={500}
-        />
+        <Textarea placeholder="Enter a description...." maxLength={500} />
         {errors.roomFacility && (
           <p style={{ color: "red" }}>{errors.roomFacility.message}</p>
         )}
@@ -107,7 +102,7 @@ const EditRoomModal = ({ initialRoomData, onClose }: EditRoomModalProps) => {
 
       <FormControl mb={4} isInvalid={!!errors.roomStatus}>
         <FormLabel>Status</FormLabel>
-        <Select value={initialRoomData.roomStatus}>
+        <Select defaultValue={initialRoomData.roomStatus}>
           {roomStatusOptions.map((option) => (
             <option key={option.value} value={option.value}>
               {option.label}
