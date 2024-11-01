@@ -3,7 +3,7 @@ import { Box, Heading, useToast } from "@chakra-ui/react";
 import TableRoom from "../../components/table/room";
 import AddRoomModal from "../../components/modal/roomModal/add";
 import Pagination from "../../components/pagination";
-import { getRooms } from "../../services/roomService";
+import { getRooms, updateRoom } from "../../services/roomService"; // Ensure updateRoom service is imported
 import LabelRoom from "../../components/label/room/labelRoom";
 import Spinner from "../../components/spinner/index";
 import { RoomData } from "../../components/constants/interfaceTypes/roomTypes";
@@ -53,11 +53,34 @@ const RoomPage = () => {
   };
 
   const handleEditRoom = async (updatedRoomData: RoomData) => {
-    setRooms((prevRooms) =>
-      prevRooms.map((room) =>
-        room.documentId === updatedRoomData.documentId ? updatedRoomData : room
-      )
-    );
+    try {
+      await updateRoom(updatedRoomData.documentId, updatedRoomData);
+
+      setRooms((prevRooms) =>
+        prevRooms.map((room) =>
+          room.documentId === updatedRoomData.documentId
+            ? updatedRoomData
+            : room
+        )
+      );
+
+      toast({
+        title: "Room updated",
+        description: "Room details have been successfully updated.",
+        status: "success",
+        duration: 3000,
+        isClosable: true,
+      });
+    } catch (error) {
+      toast({
+        title: "Error updating room",
+        description: "There was an issue updating the room data.",
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+      });
+      console.error("Error updating room:", error);
+    }
   };
 
   useEffect(() => {

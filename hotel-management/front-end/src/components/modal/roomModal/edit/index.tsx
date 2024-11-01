@@ -19,6 +19,7 @@ import { useForm } from "react-hook-form";
 import Button from "../../../button";
 import Spinner from "../../../spinner";
 import { RoomData } from "../../../constants/interfaceTypes/roomTypes";
+import { updateRoom } from "../../../../services/roomService";
 
 interface EditRoomModalProps {
   onClose?: () => void;
@@ -26,7 +27,11 @@ interface EditRoomModalProps {
   initialRoomData: RoomData;
 }
 
-const EditRoomModal = ({ initialRoomData, onClose }: EditRoomModalProps) => {
+const EditRoomModal = ({
+  initialRoomData,
+  onClose,
+  onEditRoom,
+}: EditRoomModalProps) => {
   const {
     handleSubmit,
     formState: { errors },
@@ -37,15 +42,23 @@ const EditRoomModal = ({ initialRoomData, onClose }: EditRoomModalProps) => {
   const [loading, setLoading] = useState(false);
   const toast = useToast();
 
-  const onSubmit = async () => {
+  const onSubmit = async (data: RoomData) => {
+    console.log(data);
+
     setLoading(true);
     try {
+      const updatedRoomData = await updateRoom(
+        initialRoomData.documentId,
+        data
+      );
+      if (onEditRoom) onEditRoom(updatedRoomData);
       toast({
         title: "Room updated successfully.",
         status: "success",
         duration: 3000,
         isClosable: true,
       });
+      if (onClose) onClose();
     } catch (error) {
       toast({
         title: "Failed to update room.",
@@ -66,8 +79,8 @@ const EditRoomModal = ({ initialRoomData, onClose }: EditRoomModalProps) => {
         <FormControl mb={4} maxW="320px" isInvalid={!!errors.bedType}>
           <FormLabel>Bed Type</FormLabel>
           <Select defaultValue={initialRoomData.bedType}>
-            {bedTypeOptions.map((option) => (
-              <option key={option.value} value={option.value}>
+            {bedTypeOptions.map((option, index) => (
+              <option key={`${option.value}-${index}`} value={option.value}>
                 {option.label}
               </option>
             ))}
@@ -80,8 +93,8 @@ const EditRoomModal = ({ initialRoomData, onClose }: EditRoomModalProps) => {
         <FormControl mb={4} maxW="320px" isInvalid={!!errors.roomFloor}>
           <FormLabel>Room Floor</FormLabel>
           <Select defaultValue={initialRoomData.roomFloor}>
-            {roomFloorOptions.map((option) => (
-              <option key={option.value} value={option.value}>
+            {roomFloorOptions.map((option, index) => (
+              <option key={`${option.value}-${index}`} value={option.value}>
                 {option.label}
               </option>
             ))}
@@ -94,7 +107,7 @@ const EditRoomModal = ({ initialRoomData, onClose }: EditRoomModalProps) => {
 
       <FormControl mb={4} isInvalid={!!errors.roomFacility}>
         <FormLabel>Room Facility</FormLabel>
-        <Textarea placeholder="Enter a description...." maxLength={500} />
+        <Textarea defaultValue={initialRoomData.roomFacility} maxLength={500} />
         {errors.roomFacility && (
           <p style={{ color: "red" }}>{errors.roomFacility.message}</p>
         )}
@@ -103,8 +116,8 @@ const EditRoomModal = ({ initialRoomData, onClose }: EditRoomModalProps) => {
       <FormControl mb={4} isInvalid={!!errors.roomStatus}>
         <FormLabel>Status</FormLabel>
         <Select defaultValue={initialRoomData.roomStatus}>
-          {roomStatusOptions.map((option) => (
-            <option key={option.value} value={option.value}>
+          {roomStatusOptions.map((option, index) => (
+            <option key={`${option.value}-${index}`} value={option.value}>
               {option.label}
             </option>
           ))}

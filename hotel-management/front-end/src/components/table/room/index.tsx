@@ -9,10 +9,10 @@ interface TableRoomProps {
   rooms: RoomData[];
   error?: string | null;
   onDeleteRoom: (roomId: string) => void;
-  onEditRoom: (roomData: RoomData) => Promise<void>;
+  onEditRoom: (roomData: RoomData) => void;
 }
 
-const TableRoom = ({ rooms, error, onDeleteRoom }: TableRoomProps) => {
+const TableRoom = ({ rooms, error, onDeleteRoom, onEditRoom }: TableRoomProps) => {
   const [activeRoomId, setActiveRoomId] = useState<string | null>(null);
   const [isDeleteDialogOpen, setDeleteDialogOpen] = useState(false);
 
@@ -115,7 +115,13 @@ const TableRoom = ({ rooms, error, onDeleteRoom }: TableRoomProps) => {
               borderRadius="8px"
               w="80px"
             >
-              <EditRoomModal initialRoomData={room} />
+              <EditRoomModal
+                initialRoomData={room}
+                onEditRoom={(updatedRoomData: RoomData) => {
+                  onEditRoom(updatedRoomData); 
+                  setActiveRoomId(null);
+                }}
+              />
               <Button
                 text="Delete"
                 buttonType="deleteButton"

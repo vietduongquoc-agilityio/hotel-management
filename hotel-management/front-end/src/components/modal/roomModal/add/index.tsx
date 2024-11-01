@@ -16,7 +16,10 @@ import Spinner from "../../../spinner";
 import { NewRoomData } from "../../../constants/interfaceTypes/roomTypes";
 import { createRoom } from "../../../../services/roomService";
 import { validationRules } from "../../../constants/validate";
-import { bedTypeOptions, roomFloorOptions } from "../../../constants/selectOptions/selectOption";
+import {
+  bedTypeOptions,
+  roomFloorOptions,
+} from "../../../constants/selectOptions/selectOption";
 
 interface AddRoomModalProps {
   onClose: () => void;
