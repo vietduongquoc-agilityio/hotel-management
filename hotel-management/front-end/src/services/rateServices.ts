@@ -2,8 +2,7 @@
 import axios from "axios";
 import RateData from "../components/constants/interfaceTypes/rateTypes";
 
-const BASE_URL = "https://dynamic-cheese-3118c582a4.strapiapp.com/api";
-
+const BASE_URL = process.env.VITE_BASE_URL;
 // Rate Service
 export const getRates = async (page: number, pageSize: number) => {
   try {

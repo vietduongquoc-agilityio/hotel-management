@@ -1,9 +1,8 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import axios from "axios";
 import RoomData from "../components/constants/interfaceTypes/roomTypes";
-import RateData from "../components/constants/interfaceTypes/rateTypes";
 
-const BASE_URL = "https://dynamic-cheese-3118c582a4.strapiapp.com/api";
+const BASE_URL = process.env.VITE_BASE_URL;
 
 export const getRooms = async (page: number, pageSize: number) => {
   try {
