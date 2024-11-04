@@ -13,13 +13,16 @@ import { useForm } from "react-hook-form";
 import withModal from "../../modalHoc";
 import Button from "../../../button";
 import Spinner from "../../../spinner";
-import RoomData from "../../../constants/interfaceTypes/roomTypes";
-import { createRoom } from "../../../../services/roomService";
-import { validationRules } from "../../../constants/validate";
+import { NewRoomData } from "../../../../constants/interfaceTypes/roomTypes";
+import { validationRules } from "../../../../constants/validate";
+import {
+  bedTypeOptions,
+  roomFloorOptions,
+} from "../../../../constants/selectOptions/selectOption";
 
 interface AddRoomModalProps {
   onClose: () => void;
-  onAddRoom: (roomData: RoomData) => void;
+  onAddRoom: (roomData: NewRoomData) => void;
 }
 
 interface FormData {
@@ -31,15 +34,15 @@ interface FormData {
 const AddRoomModal = ({ onClose, onAddRoom }: AddRoomModalProps) => {
   const [loading, setLoading] = useState(false);
   const toast = useToast();
-  
+
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<FormData>();
-  
+
   const onSubmit = async (data: FormData) => {
-    const newRoomData: RoomData = {
+    const newRoomData: NewRoomData = {
       roomNumber: "ID",
       bedType: data.bedType,
       roomFloor: data.roomFloor,
@@ -49,10 +52,11 @@ const AddRoomModal = ({ onClose, onAddRoom }: AddRoomModalProps) => {
       status: ""
     };
 
+    console.log('onSubmit')
     setLoading(true);
     try {
-      const createdRoom = await createRoom(newRoomData);
-      onAddRoom(createdRoom);
+      
+      await onAddRoom(newRoomData);
       toast({
         title: "Room added successfully.",
         status: "success",
@@ -83,14 +87,12 @@ const AddRoomModal = ({ onClose, onAddRoom }: AddRoomModalProps) => {
             {...register("bedType", validationRules.required)}
             placeholder="Select bed type"
           >
-            <option value="Single">Single</option>
-            <option value="Double">Double</option>
-            <option value="Queen">Queen</option>
-            <option value="King">King</option>
+            {bedTypeOptions.map((option) => (
+              <option key={option.value} value={option.value}>
+                {option.label}
+              </option>
+            ))}
           </Select>
-          {errors.bedType && (
-            <p style={{ color: "red" }}>{errors.bedType.message}</p>
-          )}
         </FormControl>
 
         <FormControl mb={4} maxW="320px" isInvalid={!!errors.roomFloor}>
@@ -99,14 +101,12 @@ const AddRoomModal = ({ onClose, onAddRoom }: AddRoomModalProps) => {
             {...register("roomFloor", validationRules.required)}
             placeholder="Select floor"
           >
-            <option value="2nd Floor">2nd Floor</option>
-            <option value="3rd Floor">3rd Floor</option>
-            <option value="4th Floor">4th Floor</option>
-            <option value="5th Floor">5th Floor</option>
+            {roomFloorOptions.map((option) => (
+              <option key={option.value} value={option.value}>
+                {option.label}
+              </option>
+            ))}
           </Select>
-          {errors.roomFloor && (
-            <p style={{ color: "red" }}>{errors.roomFloor.message}</p>
-          )}
         </FormControl>
       </Box>
 

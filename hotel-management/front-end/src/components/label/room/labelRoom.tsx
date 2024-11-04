@@ -2,41 +2,24 @@ import { Box, UnorderedList, ListItem, Text, Button } from "@chakra-ui/react";
 import { useState, useEffect } from "react";
 import AddRoomModal from "../../modal/roomModal/add/index";
 import { getRates } from "../../../services/rateServices";
-import RoomData from "../../constants/interfaceTypes/roomTypes";
-import RateData from "../../constants/interfaceTypes/rateTypes";
+import RoomData from "../../../constants/interfaceTypes/roomTypes";
+import RateData from "../../../constants/interfaceTypes/rateTypes";
 import Spinner from "../../spinner";
 
 const LabelRoom = ({
   onAddRoom,
+  isAddRoom,
 }: {
   onAddRoom: (roomData: RoomData) => void;
 }) => {
-  const [rates, setRates] = useState<RateData[]>([]);
-  const [loading, setLoading] = useState(true);
   const [isAddRoomModalOpen, setIsAddRoomModalOpen] = useState(false);
 
-  useEffect(() => {
-    const fetchRates = async () => {
-      setLoading(true);
-      try {
-        const data = await getRates(1, 10);
-        setRates(data.data);
-      } catch (error) {
-        console.error("Error fetching rates", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchRates();
-  }, []);
-
   const handleOpenAddRoomModal = () => {
-    if (rates.length > 0) {
-      setIsAddRoomModalOpen(true);
-    }
+    setIsAddRoomModalOpen(true)
   };
 
   const handleCloseAddRoomModal = () => {
+    console.log('handleCloseAddRoomModal')
     setIsAddRoomModalOpen(false);
   };
 
@@ -59,28 +42,20 @@ const LabelRoom = ({
         </ListItem>
       </UnorderedList>
 
-      {loading ? (
-        <Spinner />
-      ) : (
-        <>
-          {!isAddRoomModalOpen && (
-            <Button
-              onClick={handleOpenAddRoomModal}
-              disabled={rates.length === 0}
-              cursor={rates.length === 0 ? "not-allowed" : "pointer"}
-            >
-              Add room
-            </Button>
-          )}
+      
+        <>``
+          {/* <Button
+            onClick={handleOpenAddRoomModal}
+            disabled={!isAddRoom}
+            cursor={!isAddRoom ? "not-allowed" : "pointer"}
+          >
+            Add room
+          </Button> */}
 
-          {isAddRoomModalOpen && (
-            <AddRoomModal
-              onAddRoom={onAddRoom}
-              onClose={handleCloseAddRoomModal}
-            />
-          )}
+          <AddRoomModal
+            onAddRoom={onAddRoom}
+          />
         </>
-      )}
     </Box>
   );
 };

@@ -3,33 +3,34 @@ import EditRoomModal from "../../modal/roomModal/edit";
 import { Box, Text, UnorderedList, ListItem, Alert } from "@chakra-ui/react";
 import DeleteRoom from "../../modal/roomModal/delete";
 import Button from "../../button";
-import RoomData from "../../constants/interfaceTypes/roomTypes";
+import { RoomData } from "../../../constants/interfaceTypes/roomTypes";
 
 interface TableRoomProps {
   rooms: RoomData[];
   error?: string | null;
   onDeleteRoom: (roomId: string) => void;
-  onEditRoom: (roomData: RoomData) => Promise<void>;
+  onEditRoom: (roomData: RoomData) => void;
 }
 
-const TableRoom = ({
-  rooms,
-  error,
-  onDeleteRoom,
-  onEditRoom,
-}: TableRoomProps) => {
+const TableRoom = ({ rooms, error, onDeleteRoom, onEditRoom }: TableRoomProps) => {
   const [activeRoomId, setActiveRoomId] = useState<string | null>(null);
-  const [selectedRoom, setSelectedRoom] = useState<RoomData | null>(null);
+  const [isDeleteDialogOpen, setDeleteDialogOpen] = useState(false);
 
   const toggleMenu = (roomId: string) => {
     setActiveRoomId((prev) => (prev === roomId ? null : roomId));
   };
 
-  if (error) return <Alert status="error">{error}</Alert>;
-
-  const handleEditRoom = (room: RoomData) => {
-    setSelectedRoom(room);
+  const openDeleteDialog = (roomId: string) => {
+    setActiveRoomId(roomId);
+    setDeleteDialogOpen(true);
   };
+
+  const closeDeleteDialog = () => {
+    setDeleteDialogOpen(false);
+    setActiveRoomId(null);
+  };
+
+  if (error) return <Alert status="error">{error}</Alert>;
 
   return (
     <Box
@@ -83,8 +84,8 @@ const TableRoom = ({
           <Text w="15%" color="grey.900">
             {room.roomNumber}
           </Text>
-          <Text w="20%">{room.bedType}</Text>
-          <Text w="15%">{room.roomFloor}</Text>
+          <Text w="20%">{room.bedType} Bed</Text>
+          <Text w="15%">{room.roomFloor} Floor</Text>
           <Text w="27%">{room.roomFacility}</Text>
           <Text w="16%" pl="48px" mr="20px">
             {room.roomStatus}
@@ -114,24 +115,24 @@ const TableRoom = ({
               borderRadius="8px"
               w="80px"
             >
+              <EditRoomModal
+                initialRoomData={room}
+                onEditRoom={(updatedRoomData: RoomData) => {
+                  onEditRoom(updatedRoomData);
+                  setActiveRoomId(null);
+                }}
+              />
               <Button
-                onClick={() => handleEditRoom(room)}
-                text={"Edit"}
-                buttonType={"first"}
-              ></Button>
-              {selectedRoom && (
-                <EditRoomModal
-                  initialRoomData={selectedRoom}
-                  onClose={() => setSelectedRoom(null)}
-                  onEditRoom={async (updatedRoomData: RoomData) => {
-                    await onEditRoom(updatedRoomData);
-                    setSelectedRoom(null);
-                  }}
-                />
-              )}
+                text="Delete"
+                buttonType="deleteButton"
+                onClick={() => openDeleteDialog(room.documentId)}
+              />
+
               <DeleteRoom
                 roomId={room.documentId}
                 onDeleteRoom={onDeleteRoom}
+                isOpen={isDeleteDialogOpen}
+                onClose={closeDeleteDialog}
               />
             </Box>
           )}

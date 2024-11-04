@@ -9,6 +9,7 @@ import {
   AlertDialogFooter,
   useDisclosure,
   Text,
+  useToast
 } from "@chakra-ui/react";
 import { deleteRoom } from "../../../../services/roomService";
 import Spinner from "../../../spinner";
@@ -25,15 +26,28 @@ const DeleteRoom = ({ roomId, onDeleteRoom }: DeleteRoomProps) => {
   const cancelRef = React.useRef(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const toast = useToast();
 
   const handleDelete = async () => {
     setLoading(true);
     try {
       await deleteRoom(roomId);
       onDeleteRoom(roomId);
+      toast({
+        title: "Rate deleted successfully.",
+        status: "success",
+        duration: 3000,
+        isClosable: true,
+      });
       onClose();
     } catch (error) {
-      setError("Failed to delete room.");
+      toast({
+        title: "Failed to delete rate.",
+        description: "An error occurred while deleting the rate.",
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+      });
     } finally {
       setLoading(false);
     }

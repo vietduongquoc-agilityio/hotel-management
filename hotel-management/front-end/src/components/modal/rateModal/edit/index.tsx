@@ -12,7 +12,7 @@ import Button from "../../../button";
 import Input from "../../../input";
 import Spinner from "../../../spinner";
 import { updateRate } from "../../../../services/rateServices";
-import RateData from "../../../constants/interfaceTypes/rateTypes";
+import RateData from "../../../../constants/interfaceTypes/rateTypes";
 
 interface EditRateModalProps {
   onClose: () => void;

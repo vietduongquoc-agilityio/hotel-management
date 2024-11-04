@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import axios from "axios";
-import RoomData from "../components/constants/interfaceTypes/roomTypes";
+import { NewRoomData } from "../constants/interfaceTypes/roomTypes";
 
 const BASE_URL = process.env.VITE_BASE_URL;
 
@@ -8,6 +8,7 @@ export const getRooms = async (page: number, pageSize: number) => {
   try {
     const response = await axios.get(`${BASE_URL}/rooms`, {
       params: {
+        "sort[0]": "createdAt:desc",
         "pagination[page]": page,
         "pagination[pageSize]": pageSize,
       },
@@ -27,11 +28,10 @@ export const getRooms = async (page: number, pageSize: number) => {
   }
 };
 
-export const createRoom = async (roomData: RoomData) => {
-  const { documentId, ...data } = roomData;
+export const createRoomApi = async (roomData: NewRoomData) => {
   try {
     const response = await axios.post(`${BASE_URL}/rooms`, {
-      data: data,
+      data: roomData,
     });
     return response.data;
   } catch (error) {
@@ -43,10 +43,12 @@ export const createRoom = async (roomData: RoomData) => {
 export const getRoomById = (roomId: string) =>
   axios.get(`${BASE_URL}/rooms/${roomId}`).then((response) => response.data);
 
-export const updateRoom = (roomId: string, roomData: RoomData) =>
-  axios
-    .put(`${BASE_URL}/rooms/${roomId}`, roomData)
+export const updateRoom = (roomId: string, roomData: NewRoomData) => {
+  if (!roomId) throw new Error("Missing document ID for room update.");
+  return axios
+    .put(`${BASE_URL}/rooms/${roomId}`, { data: roomData })
     .then((response) => response.data);
+};
 
 export const deleteRoom = async (roomId: string) => {
   const response = await axios.delete(`${BASE_URL}/rooms/${roomId}`);

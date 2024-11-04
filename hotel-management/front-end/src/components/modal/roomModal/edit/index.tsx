@@ -1,6 +1,3 @@
-/* eslint-disable react-refresh/only-export-components */
-import { useEffect, useState } from "react";
-import withModal from "../../modalHoc";
 import {
   ModalFooter,
   FormControl,
@@ -11,9 +8,20 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import { useForm } from "react-hook-form";
-import Button from "../../../button";
-import Spinner from "../../../spinner";
-import RoomData from "../../../constants/interfaceTypes/roomTypes";
+import { useState } from "react";
+
+// Constants
+import {
+  bedTypeOptions,
+  roomFloorOptions,
+  roomStatusOptions,
+} from "@/constants/selectOptions/selectOption";
+import { RoomData } from "@/constants/interfaceTypes/roomTypes";
+
+// Components
+import withModal from "@/components/modal/modalHoc";
+import Button from "@/components/button";
+import Spinner from "@/components/spinner";
 
 interface EditRoomModalProps {
   onClose: () => void;
@@ -24,13 +32,12 @@ interface EditRoomModalProps {
 const EditRoomModal = ({
   initialRoomData,
   onClose,
-  onEditRoom,
+  onEditRoom
 }: EditRoomModalProps) => {
   const {
-    register,
     handleSubmit,
+    register,
     formState: { errors },
-    reset,
   } = useForm({
     defaultValues: initialRoomData,
   });
@@ -38,22 +45,14 @@ const EditRoomModal = ({
   const [loading, setLoading] = useState(false);
   const toast = useToast();
 
-  useEffect(() => {
-    // Reset form values when initialRoomData changes
-    reset(initialRoomData);
-  }, [initialRoomData, reset]);
-
   const onSubmit = async (data: RoomData) => {
+    console.log(data);
+
     setLoading(true);
     try {
       await onEditRoom(data);
-      toast({
-        title: "Room updated successfully.",
-        status: "success",
-        duration: 3000,
-        isClosable: true,
-      });
-      onClose();
+
+      if (onClose) onClose();
     } catch (error) {
       toast({
         title: "Failed to update room.",
@@ -69,18 +68,19 @@ const EditRoomModal = ({
   };
 
   return (
- <form  onSubmit={handleSubmit(onSubmit)}>
+    <form onSubmit={handleSubmit(onSubmit)}>
       <Box display="flex" justifyContent="space-between">
         <FormControl mb={4} maxW="320px" isInvalid={!!errors.bedType}>
           <FormLabel>Bed Type</FormLabel>
           <Select
-            {...register("bedType", { required: "Bed type is required" })}
-            placeholder="Select bed type"
+            defaultValue={initialRoomData.bedType}
+            {...register("bedType")}
           >
-            <option value="Single">Single</option>
-            <option value="Double">Double</option>
-            <option value="Queen">Queen</option>
-            <option value="King">King</option>
+            {bedTypeOptions.map((option, index) => (
+              <option key={`${option.value}-${index}`} value={option.value}>
+                {option.label}
+              </option>
+            ))}
           </Select>
           {errors.bedType && (
             <p style={{ color: "red" }}>{errors.bedType.message}</p>
@@ -90,15 +90,14 @@ const EditRoomModal = ({
         <FormControl mb={4} maxW="320px" isInvalid={!!errors.roomFloor}>
           <FormLabel>Room Floor</FormLabel>
           <Select
-            {...register("roomFloor", {
-              required: "Room floor is required",
-            })}
-            placeholder="Select floor"
+            defaultValue={initialRoomData.roomFloor}
+            {...register("roomFloor")}
           >
-            <option value="2nd Floor">2nd Floor</option>
-            <option value="3rd Floor">3rd Floor</option>
-            <option value="4th Floor">4th Floor</option>
-            <option value="5th Floor">5th Floor</option>
+            {roomFloorOptions.map((option, index) => (
+              <option key={`${option.value}-${index}`} value={option.value}>
+                {option.label}
+              </option>
+            ))}
           </Select>
           {errors.roomFloor && (
             <p style={{ color: "red" }}>{errors.roomFloor.message}</p>
@@ -109,29 +108,29 @@ const EditRoomModal = ({
       <FormControl mb={4} isInvalid={!!errors.roomFacility}>
         <FormLabel>Room Facility</FormLabel>
         <Textarea
-          {...register("roomFacility", {
-            required: "Room facility is required",
-          })}
-          placeholder="Enter a description...."
+          defaultValue={initialRoomData.roomFacility}
           maxLength={500}
+          {...register("roomFacility")}
         />
         {errors.roomFacility && (
           <p style={{ color: "red" }}>{errors.roomFacility.message}</p>
         )}
       </FormControl>
 
-      <FormControl mb={4} isInvalid={!!errors.status}>
+      <FormControl mb={4} isInvalid={!!errors.roomStatus}>
         <FormLabel>Status</FormLabel>
         <Select
-          {...register("status", { required: "Room status is required" })}
-          placeholder="Select status"
+          defaultValue={initialRoomData.roomStatus}
+          {...register("roomStatus")}
         >
-          <option value="Available">Available</option>
-          <option value="Occupied">Occupied</option>
-          <option value="Under Maintenance">Under Maintenance</option>
+          {roomStatusOptions.map((option, index) => (
+            <option key={`${option.value}-${index}`} value={option.value}>
+              {option.label}
+            </option>
+          ))}
         </Select>
-        {errors.status && (
-          <p style={{ color: "red" }}>{errors.status.message}</p>
+        {errors.roomStatus && (
+          <p style={{ color: "red" }}>{errors.roomStatus.message}</p>
         )}
       </FormControl>
 

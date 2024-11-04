@@ -11,12 +11,12 @@ import {
 import withModal from "../../modalHoc";
 import Button from "../../../button";
 import Input from "../../../input";
-import RateData from "../../../constants/interfaceTypes/rateTypes";
+import RateData from "../../../../constants/interfaceTypes/rateTypes";
 import { createRate } from "../../../../services/rateServices";
 import Spinner from "../../../spinner";
 import {
   validationRules,
-} from "../../../constants/validate";
+} from "../../../../constants/validate";
 
 interface AddRateModalProps {
   onClose: () => void;

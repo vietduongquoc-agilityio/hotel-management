@@ -3,7 +3,7 @@ import { Box, Heading, useToast } from "@chakra-ui/react";
 import LabelRate from "../../components/label/rate/labelRate";
 import TableRate from "../../components/table/rate";
 import { getRates } from "../../services/rateServices";
-import RateData from "../../components/constants/interfaceTypes/rateTypes";
+import RateData from "../../constants/interfaceTypes/rateTypes";
 import Spinner from "../../components/spinner";
 
 const RatePage = () => {
