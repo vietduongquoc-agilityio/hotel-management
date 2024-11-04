@@ -1,4 +1,4 @@
-interface RateData {
+export interface RateData {
   roomType: string;
   cancellationPolicy: string;
   deals: string;
@@ -7,5 +7,3 @@ interface RateData {
   availability: string;
   documentId: string;
 }
-
-export default RateData;

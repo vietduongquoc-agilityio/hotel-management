@@ -14,7 +14,6 @@ import withModal from "../../modalHoc";
 import Button from "../../../button";
 import Spinner from "../../../spinner";
 import { NewRoomData } from "../../../../constants/interfaceTypes/roomTypes";
-import { createRoom } from "../../../../services/roomService";
 import { validationRules } from "../../../../constants/validate";
 import {
   bedTypeOptions,
@@ -53,10 +52,11 @@ const AddRoomModal = ({ onClose, onAddRoom }: AddRoomModalProps) => {
       status: ""
     };
 
+    console.log('onSubmit')
     setLoading(true);
     try {
-      const createdRoom = await createRoom(newRoomData);
-      onAddRoom(createdRoom);
+      
+      await onAddRoom(newRoomData);
       toast({
         title: "Room added successfully.",
         status: "success",
