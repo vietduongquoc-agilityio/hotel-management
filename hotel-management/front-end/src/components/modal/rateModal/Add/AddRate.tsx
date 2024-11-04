@@ -11,7 +11,7 @@ import {
 
 // Constants
 import { validationRules } from "@/Constants/Validate/Validate";
-import { RateData } from "@/Constants/InterfaceTypes/RateTypes";
+import { NewRateData } from "@/Constants/InterfaceTypes/RateTypes";
 
 // Components
 import withModal from "@/components/Modal/ModalHoc";
@@ -19,12 +19,9 @@ import Button from "@/components/Button/Button";
 import Input from "@/components/Input/Input";
 import Spinner from "@/components/Spinner/Spinner";
 
-// Services
-import { createRate } from "@/services/rateServices";
-
 interface AddRateModalProps {
   onClose: () => void;
-  onAddRate: (rateData: RateData) => void;
+  onAddRate: (rateData: NewRateData) => void;
 }
 
 interface FormData {
@@ -45,20 +42,17 @@ const AddRateModal = ({ onClose, onAddRate }: AddRateModalProps) => {
   } = useForm<FormData>();
 
   const onSubmit = async (data: FormData) => {
-    const newRateData: RateData = {
+    const newRateData: NewRateData = {
       roomType: data.roomType,
       cancellationPolicy: data.cancellationPolicy,
       deals: "Family Deal",
       dealPrice: data.price,
-      rate: data.price,
       availability: data.availability,
-      documentId: "",
     };
 
     setLoading(true);
     try {
-      const createdRate = await createRate(newRateData);
-      onAddRate(createdRate);
+      await onAddRate(newRateData);
       toast({
         title: "Rate added successfully.",
         status: "success",

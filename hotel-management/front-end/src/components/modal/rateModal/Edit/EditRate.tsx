@@ -1,23 +1,25 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable react-refresh/only-export-components */
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import {
   ModalFooter,
   FormControl,
   FormLabel,
   useToast,
+  Box,
 } from "@chakra-ui/react";
+import { useForm } from "react-hook-form";
 
 // Constants
-import { RateData } from "../../../../Constants/InterfaceTypes/RateTypes";
+import { RateData } from "@/Constants/InterfaceTypes/RateTypes";
 
 // Components
 import withModal from "@/components/Modal/ModalHoc";
-import Button from "@/components/button/Button";
+import Button from "@/components/Button/Button";
 import Input from "@/components/Input/Input";
 import Spinner from "@/components/Spinner/Spinner";
 
-//Services
+// Services
 import { updateRate } from "@/services/rateServices";
 
 interface EditRateModalProps {
@@ -31,48 +33,21 @@ const EditRateModal = ({
   onEditRate,
   initialRateData,
 }: EditRateModalProps) => {
-  const [roomType, setRoomType] = useState(initialRateData.roomType || "");
-  const [rooms, setRooms] = useState(initialRateData.availability || "");
-  const [price, setPrice] = useState(initialRateData.dealPrice || "");
-  const [cancellationPolicy, setCancellationPolicy] = useState(
-    initialRateData.cancellationPolicy || ""
-  );
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    defaultValues: initialRateData,
+  });
   const [loading, setLoading] = useState(false);
   const toast = useToast();
 
-  useEffect(() => {
-    if (initialRateData) {
-      setRoomType(initialRateData.roomType || "");
-      setRooms(initialRateData.availability || "");
-      setPrice(initialRateData.dealPrice || "");
-      setCancellationPolicy(initialRateData.cancellationPolicy || "");
-    }
-  }, [initialRateData]);
-
-  const handleSubmit = async () => {
-    if (!roomType || !rooms || !price || !cancellationPolicy) {
-      toast({
-        title: "All fields are required.",
-        status: "warning",
-        duration: 3000,
-        isClosable: true,
-      });
-      return;
-    }
-
-    const updatedRateData: RateData = {
-      ...initialRateData,
-      roomType,
-      cancellationPolicy,
-      availability: rooms,
-      dealPrice: price,
-      rate: price,
-    };
-
+  const onSubmit = async (data: RateData) => {
     setLoading(true);
     try {
-      await updateRate(initialRateData.documentId, updatedRateData);
-      onEditRate(updatedRateData);
+      await updateRate(initialRateData.documentId, data);
+      onEditRate(data);
       toast({
         title: "Rate updated successfully.",
         status: "success",
@@ -88,58 +63,75 @@ const EditRateModal = ({
         duration: 3000,
         isClosable: true,
       });
+      console.error("Error updating rate:", error);
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <>
-      <FormControl mb={4}>
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <FormControl mb={4} isInvalid={!!errors.roomType}>
         <FormLabel>Rate Type</FormLabel>
         <Input
-          value={roomType}
-          onChange={(e) => setRoomType(e.target.value)}
+          {...register("roomType", { required: "Room type is required" })}
           placeHolder="Enter room type"
           inputType="first"
         />
+        {errors.roomType && (
+          <p style={{ color: "red" }}>{errors.roomType.message}</p>
+        )}
       </FormControl>
-      <FormControl mb={4}>
+
+      <FormControl mb={4} isInvalid={!!errors.cancellationPolicy}>
         <FormLabel>Cancellation Policy</FormLabel>
         <Input
-          value={cancellationPolicy}
-          onChange={(e) => setCancellationPolicy(e.target.value)}
+          {...register("cancellationPolicy", {
+            required: "Cancellation policy is required",
+          })}
           placeHolder="Enter cancellation policy"
           inputType="first"
         />
+        {errors.cancellationPolicy && (
+          <p style={{ color: "red" }}>{errors.cancellationPolicy.message}</p>
+        )}
       </FormControl>
-      <FormControl mb={4}>
-        <FormLabel>Rooms</FormLabel>
+
+      <FormControl mb={4} isInvalid={!!errors.availability}>
+        <FormLabel>Availability</FormLabel>
         <Input
-          value={rooms}
-          onChange={(e) => setRooms(e.target.value)}
-          placeHolder="Enter total number of rooms"
+          {...register("availability", {
+            required: "Availability is required",
+          })}
+          placeHolder="Enter room availability"
           inputType="first"
         />
+        {errors.availability && (
+          <p style={{ color: "red" }}>{errors.availability.message}</p>
+        )}
       </FormControl>
-      <FormControl mb={4}>
-        <FormLabel>Price</FormLabel>
+
+      <FormControl mb={4} isInvalid={!!errors.dealPrice}>
+        <FormLabel>Deal Price</FormLabel>
         <Input
-          value={price}
-          onChange={(e) => setPrice(e.target.value)}
-          placeHolder="Enter room price"
+          {...register("dealPrice", { required: "Deal price is required" })}
+          placeHolder="Enter deal price"
           inputType="first"
         />
+        {errors.dealPrice && (
+          <p style={{ color: "red" }}>{errors.dealPrice.message}</p>
+        )}
       </FormControl>
+
       <ModalFooter>
         <Button onClick={onClose} text="Cancel" buttonType="cancelButton" />
         {loading ? (
           <Spinner />
         ) : (
-          <Button onClick={handleSubmit} text="Edit" buttonType="first" />
+          <Button type="submit" text="Edit" buttonType="first" />
         )}
       </ModalFooter>
-    </>
+    </form>
   );
 };
 

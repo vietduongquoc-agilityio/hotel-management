@@ -13,25 +13,19 @@ interface TableRateProps {
   rates: RateData[];
   error?: string | null;
   onDeleteRate: (rateId: string) => void;
-  onEditRate: (updatedRateData: RateData) => Promise<void>;
+  onEditRate: (updatedRateData: RateData) => void;
 }
 
-const TableRate = ({ rates, error, onDeleteRate }: TableRateProps) => {
+const TableRate = ({
+  rates,
+  error,
+  onDeleteRate,
+  onEditRate,
+}: TableRateProps) => {
   const [activeRateId, setActiveRateId] = useState<string | null>(null);
-  const [isDeleteDialogOpen, setDeleteDialogOpen] = useState(false);
 
   const toggleMenu = (rateId: string) => {
     setActiveRateId((prev) => (prev === rateId ? null : rateId));
-  };
-
-  const openDeleteDialog = (rateId: string) => {
-    setActiveRateId(rateId);
-    setDeleteDialogOpen(true);
-  };
-
-  const closeDeleteDialog = () => {
-    setDeleteDialogOpen(false);
-    setActiveRateId(null);
   };
 
   if (error) return <Alert status="error">{error}</Alert>;
@@ -94,7 +88,7 @@ const TableRate = ({ rates, error, onDeleteRate }: TableRateProps) => {
           <Text w="15%">{rate.deals}</Text>
           <Text w="15%">{rate.cancellationPolicy}</Text>
           <Text w="15%">{rate.dealPrice}$</Text>
-          <Text w="15%">{rate.rate}$</Text>
+          <Text w="15%">{rate.dealPrice}$</Text>
           <Text w="20%">{rate.availability}</Text>
           <Button
             bg="white.200"
@@ -121,16 +115,14 @@ const TableRate = ({ rates, error, onDeleteRate }: TableRateProps) => {
               borderRadius="8px"
               w="80px"
             >
-              <EditRateModal initialRateData={rate} />
-              <Button
-                text="Delete"
-                buttonType="deleteButton"
-                onClick={() => openDeleteDialog(rate.documentId)}
+              <EditRateModal
+                initialRateData={rate}
+                onAddRate={(updatedRateData: RateData) => {
+                  onEditRate(updatedRateData);
+                }}
               />
               <DeleteRate
                 rateId={rate.documentId}
-                isOpen={isDeleteDialogOpen}
-                onClose={closeDeleteDialog}
                 onDeleteRate={onDeleteRate}
               />
             </Box>

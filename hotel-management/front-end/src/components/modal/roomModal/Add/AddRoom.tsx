@@ -54,10 +54,8 @@ const AddRoomModal = ({ onClose, onAddRoom }: AddRoomModalProps) => {
       roomStatus: "Available",
     };
 
-    console.log('onSubmit')
     setLoading(true);
     try {
-      
       await onAddRoom(newRoomData);
       toast({
         title: "Room added successfully.",

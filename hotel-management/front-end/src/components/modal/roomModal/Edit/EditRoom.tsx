@@ -47,7 +47,6 @@ const EditRoomModal = ({
   const toast = useToast();
 
   const onSubmit = async (data: RoomData) => {
-    console.log(data);
 
     setLoading(true);
     try {

@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import axios from "axios";
-import {RateData} from "@/Constants/InterfaceTypes/RateTypes";
+import { NewRateData } from "@/Constants/InterfaceTypes/RateTypes";
 
 const BASE_URL = process.env.VITE_BASE_URL;
 // Rate Service
@@ -29,11 +29,10 @@ export const getRoomsUsingRate = async (rateId: string) => {
   }
 };
 
-export const createRate = async (rateData: RateData) => {
-  const { documentId, ...data } = rateData;
+export const createRateApi = async (rateData: NewRateData) => {
   try {
     const response = await axios.post(`${BASE_URL}/rates`, {
-      data: data,
+      data: rateData,
     });
     return response.data;
   } catch (error) {
@@ -42,10 +41,12 @@ export const createRate = async (rateData: RateData) => {
   }
 };
 
-export const updateRate = (rateId: string, rateData: RateData) =>
-  axios
-    .put(`${BASE_URL}/rooms/${rateId}`, rateData)
+export const updateRate = (rateId: string, rateData: NewRateData) => {
+  if (!rateId) throw new Error("Missing document ID for rate update.");
+  return axios
+    .put(`${BASE_URL}/rates/${rateId}`, { data: rateData })
     .then((response) => response.data);
+};
 
 export const deleteRate = async (rateId: string) => {
   const response = await axios.delete(`${BASE_URL}/rates/${rateId}`);

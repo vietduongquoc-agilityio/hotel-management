@@ -21,8 +21,6 @@ import { deleteRate } from "@/services/rateServices";
 
 interface DeleteRateProps {
   rateId: string;
-  isOpen: boolean;
-  onClose: () => void;
   onDeleteRate: (rateId: string) => void;
 }
 
@@ -59,7 +57,7 @@ const DeleteRate = ({ rateId, onDeleteRate }: DeleteRateProps) => {
 
   return (
     <>
-      <Button onClick={onOpen} text="Delete" buttonType="first"></Button>
+      <Button onClick={onOpen} text="Delete" buttonType="deleteButton"></Button>
 
       <AlertDialog
         isOpen={isOpen}

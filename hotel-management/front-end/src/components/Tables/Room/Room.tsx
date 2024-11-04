@@ -120,7 +120,6 @@ const TableRoom = ({
                   setActiveRoomId(null);
                 }}
               />
-
               <DeleteRoom
                 roomId={room.documentId}
                 onDeleteRoom={onDeleteRoom}
