@@ -6,7 +6,7 @@ import Pagination from "../../components/pagination";
 import { getRooms, updateRoom } from "../../services/roomService"; // Ensure updateRoom service is imported
 import LabelRoom from "../../components/label/room/labelRoom";
 import Spinner from "../../components/spinner/index";
-import { RoomData } from "../../components/constants/interfaceTypes/roomTypes";
+import { RoomData } from "../../constants/interfaceTypes/roomTypes";
 
 const RoomPage = () => {
   const [isAddRoomOpen, setIsAddRoomOpen] = useState(false);
@@ -54,7 +54,15 @@ const RoomPage = () => {
 
   const handleEditRoom = async (updatedRoomData: RoomData) => {
     try {
-      await updateRoom(updatedRoomData.documentId, updatedRoomData);
+      const requestData = {
+        bedType: updatedRoomData.bedType,
+        roomNumber: updatedRoomData.roomNumber,
+        roomFloor: updatedRoomData.roomFloor,
+        roomFacility: updatedRoomData.roomFacility,
+        roomStatus: updatedRoomData.roomStatus
+      }
+
+      await updateRoom(updatedRoomData.documentId, requestData);
 
       setRooms((prevRooms) =>
         prevRooms.map((room) =>

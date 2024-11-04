@@ -1,11 +1,3 @@
-/* eslint-disable react-refresh/only-export-components */
-import {
-  bedTypeOptions,
-  roomFloorOptions,
-  roomStatusOptions,
-} from "../../../constants/selectOptions/selectOption";
-import { useState } from "react";
-import withModal from "../../modalHoc";
 import {
   ModalFooter,
   FormControl,
@@ -16,24 +8,35 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import { useForm } from "react-hook-form";
-import Button from "../../../button";
-import Spinner from "../../../spinner";
-import { RoomData } from "../../../constants/interfaceTypes/roomTypes";
-import { updateRoom } from "../../../../services/roomService";
+import { useState } from "react";
+
+// Constants
+import {
+  bedTypeOptions,
+  roomFloorOptions,
+  roomStatusOptions,
+} from "@/constants/selectOptions/selectOption";
+import { RoomData } from "@/constants/interfaceTypes/roomTypes";
+
+// Components
+import withModal from "@/components/modal/modalHoc";
+import Button from "@/components/button";
+import Spinner from "@/components/spinner";
 
 interface EditRoomModalProps {
-  onClose?: () => void;
-  onEditRoom?: (roomData: RoomData) => void;
+  onClose: () => void;
+  onEditRoom: (roomData: RoomData) => void;
   initialRoomData: RoomData;
 }
 
 const EditRoomModal = ({
   initialRoomData,
   onClose,
-  onEditRoom,
+  onEditRoom
 }: EditRoomModalProps) => {
   const {
     handleSubmit,
+    register,
     formState: { errors },
   } = useForm({
     defaultValues: initialRoomData,
@@ -47,17 +50,8 @@ const EditRoomModal = ({
 
     setLoading(true);
     try {
-      const updatedRoomData = await updateRoom(
-        initialRoomData.documentId,
-        data
-      );
-      if (onEditRoom) onEditRoom(updatedRoomData);
-      toast({
-        title: "Room updated successfully.",
-        status: "success",
-        duration: 3000,
-        isClosable: true,
-      });
+      await onEditRoom(data);
+
       if (onClose) onClose();
     } catch (error) {
       toast({
@@ -78,7 +72,10 @@ const EditRoomModal = ({
       <Box display="flex" justifyContent="space-between">
         <FormControl mb={4} maxW="320px" isInvalid={!!errors.bedType}>
           <FormLabel>Bed Type</FormLabel>
-          <Select defaultValue={initialRoomData.bedType}>
+          <Select
+            defaultValue={initialRoomData.bedType}
+            {...register("bedType")}
+          >
             {bedTypeOptions.map((option, index) => (
               <option key={`${option.value}-${index}`} value={option.value}>
                 {option.label}
@@ -92,7 +89,10 @@ const EditRoomModal = ({
 
         <FormControl mb={4} maxW="320px" isInvalid={!!errors.roomFloor}>
           <FormLabel>Room Floor</FormLabel>
-          <Select defaultValue={initialRoomData.roomFloor}>
+          <Select
+            defaultValue={initialRoomData.roomFloor}
+            {...register("roomFloor")}
+          >
             {roomFloorOptions.map((option, index) => (
               <option key={`${option.value}-${index}`} value={option.value}>
                 {option.label}
@@ -107,7 +107,11 @@ const EditRoomModal = ({
 
       <FormControl mb={4} isInvalid={!!errors.roomFacility}>
         <FormLabel>Room Facility</FormLabel>
-        <Textarea defaultValue={initialRoomData.roomFacility} maxLength={500} />
+        <Textarea
+          defaultValue={initialRoomData.roomFacility}
+          maxLength={500}
+          {...register("roomFacility")}
+        />
         {errors.roomFacility && (
           <p style={{ color: "red" }}>{errors.roomFacility.message}</p>
         )}
@@ -115,7 +119,10 @@ const EditRoomModal = ({
 
       <FormControl mb={4} isInvalid={!!errors.roomStatus}>
         <FormLabel>Status</FormLabel>
-        <Select defaultValue={initialRoomData.roomStatus}>
+        <Select
+          defaultValue={initialRoomData.roomStatus}
+          {...register("roomStatus")}
+        >
           {roomStatusOptions.map((option, index) => (
             <option key={`${option.value}-${index}`} value={option.value}>
               {option.label}

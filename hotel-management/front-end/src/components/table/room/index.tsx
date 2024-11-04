@@ -3,7 +3,7 @@ import EditRoomModal from "../../modal/roomModal/edit";
 import { Box, Text, UnorderedList, ListItem, Alert } from "@chakra-ui/react";
 import DeleteRoom from "../../modal/roomModal/delete";
 import Button from "../../button";
-import { RoomData } from "../../constants/interfaceTypes/roomTypes";
+import { RoomData } from "../../../constants/interfaceTypes/roomTypes";
 
 interface TableRoomProps {
   rooms: RoomData[];
@@ -118,7 +118,7 @@ const TableRoom = ({ rooms, error, onDeleteRoom, onEditRoom }: TableRoomProps) =
               <EditRoomModal
                 initialRoomData={room}
                 onEditRoom={(updatedRoomData: RoomData) => {
-                  onEditRoom(updatedRoomData); 
+                  onEditRoom(updatedRoomData);
                   setActiveRoomId(null);
                 }}
               />
