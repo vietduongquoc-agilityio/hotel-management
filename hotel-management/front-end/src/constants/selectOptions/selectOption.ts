@@ -8,10 +8,10 @@ export const bedTypeOptions = [
 ];
 
 export const roomFloorOptions = [
-  { value: "2nd Floor", label: "2nd Floor" },
-  { value: "3rd Floor", label: "3rd Floor" },
-  { value: "4th Floor", label: "4th Floor" },
-  { value: "5th Floor", label: "5th Floor" },
+  { value: "2nd", label: "2nd Floor" },
+  { value: "3rd", label: "3rd Floor" },
+  { value: "4th", label: "4th Floor" },
+  { value: "5th", label: "5th Floor" },
 ];
 
 export const roomStatusOptions = [
