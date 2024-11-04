@@ -7,12 +7,18 @@ import {
   FormLabel,
   useToast,
 } from "@chakra-ui/react";
-import withModal from "../../modalHoc";
-import Button from "../../../button";
-import Input from "../../../input";
-import Spinner from "../../../spinner";
-import { updateRate } from "../../../../services/rateServices";
-import RateData from "../../../../constants/interfaceTypes/rateTypes";
+
+// Constants
+import { RateData } from "../../../../constants/interfaceTypes/rateTypes";
+
+// Components
+import withModal from "@/components/modal/modalHoc";
+import Button from "@/components/button";
+import Input from "@/components/input";
+import Spinner from "@/components/spinner";
+
+//Services
+import { updateRate } from "@/services/rateServices";
 
 interface EditRateModalProps {
   onClose: () => void;

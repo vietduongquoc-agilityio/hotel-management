@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { useState } from "react";
+import React from "react";
 import {
   AlertDialog,
   AlertDialogOverlay,
@@ -9,12 +10,15 @@ import {
   AlertDialogFooter,
   useDisclosure,
   Text,
-  useToast
+  useToast,
 } from "@chakra-ui/react";
-import { deleteRoom } from "../../../../services/roomService";
-import Spinner from "../../../spinner";
-import React from "react";
-import Button from "../../../button";
+
+// Components
+import Spinner from "@/components/spinner";
+import Button from "@/components/button";
+
+//Services
+import { deleteRoom } from "@/services/roomService";
 
 interface DeleteRoomProps {
   roomId: string;
@@ -55,11 +59,7 @@ const DeleteRoom = ({ roomId, onDeleteRoom }: DeleteRoomProps) => {
 
   return (
     <>
-      <Button
-        onClick={onOpen}
-        text="Delete"
-        buttonType="first"
-      />
+      <Button onClick={onOpen} text="Delete" buttonType="deleteButton" />
 
       <AlertDialog
         isOpen={isOpen}

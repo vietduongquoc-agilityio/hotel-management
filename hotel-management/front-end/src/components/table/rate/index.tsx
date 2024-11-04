@@ -1,9 +1,13 @@
-import { useState } from "react";
 import { Box, Text, UnorderedList, ListItem, Alert } from "@chakra-ui/react";
-import RateData from "../../../constants/interfaceTypes/rateTypes";
-import EditRateModal from "../../modal/rateModal/edit";
-import DeleteRate from "../../modal/rateModal/delete";
-import Button from "../../button";
+import { useState } from "react";
+
+//Constants
+import { RateData } from "@/constants/interfaceTypes/rateTypes";
+
+//components
+import EditRateModal from "@/components/modal/rateModal/edit";
+import DeleteRate from "@/components/modal/rateModal/delete";
+import Button from "@/components/button";
 
 interface TableRateProps {
   rates: RateData[];

@@ -1,28 +1,13 @@
-import { Box, UnorderedList, ListItem, Text, Button } from "@chakra-ui/react";
-import { useState, useEffect } from "react";
-import AddRoomModal from "../../modal/roomModal/add/index";
-import { getRates } from "../../../services/rateServices";
-import RoomData from "../../../constants/interfaceTypes/roomTypes";
-import RateData from "../../../constants/interfaceTypes/rateTypes";
-import Spinner from "../../spinner";
+import { Box, UnorderedList, ListItem, Text } from "@chakra-ui/react";
+import AddRoomModal from "@/components/modal/roomModal/add";
+import { RoomData } from "@/constants/interfaceTypes/roomTypes";
 
-const LabelRoom = ({
-  onAddRoom,
-  isAddRoom,
-}: {
+interface LabelRoomProps {
   onAddRoom: (roomData: RoomData) => void;
-}) => {
-  const [isAddRoomModalOpen, setIsAddRoomModalOpen] = useState(false);
+  isAddRoom: boolean;
+}
 
-  const handleOpenAddRoomModal = () => {
-    setIsAddRoomModalOpen(true)
-  };
-
-  const handleCloseAddRoomModal = () => {
-    console.log('handleCloseAddRoomModal')
-    setIsAddRoomModalOpen(false);
-  };
-
+const LabelRoom = ({ onAddRoom }: LabelRoomProps) => {
   return (
     <Box
       display="flex"
@@ -42,20 +27,16 @@ const LabelRoom = ({
         </ListItem>
       </UnorderedList>
 
-      
-        <>``
-          {/* <Button
+      <>
+        {/* <Button
             onClick={handleOpenAddRoomModal}
             disabled={!isAddRoom}
             cursor={!isAddRoom ? "not-allowed" : "pointer"}
           >
             Add room
           </Button> */}
-
-          <AddRoomModal
-            onAddRoom={onAddRoom}
-          />
-        </>
+        <AddRoomModal onAddRoom={onAddRoom} />
+      </>
     </Box>
   );
 };

@@ -8,15 +8,19 @@ import {
   ModalFooter,
   useToast,
 } from "@chakra-ui/react";
-import withModal from "../../modalHoc";
-import Button from "../../../button";
-import Input from "../../../input";
-import RateData from "../../../../constants/interfaceTypes/rateTypes";
-import { createRate } from "../../../../services/rateServices";
-import Spinner from "../../../spinner";
-import {
-  validationRules,
-} from "../../../../constants/validate";
+
+// Constants
+import { validationRules } from "@/constants/validate";
+import { RateData } from "@/constants/interfaceTypes/rateTypes";
+
+// Components
+import withModal from "@/components/modal/modalHoc";
+import Button from "@/components/button";
+import Input from "@/components/input";
+import Spinner from "@/components/spinner";
+
+// Services
+import { createRate } from "@/services/rateServices";
 
 interface AddRateModalProps {
   onClose: () => void;

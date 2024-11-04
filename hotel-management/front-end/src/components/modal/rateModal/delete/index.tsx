@@ -10,10 +10,14 @@ import {
   useDisclosure,
   useToast,
 } from "@chakra-ui/react";
-import { deleteRate } from "../../../../services/rateServices";
-import Spinner from "../../../spinner";
 import React from "react";
-import Button from "../../../button";
+
+// Components
+import Spinner from "@/components/spinner";
+import Button from "@/components/button";
+
+//Services
+import { deleteRate } from "@/services/rateServices";
 
 interface DeleteRateProps {
   rateId: string;

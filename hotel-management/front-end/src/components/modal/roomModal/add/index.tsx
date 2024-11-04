@@ -10,15 +10,19 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import { useForm } from "react-hook-form";
-import withModal from "../../modalHoc";
-import Button from "../../../button";
-import Spinner from "../../../spinner";
-import { NewRoomData } from "../../../../constants/interfaceTypes/roomTypes";
-import { validationRules } from "../../../../constants/validate";
+
+// Constants
+import { validationRules } from "@/constants/validate";
 import {
   bedTypeOptions,
   roomFloorOptions,
-} from "../../../../constants/selectOptions/selectOption";
+} from "@/constants/selectOptions/selectOption";
+import { NewRoomData } from "@/constants/interfaceTypes/roomTypes";
+
+// Components
+import withModal from "@/components/modal/modalHoc";
+import Button from "@/components/button";
+import Spinner from "@/components/spinner";
 
 interface AddRoomModalProps {
   onClose: () => void;
@@ -48,8 +52,6 @@ const AddRoomModal = ({ onClose, onAddRoom }: AddRoomModalProps) => {
       roomFloor: data.roomFloor,
       roomFacility: data.roomFacility,
       roomStatus: "Available",
-      documentId: "",
-      status: ""
     };
 
     console.log('onSubmit')

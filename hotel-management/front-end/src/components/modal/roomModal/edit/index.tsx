@@ -1,3 +1,4 @@
+/* eslint-disable react-refresh/only-export-components */
 import {
   ModalFooter,
   FormControl,
@@ -32,7 +33,7 @@ interface EditRoomModalProps {
 const EditRoomModal = ({
   initialRoomData,
   onClose,
-  onEditRoom
+  onEditRoom,
 }: EditRoomModalProps) => {
   const {
     handleSubmit,

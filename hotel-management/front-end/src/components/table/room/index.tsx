@@ -1,9 +1,13 @@
-import { useState } from "react";
-import EditRoomModal from "../../modal/roomModal/edit";
 import { Box, Text, UnorderedList, ListItem, Alert } from "@chakra-ui/react";
-import DeleteRoom from "../../modal/roomModal/delete";
-import Button from "../../button";
-import { RoomData } from "../../../constants/interfaceTypes/roomTypes";
+import { useState } from "react";
+
+// Constants
+import { RoomData } from "@/constants/interfaceTypes/roomTypes";
+
+// Components
+import EditRoomModal from "@/components/modal/roomModal/edit";
+import DeleteRoom from "@/components/modal/roomModal/delete";
+import Button from "@/components/button";
 
 interface TableRoomProps {
   rooms: RoomData[];
@@ -12,22 +16,16 @@ interface TableRoomProps {
   onEditRoom: (roomData: RoomData) => void;
 }
 
-const TableRoom = ({ rooms, error, onDeleteRoom, onEditRoom }: TableRoomProps) => {
+const TableRoom = ({
+  rooms,
+  error,
+  onDeleteRoom,
+  onEditRoom,
+}: TableRoomProps) => {
   const [activeRoomId, setActiveRoomId] = useState<string | null>(null);
-  const [isDeleteDialogOpen, setDeleteDialogOpen] = useState(false);
 
   const toggleMenu = (roomId: string) => {
     setActiveRoomId((prev) => (prev === roomId ? null : roomId));
-  };
-
-  const openDeleteDialog = (roomId: string) => {
-    setActiveRoomId(roomId);
-    setDeleteDialogOpen(true);
-  };
-
-  const closeDeleteDialog = () => {
-    setDeleteDialogOpen(false);
-    setActiveRoomId(null);
   };
 
   if (error) return <Alert status="error">{error}</Alert>;
@@ -122,17 +120,10 @@ const TableRoom = ({ rooms, error, onDeleteRoom, onEditRoom }: TableRoomProps) =
                   setActiveRoomId(null);
                 }}
               />
-              <Button
-                text="Delete"
-                buttonType="deleteButton"
-                onClick={() => openDeleteDialog(room.documentId)}
-              />
 
               <DeleteRoom
                 roomId={room.documentId}
                 onDeleteRoom={onDeleteRoom}
-                isOpen={isDeleteDialogOpen}
-                onClose={closeDeleteDialog}
               />
             </Box>
           )}

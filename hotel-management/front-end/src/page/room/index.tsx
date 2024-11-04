@@ -14,7 +14,6 @@ import Spinner from "@/components/spinner/index";
 import { getRooms, updateRoom, createRoomApi } from "@/services/roomService";
 import { getRates } from "@/services/rateServices";
 
-
 const RoomPage = () => {
   const [rooms, setRooms] = useState<RoomData[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
@@ -60,18 +59,14 @@ const RoomPage = () => {
     }
   };
 
-  
-
   const handleAddRoom = async (roomData: NewRoomData) => {
-    console.log('handleAddRoom: ', roomData)
     try {
       const { data } = await createRoomApi(roomData);
       const listRoom = rooms.slice(0, -1);
       setRooms([data, ...listRoom]);
     } catch (error) {
-      
+      console.log("Error handleAddRoom", error);
     }
-    
   };
 
   const handleDeleteRoom = (deletedRoomId: string) => {
@@ -87,8 +82,8 @@ const RoomPage = () => {
         roomNumber: updatedRoomData.roomNumber,
         roomFloor: updatedRoomData.roomFloor,
         roomFacility: updatedRoomData.roomFacility,
-        roomStatus: updatedRoomData.roomStatus
-      }
+        roomStatus: updatedRoomData.roomStatus,
+      };
 
       await updateRoom(updatedRoomData.documentId, requestData);
 
@@ -121,7 +116,7 @@ const RoomPage = () => {
 
   useEffect(() => {
     fetchRates();
-  }, [])
+  }, []);
 
   useEffect(() => {
     fetchRooms(currentPage);
@@ -132,10 +127,7 @@ const RoomPage = () => {
       <Heading mb="16px" fontSize="12px" fontWeight="500" color="grey.500">
         Room
       </Heading>
-      <LabelRoom
-        onAddRoom={handleAddRoom}
-        isAddRoom={isAddRoom}
-      />
+      <LabelRoom onAddRoom={handleAddRoom} isAddRoom={isAddRoom} />
       {loading ? (
         <Spinner />
       ) : (

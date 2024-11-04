@@ -1,10 +1,16 @@
 import { useState, useEffect } from "react";
 import { Box, Heading, useToast } from "@chakra-ui/react";
-import LabelRate from "../../components/label/rate/labelRate";
-import TableRate from "../../components/table/rate";
-import { getRates } from "../../services/rateServices";
-import RateData from "../../constants/interfaceTypes/rateTypes";
-import Spinner from "../../components/spinner";
+
+//Constants
+import { RateData } from "@/constants/interfaceTypes/rateTypes";
+
+//Components
+import LabelRate from "@/components/label/rate/labelRate";
+import TableRate from "@/components/table/rate";
+import Spinner from "@/components/spinner";
+
+//Services
+import { getRates } from "@/services/rateServices";
 
 const RatePage = () => {
   const [rates, setRates] = useState<RateData[]>([]);
