@@ -13,13 +13,13 @@ import { useForm } from "react-hook-form";
 import withModal from "../../modalHoc";
 import Button from "../../../button";
 import Spinner from "../../../spinner";
-import { NewRoomData } from "../../../constants/interfaceTypes/roomTypes";
+import { NewRoomData } from "../../../../constants/interfaceTypes/roomTypes";
 import { createRoom } from "../../../../services/roomService";
-import { validationRules } from "../../../constants/validate";
+import { validationRules } from "../../../../constants/validate";
 import {
   bedTypeOptions,
   roomFloorOptions,
-} from "../../../constants/selectOptions/selectOption";
+} from "../../../../constants/selectOptions/selectOption";
 
 interface AddRoomModalProps {
   onClose: () => void;

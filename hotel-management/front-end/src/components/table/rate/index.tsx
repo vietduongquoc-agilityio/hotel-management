@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Box, Text, UnorderedList, ListItem, Alert } from "@chakra-ui/react";
-import RateData from "../../constants/interfaceTypes/rateTypes";
+import RateData from "../../../constants/interfaceTypes/rateTypes";
 import EditRateModal from "../../modal/rateModal/edit";
 import DeleteRate from "../../modal/rateModal/delete";
 import Button from "../../button";

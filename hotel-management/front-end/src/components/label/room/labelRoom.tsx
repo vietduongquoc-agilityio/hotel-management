@@ -2,8 +2,8 @@ import { Box, UnorderedList, ListItem, Text, Button } from "@chakra-ui/react";
 import { useState, useEffect } from "react";
 import AddRoomModal from "../../modal/roomModal/add/index";
 import { getRates } from "../../../services/rateServices";
-import RoomData from "../../constants/interfaceTypes/roomTypes";
-import RateData from "../../constants/interfaceTypes/rateTypes";
+import RoomData from "../../../constants/interfaceTypes/roomTypes";
+import RateData from "../../../constants/interfaceTypes/rateTypes";
 import Spinner from "../../spinner";
 
 const LabelRoom = ({
