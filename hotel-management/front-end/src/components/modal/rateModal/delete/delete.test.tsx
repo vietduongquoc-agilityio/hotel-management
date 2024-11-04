@@ -1,6 +1,6 @@
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import "@testing-library/jest-dom";
-import DeleteRate from "./index";
+import DeleteRate from "./DeleteRate";
 import { deleteRate } from "../../../../services/rateServices";
 import { useToast } from "@chakra-ui/react";
 import React from "react";

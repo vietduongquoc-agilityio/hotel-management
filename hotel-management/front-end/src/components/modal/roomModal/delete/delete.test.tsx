@@ -1,8 +1,7 @@
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import "@testing-library/jest-dom";
-import DeleteRoom from "./index";
+import DeleteRoom from "./DeleteRoom";
 import { deleteRoom } from "../../../../services/roomService";
-import React from "react";
 
 // Mock the deleteRoom service
 jest.mock("../../../../services/roomService", () => ({

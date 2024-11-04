@@ -1,4 +1,4 @@
-import { InputType } from ".";
+import { InputType } from "./Input";
 
 export const getStyleInput = (type: InputType) => {
   switch (type) {

@@ -1,5 +1,5 @@
 import { Meta, StoryFn } from "@storybook/react";
-import Button, { buttonType } from "./index";
+import Button, { buttonType } from "./Button";
 
 export default {
   title: "Components/Button",

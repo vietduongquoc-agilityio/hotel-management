@@ -1,6 +1,10 @@
 import { Box } from "@chakra-ui/react";
-import AddRateModal from "../../modal/rateModal/add/index";
-import RateData from "../../../constants/interfaceTypes/rateTypes";
+
+//Constants
+import {RateData} from "@/Constants/InterfaceTypes/RateTypes";
+
+//Components
+import AddRateModal from "@/components/Modal/RateModal/Add/AddRate";
 
 const LabelRate = ({
   onAddRate,
