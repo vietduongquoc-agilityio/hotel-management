@@ -18,7 +18,7 @@ export const roomStatusOptions = [
   { value: "Available", label: "Available" },
   { value: "Booked", label: "Booked" },
   { value: "Reserved", label: "Reserved" },
-  { value: "WaitList", label: "WaitList" },
+  { value: "Waitlist", label: "Waitlist" },
   { value: "Blocked", label: "Blocked" },
 ];
 

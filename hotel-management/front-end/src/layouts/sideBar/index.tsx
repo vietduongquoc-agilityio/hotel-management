@@ -14,7 +14,7 @@ const Sidebar = () => {
       gap="32px"
       alignItems="flex-start"
     >
-      <Link w="196px" h="40px" as={RouterLink} to="/">
+      <Link w="196px" h="40px" as={RouterLink} to="/room">
         <Image src={logoIcon} alt="Logo" />
       </Link>
       <List
@@ -26,7 +26,7 @@ const Sidebar = () => {
         <ListItem>
           <Link
             as={RouterLink}
-            to="/"
+            to="/room"
             display="flex"
             alignItems="center"
             borderRadius="borderRadius.md"

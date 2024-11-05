@@ -16,7 +16,12 @@ const Header = ({
   };
 
   return (
-    <Box as="header" className="header-container" mb="30px">
+    <Box
+      as="header"
+      className="header-container"
+      mb="30px"
+      _hover={{ cursor: "not-allowed" }}
+    >
       <Box as="form" className="form-search">
         <InputGroup w="400px" h="40px" borderRadius={8}>
           <InputLeftAddon
@@ -25,6 +30,7 @@ const Header = ({
             children={<SearchIcon color="grey.500" />}
           />
           <Input
+            pointerEvents="none"
             bg="grey.50"
             type="text"
             value={searchValue}
