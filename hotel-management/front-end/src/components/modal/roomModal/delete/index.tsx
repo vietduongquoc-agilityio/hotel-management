@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { useState } from "react";
+import React from "react";
 import {
   AlertDialog,
   AlertDialogOverlay,
@@ -9,11 +10,15 @@ import {
   AlertDialogFooter,
   useDisclosure,
   Text,
+  useToast,
 } from "@chakra-ui/react";
-import { deleteRoom } from "../../../../services/roomService";
-import Spinner from "../../../spinner";
-import React from "react";
-import Button from "../../../button";
+
+// Components
+import Spinner from "@/components/Spinner";
+import Button from "@/components/Button";
+
+//Services
+import { deleteRoom } from "@/services/roomService";
 
 interface DeleteRoomProps {
   roomId: string;
@@ -24,16 +29,29 @@ const DeleteRoom = ({ roomId, onDeleteRoom }: DeleteRoomProps) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const cancelRef = React.useRef(null);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
+  const [error,] = useState("");
+  const toast = useToast();
 
   const handleDelete = async () => {
     setLoading(true);
     try {
       await deleteRoom(roomId);
       onDeleteRoom(roomId);
+      toast({
+        title: "Rate deleted successfully.",
+        status: "success",
+        duration: 3000,
+        isClosable: true,
+      });
       onClose();
     } catch (error) {
-      setError("Failed to delete room.");
+      toast({
+        title: "Failed to delete rate.",
+        description: "An error occurred while deleting the rate.",
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+      });
     } finally {
       setLoading(false);
     }
@@ -41,11 +59,7 @@ const DeleteRoom = ({ roomId, onDeleteRoom }: DeleteRoomProps) => {
 
   return (
     <>
-      <Button
-        onClick={onOpen}
-        text="Delete"
-        buttonType="first"
-      />
+      <Button onClick={onOpen} text="Delete" buttonType="deleteButton" />
 
       <AlertDialog
         isOpen={isOpen}

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Meta, StoryFn } from "@storybook/react";
-import Pagination from "./index";
+import Pagination from ".";
 
 export default {
   title: "Components/Pagination",

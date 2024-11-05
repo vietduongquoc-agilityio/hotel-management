@@ -1,11 +1,10 @@
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import "@testing-library/jest-dom";
-import DeleteRate from "./index";
-import { deleteRate } from "../../../../services/rateServices";
+import DeleteRate from ".";
+import { deleteRate } from "@/services/rateServices";
 import { useToast } from "@chakra-ui/react";
-import React from "react";
 
-jest.mock("../../../../services/rateServices", () => ({
+jest.mock("@/services/rateServices", () => ({
   deleteRate: jest.fn(),
 }));
 jest.mock("@chakra-ui/react", () => {
