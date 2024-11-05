@@ -8,6 +8,10 @@ import { RoomData } from "@/constant/InterfaceTypes/RoomTypes";
 import EditRoomModal from "@/components/Modal/RoomModal/Edit";
 import DeleteRoom from "@/components/Modal/RoomModal/Delete";
 import Button from "@/components/Button";
+import {
+  roomStatusBackgrounds,
+  roomStatusColors,
+} from "@/constant/SelectOptions";
 
 interface TableRoomProps {
   rooms: RoomData[];
@@ -54,7 +58,13 @@ const TableRoom = ({
         <ListItem w="15%" listStyleType="none">
           Room number
         </ListItem>
-        <ListItem w="20%" listStyleType="none">
+        <ListItem
+          w="20%"
+          listStyleType="none"
+          onClick={() => {
+            console.log("kkkkkkk");
+          }}
+        >
           Bed type
         </ListItem>
         <ListItem w="15%" listStyleType="none">
@@ -79,15 +89,27 @@ const TableRoom = ({
           position="relative"
           border="1px solid #d4e5fa"
         >
-          <Text w="15%" color="grey.900">
+          <Text w="15%" color="grey.900" fontWeight="500">
             {room.roomNumber}
           </Text>
           <Text w="20%">{room.bedType} Bed</Text>
           <Text w="15%">{room.roomFloor} Floor</Text>
           <Text w="27%">{room.roomFacility}</Text>
-          <Text w="16%" pl="48px" mr="20px">
-            {room.roomStatus}
-          </Text>
+          <Box w="16%" justifyContent="center" display="flex">
+            <Text
+              borderRadius="16px"
+              p="4px 8px"
+              w="65px"
+              mr="15px"
+              bg={roomStatusBackgrounds[room.roomStatus]}
+              display="flex"
+              justifyContent="center"
+              color={roomStatusColors[room.roomStatus]}
+              fontSize="12px"
+            >
+              {room.roomStatus}
+            </Text>
+          </Box>
           <Button
             onClick={() => toggleMenu(room.documentId)}
             bg="white.200"
