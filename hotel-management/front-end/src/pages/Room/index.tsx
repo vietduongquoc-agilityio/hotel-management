@@ -5,10 +5,10 @@ import { Box, Heading, useToast } from "@chakra-ui/react";
 import { NewRoomData, RoomData } from "@/constant/InterfaceTypes/RoomTypes";
 
 // Components
-import TableRoom from "@/components/Tables/Room/Room";
-import Pagination from "@/components/Pagination/Pagination";
-import LabelRoom from "@/components/Label/Room/LabelRoom";
-import Spinner from "@/components/Spinner/Spinner";
+import TableRoom from "@/components/Tables/Room";
+import Pagination from "@/components/Pagination";
+import LabelRoom from "@/components/Label/Room";
+import Spinner from "@/components/Spinner";
 
 // Services
 import { getRooms, updateRoom, createRoomApi } from "@/services/roomService";
