@@ -15,12 +15,13 @@ import { useState } from "react";
 import {
   bedTypeOptions,
   roomFloorOptions,
+  roomStatusColors,
   roomStatusOptions,
 } from "@/constant/SelectOptions";
 import { RoomData } from "@/constant/InterfaceTypes/RoomTypes";
 
 // Components
-import withModal from "@/components/Modal/ModalHoc";
+import withModal from "@/components/Modal/modalHoc";
 import Button from "@/components/Button";
 import Spinner from "@/components/Spinner";
 
@@ -47,7 +48,6 @@ const EditRoomModal = ({
   const toast = useToast();
 
   const onSubmit = async (data: RoomData) => {
-
     setLoading(true);
     try {
       await onEditRoom(data);
@@ -94,7 +94,16 @@ const EditRoomModal = ({
             {...register("roomFloor")}
           >
             {roomFloorOptions.map((option, index) => (
-              <option key={`${option.value}-${index}`} value={option.value}>
+              <option
+                key={`${option.value}-${index}`}
+                value={option.value}
+                style={{
+                  color:
+                    roomStatusColors[
+                      option.value as keyof typeof roomStatusColors
+                    ],
+                }}
+              >
                 {option.label}
               </option>
             ))}

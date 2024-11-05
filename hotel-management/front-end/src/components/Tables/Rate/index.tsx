@@ -88,7 +88,9 @@ const TableRate = ({
           <Text w="15%">{rate.deals}</Text>
           <Text w="15%">{rate.cancellationPolicy}</Text>
           <Text w="15%">{rate.dealPrice}$</Text>
-          <Text w="15%">{rate.dealPrice}$</Text>
+          <Text fontWeight="500" w="15%" color="grey.900">
+            {rate.dealPrice}$
+          </Text>
           <Text w="20%">{rate.availability}</Text>
           <Button
             bg="white.200"

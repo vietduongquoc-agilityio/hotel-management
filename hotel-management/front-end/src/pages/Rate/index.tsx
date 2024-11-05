@@ -6,9 +6,9 @@ import { Box, Heading, useToast } from "@chakra-ui/react";
 import { RateData, NewRateData } from "@/constant/InterfaceTypes/RateTypes";
 
 //Components
-import LabelRate from "@/components/Label/Rate/LabelRate";
-import TableRate from "@/components/Tables/Rate/Rate";
-import Spinner from "@/components/Spinner/Spinner";
+import LabelRate from "@/components/Label/Rate";
+import TableRate from "@/components/Tables/Rate";
+import Spinner from "@/components/Spinner";
 
 //Services
 import { getRates, updateRate, createRateApi } from "@/services/rateServices";

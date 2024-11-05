@@ -1,5 +1,5 @@
 import { StoryFn } from "@storybook/react";
-import Sidebar from "./SideBar";
+import Sidebar from ".";
 import { BrowserRouter as Router } from "react-router-dom";
 
 export default {

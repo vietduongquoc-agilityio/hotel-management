@@ -1,13 +1,19 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import axios from "axios";
 import { NewRoomData } from "@/constant/InterfaceTypes/RoomTypes";
 
 const BASE_URL = process.env.VITE_BASE_URL;
 
-export const getRooms = async (page: number, pageSize: number) => {
+export const getRooms = async (
+  page: number,
+  pageSize: number,
+  field?: string,
+  value?: string
+) => {
   try {
+    const filters = field && value ? { [`filters[${field}]`]: value } : {};
     const response = await axios.get(`${BASE_URL}/rooms`, {
       params: {
+        ...filters,
         "sort[0]": "createdAt:desc",
         "pagination[page]": page,
         "pagination[pageSize]": pageSize,
@@ -19,9 +25,8 @@ export const getRooms = async (page: number, pageSize: number) => {
         rooms: response.data.data,
         pagination: response.data.meta.pagination,
       };
-    } else {
-      throw new Error("Unexpected data format");
     }
+    return response.data;
   } catch (error) {
     console.error("Error fetching room data", error);
     throw error;

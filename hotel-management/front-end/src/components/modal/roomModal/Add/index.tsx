@@ -20,7 +20,7 @@ import {
 import { NewRoomData } from "@/constant/InterfaceTypes/RoomTypes";
 
 // Components
-import withModal from "@/components/Modal/ModalHoc";
+import withModal from "@/components/Modal/modalHoc";
 import Button from "@/components/Button";
 import Spinner from "@/components/Spinner";
 

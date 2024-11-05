@@ -18,6 +18,23 @@ export const roomStatusOptions = [
   { value: "Available", label: "Available" },
   { value: "Booked", label: "Booked" },
   { value: "Reserved", label: "Reserved" },
-  { value: "Waitlist", label: "Waitlist" },
+  { value: "WaitList", label: "WaitList" },
   { value: "Blocked", label: "Blocked" },
 ];
+
+// roomStatusColors.ts (or add to your constants file)
+export const roomStatusColors: { [key: string]: string } = {
+  Available: "blue.400",
+  Booked: "error.400",
+  Reserved: "success.400",
+  Waitlist: "warning.400",
+  Blocked: "warning.400",
+};
+
+export const roomStatusBackgrounds: { [key: string]: string } = {
+  Available: "blue.100",
+  Booked: "error.50",
+  Reserved: "success.50",
+  Waitlist: "warning.50",
+  Blocked: "warning.50",
+};
