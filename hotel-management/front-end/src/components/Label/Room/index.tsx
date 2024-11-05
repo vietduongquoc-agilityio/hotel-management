@@ -1,15 +1,38 @@
-import { Box, UnorderedList, ListItem, Text } from "@chakra-ui/react";
+import { Box, UnorderedList, ListItem, Text, Select } from "@chakra-ui/react";
+import { ChangeEvent } from "react";
+
+//Constants
+import { NewRoomData } from "@/constant/InterfaceTypes/RoomTypes";
+import {
+  bedTypeOptions,
+  roomFloorOptions,
+  roomStatusColors,
+  roomStatusOptions,
+} from "@/constant/SelectOptions";
+
+//Components
 import AddRoomModal from "@/components/Modal/RoomModal/Add";
-import { RoomData } from "@/constant/InterfaceTypes/RoomTypes";
 
 interface LabelRoomProps {
-  onAddRoom: (roomData: RoomData) => void;
+  onAddRoom: (roomData: NewRoomData) => Promise<void>;
   isAddRoom: boolean;
+  selectedBedType: string;
+  selectedRoomFloor: string;
+  selectedRoomStatus: string;
+  handleSelectedBedType: (event: ChangeEvent<HTMLSelectElement>) => void;
+  handleSelectedRoomFloor: (event: ChangeEvent<HTMLSelectElement>) => void;
+  handleSelectedRoomStatus: (event: ChangeEvent<HTMLSelectElement>) => void;
 }
 
-const LabelRoom = ({ onAddRoom }: LabelRoomProps) => {
+const LabelRoom = ({
+  onAddRoom,
+  handleSelectedBedType,
+  handleSelectedRoomFloor,
+  handleSelectedRoomStatus,
+}: LabelRoomProps) => {
   return (
     <Box
+      cursor="pointer"
       display="flex"
       justifyContent="space-between"
       alignItems="center"
@@ -17,24 +40,94 @@ const LabelRoom = ({ onAddRoom }: LabelRoomProps) => {
     >
       <UnorderedList styleType="none" m={0} display="flex" gap={4}>
         <ListItem>
-          <Text>All rooms (100)</Text>
+          <Text
+            border="1px solid rgb(152, 159, 173)"
+            borderRadius="100px"
+            p="8px 20px"
+            _hover={{
+              border: "1px solid rgb(21, 112, 239)",
+              bg: "blue.100",
+              color: "blue.500",
+              transition: "background-color 0.2s ease",
+            }}
+          >
+            All rooms (100)
+          </Text>
         </ListItem>
         <ListItem>
-          <Text>Available rooms (20)</Text>
+          <Text
+            border="1px solid rgb(152, 159, 173)"
+            borderRadius="100px"
+            p="8px 20px"
+            _hover={{
+              border: "1px solid rgb(21, 112, 239)",
+              bg: "blue.100",
+              color: "blue.500",
+              transition: "background-color 0.2s ease",
+            }}
+          >
+            Available rooms (20)
+          </Text>
         </ListItem>
         <ListItem>
-          <Text>Booked (80)</Text>
+          <Text
+            border="1px solid rgb(152, 159, 173)"
+            borderRadius="100px"
+            p="8px 20px"
+            _hover={{
+              border: "1px solid rgb(21, 112, 239)",
+              bg: "blue.100",
+              color: "blue.500",
+              transition: "background-color 0.2s ease",
+            }}
+          >
+            Booked (80)
+          </Text>
         </ListItem>
       </UnorderedList>
+      <Box display="flex" gap="10px">
+        <Select cursor="pointer" width="120px" onChange={handleSelectedBedType}>
+          {bedTypeOptions.map((option, index) => (
+            <option key={`${option.value}-${index}`} value={option.value}>
+              {option.label}
+            </option>
+          ))}
+        </Select>
 
+        <Select
+          cursor="pointer"
+          width="120px"
+          onChange={handleSelectedRoomFloor}
+        >
+          {roomFloorOptions.map((option, index) => (
+            <option
+              key={`${option.value}-${index}`}
+              value={option.value}
+              style={{
+                color:
+                  roomStatusColors[
+                    option.value as keyof typeof roomStatusColors
+                  ],
+              }}
+            >
+              {option.label}
+            </option>
+          ))}
+        </Select>
+
+        <Select
+          cursor="pointer"
+          width="120px"
+          onChange={handleSelectedRoomStatus}
+        >
+          {roomStatusOptions.map((option, index) => (
+            <option key={`${option.value}-${index}`} value={option.value}>
+              {option.label}
+            </option>
+          ))}
+        </Select>
+      </Box>
       <>
-        {/* <Button
-            onClick={handleOpenAddRoomModal}
-            disabled={!isAddRoom}
-            cursor={!isAddRoom ? "not-allowed" : "pointer"}
-          >
-            Add room
-          </Button> */}
         <AddRoomModal onAddRoom={onAddRoom} />
       </>
     </Box>

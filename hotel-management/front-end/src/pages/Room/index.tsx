@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Box, Heading, useToast } from "@chakra-ui/react";
 
 // Constants
@@ -22,29 +22,33 @@ const RoomPage = () => {
   const [loading, setLoading] = useState(true);
   const [isAddRoom, setIsAddRoom] = useState(false);
   const toast = useToast();
+  const [bedType, setBedType] = useState("");
+  const [roomFloor, setRoomFloor] = useState("");
+  const [roomStatus, setRoomStatus] = useState("");
 
-  const fetchRooms = useCallback(
-    async (page = 1) => {
-      setLoading(true);
-      try {
-        const { rooms, pagination } = await getRooms(page, pageSize);
-        setRooms(rooms);
-        setPageCount(pagination.pageCount);
-      } catch (error) {
-        toast({
-          title: "Error fetching rooms",
-          description: "There was an issue retrieving the room data.",
-          status: "error",
-          duration: 3000,
-          isClosable: true,
-        });
-        console.error("Error fetching rooms:", error);
-      } finally {
-        setLoading(false);
-      }
-    },
-    [pageSize, toast]
-  );
+  const fetchRooms = async (
+    currentPage: number,
+    pageSize: number,
+    field?: string,
+    value?: string
+  ) => {
+    setLoading(true);
+    try {
+      const { rooms, pagination } = await getRooms(
+        currentPage,
+        pageSize,
+        field,
+        value
+      );
+      setRooms(rooms);
+      setPageCount(pagination.pageCount);
+    } catch (error) {
+      console.error("Error fetching rooms:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const fetchRates = async () => {
     setLoading(true);
     try {
@@ -119,15 +123,50 @@ const RoomPage = () => {
   }, []);
 
   useEffect(() => {
-    fetchRooms(currentPage);
-  }, [fetchRooms, currentPage]);
+    fetchRooms(currentPage, pageSize);
+  }, [currentPage]);
+
+  const handleSelectedBedType = (
+    event: React.ChangeEvent<HTMLSelectElement>
+  ) => {
+    const selectedBedType = event.target.value;
+    setBedType(selectedBedType);
+    fetchRooms(currentPage, pageSize, "bedType", selectedBedType);
+  };
+
+  const handleSelectedRoomFloor = (
+    event: React.ChangeEvent<HTMLSelectElement>
+  ) => {
+    const selectedRoomFloor = event.target.value;
+    setRoomFloor(selectedRoomFloor);
+    fetchRooms(currentPage, pageSize, "roomFloor", selectedRoomFloor);
+  };
+
+  const handleSelectedRoomStatus = (
+    event: React.ChangeEvent<HTMLSelectElement>
+  ) => {
+    const selectedRoomStatus = event.target.value;
+    setRoomStatus(selectedRoomStatus);
+    fetchRooms(currentPage, pageSize, "roomStatus", selectedRoomStatus);
+  };
 
   return (
     <Box>
       <Heading mb="16px" fontSize="12px" fontWeight="500" color="grey.500">
         Room
       </Heading>
-      <LabelRoom onAddRoom={handleAddRoom} isAddRoom={isAddRoom} />
+
+      <LabelRoom
+        onAddRoom={handleAddRoom}
+        isAddRoom={isAddRoom}
+        selectedBedType={bedType}
+        selectedRoomFloor={roomFloor}
+        selectedRoomStatus={roomStatus}
+        handleSelectedBedType={handleSelectedBedType}
+        handleSelectedRoomFloor={handleSelectedRoomFloor}
+        handleSelectedRoomStatus={handleSelectedRoomStatus}
+      />
+
       {loading ? (
         <Spinner />
       ) : (

@@ -58,13 +58,7 @@ const TableRoom = ({
         <ListItem w="15%" listStyleType="none">
           Room number
         </ListItem>
-        <ListItem
-          w="20%"
-          listStyleType="none"
-          onClick={() => {
-            console.log("kkkkkkk");
-          }}
-        >
+        <ListItem w="20%" listStyleType="none">
           Bed type
         </ListItem>
         <ListItem w="15%" listStyleType="none">
