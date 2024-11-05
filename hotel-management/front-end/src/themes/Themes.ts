@@ -1,6 +1,6 @@
 import { extendTheme } from "@chakra-ui/react";
-import { bases } from "./base";
-import { components } from "./components";
+import { bases } from "./Base/index";
+import { components } from "@/themes/Components/Index";
 
 export const theme = extendTheme({
   ...bases,

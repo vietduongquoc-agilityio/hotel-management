@@ -1,7 +1,9 @@
 import { Box, Flex } from "@chakra-ui/react";
-import Sidebar from "../sideBar";
-import Header from "../header";
 import { Outlet } from "react-router-dom";
+
+//Components
+import Header from "@/layouts/Header";
+import Sidebar from "@/layouts/SideBar";
 
 const MainLayout = () => {
   return (

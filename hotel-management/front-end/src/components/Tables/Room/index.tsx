@@ -1,9 +1,17 @@
-import { useState } from "react";
-import EditRoomModal from "../../modal/roomModal/edit";
 import { Box, Text, UnorderedList, ListItem, Alert } from "@chakra-ui/react";
-import DeleteRoom from "../../modal/roomModal/delete";
-import Button from "../../button";
-import { RoomData } from "../../../constants/interfaceTypes/roomTypes";
+import { useState } from "react";
+
+// Constants
+import { RoomData } from "@/constant/InterfaceTypes/RoomTypes";
+
+// Components
+import EditRoomModal from "@/components/Modal/RoomModal/Edit";
+import DeleteRoom from "@/components/Modal/RoomModal/Delete";
+import Button from "@/components/Button";
+import {
+  roomStatusBackgrounds,
+  roomStatusColors,
+} from "@/constant/SelectOptions";
 
 interface TableRoomProps {
   rooms: RoomData[];
@@ -12,22 +20,16 @@ interface TableRoomProps {
   onEditRoom: (roomData: RoomData) => void;
 }
 
-const TableRoom = ({ rooms, error, onDeleteRoom, onEditRoom }: TableRoomProps) => {
+const TableRoom = ({
+  rooms,
+  error,
+  onDeleteRoom,
+  onEditRoom,
+}: TableRoomProps) => {
   const [activeRoomId, setActiveRoomId] = useState<string | null>(null);
-  const [isDeleteDialogOpen, setDeleteDialogOpen] = useState(false);
 
   const toggleMenu = (roomId: string) => {
     setActiveRoomId((prev) => (prev === roomId ? null : roomId));
-  };
-
-  const openDeleteDialog = (roomId: string) => {
-    setActiveRoomId(roomId);
-    setDeleteDialogOpen(true);
-  };
-
-  const closeDeleteDialog = () => {
-    setDeleteDialogOpen(false);
-    setActiveRoomId(null);
   };
 
   if (error) return <Alert status="error">{error}</Alert>;
@@ -56,7 +58,13 @@ const TableRoom = ({ rooms, error, onDeleteRoom, onEditRoom }: TableRoomProps) =
         <ListItem w="15%" listStyleType="none">
           Room number
         </ListItem>
-        <ListItem w="20%" listStyleType="none">
+        <ListItem
+          w="20%"
+          listStyleType="none"
+          onClick={() => {
+            console.log("kkkkkkk");
+          }}
+        >
           Bed type
         </ListItem>
         <ListItem w="15%" listStyleType="none">
@@ -81,15 +89,27 @@ const TableRoom = ({ rooms, error, onDeleteRoom, onEditRoom }: TableRoomProps) =
           position="relative"
           border="1px solid #d4e5fa"
         >
-          <Text w="15%" color="grey.900">
+          <Text w="15%" color="grey.900" fontWeight="500">
             {room.roomNumber}
           </Text>
           <Text w="20%">{room.bedType} Bed</Text>
           <Text w="15%">{room.roomFloor} Floor</Text>
           <Text w="27%">{room.roomFacility}</Text>
-          <Text w="16%" pl="48px" mr="20px">
-            {room.roomStatus}
-          </Text>
+          <Box w="16%" justifyContent="center" display="flex">
+            <Text
+              borderRadius="16px"
+              p="4px 8px"
+              w="65px"
+              mr="15px"
+              bg={roomStatusBackgrounds[room.roomStatus]}
+              display="flex"
+              justifyContent="center"
+              color={roomStatusColors[room.roomStatus]}
+              fontSize="12px"
+            >
+              {room.roomStatus}
+            </Text>
+          </Box>
           <Button
             onClick={() => toggleMenu(room.documentId)}
             bg="white.200"
@@ -122,17 +142,9 @@ const TableRoom = ({ rooms, error, onDeleteRoom, onEditRoom }: TableRoomProps) =
                   setActiveRoomId(null);
                 }}
               />
-              <Button
-                text="Delete"
-                buttonType="deleteButton"
-                onClick={() => openDeleteDialog(room.documentId)}
-              />
-
               <DeleteRoom
                 roomId={room.documentId}
                 onDeleteRoom={onDeleteRoom}
-                isOpen={isDeleteDialogOpen}
-                onClose={closeDeleteDialog}
               />
             </Box>
           )}

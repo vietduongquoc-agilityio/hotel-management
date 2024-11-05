@@ -1,5 +1,5 @@
 import { Meta, StoryFn } from "@storybook/react";
-import Header, { HeaderProps } from "./index";
+import Header, { HeaderProps } from ".";
 
 export default {
   title: "Layouts/Header",

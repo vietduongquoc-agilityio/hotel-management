@@ -2,18 +2,17 @@ import { useCallback, useEffect, useState } from "react";
 import { Box, Heading, useToast } from "@chakra-ui/react";
 
 // Constants
-import { NewRoomData, RoomData } from "@/constants/interfaceTypes/roomTypes";
+import { NewRoomData, RoomData } from "@/constant/InterfaceTypes/RoomTypes";
 
 // Components
-import TableRoom from "@/components/table/room";
-import Pagination from "@/components/pagination";
-import LabelRoom from "@/components/label/room/labelRoom";
-import Spinner from "@/components/spinner/index";
+import TableRoom from "@/components/Tables/Room";
+import Pagination from "@/components/Pagination";
+import LabelRoom from "@/components/Label/Room";
+import Spinner from "@/components/Spinner";
 
 // Services
 import { getRooms, updateRoom, createRoomApi } from "@/services/roomService";
 import { getRates } from "@/services/rateServices";
-
 
 const RoomPage = () => {
   const [rooms, setRooms] = useState<RoomData[]>([]);
@@ -60,18 +59,14 @@ const RoomPage = () => {
     }
   };
 
-  
-
   const handleAddRoom = async (roomData: NewRoomData) => {
-    console.log('handleAddRoom: ', roomData)
     try {
       const { data } = await createRoomApi(roomData);
       const listRoom = rooms.slice(0, -1);
       setRooms([data, ...listRoom]);
     } catch (error) {
-      
+      console.log("Error handleAddRoom", error);
     }
-    
   };
 
   const handleDeleteRoom = (deletedRoomId: string) => {
@@ -87,8 +82,8 @@ const RoomPage = () => {
         roomNumber: updatedRoomData.roomNumber,
         roomFloor: updatedRoomData.roomFloor,
         roomFacility: updatedRoomData.roomFacility,
-        roomStatus: updatedRoomData.roomStatus
-      }
+        roomStatus: updatedRoomData.roomStatus,
+      };
 
       await updateRoom(updatedRoomData.documentId, requestData);
 
@@ -121,7 +116,7 @@ const RoomPage = () => {
 
   useEffect(() => {
     fetchRates();
-  }, [])
+  }, []);
 
   useEffect(() => {
     fetchRooms(currentPage);
@@ -132,10 +127,7 @@ const RoomPage = () => {
       <Heading mb="16px" fontSize="12px" fontWeight="500" color="grey.500">
         Room
       </Heading>
-      <LabelRoom
-        onAddRoom={handleAddRoom}
-        isAddRoom={isAddRoom}
-      />
+      <LabelRoom onAddRoom={handleAddRoom} isAddRoom={isAddRoom} />
       {loading ? (
         <Spinner />
       ) : (

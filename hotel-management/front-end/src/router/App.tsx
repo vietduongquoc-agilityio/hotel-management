@@ -5,10 +5,10 @@ import {
   Route,
   Navigate,
 } from "react-router-dom";
-import MainLayout from "../layouts/main";
-import RoomPage from "../page/room";
-import RatePage from "../page/rate";
-import theme from "../themes";
+import MainLayout from "../layouts/Main";
+import RoomPage from "../pages/Room";
+import RatePage from "../pages/Rate";
+import theme from "@/themes/Themes";
 
 const App = () => {
   return (

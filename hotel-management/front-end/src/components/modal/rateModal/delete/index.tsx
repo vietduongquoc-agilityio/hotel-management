@@ -10,10 +10,14 @@ import {
   useDisclosure,
   useToast,
 } from "@chakra-ui/react";
-import { deleteRate } from "../../../../services/rateServices";
-import Spinner from "../../../spinner";
 import React from "react";
-import Button from "../../../button";
+
+// Components
+import Spinner from "@/components/Spinner";
+import Button from "@/components/Button";
+
+//Services
+import { deleteRate } from "@/services/rateServices";
 
 interface DeleteRateProps {
   rateId: string;
@@ -53,7 +57,7 @@ const DeleteRate = ({ rateId, onDeleteRate }: DeleteRateProps) => {
 
   return (
     <>
-      <Button onClick={onOpen} text="Delete" buttonType="first"></Button>
+      <Button onClick={onOpen} text="Delete" buttonType="deleteButton"></Button>
 
       <AlertDialog
         isOpen={isOpen}

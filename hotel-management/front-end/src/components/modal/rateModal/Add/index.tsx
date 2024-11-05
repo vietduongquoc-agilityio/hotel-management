@@ -8,19 +8,20 @@ import {
   ModalFooter,
   useToast,
 } from "@chakra-ui/react";
-import withModal from "../../modalHoc";
-import Button from "../../../button";
-import Input from "../../../input";
-import RateData from "../../../../constants/interfaceTypes/rateTypes";
-import { createRate } from "../../../../services/rateServices";
-import Spinner from "../../../spinner";
-import {
-  validationRules,
-} from "../../../../constants/validate";
+
+// Constants
+import { validationRules } from "@/constant/Validate";
+import { NewRateData } from "@/constant/InterfaceTypes/RateTypes";
+
+// Components
+import withModal from "@/components/Modal/ModalHoc";
+import Button from "@/components/Button";
+import Input from "@/components/Input";
+import Spinner from "@/components/Spinner";
 
 interface AddRateModalProps {
   onClose: () => void;
-  onAddRate: (rateData: RateData) => void;
+  onAddRate: (rateData: NewRateData) => void;
 }
 
 interface FormData {
@@ -41,20 +42,18 @@ const AddRateModal = ({ onClose, onAddRate }: AddRateModalProps) => {
   } = useForm<FormData>();
 
   const onSubmit = async (data: FormData) => {
-    const newRateData: RateData = {
+    const newRateData: NewRateData = {
       roomType: data.roomType,
       cancellationPolicy: data.cancellationPolicy,
       deals: "Family Deal",
       dealPrice: data.price,
-      rate: data.price,
       availability: data.availability,
-      documentId: "",
+      rate: data.price,
     };
 
     setLoading(true);
     try {
-      const createdRate = await createRate(newRateData);
-      onAddRate(createdRate);
+      await onAddRate(newRateData);
       toast({
         title: "Rate added successfully.",
         status: "success",

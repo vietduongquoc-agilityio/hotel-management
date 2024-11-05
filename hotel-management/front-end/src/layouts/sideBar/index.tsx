@@ -1,9 +1,9 @@
 import { VStack, Image, Link, List, ListItem } from "@chakra-ui/react";
 import { Link as RouterLink } from "react-router-dom";
-import roomIcon from "../../assets/icons/room.svg";
-import logoIcon from "../../assets/icons/logo.svg";
-import rateIcon from "../../assets/icons/rate.svg";
-import { borderRadius } from "../../themes/base/metrics";
+import roomIcon from "@/assets/icons/room.svg";
+import logoIcon from "@/assets/icons/logo.svg";
+import rateIcon from "@/assets/icons/rate.svg";
+import { borderRadius } from "@/themes/Base/metrics";
 
 const Sidebar = () => {
   return (

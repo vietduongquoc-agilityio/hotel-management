@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import axios from "axios";
-import { NewRoomData } from "../constants/interfaceTypes/roomTypes";
+import { NewRoomData } from "@/constant/InterfaceTypes/RoomTypes";
 
 const BASE_URL = process.env.VITE_BASE_URL;
 

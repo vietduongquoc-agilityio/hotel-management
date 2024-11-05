@@ -7,7 +7,9 @@ import {
   ModalBody,
   ModalFooter,
 } from "@chakra-ui/react";
-import Button from "../button";
+
+//Components
+import Button from "@/components/Button";
 
 const withModal = (
   WrappedComponent: React.ComponentType<any>,

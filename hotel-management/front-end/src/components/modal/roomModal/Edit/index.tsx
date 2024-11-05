@@ -1,3 +1,4 @@
+/* eslint-disable react-refresh/only-export-components */
 import {
   ModalFooter,
   FormControl,
@@ -14,14 +15,15 @@ import { useState } from "react";
 import {
   bedTypeOptions,
   roomFloorOptions,
+  roomStatusColors,
   roomStatusOptions,
-} from "@/constants/selectOptions/selectOption";
-import { RoomData } from "@/constants/interfaceTypes/roomTypes";
+} from "@/constant/SelectOptions";
+import { RoomData } from "@/constant/InterfaceTypes/RoomTypes";
 
 // Components
-import withModal from "@/components/modal/modalHoc";
-import Button from "@/components/button";
-import Spinner from "@/components/spinner";
+import withModal from "@/components/Modal/ModalHoc";
+import Button from "@/components/Button";
+import Spinner from "@/components/Spinner";
 
 interface EditRoomModalProps {
   onClose: () => void;
@@ -32,7 +34,7 @@ interface EditRoomModalProps {
 const EditRoomModal = ({
   initialRoomData,
   onClose,
-  onEditRoom
+  onEditRoom,
 }: EditRoomModalProps) => {
   const {
     handleSubmit,
@@ -46,8 +48,6 @@ const EditRoomModal = ({
   const toast = useToast();
 
   const onSubmit = async (data: RoomData) => {
-    console.log(data);
-
     setLoading(true);
     try {
       await onEditRoom(data);
@@ -94,7 +94,16 @@ const EditRoomModal = ({
             {...register("roomFloor")}
           >
             {roomFloorOptions.map((option, index) => (
-              <option key={`${option.value}-${index}`} value={option.value}>
+              <option
+                key={`${option.value}-${index}`}
+                value={option.value}
+                style={{
+                  color:
+                    roomStatusColors[
+                      option.value as keyof typeof roomStatusColors
+                    ],
+                }}
+              >
                 {option.label}
               </option>
             ))}
