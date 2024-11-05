@@ -16,8 +16,8 @@ import {
   bedTypeOptions,
   roomFloorOptions,
   roomStatusOptions,
-} from "@/Constants/SelectOptions/SelectOption";
-import { RoomData } from "@/Constants/InterfaceTypes/RoomTypes";
+} from "@/constant/SelectOptions/SelectOption";
+import { RoomData } from "@/constant/InterfaceTypes/RoomTypes";
 
 // Components
 import withModal from "@/components/Modal/ModalHoc";

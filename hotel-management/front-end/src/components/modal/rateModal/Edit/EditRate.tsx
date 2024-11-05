@@ -6,21 +6,17 @@ import {
   FormControl,
   FormLabel,
   useToast,
-  Box,
 } from "@chakra-ui/react";
 import { useForm } from "react-hook-form";
 
 // Constants
-import { RateData } from "@/Constants/InterfaceTypes/RateTypes";
+import { RateData } from "@/constant/InterfaceTypes/RateTypes";
 
 // Components
 import withModal from "@/components/Modal/ModalHoc";
 import Button from "@/components/Button/Button";
 import Input from "@/components/Input/Input";
 import Spinner from "@/components/Spinner/Spinner";
-
-// Services
-import { updateRate } from "@/services/rateServices";
 
 interface EditRateModalProps {
   onClose: () => void;
@@ -46,15 +42,8 @@ const EditRateModal = ({
   const onSubmit = async (data: RateData) => {
     setLoading(true);
     try {
-      await updateRate(initialRateData.documentId, data);
-      onEditRate(data);
-      toast({
-        title: "Rate updated successfully.",
-        status: "success",
-        duration: 3000,
-        isClosable: true,
-      });
-      onClose();
+      await onEditRate(data);
+      if (onClose) onClose();
     } catch (error) {
       toast({
         title: "Failed to update rate.",

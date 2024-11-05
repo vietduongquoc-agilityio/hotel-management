@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { Box, Heading, useToast } from "@chakra-ui/react";
 
 //Constants
-import { RateData, NewRateData } from "@/Constants/InterfaceTypes/RateTypes";
+import { RateData, NewRateData } from "@/constant/InterfaceTypes/RateTypes";
 
 //Components
 import LabelRate from "@/components/Label/Rate/LabelRate";
@@ -11,7 +11,7 @@ import TableRate from "@/components/Tables/Rate/Rate";
 import Spinner from "@/components/Spinner/Spinner";
 
 //Services
-import { getRates, updateRate , createRateApi} from "@/services/rateServices";
+import { getRates, updateRate, createRateApi } from "@/services/rateServices";
 
 const RatePage = () => {
   const [rates, setRates] = useState<RateData[]>([]);
@@ -54,7 +54,8 @@ const RatePage = () => {
         cancellationPolicy: updatedRateData.cancellationPolicy,
         availability: updatedRateData.availability,
         dealPrice: updatedRateData.dealPrice,
-        deals: updatedRateData.deals
+        deals: updatedRateData.deals,
+        rate: updatedRateData.rate,
       };
       await updateRate(updatedRateData.documentId, requestData);
       setRates((prevRates) =>
@@ -98,7 +99,7 @@ const RatePage = () => {
       <Heading mb="16px" fontSize="12px" fontWeight="500" color="grey.500">
         Rates
       </Heading>
-      <LabelRate onAddRate={handleAddRate}/>
+      <LabelRate onAddRate={handleAddRate} />
       {loading ? (
         <Spinner />
       ) : (

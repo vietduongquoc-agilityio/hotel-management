@@ -1,13 +1,17 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import axios from "axios";
-import { NewRateData } from "@/Constants/InterfaceTypes/RateTypes";
+import { NewRateData } from "@/constant/InterfaceTypes/RateTypes";
 
 const BASE_URL = process.env.VITE_BASE_URL;
 // Rate Service
 export const getRates = async (page: number, pageSize: number) => {
   try {
     const response = await axios.get(`${BASE_URL}/rates`, {
-      params: { _page: page, _pageSize: pageSize },
+      params: {
+        "sort[0]": "createdAt:desc",
+        "pagination[page]": page,
+        "pagination[pageSize]": pageSize,
+      },
     });
     return response.data;
   } catch (error) {

@@ -2,7 +2,7 @@ import { Box, Text, UnorderedList, ListItem, Alert } from "@chakra-ui/react";
 import { useState } from "react";
 
 //Constants
-import { RateData } from "@/Constants/InterfaceTypes/RateTypes";
+import { RateData } from "@/constant/InterfaceTypes/RateTypes";
 
 //components
 import EditRateModal from "@/components/Modal/RateModal/Edit/EditRate";
@@ -117,7 +117,7 @@ const TableRate = ({
             >
               <EditRateModal
                 initialRateData={rate}
-                onAddRate={(updatedRateData: RateData) => {
+                onEditRate={(updatedRateData: RateData) => {
                   onEditRate(updatedRateData);
                 }}
               />

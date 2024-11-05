@@ -5,6 +5,7 @@ export interface RateData {
   dealPrice: string;
   availability: string;
   documentId: string;
+  rate: string;
 }
 
 export type NewRateData = Omit<RateData, "documentId">;

@@ -25,7 +25,8 @@
     "react-dom": "^18.3.1",
     "react-hook-form": "^7.53.1",
     "react-router-dom": "^6.27.0",
-    "sb": "^8.3.5"
+    "sb": "^8.3.5",
+    "zustand": "^5.0.1"
   },
   "devDependencies": {
     "@babel/preset-env": "^7.25.8",

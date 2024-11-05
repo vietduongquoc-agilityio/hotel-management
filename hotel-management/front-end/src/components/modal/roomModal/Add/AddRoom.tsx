@@ -12,12 +12,12 @@ import {
 import { useForm } from "react-hook-form";
 
 // Constants
-import { validationRules } from "@/Constants/Validate/Validate";
+import { validationRules } from "@/constant/Validate/Validate";
 import {
   bedTypeOptions,
   roomFloorOptions,
-} from "@/Constants/SelectOptions/SelectOption";
-import { NewRoomData } from "@/Constants/InterfaceTypes/RoomTypes";
+} from "@/constant/SelectOptions/SelectOption";
+import { NewRoomData } from "@/constant/InterfaceTypes/RoomTypes";
 
 // Components
 import withModal from "@/components/Modal/ModalHoc";

@@ -10,8 +10,8 @@ import {
 } from "@chakra-ui/react";
 
 // Constants
-import { validationRules } from "@/Constants/Validate/Validate";
-import { NewRateData } from "@/Constants/InterfaceTypes/RateTypes";
+import { validationRules } from "@/constant/Validate/Validate";
+import { NewRateData } from "@/constant/InterfaceTypes/RateTypes";
 
 // Components
 import withModal from "@/components/Modal/ModalHoc";
@@ -48,6 +48,7 @@ const AddRateModal = ({ onClose, onAddRate }: AddRateModalProps) => {
       deals: "Family Deal",
       dealPrice: data.price,
       availability: data.availability,
+      rate: data.price,
     };
 
     setLoading(true);
