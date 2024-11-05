@@ -14,6 +14,9 @@ import {
 import AddRoomModal from "@/components/Modal/RoomModal/Add";
 
 interface LabelRoomProps {
+  totalRooms: number;
+  availableRooms: number;
+  bookedRooms: number;
   onAddRoom: (roomData: NewRoomData) => Promise<void>;
   isAddRoom: boolean;
   selectedBedType: string;
@@ -25,6 +28,9 @@ interface LabelRoomProps {
 }
 
 const LabelRoom = ({
+  totalRooms,
+  availableRooms,
+  bookedRooms,
   onAddRoom,
   handleSelectedBedType,
   handleSelectedRoomFloor,
@@ -51,7 +57,7 @@ const LabelRoom = ({
               transition: "background-color 0.2s ease",
             }}
           >
-            All rooms (100)
+            All rooms ({totalRooms})
           </Text>
         </ListItem>
         <ListItem>
@@ -66,7 +72,7 @@ const LabelRoom = ({
               transition: "background-color 0.2s ease",
             }}
           >
-            Available rooms (20)
+            Available rooms ({availableRooms})
           </Text>
         </ListItem>
         <ListItem>
@@ -81,7 +87,7 @@ const LabelRoom = ({
               transition: "background-color 0.2s ease",
             }}
           >
-            Booked (80)
+            Booked ({bookedRooms})
           </Text>
         </ListItem>
       </UnorderedList>
