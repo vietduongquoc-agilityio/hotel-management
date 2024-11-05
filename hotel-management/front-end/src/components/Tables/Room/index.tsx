@@ -5,9 +5,9 @@ import { useState } from "react";
 import { RoomData } from "@/constant/InterfaceTypes/RoomTypes";
 
 // Components
-import EditRoomModal from "@/components/Modal/RoomModal/Edit/EditRoom";
-import DeleteRoom from "@/components/Modal/RoomModal/Delete/DeleteRoom";
-import Button from "@/components/Button/Button";
+import EditRoomModal from "@/components/Modal/RoomModal/Edit";
+import DeleteRoom from "@/components/Modal/RoomModal/Delete";
+import Button from "@/components/Button";
 
 interface TableRoomProps {
   rooms: RoomData[];

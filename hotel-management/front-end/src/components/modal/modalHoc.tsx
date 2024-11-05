@@ -9,7 +9,7 @@ import {
 } from "@chakra-ui/react";
 
 //Components
-import Button from "@/components/Button/Button";
+import Button from "@/components/Button";
 
 const withModal = (
   WrappedComponent: React.ComponentType<any>,

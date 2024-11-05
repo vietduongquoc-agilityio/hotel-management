@@ -16,13 +16,13 @@ import {
   bedTypeOptions,
   roomFloorOptions,
   roomStatusOptions,
-} from "@/constant/SelectOptions/SelectOption";
+} from "@/constant/SelectOptions";
 import { RoomData } from "@/constant/InterfaceTypes/RoomTypes";
 
 // Components
 import withModal from "@/components/Modal/ModalHoc";
-import Button from "@/components/Button/Button";
-import Spinner from "@/components/Spinner/Spinner";
+import Button from "@/components/Button";
+import Spinner from "@/components/Spinner";
 
 interface EditRoomModalProps {
   onClose: () => void;

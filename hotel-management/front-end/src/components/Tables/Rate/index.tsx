@@ -5,9 +5,9 @@ import { useState } from "react";
 import { RateData } from "@/constant/InterfaceTypes/RateTypes";
 
 //components
-import EditRateModal from "@/components/Modal/RateModal/Edit/EditRate";
-import DeleteRate from "@/components/Modal/RateModal/Delete/DeleteRate";
-import Button from "@/components/Button/Button";
+import EditRateModal from "@/components/Modal/RateModal/Edit";
+import DeleteRate from "@/components/Modal/RateModal/Delete";
+import Button from "@/components/Button";
 
 interface TableRateProps {
   rates: RateData[];

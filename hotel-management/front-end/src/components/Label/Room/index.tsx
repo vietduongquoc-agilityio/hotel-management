@@ -1,6 +1,6 @@
 import { Box, UnorderedList, ListItem, Text } from "@chakra-ui/react";
-import AddRoomModal from "@/components/Modal/RoomModal/Add/AddRoom";
-import { RoomData } from "@/Constants/InterfaceTypes/RoomTypes";
+import AddRoomModal from "@/components/Modal/RoomModal/Add";
+import { RoomData } from "@/constant/InterfaceTypes/RoomTypes";
 
 interface LabelRoomProps {
   onAddRoom: (roomData: RoomData) => void;

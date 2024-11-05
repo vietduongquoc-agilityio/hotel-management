@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { useState } from "react";
+import React from "react";
 import {
   AlertDialog,
   AlertDialogOverlay,
@@ -8,33 +9,34 @@ import {
   AlertDialogBody,
   AlertDialogFooter,
   useDisclosure,
+  Text,
   useToast,
 } from "@chakra-ui/react";
-import React from "react";
 
 // Components
-import Spinner from "@/components/Spinner/Spinner";
-import Button from "@/components/Button/Button";
+import Spinner from "@/components/Spinner";
+import Button from "@/components/Button";
 
 //Services
-import { deleteRate } from "@/services/rateServices";
+import { deleteRoom } from "@/services/roomService";
 
-interface DeleteRateProps {
-  rateId: string;
-  onDeleteRate: (rateId: string) => void;
+interface DeleteRoomProps {
+  roomId: string;
+  onDeleteRoom: (roomId: string) => void;
 }
 
-const DeleteRate = ({ rateId, onDeleteRate }: DeleteRateProps) => {
+const DeleteRoom = ({ roomId, onDeleteRoom }: DeleteRoomProps) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const cancelRef = React.useRef(null);
-  const toast = useToast();
   const [loading, setLoading] = useState(false);
+  const [error,] = useState("");
+  const toast = useToast();
 
   const handleDelete = async () => {
     setLoading(true);
     try {
-      await deleteRate(rateId);
-      onDeleteRate(rateId);
+      await deleteRoom(roomId);
+      onDeleteRoom(roomId);
       toast({
         title: "Rate deleted successfully.",
         status: "success",
@@ -57,7 +59,7 @@ const DeleteRate = ({ rateId, onDeleteRate }: DeleteRateProps) => {
 
   return (
     <>
-      <Button onClick={onOpen} text="Delete" buttonType="deleteButton"></Button>
+      <Button onClick={onOpen} text="Delete" buttonType="deleteButton" />
 
       <AlertDialog
         isOpen={isOpen}
@@ -67,27 +69,28 @@ const DeleteRate = ({ rateId, onDeleteRate }: DeleteRateProps) => {
         <AlertDialogOverlay>
           <AlertDialogContent bg="white.200">
             <AlertDialogHeader fontSize="lg" fontWeight="bold">
-              Delete Rate
+              Delete Room
             </AlertDialogHeader>
 
             <AlertDialogBody>
-              Are you sure you want to delete this rate?
+              Are you sure you want to delete this room?{" "}
+              {error && <Text color="red.500">{error}</Text>}
             </AlertDialogBody>
 
             <AlertDialogFooter>
               <Button
                 text="Cancel"
-                buttonType="cancelButton"
                 onClick={onClose}
+                buttonType="cancelButton"
               />
               {loading ? (
                 <Spinner />
               ) : (
                 <Button
-                  onClick={handleDelete}
-                  ml={3}
                   text="Confirm Delete"
                   buttonType="deleteButton"
+                  onClick={handleDelete}
+                  ml={3}
                 />
               )}
             </AlertDialogFooter>
@@ -98,4 +101,4 @@ const DeleteRate = ({ rateId, onDeleteRate }: DeleteRateProps) => {
   );
 };
 
-export default DeleteRate;
+export default DeleteRoom;

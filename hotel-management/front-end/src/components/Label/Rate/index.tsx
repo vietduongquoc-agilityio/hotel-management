@@ -1,10 +1,10 @@
 import { Box } from "@chakra-ui/react";
 
 //Constants
-import { RateData } from "@/Constants/InterfaceTypes/RateTypes";
+import { RateData } from "@/constant/InterfaceTypes/RateTypes";
 
 //Components
-import AddRateModal from "@/components/Modal/RateModal/Add/AddRate";
+import AddRateModal from "@/components/Modal/RateModal/Add";
 
 interface LabelRateProps {
   onAddRate: (roomData: RateData) => void;

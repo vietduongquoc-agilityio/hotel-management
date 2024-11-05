@@ -1,5 +1,5 @@
 import { HStack, VStack } from "@chakra-ui/react";
-import Button from "@/components/Button/Button";
+import Button from "@/components/Button";
 
 interface PaginationProps {
   currentPage: number;
