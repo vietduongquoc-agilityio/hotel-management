@@ -13,7 +13,7 @@ import { useForm } from "react-hook-form";
 import { RateData } from "@/constant/InterfaceTypes/RateTypes";
 
 // Components
-import withModal from "@/components/Modal/ModalHoc";
+import withModal from "@/components/Modal/modalHoc";
 import Button from "@/components/Button";
 import Input from "@/components/Input";
 import Spinner from "@/components/Spinner";

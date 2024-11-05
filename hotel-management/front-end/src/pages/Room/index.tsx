@@ -11,7 +11,12 @@ import LabelRoom from "@/components/Label/Room";
 import Spinner from "@/components/Spinner";
 
 // Services
-import { getRooms, updateRoom, createRoomApi } from "@/services/roomService";
+import {
+  getRooms,
+  updateRoom,
+  createRoomApi,
+  deleteRoom,
+} from "@/services/roomService";
 import { getRates } from "@/services/rateServices";
 
 const RoomPage = () => {
@@ -25,6 +30,9 @@ const RoomPage = () => {
   const [bedType, setBedType] = useState("");
   const [roomFloor, setRoomFloor] = useState("");
   const [roomStatus, setRoomStatus] = useState("");
+  const [totalRooms, setTotalRooms] = useState(0);
+  const [availableRooms, setAvailableRooms] = useState(0);
+  const [bookedRooms, setBookedRooms] = useState(0);
 
   const fetchRooms = async (
     currentPage: number,
@@ -42,11 +50,26 @@ const RoomPage = () => {
       );
       setRooms(rooms);
       setPageCount(pagination.pageCount);
+      setTotalRooms(pagination.total);
+
+      // Calculate the available and booked room counts
+      calculateRoomCounts(rooms);
     } catch (error) {
       console.error("Error fetching rooms:", error);
     } finally {
       setLoading(false);
     }
+  };
+
+  const calculateRoomCounts = (rooms: RoomData[]) => {
+    const availableCount = rooms.filter(
+      (room) => room.roomStatus === "Available"
+    ).length;
+    const bookedCount = rooms.filter(
+      (room) => room.roomStatus === "Booked"
+    ).length;
+    setAvailableRooms(availableCount);
+    setBookedRooms(bookedCount);
   };
 
   const fetchRates = async () => {
@@ -66,17 +89,20 @@ const RoomPage = () => {
   const handleAddRoom = async (roomData: NewRoomData) => {
     try {
       const { data } = await createRoomApi(roomData);
-      const listRoom = rooms.slice(0, -1);
-      setRooms([data, ...listRoom]);
+      setRooms((prevRooms) => [data, ...prevRooms]);
+      fetchRooms(currentPage, pageSize);
     } catch (error) {
       console.log("Error handleAddRoom", error);
     }
   };
 
-  const handleDeleteRoom = (deletedRoomId: string) => {
-    setRooms((prevRooms) =>
-      prevRooms.filter((room) => room.documentId !== deletedRoomId)
-    );
+  const handleDeleteRoom = async (deletedRoomId: string) => {
+    try {
+      await deleteRoom(deletedRoomId);
+      fetchRooms(currentPage, pageSize);
+    } catch (error) {
+      console.error("Error deleting room:", error);
+    }
   };
 
   const handleEditRoom = async (updatedRoomData: RoomData) => {
@@ -90,14 +116,7 @@ const RoomPage = () => {
       };
 
       await updateRoom(updatedRoomData.documentId, requestData);
-
-      setRooms((prevRooms) =>
-        prevRooms.map((room) =>
-          room.documentId === updatedRoomData.documentId
-            ? updatedRoomData
-            : room
-        )
-      );
+      fetchRooms(currentPage, pageSize);
 
       toast({
         title: "Room updated",
@@ -157,6 +176,9 @@ const RoomPage = () => {
       </Heading>
 
       <LabelRoom
+        totalRooms={totalRooms}
+        availableRooms={availableRooms}
+        bookedRooms={bookedRooms}
         onAddRoom={handleAddRoom}
         isAddRoom={isAddRoom}
         selectedBedType={bedType}
