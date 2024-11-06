@@ -12,7 +12,7 @@ import Spinner from "@/components/Spinner";
 
 // Services
 import { getRooms, updateRoom, createRoomApi } from "@/services/roomService";
-import { useRoomStore } from "@/zustand";
+import { useRoomStore } from "@/store";
 
 const RoomPage = () => {
   const { fetchRates, addRate, updateRate, deleteRate } = useRoomStore();
@@ -38,7 +38,6 @@ const RoomPage = () => {
       setPageCount(pagination.pageCount);
       setTotalRooms(pagination.total);
 
-      // Calculate the available and booked room counts
       const availableCount = rooms.filter(
         (room: { roomStatus: string }) => room.roomStatus === "Available"
       ).length;
