@@ -3,7 +3,7 @@ import Button from "@/components/Button";
 
 interface PaginationProps {
   currentPage: number;
-  setCurrentPage: React.Dispatch<React.SetStateAction<number>>;
+  setCurrentPage: (page: number) => void;
   pageSize: number;
   pageCount: number;
 }

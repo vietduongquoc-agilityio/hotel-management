@@ -6,10 +6,11 @@ import rateIcon from "@/assets/icons/rate.svg";
 
 const Sidebar = () => {
   const location = useLocation();
-  // const isActive = (path: string) => location.pathname.includes(path);
-  const isActive = (path: string) =>
-    path === "/" ? location.pathname === "/" : location.pathname === path;
-  console.log("Current pathname:", location.pathname);
+  const isActive = (path: string) => location.pathname === path;
+  const bgStyle = isActive("/") ? "blue.100" : "transparent";
+  const textColorStyle = isActive("/") ? "blue.600" : "grey.600";
+  const bgStyleRate = isActive("/rate") ? "blue.100" : "transparent";
+  const textColorStyleRate = isActive("/rate") ? "blue.600" : "grey.600";
 
   return (
     <VStack
@@ -35,8 +36,8 @@ const Sidebar = () => {
             display="flex"
             alignItems="center"
             borderRadius="10px"
-            bg={isActive("/") ? "blue.100" : "transparent"}
-            textColor={isActive("/") ? "blue.600" : "grey.600"}
+            bg={bgStyle}
+            textColor={textColorStyle}
             _hover={{
               bg: "blue.100",
               textColor: "blue.600",
@@ -56,8 +57,8 @@ const Sidebar = () => {
             display="flex"
             alignItems="center"
             borderRadius="10px"
-            bg={isActive("/rate") ? "blue.100" : "transparent"}
-            textColor={isActive("/rate") ? "blue.600" : "grey.600"}
+            bg={bgStyleRate}
+            textColor={textColorStyleRate}
             _hover={{
               bg: "blue.100",
               transition: "background-color 0.2s ease",
