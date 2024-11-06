@@ -13,7 +13,7 @@ dist-ssr
 storybook-static
 *.__mocks__
 *.local
-coverage
+/coverage
 
 # Editor directories and files
 .vscode/*
