@@ -1,11 +1,16 @@
 import { VStack, Image, Link, List, ListItem } from "@chakra-ui/react";
-import { Link as RouterLink } from "react-router-dom";
+import { Link as RouterLink, useLocation } from "react-router-dom";
 import roomIcon from "@/assets/icons/room.svg";
 import logoIcon from "@/assets/icons/logo.svg";
 import rateIcon from "@/assets/icons/rate.svg";
-import { borderRadius } from "@/themes/Base/metrics";
 
 const Sidebar = () => {
+  const location = useLocation();
+  // const isActive = (path: string) => location.pathname.includes(path);
+  const isActive = (path: string) =>
+    path === "/" ? location.pathname === "/" : location.pathname === path;
+  console.log("Current pathname:", location.pathname);
+
   return (
     <VStack
       as="aside"
@@ -26,13 +31,14 @@ const Sidebar = () => {
         <ListItem>
           <Link
             as={RouterLink}
-            to="/room"
+            to="/"
             display="flex"
             alignItems="center"
-            borderRadius="borderRadius.md"
+            borderRadius="10px"
+            bg={isActive("/") ? "blue.100" : "transparent"}
+            textColor={isActive("/") ? "blue.600" : "grey.600"}
             _hover={{
               bg: "blue.100",
-              borderRadius: borderRadius.md,
               textColor: "blue.600",
               transition: "background-color 0.2s ease",
             }}
@@ -49,10 +55,11 @@ const Sidebar = () => {
             to="/rate"
             display="flex"
             alignItems="center"
-            borderRadius="borderRadius.md"
+            borderRadius="10px"
+            bg={isActive("/rate") ? "blue.100" : "transparent"}
+            textColor={isActive("/rate") ? "blue.600" : "grey.600"}
             _hover={{
               bg: "blue.100",
-              borderRadius: borderRadius.md,
               transition: "background-color 0.2s ease",
               textColor: "blue.600",
             }}
