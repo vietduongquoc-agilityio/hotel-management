@@ -12,11 +12,13 @@ import Spinner from "@/components/Spinner";
 
 //Services
 import { getRates, updateRate, createRateApi } from "@/services/rateServices";
+import { useRoomStore } from "@/store/RoomStore";
 
 const RatePage = () => {
   const [rates, setRates] = useState<RateData[]>([]);
   const [loading, setLoading] = useState(true);
   const toast = useToast();
+  const totalOfBooked = useRoomStore((state) => state.totalOfBooked);
 
   const fetchRates = async () => {
     setLoading(true);
@@ -40,13 +42,13 @@ const RatePage = () => {
   const handleAddRate = async (rateData: NewRateData) => {
     try {
       const { data } = await createRateApi(rateData);
-      const listRate = rates.slice(0, -1);
-      setRates([data, ...listRate]);
+      const updatedRate = { ...data, total: data.availability };
+      setRates((prevRates) => [updatedRate, ...prevRates]);
     } catch (error) {
       console.log("Error handleAddRate", error);
     }
   };
-
+  
   const handleEditRate = async (updatedRateData: RateData) => {
     try {
       const requestData = {
@@ -107,6 +109,7 @@ const RatePage = () => {
           onEditRate={handleEditRate}
           rates={rates}
           onDeleteRate={handleDeleteRate}
+          totalOfBooked={totalOfBooked}
         />
       )}
     </Box>
@@ -114,3 +117,5 @@ const RatePage = () => {
 };
 
 export default RatePage;
+
+
