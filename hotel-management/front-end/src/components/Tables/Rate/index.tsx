@@ -72,8 +72,9 @@ const TableRate = ({
       </UnorderedList>
       {rates.map((rate) => {
         const availableRooms = rate.availability - (totalOfBooked || 0);
-        console.log("Total rooms:", rate.availability);
-        console.log("Total booked:", totalOfBooked);
+        const isFull = availableRooms <= 0;
+        const textColor = isFull ? "red.500" : "blue.500";
+        const backgroundColor = isFull ? "red.100" : "blue.100";
         return (
           <Box
             key={rate.documentId}
@@ -95,7 +96,20 @@ const TableRate = ({
             <Text fontWeight="500" w="15%" color="grey.900">
               {rate.dealPrice}$
             </Text>
-            <Text w="20%">{availableRooms > 0 ? availableRooms : "Full"}</Text>
+            <Box w="20%">
+              <Text
+                borderRadius="16px"
+                p="2px 4px"
+                w="65px"
+                color={textColor}
+                bg={backgroundColor}
+                display="flex"
+                justifyContent="center"
+              >
+                {isFull ? "Full" : availableRooms}
+              </Text>
+            </Box>
+
             <Button
               bg="white.200"
               color="grey.800"

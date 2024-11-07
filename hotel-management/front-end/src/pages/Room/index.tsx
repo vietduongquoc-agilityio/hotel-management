@@ -39,6 +39,7 @@ const RoomPage = () => {
   const [isAddRoom, setIsAddRoom] = useState(false);
   const [totalOfBooked, setTotalOfBookedCount] = useState(0);
   const toast = useToast();
+  const statusRoom = ["Available", "Booked", "Reserved", "Waitlist"];
 
   useEffect(() => {
     fetchRates(currentPage, pageSize);
@@ -56,19 +57,13 @@ const RoomPage = () => {
 
   useEffect(() => {
     const bookedCount = rooms.filter((room) =>
-      ["Available", "Booked", "Reserved", "Waitlist"].includes(room.roomStatus)
+      statusRoom.includes(room.roomStatus)
     ).length;
     setTotalOfBookedCount(bookedCount);
     setTotalOfBooked(bookedCount);
   }, [rooms, setTotalOfBooked]);
 
   const handleAddRoom = async (newRoom: NewRoomData) => {
-    const totalOfBooked = rooms.filter((room) =>
-      ["Available", "Booked", "Reserved", "Waitlist"].includes(room.roomStatus)
-    ).length;
-
-    console.log("Total of booked rooms:", totalOfBooked);
-    // Pass totalOfBooked to TableRate or store it in a shared Zustand state
     await addRoom(newRoom);
     fetchRooms(currentPage, pageSize);
   };
