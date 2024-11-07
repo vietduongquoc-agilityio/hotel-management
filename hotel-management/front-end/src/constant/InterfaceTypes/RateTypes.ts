@@ -3,7 +3,7 @@ export interface RateData {
   cancellationPolicy: string;
   deals: string;
   dealPrice: string;
-  availability: number;
+  availability: any;
   documentId: string;
   rate: string;
   totalOfBooked?: any;
