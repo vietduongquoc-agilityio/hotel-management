@@ -624,6 +624,7 @@ export interface ApiRateRate extends Struct.CollectionTypeSchema {
     singularName: 'rate';
     pluralName: 'rates';
     displayName: 'rate';
+    description: '';
   };
   options: {
     draftAndPublish: true;
@@ -635,6 +636,7 @@ export interface ApiRateRate extends Struct.CollectionTypeSchema {
     dealPrice: Schema.Attribute.String & Schema.Attribute.Required;
     rate: Schema.Attribute.String & Schema.Attribute.Required;
     availability: Schema.Attribute.String & Schema.Attribute.Required;
+    totalOfBooked: Schema.Attribute.String & Schema.Attribute.Required;
     createdAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
     publishedAt: Schema.Attribute.DateTime;

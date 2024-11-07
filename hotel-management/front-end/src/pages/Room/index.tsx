@@ -22,6 +22,7 @@ const RoomPage = () => {
     availableRooms,
     bookedRooms,
     loading: roomsLoading,
+    setTotalOfBooked,
     fetchRooms,
     addRoom,
     editRoom,
@@ -29,7 +30,6 @@ const RoomPage = () => {
   } = useRoomStore();
 
   const { rates, loading: ratesLoading, fetchRates } = useRateStore();
-
   const [currentPage, setCurrentPage] = useState(1);
   const pageSize = 10;
   const [bedType, setBedType] = useState("");
@@ -37,11 +37,12 @@ const RoomPage = () => {
   const [roomStatus, setRoomStatus] = useState("");
 
   const [isAddRoom, setIsAddRoom] = useState(false);
+  const [totalOfBooked, setTotalOfBookedCount] = useState(0);
   const toast = useToast();
 
   useEffect(() => {
     fetchRates(currentPage, pageSize);
-  }, [currentPage, fetchRates]);
+  }, [currentPage, pageSize, fetchRates]);
 
   useEffect(() => {
     fetchRooms(currentPage, pageSize);
@@ -53,8 +54,22 @@ const RoomPage = () => {
     }
   }, [rates]);
 
-  const handleAddRoom = async (roomData: NewRoomData) => {
-    await addRoom(roomData);
+  useEffect(() => {
+    const bookedCount = rooms.filter((room) =>
+      ["Available", "Booked", "Reserved", "Waitlist"].includes(room.roomStatus)
+    ).length;
+    setTotalOfBookedCount(bookedCount);
+    setTotalOfBooked(bookedCount);
+  }, [rooms, setTotalOfBooked]);
+
+  const handleAddRoom = async (newRoom: NewRoomData) => {
+    const totalOfBooked = rooms.filter((room) =>
+      ["Available", "Booked", "Reserved", "Waitlist"].includes(room.roomStatus)
+    ).length;
+
+    console.log("Total of booked rooms:", totalOfBooked);
+    // Pass totalOfBooked to TableRate or store it in a shared Zustand state
+    await addRoom(newRoom);
     fetchRooms(currentPage, pageSize);
   };
 
@@ -127,9 +142,10 @@ const RoomPage = () => {
         <Spinner />
       ) : (
         <TableRoom
-          onEditRoom={handleEditRoom}
           rooms={rooms}
+          onEditRoom={handleEditRoom}
           onDeleteRoom={handleDeleteRoom}
+          totalOfBooked={totalOfBooked}
         />
       )}
 
