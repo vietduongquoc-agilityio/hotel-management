@@ -10,161 +10,95 @@ import Pagination from "@/components/Pagination";
 import LabelRoom from "@/components/Label/Room";
 import Spinner from "@/components/Spinner";
 
-// Services
-import {
-  getRooms,
-  updateRoom,
-  createRoomApi,
-  deleteRoom,
-} from "@/services/roomService";
-import { getRates } from "@/services/rateServices";
+// Store
+import { useRoomStore } from "@/store/RoomStore";
+import { useRateStore } from "@/store/RateStore";
 
 const RoomPage = () => {
-  const [rooms, setRooms] = useState<RoomData[]>([]);
+  const {
+    rooms,
+    totalRooms,
+    pageCount,
+    availableRooms,
+    bookedRooms,
+    loading: roomsLoading,
+    fetchRooms,
+    addRoom,
+    editRoom,
+    deleteRoom,
+  } = useRoomStore();
+
+  const { rates, loading: ratesLoading, fetchRates } = useRateStore();
+
   const [currentPage, setCurrentPage] = useState(1);
   const pageSize = 10;
-  const [pageCount, setPageCount] = useState(1);
-  const [loading, setLoading] = useState(true);
-  const [isAddRoom, setIsAddRoom] = useState(false);
-  const toast = useToast();
   const [bedType, setBedType] = useState("");
   const [roomFloor, setRoomFloor] = useState("");
   const [roomStatus, setRoomStatus] = useState("");
-  const [totalRooms, setTotalRooms] = useState(0);
-  const [availableRooms, setAvailableRooms] = useState(0);
-  const [bookedRooms, setBookedRooms] = useState(0);
 
-  const fetchRooms = async (
-    currentPage: number,
-    pageSize: number,
-    field?: string,
-    value?: string
-  ) => {
-    setLoading(true);
-    try {
-      const { rooms, pagination } = await getRooms(
-        currentPage,
-        pageSize,
-        field,
-        value
-      );
-      setRooms(rooms);
-      setPageCount(pagination.pageCount);
-      setTotalRooms(pagination.total);
-
-      // Calculate the available and booked room counts
-      calculateRoomCounts(rooms);
-    } catch (error) {
-      console.error("Error fetching rooms:", error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const calculateRoomCounts = (rooms: RoomData[]) => {
-    const availableCount = rooms.filter(
-      (room) => room.roomStatus === "Available"
-    ).length;
-    const bookedCount = rooms.filter(
-      (room) => room.roomStatus === "Booked"
-    ).length;
-    setAvailableRooms(availableCount);
-    setBookedRooms(bookedCount);
-  };
-
-  const fetchRates = async () => {
-    setLoading(true);
-    try {
-      const { data } = await getRates(1, 10);
-      if (data.length > 0) {
-        setIsAddRoom(true);
-      }
-    } catch (error) {
-      console.error("Error fetching rates", error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const handleAddRoom = async (roomData: NewRoomData) => {
-    try {
-      const { data } = await createRoomApi(roomData);
-      setRooms((prevRooms) => [data, ...prevRooms]);
-      fetchRooms(currentPage, pageSize);
-    } catch (error) {
-      console.log("Error handleAddRoom", error);
-    }
-  };
-
-  const handleDeleteRoom = async (deletedRoomId: string) => {
-    try {
-      await deleteRoom(deletedRoomId);
-      fetchRooms(currentPage, pageSize);
-    } catch (error) {
-      console.error("Error deleting room:", error);
-    }
-  };
-
-  const handleEditRoom = async (updatedRoomData: RoomData) => {
-    try {
-      const requestData = {
-        bedType: updatedRoomData.bedType,
-        roomNumber: updatedRoomData.roomNumber,
-        roomFloor: updatedRoomData.roomFloor,
-        roomFacility: updatedRoomData.roomFacility,
-        roomStatus: updatedRoomData.roomStatus,
-      };
-
-      await updateRoom(updatedRoomData.documentId, requestData);
-      fetchRooms(currentPage, pageSize);
-
-      toast({
-        title: "Room updated",
-        description: "Room details have been successfully updated.",
-        status: "success",
-        duration: 3000,
-        isClosable: true,
-      });
-    } catch (error) {
-      toast({
-        title: "Error updating room",
-        description: "There was an issue updating the room data.",
-        status: "error",
-        duration: 3000,
-        isClosable: true,
-      });
-      console.error("Error updating room:", error);
-    }
-  };
+  const [isAddRoom, setIsAddRoom] = useState(false);
+  const toast = useToast();
 
   useEffect(() => {
-    fetchRates();
-  }, []);
+    fetchRates(currentPage, pageSize);
+  }, [currentPage, fetchRates]);
 
   useEffect(() => {
     fetchRooms(currentPage, pageSize);
-  }, [currentPage]);
+  }, [fetchRooms, currentPage]);
 
-  const handleSelectedBedType = (
-    event: React.ChangeEvent<HTMLSelectElement>
-  ) => {
-    const selectedBedType = event.target.value;
+  useEffect(() => {
+    if (rates.length > 0) {
+      setIsAddRoom(true);
+    }
+  }, [rates]);
+
+  const handleAddRoom = async (roomData: NewRoomData) => {
+    await addRoom(roomData);
+    fetchRooms(currentPage, pageSize);
+  };
+
+  const handleDeleteRoom = async (deletedRoomId: string) => {
+    await deleteRoom(deletedRoomId);
+    fetchRooms(currentPage, pageSize);
+  };
+
+  const handleEditRoom = async (updatedRoomData: RoomData) => {
+    const requestPayload = {
+      bedType: updatedRoomData.bedType,
+      roomFacility: updatedRoomData.roomFacility,
+      roomFloor: updatedRoomData.roomFloor,
+      roomStatus: updatedRoomData.roomStatus,
+      roomNumber: updatedRoomData.roomNumber,
+    };
+
+    await editRoom(updatedRoomData.documentId, requestPayload);
+    fetchRooms(currentPage, pageSize);
+    toast({
+      title: "Room updated",
+      description: "Room details have been successfully updated.",
+      status: "success",
+      duration: 3000,
+      isClosable: true,
+    });
+  };
+
+  const handleSelectedBedType = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const selectedBedType = e.target.value;
     setBedType(selectedBedType);
     fetchRooms(currentPage, pageSize, "bedType", selectedBedType);
   };
 
-  const handleSelectedRoomFloor = (
-    event: React.ChangeEvent<HTMLSelectElement>
-  ) => {
-    const selectedRoomFloor = event.target.value;
+  const handleSelectedRoomFloor = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const selectedRoomFloor = e.target.value;
     setRoomFloor(selectedRoomFloor);
     fetchRooms(currentPage, pageSize, "roomFloor", selectedRoomFloor);
   };
 
   const handleSelectedRoomStatus = (
-    event: React.ChangeEvent<HTMLSelectElement>
+    e: React.ChangeEvent<HTMLSelectElement>
   ) => {
-    const selectedRoomStatus = event.target.value;
+    const selectedRoomStatus = e.target.value;
     setRoomStatus(selectedRoomStatus);
     fetchRooms(currentPage, pageSize, "roomStatus", selectedRoomStatus);
   };
@@ -189,7 +123,7 @@ const RoomPage = () => {
         handleSelectedRoomStatus={handleSelectedRoomStatus}
       />
 
-      {loading ? (
+      {roomsLoading || ratesLoading ? (
         <Spinner />
       ) : (
         <TableRoom
@@ -198,6 +132,7 @@ const RoomPage = () => {
           onDeleteRoom={handleDeleteRoom}
         />
       )}
+
       <Pagination
         currentPage={currentPage}
         setCurrentPage={setCurrentPage}
