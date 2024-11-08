@@ -2,7 +2,7 @@ import { Box, UnorderedList, ListItem, Text, Select } from "@chakra-ui/react";
 import { ChangeEvent } from "react";
 
 // InterFace
-import { NewRoomData } from "@/Interface/Room";
+import { NewRoomData } from "@/interfaces/Room";
 
 // Constants
 import {

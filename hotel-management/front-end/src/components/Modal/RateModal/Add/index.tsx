@@ -10,7 +10,7 @@ import {
 } from "@chakra-ui/react";
 
 // InterFace
-import { NewRateData } from "@/Interface/Rate";
+import { NewRateData } from "@/interfaces/Rate";
 
 // Constants
 import { validationRules } from "@/constant/Validate";

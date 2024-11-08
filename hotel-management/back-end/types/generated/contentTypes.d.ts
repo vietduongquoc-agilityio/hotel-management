@@ -666,9 +666,7 @@ export interface ApiRoomRoom extends Struct.CollectionTypeSchema {
     roomNumber: Schema.Attribute.String & Schema.Attribute.Required;
     roomFloor: Schema.Attribute.String & Schema.Attribute.Required;
     roomFacility: Schema.Attribute.Text & Schema.Attribute.Required;
-    Available: Schema.Attribute.Enumeration<
-      ['Available', 'Booked', 'Waitlist', 'Blocked', 'Reserved']
-    >;
+    roomStatus: Schema.Attribute.String & Schema.Attribute.Required;
     createdAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
     publishedAt: Schema.Attribute.DateTime;

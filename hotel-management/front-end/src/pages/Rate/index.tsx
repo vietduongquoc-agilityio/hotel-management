@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { Box, Heading, useToast } from "@chakra-ui/react";
 
 //InterFace
-import { NewRateData, RateData } from "@/Interface/Rate";
+import { NewRateData, RateData } from "@/interfaces/Rate";
 
 // Components
 import LabelRate from "@/components/Label/Rate";

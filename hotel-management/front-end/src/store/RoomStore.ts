@@ -9,7 +9,7 @@ import {
 } from "@/services/roomService";
 
 // InterFace
-import { RoomData, NewRoomData } from "@/Interface/Room";
+import { RoomData, NewRoomData } from "@/interfaces/Room";
 
 interface RoomState {
   rooms: RoomData[];

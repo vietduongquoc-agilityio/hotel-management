@@ -19,7 +19,7 @@ import {
 } from "@/constant/SelectOptions";
 
 // InterFace
-import { NewRoomData } from "@/Interface/Room";
+import { NewRoomData } from "@/interfaces/Room";
 
 // Components
 import withModal from "@/components/Modal/modalHoc";
