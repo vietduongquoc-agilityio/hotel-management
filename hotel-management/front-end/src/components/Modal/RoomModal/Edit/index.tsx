@@ -18,7 +18,7 @@ import {
   roomStatusColors,
   roomStatusOptions,
 } from "@/constant/SelectOptions";
-import { RoomData } from "@/Interface/Room";
+import { RoomData } from "@/interfaces/Room";
 
 // Components
 import withModal from "@/components/Modal/modalHoc";

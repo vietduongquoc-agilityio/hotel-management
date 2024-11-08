@@ -4,7 +4,7 @@ import { create } from "zustand";
 import { getRates, updateRate, createRateApi } from "@/services/rateServices";
 
 // InterFace
-import { RateData, NewRateData } from "@/Interface/Rate";
+import { RateData, NewRateData } from "@/interfaces/Rate";
 
 interface RateState {
   rates: RateData[];

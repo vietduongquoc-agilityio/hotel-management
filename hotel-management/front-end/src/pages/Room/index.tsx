@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Box, Heading, useToast } from "@chakra-ui/react";
 
 // InterFace
-import { NewRoomData, RoomData } from "@/Interface/Room";
+import { NewRoomData, RoomData } from "@/interfaces/Room";
 
 // Components
 import TableRoom from "@/components/Tables/Room";

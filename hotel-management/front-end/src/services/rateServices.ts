@@ -2,7 +2,7 @@
 import axios from "axios";
 
 // InterFace
-import { NewRateData } from "@/Interface/Rate";
+import { NewRateData } from "@/interfaces/Rate";
 
 const BASE_URL = process.env.VITE_BASE_URL;
 // Rate Service
