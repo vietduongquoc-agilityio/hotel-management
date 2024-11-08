@@ -1,11 +1,14 @@
 import { Box, Text, UnorderedList, ListItem, Alert } from "@chakra-ui/react";
 import { useState } from "react";
 
+// InterFace
+import { RateData } from "@/Interface/Rate";
+
 //Components
 import EditRateModal from "@/components/Modal/RateModal/Edit";
 import DeleteRate from "@/components/Modal/RateModal/Delete";
 import Button from "@/components/Button";
-import { RateData } from "@/constant/InterfaceTypes/RateTypes";
+
 
 interface TableRateProps {
   rates: RateData[];

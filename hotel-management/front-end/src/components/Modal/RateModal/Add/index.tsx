@@ -9,9 +9,11 @@ import {
   useToast,
 } from "@chakra-ui/react";
 
+// InterFace
+import { NewRateData } from "@/Interface/Rate";
+
 // Constants
 import { validationRules } from "@/constant/Validate";
-import { NewRateData } from "@/constant/InterfaceTypes/RateTypes";
 
 // Components
 import withModal from "@/components/Modal/modalHoc";
@@ -29,6 +31,7 @@ interface FormData {
   cancellationPolicy: string;
   price: string;
   availability: string;
+  totalOfBooked: number;
 }
 
 const AddRateModal = ({ onClose, onAddRate }: AddRateModalProps) => {
@@ -49,7 +52,7 @@ const AddRateModal = ({ onClose, onAddRate }: AddRateModalProps) => {
       dealPrice: data.price,
       availability: data.availability,
       rate: data.price,
-      totalOfBooked: 10,
+      totalOfBooked: 0,
     };
 
     setLoading(true);

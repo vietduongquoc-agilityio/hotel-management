@@ -1,8 +1,8 @@
 import { Box, Text, UnorderedList, ListItem, Alert } from "@chakra-ui/react";
 import { useState } from "react";
 
-// Constants
-import { RoomData } from "@/constant/InterfaceTypes/RoomTypes";
+// InterFace
+import { RoomData } from "@/Interface/Room";
 
 // Components
 import EditRoomModal from "@/components/Modal/RoomModal/Edit";

@@ -1,6 +1,8 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import axios from "axios";
-import { NewRateData } from "@/constant/InterfaceTypes/RateTypes";
+
+// InterFace
+import { NewRateData } from "@/Interface/Rate";
 
 const BASE_URL = process.env.VITE_BASE_URL;
 // Rate Service

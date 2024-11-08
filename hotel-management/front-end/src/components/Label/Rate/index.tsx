@@ -1,7 +1,7 @@
 import { Box } from "@chakra-ui/react";
 
-//Constants
-import { RateData } from "@/constant/InterfaceTypes/RateTypes";
+//InterFace
+import { RateData } from "@/Interface/Rate";
 
 //Components
 import AddRateModal from "@/components/Modal/RateModal/Add";

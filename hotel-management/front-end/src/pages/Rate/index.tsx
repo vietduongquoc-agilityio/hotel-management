@@ -1,6 +1,9 @@
 import { useEffect } from "react";
 import { Box, Heading, useToast } from "@chakra-ui/react";
 
+//InterFace
+import { NewRateData, RateData } from "@/Interface/Rate";
+
 // Components
 import LabelRate from "@/components/Label/Rate";
 import TableRate from "@/components/Tables/Rate";
@@ -9,7 +12,6 @@ import Spinner from "@/components/Spinner";
 // Store
 import { useRateStore } from "@/store/RateStore";
 import { useRoomStore } from "@/store/RoomStore";
-import { NewRateData, RateData } from "@/constant/InterfaceTypes/RateTypes";
 
 const RatePage = () => {
   const toast = useToast();

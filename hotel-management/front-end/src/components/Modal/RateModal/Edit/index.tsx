@@ -9,7 +9,7 @@ import {
 import { useForm } from "react-hook-form";
 
 // Constants
-import { RateData } from "@/constant/InterfaceTypes/RateTypes";
+import { RateData } from "@/Interface/Rate";
 
 // Components
 import withModal from "@/components/Modal/modalHoc";
