@@ -7,7 +7,7 @@ interface RateState {
   loading: boolean;
   fetchRates: (currentPage: number, pageSize: number) => Promise<void>;
   addRate: (rateData: NewRateData) => Promise<void>;
-  editRate: (rateId: string, updatedData: RateData) => Promise<void>;
+  editRate: (rateId: string, updatedData: NewRateData) => Promise<void>;
   deleteRate: (rateId: string) => void;
 }
 
@@ -39,15 +39,7 @@ export const useRateStore = create<RateState>((set) => ({
 
   editRate: async (rateId, updatedData) => {
     try {
-      const requestData = {
-        roomType: updatedData.roomType,
-        cancellationPolicy: updatedData.cancellationPolicy,
-        availability: updatedData.availability,
-        dealPrice: updatedData.dealPrice,
-        deals: updatedData.deals,
-        rate: updatedData.rate,
-      };
-      await updateRate(rateId, requestData);
+      await updateRate(rateId, updatedData);
       set((state) => ({
         rates: state.rates.map((rate) =>
           rate.documentId === rateId ? { ...rate, ...updatedData } : rate

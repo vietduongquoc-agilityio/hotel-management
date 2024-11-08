@@ -35,7 +35,16 @@ const RatePage = () => {
   };
 
   const handleEditRate = async (updatedRateData: RateData) => {
-    await editRate(updatedRateData.documentId, updatedRateData);
+    const requestPayload = {
+      roomType: updatedRateData.roomType,
+      cancellationPolicy: updatedRateData.cancellationPolicy,
+      availability: updatedRateData.availability,
+      dealPrice: updatedRateData.dealPrice,
+      deals: updatedRateData.deals,
+      rate: updatedRateData.rate,
+    };
+
+    await editRate(updatedRateData.documentId, requestPayload);
     toast({
       title: "Rate updated",
       description: "Rate details have been successfully updated.",

@@ -49,7 +49,7 @@ const AddRateModal = ({ onClose, onAddRate }: AddRateModalProps) => {
       dealPrice: data.price,
       availability: data.availability,
       rate: data.price,
-      totalOfBooked: ""
+      totalOfBooked: 10,
     };
 
     setLoading(true);
