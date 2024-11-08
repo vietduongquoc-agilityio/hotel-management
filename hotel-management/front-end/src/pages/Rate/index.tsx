@@ -1,100 +1,60 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { Box, Heading, useToast } from "@chakra-ui/react";
 
-//Constants
-import { RateData, NewRateData } from "@/constant/InterfaceTypes/RateTypes";
-
-//Components
+// Components
 import LabelRate from "@/components/Label/Rate";
 import TableRate from "@/components/Tables/Rate";
 import Spinner from "@/components/Spinner";
 
-//Services
-import { getRates, updateRate, createRateApi } from "@/services/rateServices";
+// Store
+import { useRateStore } from "@/store/RateStore";
 import { useRoomStore } from "@/store/RoomStore";
+import { NewRateData, RateData } from "@/constant/InterfaceTypes/RateTypes";
 
 const RatePage = () => {
-  const [rates, setRates] = useState<RateData[]>([]);
-  const [loading, setLoading] = useState(true);
   const toast = useToast();
   const totalOfBooked = useRoomStore((state) => state.totalOfBooked);
 
-  const fetchRates = async () => {
-    setLoading(true);
-    try {
-      const data = await getRates(1, 10);
-      setRates(data.data);
-    } catch (error) {
-      toast({
-        title: "Error fetching rates",
-        description: "There was an issue retrieving the rate data.",
-        status: "error",
-        duration: 3000,
-        isClosable: true,
-      });
-      console.error("Error fetching rates:", error);
-    } finally {
-      setLoading(false);
-    }
-  };
+  // Zustand store for rates
+  const { rates, loading, fetchRates, addRate, editRate, deleteRate } =
+    useRateStore();
+
+  useEffect(() => {
+    fetchRates(1, 10);
+  }, []);
 
   const handleAddRate = async (rateData: NewRateData) => {
-    try {
-      const { data } = await createRateApi(rateData);
-      const updatedRate = { ...data, total: data.availability };
-      setRates((prevRates) => [updatedRate, ...prevRates]);
-    } catch (error) {
-      console.log("Error handleAddRate", error);
-    }
+    await addRate(rateData);
+    toast({
+      title: "Rate added",
+      description: "Rate has been successfully added.",
+      status: "success",
+      duration: 3000,
+      isClosable: true,
+    });
   };
-  
+
   const handleEditRate = async (updatedRateData: RateData) => {
-    try {
-      const requestData = {
-        roomType: updatedRateData.roomType,
-        cancellationPolicy: updatedRateData.cancellationPolicy,
-        availability: updatedRateData.availability,
-        dealPrice: updatedRateData.dealPrice,
-        deals: updatedRateData.deals,
-        rate: updatedRateData.rate,
-      };
-      await updateRate(updatedRateData.documentId, requestData);
-      setRates((prevRates) =>
-        prevRates.map((rate) =>
-          rate.documentId === updatedRateData.documentId
-            ? updatedRateData
-            : rate
-        )
-      );
-      toast({
-        title: "Rate updated",
-        description: "Rate details have been successfully updated.",
-        status: "success",
-        duration: 3000,
-        isClosable: true,
-      });
-    } catch (error) {
-      toast({
-        title: "Error updating room",
-        description: "There was an issue updating the room data.",
-        status: "error",
-        duration: 3000,
-        isClosable: true,
-      });
-      console.error("Error updating rate:", error);
-    }
+    await editRate(updatedRateData.documentId, updatedRateData);
+    toast({
+      title: "Rate updated",
+      description: "Rate details have been successfully updated.",
+      status: "success",
+      duration: 3000,
+      isClosable: true,
+    });
   };
 
   const handleDeleteRate = (deletedRateId: string) => {
-    setRates((prevRates) =>
-      prevRates.filter((rate) => rate.documentId !== deletedRateId)
-    );
+    deleteRate(deletedRateId);
+    toast({
+      title: "Rate deleted",
+      description: "Rate has been successfully deleted.",
+      status: "success",
+      duration: 3000,
+      isClosable: true,
+    });
   };
-
-  useEffect(() => {
-    fetchRates();
-  }, []);
 
   return (
     <Box>
@@ -117,5 +77,3 @@ const RatePage = () => {
 };
 
 export default RatePage;
-
-

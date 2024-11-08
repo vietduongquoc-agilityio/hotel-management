@@ -3,10 +3,10 @@ export interface RateData {
   cancellationPolicy: string;
   deals: string;
   dealPrice: string;
-  availability: any;
+  availability: string ;
   documentId: string;
   rate: string;
-  totalOfBooked?: any;
+  totalOfBooked?: string;
 }
 
 export type NewRateData = Omit<RateData, "documentId">;

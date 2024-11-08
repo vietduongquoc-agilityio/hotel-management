@@ -22,6 +22,7 @@ const RoomPage = () => {
     availableRooms,
     bookedRooms,
     loading: roomsLoading,
+    totalOfBooked,
     setTotalOfBooked,
     fetchRooms,
     addRoom,
@@ -37,13 +38,12 @@ const RoomPage = () => {
   const [roomStatus, setRoomStatus] = useState("");
 
   const [isAddRoom, setIsAddRoom] = useState(false);
-  const [totalOfBooked, setTotalOfBookedCount] = useState(0);
   const toast = useToast();
   const statusRoom = ["Available", "Booked", "Reserved", "Waitlist"];
 
   useEffect(() => {
     fetchRates(currentPage, pageSize);
-  }, [currentPage, pageSize, fetchRates]);
+  }, [currentPage, fetchRates]);
 
   useEffect(() => {
     fetchRooms(currentPage, pageSize);
@@ -59,18 +59,15 @@ const RoomPage = () => {
     const bookedCount = rooms.filter((room) =>
       statusRoom.includes(room.roomStatus)
     ).length;
-    setTotalOfBookedCount(bookedCount);
     setTotalOfBooked(bookedCount);
   }, [rooms, setTotalOfBooked]);
 
   const handleAddRoom = async (newRoom: NewRoomData) => {
     await addRoom(newRoom);
-    fetchRooms(currentPage, pageSize);
   };
 
   const handleDeleteRoom = async (deletedRoomId: string) => {
     await deleteRoom(deletedRoomId);
-    fetchRooms(currentPage, pageSize);
   };
 
   const handleEditRoom = async (updatedRoomData: RoomData) => {
