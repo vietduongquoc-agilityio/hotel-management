@@ -4,7 +4,8 @@
   "info": {
     "singularName": "rate",
     "pluralName": "rates",
-    "displayName": "rate"
+    "displayName": "rate",
+    "description": ""
   },
   "options": {
     "draftAndPublish": true
@@ -32,6 +33,10 @@
       "required": true
     },
     "availability": {
+      "type": "string",
+      "required": true
+    },
+    "totalOfBooked": {
       "type": "string",
       "required": true
     }

@@ -1,5 +1,7 @@
 import axios from "axios";
-import { NewRoomData } from "@/constant/InterfaceTypes/RoomTypes";
+
+//InterFace
+import { NewRoomData } from "@/interfaces/Room";
 
 const BASE_URL = process.env.VITE_BASE_URL;
 

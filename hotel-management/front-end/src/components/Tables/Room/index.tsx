@@ -1,8 +1,8 @@
 import { Box, Text, UnorderedList, ListItem, Alert } from "@chakra-ui/react";
 import { useState } from "react";
 
-// Constants
-import { RoomData } from "@/constant/InterfaceTypes/RoomTypes";
+// InterFace
+import { RoomData } from "@/interfaces/Room";
 
 // Components
 import EditRoomModal from "@/components/Modal/RoomModal/Edit";
@@ -18,6 +18,7 @@ interface TableRoomProps {
   error?: string | null;
   onDeleteRoom: (roomId: string) => void;
   onEditRoom: (roomData: RoomData) => void;
+  totalOfBooked: number;
 }
 
 const TableRoom = ({
@@ -104,6 +105,7 @@ const TableRoom = ({
               {room.roomStatus}
             </Text>
           </Box>
+
           <Button
             onClick={() => toggleMenu(room.documentId)}
             bg="white.200"

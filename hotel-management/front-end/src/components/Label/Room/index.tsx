@@ -1,8 +1,10 @@
 import { Box, UnorderedList, ListItem, Text, Select } from "@chakra-ui/react";
 import { ChangeEvent } from "react";
 
-//Constants
-import { NewRoomData } from "@/constant/InterfaceTypes/RoomTypes";
+// InterFace
+import { NewRoomData } from "@/interfaces/Room";
+
+// Constants
 import {
   bedTypeOptions,
   roomFloorOptions,
@@ -10,7 +12,7 @@ import {
   roomStatusOptions,
 } from "@/constant/SelectOptions";
 
-//Components
+// Components
 import AddRoomModal from "@/components/Modal/RoomModal/Add";
 
 interface LabelRoomProps {

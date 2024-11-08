@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable react-refresh/only-export-components */
 import { useState } from "react";
 import {
@@ -10,7 +9,7 @@ import {
 import { useForm } from "react-hook-form";
 
 // Constants
-import { RateData } from "@/constant/InterfaceTypes/RateTypes";
+import { RateData } from "@/interfaces/Rate";
 
 // Components
 import withModal from "@/components/Modal/modalHoc";
@@ -67,8 +66,8 @@ const EditRateModal = ({
           placeHolder="Enter room type"
           inputType="first"
         />
-        {errors.roomType && (
-          <p style={{ color: "red" }}>{errors.roomType.message}</p>
+        {errors.roomType?.message && (
+          <p style={{ color: "red" }}>{String(errors.roomType.message)}</p>
         )}
       </FormControl>
 
@@ -81,8 +80,8 @@ const EditRateModal = ({
           placeHolder="Enter cancellation policy"
           inputType="first"
         />
-        {errors.cancellationPolicy && (
-          <p style={{ color: "red" }}>{errors.cancellationPolicy.message}</p>
+        {errors.cancellationPolicy?.message && (
+          <p style={{ color: "red" }}>{String(errors.cancellationPolicy.message)}</p>
         )}
       </FormControl>
 
@@ -95,8 +94,8 @@ const EditRateModal = ({
           placeHolder="Enter room availability"
           inputType="first"
         />
-        {errors.availability && (
-          <p style={{ color: "red" }}>{errors.availability.message}</p>
+        {errors.availability?.message && (
+          <p style={{ color: "red" }}>{String(errors.availability.message)}</p>
         )}
       </FormControl>
 
@@ -107,8 +106,8 @@ const EditRateModal = ({
           placeHolder="Enter deal price"
           inputType="first"
         />
-        {errors.dealPrice && (
-          <p style={{ color: "red" }}>{errors.dealPrice.message}</p>
+        {errors.dealPrice?.message && (
+          <p style={{ color: "red" }}>{String(errors.dealPrice.message)}</p>
         )}
       </FormControl>
 

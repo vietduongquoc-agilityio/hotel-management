@@ -1,11 +1,15 @@
 import { create } from "zustand";
+
+// Services
 import {
   getRooms,
   createRoomApi,
   updateRoom,
   deleteRoom,
 } from "@/services/roomService";
-import { RoomData, NewRoomData } from "@/constant/InterfaceTypes/RoomTypes";
+
+// InterFace
+import { RoomData, NewRoomData } from "@/interfaces/Room";
 
 interface RoomState {
   rooms: RoomData[];
@@ -14,6 +18,7 @@ interface RoomState {
   availableRooms: number;
   bookedRooms: number;
   loading: boolean;
+  totalOfBooked: number;
   fetchRooms: (
     currentPage: number,
     pageSize: number,
@@ -24,9 +29,12 @@ interface RoomState {
   editRoom: (roomId: string, updatedData: NewRoomData) => Promise<void>;
   deleteRoom: (roomId: string) => Promise<void>;
   calculateRoomCounts: (rooms: RoomData[]) => void;
+  setTotalOfBooked: (count: number) => void;
 }
 
 export const useRoomStore = create<RoomState>((set) => ({
+  totalOfBooked: 0,
+  setTotalOfBooked: (count: number) => set({ totalOfBooked: count }),
   rooms: [],
   totalRooms: 0,
   pageCount: 1,

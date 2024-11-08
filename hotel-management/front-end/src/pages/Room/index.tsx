@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { Box, Heading, useToast } from "@chakra-ui/react";
 
-// Constants
-import { NewRoomData, RoomData } from "@/constant/InterfaceTypes/RoomTypes";
+// InterFace
+import { NewRoomData, RoomData } from "@/interfaces/Room";
 
 // Components
 import TableRoom from "@/components/Tables/Room";
@@ -22,6 +22,8 @@ const RoomPage = () => {
     availableRooms,
     bookedRooms,
     loading: roomsLoading,
+    totalOfBooked,
+    setTotalOfBooked,
     fetchRooms,
     addRoom,
     editRoom,
@@ -29,7 +31,6 @@ const RoomPage = () => {
   } = useRoomStore();
 
   const { rates, loading: ratesLoading, fetchRates } = useRateStore();
-
   const [currentPage, setCurrentPage] = useState(1);
   const pageSize = 10;
   const [bedType, setBedType] = useState("");
@@ -38,6 +39,7 @@ const RoomPage = () => {
 
   const [isAddRoom, setIsAddRoom] = useState(false);
   const toast = useToast();
+  const statusRoom = ["Available", "Booked", "Reserved", "Waitlist"];
 
   useEffect(() => {
     fetchRates(currentPage, pageSize);
@@ -53,14 +55,19 @@ const RoomPage = () => {
     }
   }, [rates]);
 
-  const handleAddRoom = async (roomData: NewRoomData) => {
-    await addRoom(roomData);
-    fetchRooms(currentPage, pageSize);
+  useEffect(() => {
+    const bookedCount = rooms.filter((room) =>
+      statusRoom.includes(room.roomStatus)
+    ).length;
+    setTotalOfBooked(bookedCount);
+  }, [rooms, setTotalOfBooked]);
+
+  const handleAddRoom = async (newRoom: NewRoomData) => {
+    await addRoom(newRoom);
   };
 
   const handleDeleteRoom = async (deletedRoomId: string) => {
     await deleteRoom(deletedRoomId);
-    fetchRooms(currentPage, pageSize);
   };
 
   const handleEditRoom = async (updatedRoomData: RoomData) => {
@@ -127,9 +134,10 @@ const RoomPage = () => {
         <Spinner />
       ) : (
         <TableRoom
-          onEditRoom={handleEditRoom}
           rooms={rooms}
+          onEditRoom={handleEditRoom}
           onDeleteRoom={handleDeleteRoom}
+          totalOfBooked={totalOfBooked}
         />
       )}
 
