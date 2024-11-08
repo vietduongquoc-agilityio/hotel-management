@@ -9,9 +9,11 @@ import {
   useToast,
 } from "@chakra-ui/react";
 
+// InterFace
+import { NewRateData } from "@/Interface/Rate";
+
 // Constants
 import { validationRules } from "@/constant/Validate";
-import { NewRateData } from "@/constant/InterfaceTypes/RateTypes";
 
 // Components
 import withModal from "@/components/Modal/modalHoc";

@@ -1,11 +1,15 @@
 import { create } from "zustand";
+
+// Services
 import {
   getRooms,
   createRoomApi,
   updateRoom,
   deleteRoom,
 } from "@/services/roomService";
-import { RoomData, NewRoomData } from "@/constant/InterfaceTypes/RoomTypes";
+
+// InterFace
+import { RoomData, NewRoomData } from "@/Interface/Room";
 
 interface RoomState {
   rooms: RoomData[];

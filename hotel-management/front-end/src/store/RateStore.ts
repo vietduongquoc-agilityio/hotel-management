@@ -1,6 +1,10 @@
 import { create } from "zustand";
+
+// Services
 import { getRates, updateRate, createRateApi } from "@/services/rateServices";
-import { RateData, NewRateData } from "@/constant/InterfaceTypes/RateTypes";
+
+// InterFace
+import { RateData, NewRateData } from "@/Interface/Rate";
 
 interface RateState {
   rates: RateData[];

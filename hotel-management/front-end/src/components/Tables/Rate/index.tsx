@@ -1,8 +1,8 @@
 import { Box, Text, UnorderedList, ListItem, Alert } from "@chakra-ui/react";
 import { useState } from "react";
 
-// Constant
-import { RateData } from "@/constant/InterfaceTypes/RateTypes";
+// InterFace
+import { RateData } from "@/Interface/Rate";
 
 //Components
 import EditRateModal from "@/components/Modal/RateModal/Edit";
