@@ -51,13 +51,6 @@ const RatePage = () => {
 
   const handleDeleteRate = (deletedRateId: string) => {
     deleteRate(deletedRateId);
-    toast({
-      title: "Rate deleted",
-      description: "Rate has been successfully deleted.",
-      status: "success",
-      duration: 3000,
-      isClosable: true,
-    });
   };
 
   return (
