@@ -71,7 +71,20 @@ const TableRate = ({
         </ListItem>
       </UnorderedList>
       {rates.map((rate) => {
-        const availableRooms = rate.availability - (totalOfBooked || 0);
+        const availability =
+          typeof rate.availability === "string"
+            ? parseInt(rate.availability, 10)
+            : rate.availability;
+        if (isNaN(availability)) {
+          return (
+            <Box key={rate.documentId} p="17px 24px">
+              {" "}
+              <Alert status="error">Invalid availability value</Alert>{" "}
+            </Box>
+          );
+        }
+
+        const availableRooms = availability - (totalOfBooked || 0);
         const isFull = availableRooms <= 0;
         const textColor = isFull ? "red.500" : "blue.500";
         const backgroundColor = isFull ? "red.100" : "blue.100";

@@ -105,6 +105,7 @@ const TableRoom = ({
               {room.roomStatus}
             </Text>
           </Box>
+
           <Button
             onClick={() => toggleMenu(room.documentId)}
             bg="white.200"

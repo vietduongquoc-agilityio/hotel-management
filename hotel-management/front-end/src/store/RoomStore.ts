@@ -25,7 +25,7 @@ interface RoomState {
   editRoom: (roomId: string, updatedData: NewRoomData) => Promise<void>;
   deleteRoom: (roomId: string) => Promise<void>;
   calculateRoomCounts: (rooms: RoomData[]) => void;
-  setTotalOfBooked: (count: number) => void; // Add this line
+  setTotalOfBooked: (count: number) => void;
 }
 
 export const useRoomStore = create<RoomState>((set) => ({
