@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable react-refresh/only-export-components */
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import {
@@ -65,7 +63,7 @@ const AddRateModal = ({ onClose, onAddRate }: AddRateModalProps) => {
         isClosable: true,
       });
       onClose();
-    } catch (error) {
+    } catch {
       toast({
         title: "Failed to add rate.",
         description: "An error occurred while creating the rate.",

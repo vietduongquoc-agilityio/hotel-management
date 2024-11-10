@@ -29,8 +29,8 @@ const RoomPage = () => {
     editRoom,
     deleteRoom,
   } = useRoomStore();
+  const { rates, loading: ratesLoading, fetchRates, updateRateAvailability } = useRateStore();
 
-  const { rates, loading: ratesLoading, fetchRates } = useRateStore();
   const [currentPage, setCurrentPage] = useState(1);
   const pageSize = 10;
   const [bedType, setBedType] = useState("");
@@ -80,6 +80,17 @@ const RoomPage = () => {
     };
 
     await editRoom(updatedRoomData.documentId, requestPayload);
+
+    // Update rate availability based on new room status
+    if (
+      updatedRoomData.roomStatus === "Booked" ||
+      updatedRoomData.roomStatus === "Reserved"
+    ) {
+      updateRateAvailability(updatedRoomData.bedType, -1);
+    } else if (updatedRoomData.roomStatus === "Available") {
+      updateRateAvailability(updatedRoomData.bedType, 1);
+    }
+
     fetchRooms(currentPage, pageSize);
     toast({
       title: "Room updated",
@@ -152,3 +163,4 @@ const RoomPage = () => {
 };
 
 export default RoomPage;
+

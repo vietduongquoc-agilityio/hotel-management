@@ -19,6 +19,11 @@ interface RoomState {
   bookedRooms: number;
   loading: boolean;
   totalOfBooked: number;
+  
+  // Store bedType options here
+  bedTypeOptions: string[]; 
+  setBedTypeOptions: (rates: any[]) => void;
+
   fetchRooms: (
     currentPage: number,
     pageSize: number,
@@ -41,6 +46,13 @@ export const useRoomStore = create<RoomState>((set) => ({
   availableRooms: 0,
   bookedRooms: 0,
   loading: false,
+  bedTypeOptions: [],
+  setBedTypeOptions: (rates) => {
+    const uniqueBedTypes = Array.from(
+      new Set(rates.map((rate) => rate.roomType))
+    );
+    set({ bedTypeOptions: uniqueBedTypes });
+  },
 
   fetchRooms: async (currentPage, pageSize, field, value) => {
     set({ loading: true });
