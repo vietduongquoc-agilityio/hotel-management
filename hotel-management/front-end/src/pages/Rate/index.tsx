@@ -27,13 +27,6 @@ const RatePage = () => {
 
   const handleAddRate = async (rateData: NewRateData) => {
     await addRate(rateData);
-    toast({
-      title: "Rate added",
-      description: "Rate has been successfully added.",
-      status: "success",
-      duration: 3000,
-      isClosable: true,
-    });
   };
 
   const handleEditRate = async (updatedRateData: RateData) => {
@@ -58,13 +51,6 @@ const RatePage = () => {
 
   const handleDeleteRate = (deletedRateId: string) => {
     deleteRate(deletedRateId);
-    toast({
-      title: "Rate deleted",
-      description: "Rate has been successfully deleted.",
-      status: "success",
-      duration: 3000,
-      isClosable: true,
-    });
   };
 
   return (

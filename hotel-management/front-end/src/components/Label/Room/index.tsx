@@ -94,7 +94,13 @@ const LabelRoom = ({
         </ListItem>
       </UnorderedList>
       <Box display="flex" gap="10px">
-        <Select cursor="pointer" width="120px" onChange={handleSelectedBedType}>
+        <Select
+          fontSize="13px"
+          cursor="pointer"
+          width="120px"
+          onChange={handleSelectedBedType}
+          placeholder="Filter type"
+        >
           {bedTypeOptions.map((option, index) => (
             <option key={`${option.value}-${index}`} value={option.value}>
               {option.label}
@@ -103,8 +109,10 @@ const LabelRoom = ({
         </Select>
 
         <Select
+          fontSize="13px"
           cursor="pointer"
           width="120px"
+          placeholder="Filter floor"
           onChange={handleSelectedRoomFloor}
         >
           {roomFloorOptions.map((option, index) => (
@@ -124,8 +132,10 @@ const LabelRoom = ({
         </Select>
 
         <Select
+          fontSize="13px"
           cursor="pointer"
-          width="120px"
+          width="130px"
+          placeholder="Filter status"
           onChange={handleSelectedRoomStatus}
         >
           {roomStatusOptions.map((option, index) => (

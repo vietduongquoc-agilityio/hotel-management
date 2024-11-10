@@ -28,9 +28,15 @@
       "type": "text",
       "required": true
     },
-    "roomStatus": {
-      "type": "string",
-      "required": true
+    "Available": {
+      "type": "enumeration",
+      "enum": [
+        "Available",
+        "Booked",
+        "Waitlist",
+        "Blocked",
+        "Reserved"
+      ]
     }
   }
 }

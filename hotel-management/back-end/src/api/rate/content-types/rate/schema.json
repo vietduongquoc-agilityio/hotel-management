@@ -37,7 +37,7 @@
       "required": true
     },
     "totalOfBooked": {
-      "type": "string",
+      "type": "integer",
       "required": true
     }
   }
