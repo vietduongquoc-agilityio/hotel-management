@@ -16,12 +16,15 @@ interface RoomState {
   totalRooms: number;
   pageCount: number;
   availableRooms: number;
+  reservedRooms: number;
   bookedRooms: number;
+  waitlistRooms: number;
+
   loading: boolean;
   totalOfBooked: number;
-  
+
   // Store bedType options here
-  bedTypeOptions: string[]; 
+  bedTypeOptions: string[];
   setBedTypeOptions: (rates: any[]) => void;
 
   fetchRooms: (
@@ -45,6 +48,8 @@ export const useRoomStore = create<RoomState>((set) => ({
   pageCount: 1,
   availableRooms: 0,
   bookedRooms: 0,
+  reservedRooms: 0,
+  waitlistRooms: 0,
   loading: false,
   bedTypeOptions: [],
   setBedTypeOptions: (rates) => {
@@ -116,6 +121,12 @@ export const useRoomStore = create<RoomState>((set) => ({
     const bookedRooms = rooms.filter(
       (room) => room.roomStatus === "Booked"
     ).length;
-    set({ availableRooms, bookedRooms });
+    const reservedRooms = rooms.filter(
+      (room) => room.roomStatus === "reserved"
+    ).length;
+    const waitlistRooms = rooms.filter(
+      (room) => room.roomStatus === "waitlist"
+    ).length;
+    set({ availableRooms, bookedRooms, reservedRooms, waitlistRooms });
   },
 }));

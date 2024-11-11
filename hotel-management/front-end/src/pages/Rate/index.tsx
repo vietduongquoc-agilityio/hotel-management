@@ -23,7 +23,7 @@ const RatePage = () => {
 
   useEffect(() => {
     fetchRates(1, 10);
-  }, []);
+  }, [fetchRates]);
 
   const handleAddRate = async (rateData: NewRateData) => {
     await addRate(rateData);

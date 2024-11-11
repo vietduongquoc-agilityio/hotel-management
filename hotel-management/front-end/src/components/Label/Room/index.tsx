@@ -6,11 +6,13 @@ import { NewRoomData } from "@/interfaces/Room";
 
 // Constants
 import {
-  bedTypeOptions,
   roomFloorOptions,
   roomStatusColors,
   roomStatusOptions,
 } from "@/constant/SelectOptions";
+
+// Store
+import { useRateStore } from "@/store/RateStore";
 
 // Components
 import AddRoomModal from "@/components/Modal/RoomModal/Add";
@@ -38,6 +40,9 @@ const LabelRoom = ({
   handleSelectedRoomFloor,
   handleSelectedRoomStatus,
 }: LabelRoomProps) => {
+
+  const bedTypeOptions = useRateStore((state) => state.bedTypeOptions);
+
   return (
     <Box
       cursor="pointer"

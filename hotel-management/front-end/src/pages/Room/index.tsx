@@ -29,7 +29,12 @@ const RoomPage = () => {
     editRoom,
     deleteRoom,
   } = useRoomStore();
-  const { rates, loading: ratesLoading, fetchRates, updateRateAvailability } = useRateStore();
+  const {
+    rates,
+    loading: ratesLoading,
+    fetchRates,
+    updateRateAvailability,
+  } = useRateStore();
 
   const [currentPage, setCurrentPage] = useState(1);
   const pageSize = 10;
@@ -56,10 +61,14 @@ const RoomPage = () => {
   }, [rates]);
 
   useEffect(() => {
-    const bookedCount = rooms.filter((room) =>
-      statusRoom.includes(room.roomStatus)
-    ).length;
-    setTotalOfBooked(bookedCount);
+    if (rooms && Array.isArray(rooms)) {
+      const bookedCount = rooms.filter((room) =>
+        statusRoom.includes(room.roomStatus)
+      ).length;
+      setTotalOfBooked(bookedCount || 0);
+    } else {
+      setTotalOfBooked(0);
+    }
   }, [rooms, setTotalOfBooked]);
 
   const handleAddRoom = async (newRoom: NewRoomData) => {
@@ -84,7 +93,8 @@ const RoomPage = () => {
     // Update rate availability based on new room status
     if (
       updatedRoomData.roomStatus === "Booked" ||
-      updatedRoomData.roomStatus === "Reserved"
+      updatedRoomData.roomStatus === "Reserved" ||
+      updatedRoomData.roomStatus === "Waitlist"
     ) {
       updateRateAvailability(updatedRoomData.bedType, -1);
     } else if (updatedRoomData.roomStatus === "Available") {
@@ -163,4 +173,3 @@ const RoomPage = () => {
 };
 
 export default RoomPage;
-
