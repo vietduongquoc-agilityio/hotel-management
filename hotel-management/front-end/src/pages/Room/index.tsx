@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Box, Heading, useToast } from "@chakra-ui/react";
 
 // InterFace
@@ -29,7 +29,12 @@ const RoomPage = () => {
     editRoom,
     deleteRoom,
   } = useRoomStore();
-  const { rates, loading: ratesLoading, fetchRates, updateRateAvailability } = useRateStore();
+  const {
+    rates,
+    loading: ratesLoading,
+    fetchRates,
+    updateRateAvailability,
+  } = useRateStore();
 
   const [currentPage, setCurrentPage] = useState(1);
   const pageSize = 10;
@@ -55,12 +60,19 @@ const RoomPage = () => {
     }
   }, [rates]);
 
+  const calculatedTotalOfBooked = useMemo(() => {
+    if (rooms && Array.isArray(rooms)) {
+      return rooms.filter(
+        (room) =>
+          room.bedType === bedType && statusRoom.includes(room.roomStatus)
+      ).length;
+    }
+    return 0;
+  }, [rooms, bedType, statusRoom]);
+
   useEffect(() => {
-    const bookedCount = rooms.filter((room) =>
-      statusRoom.includes(room.roomStatus)
-    ).length;
-    setTotalOfBooked(bookedCount);
-  }, [rooms, setTotalOfBooked]);
+    setTotalOfBooked(calculatedTotalOfBooked);
+  }, [calculatedTotalOfBooked, setTotalOfBooked]);
 
   const handleAddRoom = async (newRoom: NewRoomData) => {
     await addRoom(newRoom);
@@ -81,13 +93,11 @@ const RoomPage = () => {
 
     await editRoom(updatedRoomData.documentId, requestPayload);
 
-    // Update rate availability based on new room status
-    if (
-      updatedRoomData.roomStatus === "Booked" ||
-      updatedRoomData.roomStatus === "Reserved"
-    ) {
+    // Update rate availability based on room status change
+    const roomStatusChange = updatedRoomData.roomStatus;
+    if (["Booked", "Reserved", "Waitlist"].includes(roomStatusChange)) {
       updateRateAvailability(updatedRoomData.bedType, -1);
-    } else if (updatedRoomData.roomStatus === "Available") {
+    } else if (roomStatusChange === "Available") {
       updateRateAvailability(updatedRoomData.bedType, 1);
     }
 
@@ -163,4 +173,3 @@ const RoomPage = () => {
 };
 
 export default RoomPage;
-

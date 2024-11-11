@@ -12,12 +12,16 @@ import { useState } from "react";
 
 // Constants
 import {
-  bedTypeOptions,
   roomFloorOptions,
   roomStatusColors,
   roomStatusOptions,
 } from "@/constant/SelectOptions";
+
+// Interface
 import { RoomData } from "@/interfaces/Room";
+
+// Store
+import { useRateStore } from "@/store/RateStore";
 
 // Components
 import withModal from "@/components/Modal/modalHoc";
@@ -45,6 +49,7 @@ const EditRoomModal = ({
 
   const [loading, setLoading] = useState(false);
   const toast = useToast();
+  const bedTypeOptions = useRateStore((state) => state.bedTypeOptions);
 
   const onSubmit = async (data: RoomData) => {
     setLoading(true);

@@ -13,12 +13,14 @@ import { useForm } from "react-hook-form";
 // Constants
 import { validationRules } from "@/constant/Validate";
 import {
-  bedTypeOptions,
   roomFloorOptions,
 } from "@/constant/SelectOptions";
 
 // InterFace
 import { NewRoomData } from "@/interfaces/Room";
+
+// Store
+import { useRateStore } from "@/store/RateStore";
 
 // Components
 import withModal from "@/components/Modal/modalHoc";
@@ -39,6 +41,7 @@ interface FormData {
 const AddRoomModal = ({ onClose, onAddRoom }: AddRoomModalProps) => {
   const [loading, setLoading] = useState(false);
   const toast = useToast();
+  const bedTypeOptions = useRateStore((state) => state.bedTypeOptions);
 
   const {
     register,

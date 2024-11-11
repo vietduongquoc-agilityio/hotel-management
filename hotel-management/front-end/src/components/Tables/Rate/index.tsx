@@ -9,13 +9,13 @@ import EditRateModal from "@/components/Modal/RateModal/Edit";
 import DeleteRate from "@/components/Modal/RateModal/Delete";
 import Button from "@/components/Button";
 
-
 interface TableRateProps {
   rates: RateData[];
   error?: string | null;
   onDeleteRate: (rateId: string) => void;
   onEditRate: (updatedRateData: RateData) => void;
   totalOfBooked: number;
+  bedType: string;
 }
 
 const TableRate = ({
@@ -24,6 +24,7 @@ const TableRate = ({
   onDeleteRate,
   onEditRate,
   totalOfBooked,
+  bedType,
 }: TableRateProps) => {
   const [activeRateId, setActiveRateId] = useState<string | null>(null);
 
@@ -81,16 +82,20 @@ const TableRate = ({
         if (isNaN(availability)) {
           return (
             <Box key={rate.documentId} p="17px 24px">
-              {" "}
-              <Alert status="error">Invalid availability value</Alert>{" "}
+              <Alert status="error">Invalid availability value</Alert>
             </Box>
           );
         }
 
-        const availableRooms = availability - (totalOfBooked || 0);
+        const applicableTotalOfBooked =
+          rate.roomType === bedType ? totalOfBooked : 0;
+        console.log(applicableTotalOfBooked);
+
+        const availableRooms = availability - applicableTotalOfBooked;
         const isFull = availableRooms <= 0;
         const textColor = isFull ? "red.500" : "blue.500";
         const backgroundColor = isFull ? "red.100" : "blue.100";
+
         return (
           <Box
             key={rate.documentId}

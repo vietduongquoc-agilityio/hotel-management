@@ -1,15 +1,20 @@
 import { create } from "zustand";
 import { devtools } from "zustand/middleware";
+
+// Services
 import {
   getRates,
   updateRate,
   createRateApi,
   deleteRate as deleteRateApi,
 } from "@/services/rateServices";
+
+// InterFace
 import { RateData, NewRateData } from "@/interfaces/Rate";
 
 interface RateState {
   rates: RateData[];
+  bedTypeOptions: { value: string; label: string }[];
   loading: boolean;
   fetchRates: (currentPage: number, pageSize: number) => Promise<void>;
   addRate: (rateData: NewRateData) => Promise<void>;
@@ -20,6 +25,7 @@ interface RateState {
 
 export const useRateStore = create<RateState>()(
   devtools((set) => ({
+    bedTypeOptions: [],
     rates: [],
     loading: false,
 
@@ -27,6 +33,14 @@ export const useRateStore = create<RateState>()(
       set({ loading: true });
       try {
         const { data } = await getRates(currentPage, pageSize);
+        const resultTypeBed = data.map((item: RateData) => ({
+          value: item.roomType,
+          label: `${item.roomType} Bed`,
+        }));
+        set({
+          rates: data,
+          bedTypeOptions: resultTypeBed,
+        });
         set({ rates: data });
       } catch (error) {
         console.error("Error fetching rates:", error);
@@ -69,11 +83,14 @@ export const useRateStore = create<RateState>()(
       }
     },
 
-    updateRateAvailability: (roomType, change) => {
+    updateRateAvailability: (roomType, bookedCount) => {
       set((state) => ({
         rates: state.rates.map((rate) =>
           rate.roomType === roomType
-            ? { ...rate, availability: rate.availability + change }
+            ? {
+                ...rate,
+                availability: Math.max(0, rate.availability - bookedCount),
+              }
             : rate
         ),
       }));
