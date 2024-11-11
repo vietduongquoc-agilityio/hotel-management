@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Box, Heading, useToast } from "@chakra-ui/react";
 
 // InterFace
@@ -60,16 +60,19 @@ const RoomPage = () => {
     }
   }, [rates]);
 
-  useEffect(() => {
+  const calculatedTotalOfBooked = useMemo(() => {
     if (rooms && Array.isArray(rooms)) {
-      const bookedCount = rooms.filter((room) =>
-        statusRoom.includes(room.roomStatus)
+      return rooms.filter(
+        (room) =>
+          room.bedType === bedType && statusRoom.includes(room.roomStatus)
       ).length;
-      setTotalOfBooked(bookedCount || 0);
-    } else {
-      setTotalOfBooked(0);
     }
-  }, [rooms, setTotalOfBooked]);
+    return 0;
+  }, [rooms, bedType, statusRoom]);
+
+  useEffect(() => {
+    setTotalOfBooked(calculatedTotalOfBooked);
+  }, [calculatedTotalOfBooked, setTotalOfBooked]);
 
   const handleAddRoom = async (newRoom: NewRoomData) => {
     await addRoom(newRoom);
@@ -90,14 +93,11 @@ const RoomPage = () => {
 
     await editRoom(updatedRoomData.documentId, requestPayload);
 
-    // Update rate availability based on new room status
-    if (
-      updatedRoomData.roomStatus === "Booked" ||
-      updatedRoomData.roomStatus === "Reserved" ||
-      updatedRoomData.roomStatus === "Waitlist"
-    ) {
+    // Update rate availability based on room status change
+    const roomStatusChange = updatedRoomData.roomStatus;
+    if (["Booked", "Reserved", "Waitlist"].includes(roomStatusChange)) {
       updateRateAvailability(updatedRoomData.bedType, -1);
-    } else if (updatedRoomData.roomStatus === "Available") {
+    } else if (roomStatusChange === "Available") {
       updateRateAvailability(updatedRoomData.bedType, 1);
     }
 

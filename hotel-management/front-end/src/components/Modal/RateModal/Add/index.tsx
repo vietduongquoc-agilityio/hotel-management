@@ -28,7 +28,7 @@ interface FormData {
   roomType: string;
   cancellationPolicy: string;
   price: string;
-  availability: string;
+  availability: number;
   totalOfBooked: number;
 }
 

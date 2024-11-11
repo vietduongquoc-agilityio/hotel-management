@@ -23,7 +23,7 @@ interface RoomState {
   loading: boolean;
   totalOfBooked: number;
 
-  // Store bedType options here
+  // Store bedType options
   bedTypeOptions: string[];
   setBedTypeOptions: (rates: any[]) => void;
 
@@ -122,11 +122,21 @@ export const useRoomStore = create<RoomState>((set) => ({
       (room) => room.roomStatus === "Booked"
     ).length;
     const reservedRooms = rooms.filter(
-      (room) => room.roomStatus === "reserved"
+      (room) => room.roomStatus === "Reserved"
     ).length;
     const waitlistRooms = rooms.filter(
-      (room) => room.roomStatus === "waitlist"
+      (room) => room.roomStatus === "Waitlist"
     ).length;
-    set({ availableRooms, bookedRooms, reservedRooms, waitlistRooms });
+
+    const totalOfBooked =
+      availableRooms + bookedRooms + reservedRooms + waitlistRooms;
+
+    set({
+      availableRooms,
+      bookedRooms,
+      reservedRooms,
+      waitlistRooms,
+      totalOfBooked,
+    });
   },
 }));

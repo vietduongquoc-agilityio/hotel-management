@@ -83,11 +83,14 @@ export const useRateStore = create<RateState>()(
       }
     },
 
-    updateRateAvailability: (roomType, change) => {
+    updateRateAvailability: (roomType, bookedCount) => {
       set((state) => ({
         rates: state.rates.map((rate) =>
           rate.roomType === roomType
-            ? { ...rate, availability: rate.availability + change }
+            ? {
+                ...rate,
+                availability: Math.max(0, rate.availability - bookedCount),
+              }
             : rate
         ),
       }));

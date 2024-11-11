@@ -67,6 +67,7 @@ const RatePage = () => {
           rates={rates}
           onDeleteRate={handleDeleteRate}
           totalOfBooked={totalOfBooked}
+          bedType={""}
         />
       )}
     </Box>
