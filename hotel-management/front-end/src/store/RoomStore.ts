@@ -11,6 +11,9 @@ import {
 // InterFace
 import { RoomData, NewRoomData } from "@/interfaces/Room";
 
+// Constant
+import { setBedTypeOptions } from "@/constant/SelectOptions";
+
 interface RoomState {
   rooms: RoomData[];
   totalRooms: number;
@@ -25,7 +28,7 @@ interface RoomState {
 
   // Store bedType options
   bedTypeOptions: string[];
-  setBedTypeOptions: (rates: any[]) => void;
+  setBedTypeOptions: (rates: setBedTypeOptions[]) => void;
 
   fetchRooms: (
     currentPage: number,
