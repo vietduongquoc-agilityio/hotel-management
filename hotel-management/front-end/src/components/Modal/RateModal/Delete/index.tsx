@@ -65,7 +65,7 @@ const DeleteRate = ({ rateId, onDeleteRate }: DeleteRateProps) => {
         onClose={onClose}
       >
         <AlertDialogOverlay>
-          <AlertDialogContent bg="white.200">
+          <AlertDialogContent bg="white.200" top="200px">
             <AlertDialogHeader fontSize="lg" fontWeight="bold">
               Delete Rate
             </AlertDialogHeader>

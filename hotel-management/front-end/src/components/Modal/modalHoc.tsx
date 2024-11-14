@@ -24,7 +24,7 @@ const withModal = (
         <Button onClick={toggleModal} text={modalTitle} buttonType="first" />
         <Modal isOpen={isOpen} onClose={toggleModal}>
           <ModalOverlay />
-          <ModalContent bg="white.200">
+          <ModalContent bg="white.200" top="160px">
             <ModalHeader>{modalTitle}</ModalHeader>
             <ModalBody>
               <WrappedComponent {...props} onClose={toggleModal} />
