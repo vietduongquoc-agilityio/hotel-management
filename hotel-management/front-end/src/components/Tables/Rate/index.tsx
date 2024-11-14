@@ -4,9 +4,6 @@ import { useEffect, useState } from "react";
 // InterFace
 import { RateData } from "@/interfaces/Rate";
 
-// Store
-import { useRoomStore } from "@/store/RoomStore";
-
 //Components
 import EditRateModal from "@/components/Modal/RateModal/Edit";
 import DeleteRate from "@/components/Modal/RateModal/Delete";
@@ -17,7 +14,6 @@ interface TableRateProps {
   error?: string | null;
   onDeleteRate: (rateId: string) => void;
   onEditRate: (updatedRateData: RateData) => void;
-  // totalOfBooked: number;
   bedType: string;
 }
 
@@ -26,11 +22,8 @@ const TableRate = ({
   error,
   onDeleteRate,
   onEditRate,
-  // totalOfBooked,
-  // bedType,
 }: TableRateProps) => {
   const [activeRateId, setActiveRateId] = useState<string | null>(null);
-  const totalOfBooked = useRoomStore((state) => state.totalOfBooked)
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -95,25 +88,13 @@ const TableRate = ({
         </ListItem>
       </UnorderedList>
       {rates.map((rate) => {
-        const totalOfRoom =
-          typeof rate.availability === "string"
-            ? parseInt(rate.availability, 10)
-            : rate.availability;
-        if (isNaN(totalOfRoom)) {
-          return (
-            <Box key={rate.documentId} p="17px 24px">
-              <Alert status="error">Invalid availability value</Alert>
-            </Box>
-          );
-        }
+        const { totalOfRooms, totalOfBooked } = rate;
 
-        // const TotalOfBooked = rate.roomType === bedType ? totalOfBooked : totalOfBooked;
-
-        console.log("totalOfRoom", totalOfRoom);
+        console.log("totalOfRooms", totalOfRooms);
         console.log("totalOfBooked", totalOfBooked);
-
-        const Availability = totalOfRoom - totalOfBooked;
-        const isFull = Availability <= 0;
+        
+        const availability = totalOfRooms - totalOfBooked;
+        const isFull = availability === 0;
         const textColor = isFull ? "red.500" : "blue.500";
         const backgroundColor = isFull ? "red.100" : "blue.100";
 
@@ -148,7 +129,7 @@ const TableRate = ({
                 display="flex"
                 justifyContent="center"
               >
-                {isFull ? "Full" : Availability}
+                {isFull ? "Full" : availability}
               </Text>
             </Box>
 

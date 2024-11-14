@@ -85,10 +85,10 @@ const EditRateModal = ({
       </FormControl>
 
       <FormControl mb={4} isInvalid={!!errors.availability}>
-        <FormLabel>Availability</FormLabel>
+        <FormLabel>Rooms</FormLabel>
         <Input
-          {...register("availability", {
-            required: "Availability is required",
+          {...register("totalOfRooms", {
+            required: "totalOfRooms is required",
           })}
           placeHolder="Enter room availability"
           inputType="first"

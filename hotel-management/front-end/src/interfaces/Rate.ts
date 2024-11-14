@@ -7,7 +7,7 @@ export interface RateData {
   availability: number;
   documentId: string;
   rate: string;
-  totalOfBooked?: number;
+  totalOfBooked: number;
 }
 
 export type NewRateData = Omit<RateData, "documentId">;

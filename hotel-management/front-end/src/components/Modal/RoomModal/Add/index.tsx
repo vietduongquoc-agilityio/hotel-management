@@ -41,8 +41,8 @@ const AddRoomModal = ({ onClose, onAddRoom }: AddRoomModalProps) => {
   const toast = useToast();
   const bedTypeOptions = useRateStore((state) => state.bedTypeOptions);
   const rates = useRateStore((state) => state.rates);
-  const updateRateTotalOfBooked = useRateStore((state) => state.updateRateTotalOfBooked);
-
+  const editRate = useRateStore((state) => state.editRate);
+  
   const {
     register,
     handleSubmit,
@@ -63,9 +63,9 @@ const AddRoomModal = ({ onClose, onAddRoom }: AddRoomModalProps) => {
       return;
     }
 
-    const { totalOfRooms, totalOfBooked = 0 } = selectedRate;
+    const { totalOfRooms, totalOfBooked } = selectedRate;
     
-    if (totalOfBooked > totalOfRooms) {
+    if (totalOfBooked === totalOfRooms) {
       toast({
         title: "Room cannot be added",
         description: "Selected room type is fully booked.",
@@ -86,8 +86,21 @@ const AddRoomModal = ({ onClose, onAddRoom }: AddRoomModalProps) => {
 
     setLoading(true);
     try {
+
+      const { documentId } = selectedRate;
+      const requestPayload = {
+        roomType: selectedRate.roomType,
+        cancellationPolicy: selectedRate.cancellationPolicy,
+        availability: selectedRate.availability,
+        dealPrice: selectedRate.dealPrice,
+        deals: selectedRate.deals,
+        rate: selectedRate.rate,
+        totalOfRooms: selectedRate.totalOfRooms,
+        totalOfBooked: selectedRate.totalOfBooked + 1
+      };
+
       await onAddRoom(newRoomData);
-      updateRateTotalOfBooked(data.bedType, 1);
+      await editRate(documentId, requestPayload)
       toast({
         title: "Room added successfully.",
         status: "success",
@@ -173,4 +186,3 @@ const AddRoomModal = ({ onClose, onAddRoom }: AddRoomModalProps) => {
 };
 
 export default withModal(AddRoomModal, "Add room");
-

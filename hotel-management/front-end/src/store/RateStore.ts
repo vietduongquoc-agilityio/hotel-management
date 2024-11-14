@@ -20,7 +20,6 @@ interface RateState {
   addRate: (rateData: NewRateData) => Promise<void>;
   editRate: (rateId: string, updatedData: NewRateData) => Promise<void>;
   deleteRate: (rateId: string) => Promise<void>;
-  updateRateTotalOfBooked: (roomType: string, change: number) => void;
 }
 
 export const useRateStore = create<RateState>()(
@@ -37,15 +36,16 @@ export const useRateStore = create<RateState>()(
           value: item.roomType,
           label: `${item.roomType} Bed`,
         }));
-        const updatedRates = data.map((item: RateData) => ({
-          ...item,
-          totalOfRooms: item.availability,
-        }));
+        const updatedRates = data.map(({ id, ...item }: RateData) => {
+          return {
+            ...item,
+            totalOfBooked: item.totalOfBooked,
+          };
+        });
         set({
           rates: updatedRates,
           bedTypeOptions: resultTypeBed,
         });
-        set({ rates: data });
       } catch (error) {
         console.error("Error fetching rates:", error);
       } finally {
@@ -85,19 +85,6 @@ export const useRateStore = create<RateState>()(
       } catch (error) {
         console.error("Error deleting rate:", error);
       }
-    },
-
-    updateRateTotalOfBooked: (roomType, change) => {
-      set((state) => ({
-        rates: state.rates.map((rate) =>
-          rate.roomType === roomType
-            ? {
-                ...rate,
-                totalOfBooked: Math.max(0, (rate.totalOfBooked || 0) + change),
-              }
-            : rate
-        ),
-      }));
     },
   }))
 );

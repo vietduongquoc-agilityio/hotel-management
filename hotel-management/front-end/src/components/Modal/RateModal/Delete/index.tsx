@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { useState } from "react";
 import {
   AlertDialog,
@@ -42,7 +41,7 @@ const DeleteRate = ({ rateId, onDeleteRate }: DeleteRateProps) => {
         isClosable: true,
       });
       onClose();
-    } catch (error) {
+    } catch {
       toast({
         title: "Failed to delete rate.",
         description: "An error occurred while deleting the rate.",

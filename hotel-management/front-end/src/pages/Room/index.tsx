@@ -22,17 +22,12 @@ const RoomPage = () => {
     availableRooms,
     bookedRooms,
     loading: roomsLoading,
-    totalOfBooked,
     fetchRooms,
     addRoom,
     editRoom,
     deleteRoom,
   } = useRoomStore();
-  const {
-    rates,
-    loading: ratesLoading,
-    fetchRates,
-  } = useRateStore();
+  const { rates, loading: ratesLoading, fetchRates } = useRateStore();
 
   const [currentPage, setCurrentPage] = useState(1);
   const pageSize = 10;
@@ -133,7 +128,6 @@ const RoomPage = () => {
           rooms={rooms}
           onEditRoom={handleEditRoom}
           onDeleteRoom={handleDeleteRoom}
-          totalOfBooked={totalOfBooked}
         />
       )}
 
