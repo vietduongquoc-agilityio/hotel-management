@@ -43,8 +43,6 @@ const AddRoomModal = ({ onClose, onAddRoom }: AddRoomModalProps) => {
   const rates = useRateStore((state) => state.rates);
   const updateRateTotalOfBooked = useRateStore((state) => state.updateRateTotalOfBooked);
 
-  console.log({ rates });
-
   const {
     register,
     handleSubmit,
@@ -66,7 +64,6 @@ const AddRoomModal = ({ onClose, onAddRoom }: AddRoomModalProps) => {
     }
 
     const { totalOfRooms, totalOfBooked = 0 } = selectedRate;
-    console.log("totalOfRooms", totalOfRooms);
     
     if (totalOfBooked > totalOfRooms) {
       toast({
@@ -112,12 +109,6 @@ const AddRoomModal = ({ onClose, onAddRoom }: AddRoomModalProps) => {
     }
   };
 
-  const handleSelectType = (e: any) => {
-    console.log(e.target.value);
-    const result = rates.find((item) => item.roomType === e.target.value);
-    console.log({ result });
-  };
-
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <Box display="flex" justifyContent="space-between">
@@ -126,7 +117,6 @@ const AddRoomModal = ({ onClose, onAddRoom }: AddRoomModalProps) => {
           <Select
             {...register("bedType", validationRules.required)}
             placeholder="Select bed type"
-            onChange={handleSelectType}
           >
             {bedTypeOptions.map((option) => (
               <option key={option.value} value={option.value}>
