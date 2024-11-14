@@ -39,6 +39,10 @@
     "totalOfBooked": {
       "type": "integer",
       "required": true
+    },
+    "totalOfRooms": {
+      "required": true,
+      "type": "integer"
     }
   }
 }
