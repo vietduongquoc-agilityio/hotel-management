@@ -30,6 +30,7 @@ interface FormData {
   price: string;
   availability: number;
   totalOfBooked: number;
+  totalOfRooms: number;
 }
 
 const AddRateModal = ({ onClose, onAddRate }: AddRateModalProps) => {
@@ -51,6 +52,7 @@ const AddRateModal = ({ onClose, onAddRate }: AddRateModalProps) => {
       availability: data.availability,
       rate: data.price,
       totalOfBooked: 0,
+      totalOfRooms: data.availability
     };
 
     setLoading(true);

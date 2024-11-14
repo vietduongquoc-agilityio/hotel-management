@@ -12,9 +12,7 @@ import { useForm } from "react-hook-form";
 
 // Constants
 import { validationRules } from "@/constant/Validate";
-import {
-  roomFloorOptions,
-} from "@/constant/SelectOptions";
+import { roomFloorOptions } from "@/constant/SelectOptions";
 
 // InterFace
 import { NewRoomData } from "@/interfaces/Room";
@@ -42,6 +40,10 @@ const AddRoomModal = ({ onClose, onAddRoom }: AddRoomModalProps) => {
   const [loading, setLoading] = useState(false);
   const toast = useToast();
   const bedTypeOptions = useRateStore((state) => state.bedTypeOptions);
+  const rates = useRateStore((state) => state.rates);
+  const updateRateTotalOfBooked = useRateStore((state) => state.updateRateTotalOfBooked);
+
+  console.log({ rates });
 
   const {
     register,
@@ -50,6 +52,33 @@ const AddRoomModal = ({ onClose, onAddRoom }: AddRoomModalProps) => {
   } = useForm<FormData>();
 
   const onSubmit = async (data: FormData) => {
+    const selectedRate = rates.find((rate) => rate.roomType === data.bedType);
+    
+    if (!selectedRate) {
+      toast({
+        title: "Error",
+        description: "Please select a valid bed type.",
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+      });
+      return;
+    }
+
+    const { totalOfRooms, totalOfBooked = 0 } = selectedRate;
+    console.log("totalOfRooms", totalOfRooms);
+    
+    if (totalOfBooked > totalOfRooms) {
+      toast({
+        title: "Room cannot be added",
+        description: "Selected room type is fully booked.",
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+      });
+      return;
+    }
+
     const newRoomData: NewRoomData = {
       roomNumber: "ID",
       bedType: data.bedType,
@@ -61,6 +90,7 @@ const AddRoomModal = ({ onClose, onAddRoom }: AddRoomModalProps) => {
     setLoading(true);
     try {
       await onAddRoom(newRoomData);
+      updateRateTotalOfBooked(data.bedType, 1);
       toast({
         title: "Room added successfully.",
         status: "success",
@@ -82,6 +112,12 @@ const AddRoomModal = ({ onClose, onAddRoom }: AddRoomModalProps) => {
     }
   };
 
+  const handleSelectType = (e: any) => {
+    console.log(e.target.value);
+    const result = rates.find((item) => item.roomType === e.target.value);
+    console.log({ result });
+  };
+
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <Box display="flex" justifyContent="space-between">
@@ -90,6 +126,7 @@ const AddRoomModal = ({ onClose, onAddRoom }: AddRoomModalProps) => {
           <Select
             {...register("bedType", validationRules.required)}
             placeholder="Select bed type"
+            onChange={handleSelectType}
           >
             {bedTypeOptions.map((option) => (
               <option key={option.value} value={option.value}>
@@ -146,3 +183,4 @@ const AddRoomModal = ({ onClose, onAddRoom }: AddRoomModalProps) => {
 };
 
 export default withModal(AddRoomModal, "Add room");
+

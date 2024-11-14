@@ -20,7 +20,7 @@ interface RateState {
   addRate: (rateData: NewRateData) => Promise<void>;
   editRate: (rateId: string, updatedData: NewRateData) => Promise<void>;
   deleteRate: (rateId: string) => Promise<void>;
-  updateRateAvailability: (roomType: string, change: number) => void;
+  updateRateTotalOfBooked: (roomType: string, change: number) => void;
 }
 
 export const useRateStore = create<RateState>()(
@@ -37,8 +37,12 @@ export const useRateStore = create<RateState>()(
           value: item.roomType,
           label: `${item.roomType} Bed`,
         }));
+        const updatedRates = data.map((item: RateData) => ({
+          ...item,
+          totalOfRooms: item.availability,
+        }));
         set({
-          rates: data,
+          rates: updatedRates,
           bedTypeOptions: resultTypeBed,
         });
         set({ rates: data });
@@ -52,7 +56,7 @@ export const useRateStore = create<RateState>()(
     addRate: async (rateData) => {
       try {
         const { data } = await createRateApi(rateData);
-        const updatedRate = { ...data, total: data.availability };
+        const updatedRate = { ...data, totalOfRooms: data.availability };
         set((state) => ({ rates: [updatedRate, ...state.rates] }));
       } catch (error) {
         console.error("Error adding rate:", error);
@@ -83,13 +87,13 @@ export const useRateStore = create<RateState>()(
       }
     },
 
-    updateRateAvailability: (roomType, bookedCount) => {
+    updateRateTotalOfBooked: (roomType, change) => {
       set((state) => ({
         rates: state.rates.map((rate) =>
           rate.roomType === roomType
             ? {
                 ...rate,
-                availability: Math.max(0, rate.availability - bookedCount),
+                totalOfBooked: Math.max(0, (rate.totalOfBooked || 0) + change),
               }
             : rate
         ),

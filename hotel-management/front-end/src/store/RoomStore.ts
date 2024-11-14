@@ -128,15 +128,11 @@ export const useRoomStore = create<RoomState>((set) => ({
       (room) => room.roomStatus === "Waitlist"
     ).length;
 
-    const totalOfBooked =
-      availableRooms + bookedRooms + reservedRooms + waitlistRooms;
-
     set({
       availableRooms,
       bookedRooms,
       reservedRooms,
       waitlistRooms,
-      totalOfBooked,
     });
   },
 }));
