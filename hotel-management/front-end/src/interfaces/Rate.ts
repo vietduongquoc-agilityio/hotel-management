@@ -1,4 +1,5 @@
 export interface RateData {
+  totalOfRooms: number;
   roomType: string;
   cancellationPolicy: string;
   deals: string;

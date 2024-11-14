@@ -37,6 +37,8 @@ const RatePage = () => {
       dealPrice: updatedRateData.dealPrice,
       deals: updatedRateData.deals,
       rate: updatedRateData.rate,
+      totalOfRooms: updatedRateData.totalOfRooms,
+      totalOfBooked: updatedRateData.totalOfBooked
     };
 
     await editRate(updatedRateData.documentId, requestPayload);
