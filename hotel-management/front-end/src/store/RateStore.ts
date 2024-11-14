@@ -36,7 +36,7 @@ export const useRateStore = create<RateState>()(
           value: item.roomType,
           label: `${item.roomType} Bed`,
         }));
-        const updatedRates = data.map(({ id, ...item }: RateData) => {
+        const updatedRates = data.map((item: RateData) => {
           return {
             ...item,
             totalOfBooked: item.totalOfBooked,
