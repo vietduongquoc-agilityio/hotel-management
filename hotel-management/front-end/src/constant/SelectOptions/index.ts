@@ -7,6 +7,13 @@ export const roomFloorOptions = [
   { value: "5th", label: "5th Floor" },
 ];
 
+export interface setBedTypeOptions {
+  roomType: string;
+  value: string;
+  field: string
+}
+
+
 export const roomStatusOptions = [
   { value: "Available", label: "Available" },
   { value: "Booked", label: "Booked" },

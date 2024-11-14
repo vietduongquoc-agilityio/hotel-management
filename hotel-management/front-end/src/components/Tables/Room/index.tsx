@@ -18,7 +18,6 @@ interface TableRoomProps {
   error?: string | null;
   onDeleteRoom: (roomId: string) => void;
   onEditRoom: (roomData: RoomData) => void;
-  totalOfBooked: number;
 }
 
 const TableRoom = ({

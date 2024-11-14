@@ -11,11 +11,9 @@ import Spinner from "@/components/Spinner";
 
 // Store
 import { useRateStore } from "@/store/RateStore";
-import { useRoomStore } from "@/store/RoomStore";
 
 const RatePage = () => {
   const toast = useToast();
-  const totalOfBooked = useRoomStore((state) => state.totalOfBooked);
 
   // Zustand store for rates
   const { rates, loading, fetchRates, addRate, editRate, deleteRate } =
@@ -68,7 +66,6 @@ const RatePage = () => {
           onEditRate={handleEditRate}
           rates={rates}
           onDeleteRate={handleDeleteRate}
-          totalOfBooked={totalOfBooked}
           bedType={""}
         />
       )}
