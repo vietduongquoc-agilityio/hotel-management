@@ -26,7 +26,7 @@ const Header = ({
         <InputGroup w="400px" h="40px" borderRadius={8}>
           <InputLeftAddon
             bg="grey.50"
-            border="1px solid rgb(238, 240, 242);"
+            border="1px solid rgb(238, 240, 242)"
             children={<SearchIcon color="grey.500" />}
           />
           <Input

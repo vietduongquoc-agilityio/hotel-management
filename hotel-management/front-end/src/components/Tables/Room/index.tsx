@@ -13,7 +13,7 @@ import {
   roomStatusColors,
 } from "@/constant/SelectOptions";
 
-interface TableRoomProps {
+export interface TableRoomProps {
   rooms: RoomData[];
   error?: string | null;
   onDeleteRoom: (roomId: string) => void;
