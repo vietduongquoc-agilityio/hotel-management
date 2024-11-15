@@ -1,12 +1,13 @@
 import { Meta, StoryFn } from "@storybook/react";
 import Input from ".";
-import { ChakraProvider, theme } from "@chakra-ui/react";
+import { ChakraProvider } from "@chakra-ui/react";
+import { themeColor } from "@/themes/Base/colors";
 
 export default {
   title: "Components/Input",
   component: Input,
   decorators: [
-    (Story) => <ChakraProvider theme={theme}>{Story()}</ChakraProvider>,
+    (Story) => <ChakraProvider theme={themeColor}>{Story()}</ChakraProvider>,
   ],
   argTypes: {
     placeHolder: {

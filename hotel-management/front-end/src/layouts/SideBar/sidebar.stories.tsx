@@ -1,13 +1,14 @@
 import { StoryFn } from "@storybook/react";
 import Sidebar from ".";
 import { BrowserRouter as Router } from "react-router-dom";
-import { ChakraProvider, theme } from "@chakra-ui/react";
+import { ChakraProvider } from "@chakra-ui/react";
+import { themeColor } from "@/themes/Base/colors";
 
 export default {
   title: "Layouts/Sidebar",
   component: Sidebar,
   decorators: [
-    (Story: any) => <ChakraProvider theme={theme}>{Story()}</ChakraProvider>,
+    (Story: any) => <ChakraProvider theme={themeColor}>{Story()}</ChakraProvider>,
   ],
   argTypes: {
     textColor: { control: "color", defaultValue: "black" },
