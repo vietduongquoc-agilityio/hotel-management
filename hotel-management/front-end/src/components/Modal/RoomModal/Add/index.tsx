@@ -91,7 +91,6 @@ const AddRoomModal = ({ onClose, onAddRoom }: AddRoomModalProps) => {
       const requestPayload = {
         roomType: selectedRate.roomType,
         cancellationPolicy: selectedRate.cancellationPolicy,
-        availability: selectedRate.availability,
         dealPrice: selectedRate.dealPrice,
         deals: selectedRate.deals,
         rate: selectedRate.rate,

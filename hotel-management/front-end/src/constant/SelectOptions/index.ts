@@ -1,5 +1,3 @@
-// src/constants/selectOptions.ts
-
 export const roomFloorOptions = [
   { value: "2nd", label: "2nd Floor" },
   { value: "3rd", label: "3rd Floor" },
@@ -12,7 +10,6 @@ export interface setBedTypeOptions {
   value: string;
   field: string
 }
-
 
 export const roomStatusOptions = [
   { value: "Available", label: "Available" },

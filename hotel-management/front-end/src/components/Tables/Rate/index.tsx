@@ -14,7 +14,6 @@ interface TableRateProps {
   error?: string | null;
   onDeleteRate: (rateId: string) => void;
   onEditRate: (updatedRateData: RateData) => void;
-  bedType: string;
 }
 
 const TableRate = ({
@@ -90,9 +89,6 @@ const TableRate = ({
       {rates.map((rate) => {
         const { totalOfRooms, totalOfBooked } = rate;
 
-        console.log("totalOfRooms", totalOfRooms);
-        console.log("totalOfBooked", totalOfBooked);
-        
         const availability = totalOfRooms - totalOfBooked;
         const isFull = availability === 0;
         const textColor = isFull ? "red.500" : "blue.500";

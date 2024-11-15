@@ -56,7 +56,7 @@ export const useRateStore = create<RateState>()(
     addRate: async (rateData) => {
       try {
         const { data } = await createRateApi(rateData);
-        const updatedRate = { ...data, totalOfRooms: data.availability };
+        const updatedRate = { ...data, totalOfRooms: data.totalOfRooms };
         set((state) => ({ rates: [updatedRate, ...state.rates] }));
       } catch (error) {
         console.error("Error adding rate:", error);
