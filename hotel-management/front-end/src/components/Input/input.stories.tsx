@@ -1,9 +1,13 @@
 import { Meta, StoryFn } from "@storybook/react";
 import Input from ".";
+import { ChakraProvider, theme } from "@chakra-ui/react";
 
 export default {
   title: "Components/Input",
   component: Input,
+  decorators: [
+    (Story) => <ChakraProvider theme={theme}>{Story()}</ChakraProvider>,
+  ],
   argTypes: {
     placeHolder: {
       control: "text",
@@ -25,10 +29,12 @@ export const FirstInputType = Template.bind({});
 FirstInputType.args = {
   placeHolder: "Enter text",
   inputType: "first",
+  width: "300px",
 };
 
 export const SecondInputType = Template.bind({});
 SecondInputType.args = {
-  placeHolder: "Enter text",
+  placeHolder: "Custom Width",
   inputType: "second",
+  width: "1000px",
 };

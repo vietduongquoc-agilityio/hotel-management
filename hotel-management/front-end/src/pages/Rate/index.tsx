@@ -57,7 +57,7 @@ const RatePage = () => {
       <Heading mb="16px" fontSize="12px" fontWeight="500" color="grey.500">
         Rates
       </Heading>
-      <LabelRate onAddRate={handleAddRate} />
+      <LabelRate onAddRate={handleAddRate} width={""} />
       {loading ? (
         <Spinner />
       ) : (

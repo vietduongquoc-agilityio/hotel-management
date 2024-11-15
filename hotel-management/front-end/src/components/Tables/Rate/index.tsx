@@ -9,7 +9,7 @@ import EditRateModal from "@/components/Modal/RateModal/Edit";
 import DeleteRate from "@/components/Modal/RateModal/Delete";
 import Button from "@/components/Button";
 
-interface TableRateProps {
+export interface TableRateProps {
   rates: RateData[];
   error?: string | null;
   onDeleteRate: (rateId: string) => void;
