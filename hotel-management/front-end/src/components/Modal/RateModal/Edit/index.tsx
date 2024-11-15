@@ -84,17 +84,17 @@ const EditRateModal = ({
         )}
       </FormControl>
 
-      <FormControl mb={4} isInvalid={!!errors.availability}>
+      <FormControl mb={4} isInvalid={!!errors.totalOfRooms}>
         <FormLabel>Rooms</FormLabel>
         <Input
           {...register("totalOfRooms", {
             required: "totalOfRooms is required",
           })}
-          placeHolder="Enter room availability"
+          placeHolder="Enter total rooms"
           inputType="first"
         />
-        {errors.availability?.message && (
-          <p style={{ color: "red" }}>{String(errors.availability.message)}</p>
+        {errors.totalOfRooms?.message && (
+          <p style={{ color: "red" }}>{String(errors.totalOfRooms.message)}</p>
         )}
       </FormControl>
 

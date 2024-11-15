@@ -31,7 +31,6 @@ const RatePage = () => {
     const requestPayload = {
       roomType: updatedRateData.roomType,
       cancellationPolicy: updatedRateData.cancellationPolicy,
-      availability: updatedRateData.availability,
       dealPrice: updatedRateData.dealPrice,
       deals: updatedRateData.deals,
       rate: updatedRateData.rate,
@@ -66,7 +65,6 @@ const RatePage = () => {
           onEditRate={handleEditRate}
           rates={rates}
           onDeleteRate={handleDeleteRate}
-          bedType={""}
         />
       )}
     </Box>
