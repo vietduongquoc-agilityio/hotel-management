@@ -1,5 +1,5 @@
 import { Box, Text, UnorderedList, ListItem, Alert } from "@chakra-ui/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 // InterFace
 import { RoomData } from "@/interfaces/Room";
@@ -18,7 +18,6 @@ interface TableRoomProps {
   error?: string | null;
   onDeleteRoom: (roomId: string) => void;
   onEditRoom: (roomData: RoomData) => void;
-  totalOfBooked: number;
 }
 
 const TableRoom = ({
@@ -28,6 +27,21 @@ const TableRoom = ({
   onEditRoom,
 }: TableRoomProps) => {
   const [activeRoomId, setActiveRoomId] = useState<string | null>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (activeRoomId) {
+        const menuElement = document.getElementById(`${activeRoomId}`);
+        if (menuElement && !menuElement.contains(event.target as Node)) {
+          setActiveRoomId(null);
+        }
+      }
+    };
+    window.addEventListener("click", handleClickOutside);
+    return () => {
+      window.removeEventListener("click", handleClickOutside);
+    };
+  }, [activeRoomId]);
 
   const toggleMenu = (roomId: string) => {
     setActiveRoomId((prev) => (prev === roomId ? null : roomId));
@@ -107,7 +121,10 @@ const TableRoom = ({
           </Box>
 
           <Button
-            onClick={() => toggleMenu(room.documentId)}
+            onClick={(e) => {
+              e.stopPropagation();
+              toggleMenu(room.documentId);
+            }}
             bg="white.200"
             color="grey.800"
             _hover={{ bg: "white.200" }}
@@ -117,8 +134,9 @@ const TableRoom = ({
           />
           {activeRoomId === room.documentId && (
             <Box
+              id={room.documentId}
               top="25px"
-              right="55px"
+              right="70px"
               position="absolute"
               backgroundColor="white.200"
               border="1px solid #989fad"

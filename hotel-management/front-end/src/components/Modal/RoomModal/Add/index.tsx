@@ -1,4 +1,3 @@
-/* eslint-disable react-refresh/only-export-components */
 import { useState } from "react";
 import {
   ModalFooter,
@@ -13,13 +12,13 @@ import { useForm } from "react-hook-form";
 
 // Constants
 import { validationRules } from "@/constant/Validate";
-import {
-  bedTypeOptions,
-  roomFloorOptions,
-} from "@/constant/SelectOptions";
+import { roomFloorOptions } from "@/constant/SelectOptions";
 
 // InterFace
 import { NewRoomData } from "@/interfaces/Room";
+
+// Store
+import { useRateStore } from "@/store/RateStore";
 
 // Components
 import withModal from "@/components/Modal/modalHoc";
@@ -40,7 +39,10 @@ interface FormData {
 const AddRoomModal = ({ onClose, onAddRoom }: AddRoomModalProps) => {
   const [loading, setLoading] = useState(false);
   const toast = useToast();
-
+  const bedTypeOptions = useRateStore((state) => state.bedTypeOptions);
+  const rates = useRateStore((state) => state.rates);
+  const editRate = useRateStore((state) => state.editRate);
+  
   const {
     register,
     handleSubmit,
@@ -48,6 +50,32 @@ const AddRoomModal = ({ onClose, onAddRoom }: AddRoomModalProps) => {
   } = useForm<FormData>();
 
   const onSubmit = async (data: FormData) => {
+    const selectedRate = rates.find((rate) => rate.roomType === data.bedType);
+    
+    if (!selectedRate) {
+      toast({
+        title: "Error",
+        description: "Please select a valid bed type.",
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+      });
+      return;
+    }
+
+    const { totalOfRooms, totalOfBooked } = selectedRate;
+    
+    if (totalOfBooked === totalOfRooms) {
+      toast({
+        title: "Room cannot be added",
+        description: "Selected room type is fully booked.",
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+      });
+      return;
+    }
+
     const newRoomData: NewRoomData = {
       roomNumber: "ID",
       bedType: data.bedType,
@@ -58,7 +86,20 @@ const AddRoomModal = ({ onClose, onAddRoom }: AddRoomModalProps) => {
 
     setLoading(true);
     try {
+
+      const { documentId } = selectedRate;
+      const requestPayload = {
+        roomType: selectedRate.roomType,
+        cancellationPolicy: selectedRate.cancellationPolicy,
+        dealPrice: selectedRate.dealPrice,
+        deals: selectedRate.deals,
+        rate: selectedRate.rate,
+        totalOfRooms: selectedRate.totalOfRooms,
+        totalOfBooked: selectedRate.totalOfBooked + 1
+      };
+
       await onAddRoom(newRoomData);
+      await editRate(documentId, requestPayload)
       toast({
         title: "Room added successfully.",
         status: "success",

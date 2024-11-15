@@ -1,5 +1,5 @@
 import { Box, Text, UnorderedList, ListItem, Alert } from "@chakra-ui/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 // InterFace
 import { RateData } from "@/interfaces/Rate";
@@ -9,13 +9,11 @@ import EditRateModal from "@/components/Modal/RateModal/Edit";
 import DeleteRate from "@/components/Modal/RateModal/Delete";
 import Button from "@/components/Button";
 
-
 interface TableRateProps {
   rates: RateData[];
   error?: string | null;
   onDeleteRate: (rateId: string) => void;
   onEditRate: (updatedRateData: RateData) => void;
-  totalOfBooked: number;
 }
 
 const TableRate = ({
@@ -23,9 +21,24 @@ const TableRate = ({
   error,
   onDeleteRate,
   onEditRate,
-  totalOfBooked,
 }: TableRateProps) => {
   const [activeRateId, setActiveRateId] = useState<string | null>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (activeRateId) {
+        const menuElement = document.getElementById(`${activeRateId}`);
+        if (menuElement && !menuElement.contains(event.target as Node)) {
+          setActiveRateId(null);
+        }
+      }
+    };
+
+    window.addEventListener("click", handleClickOutside);
+    return () => {
+      window.removeEventListener("click", handleClickOutside);
+    };
+  }, [activeRateId]);
 
   const toggleMenu = (rateId: string) => {
     setActiveRateId((prev) => (prev === rateId ? null : rateId));
@@ -74,23 +87,13 @@ const TableRate = ({
         </ListItem>
       </UnorderedList>
       {rates.map((rate) => {
-        const availability =
-          typeof rate.availability === "string"
-            ? parseInt(rate.availability, 10)
-            : rate.availability;
-        if (isNaN(availability)) {
-          return (
-            <Box key={rate.documentId} p="17px 24px">
-              {" "}
-              <Alert status="error">Invalid availability value</Alert>{" "}
-            </Box>
-          );
-        }
+        const { totalOfRooms, totalOfBooked } = rate;
 
-        const availableRooms = availability - (totalOfBooked || 0);
-        const isFull = availableRooms <= 0;
+        const availability = totalOfRooms - totalOfBooked;
+        const isFull = availability === 0;
         const textColor = isFull ? "red.500" : "blue.500";
         const backgroundColor = isFull ? "red.100" : "blue.100";
+
         return (
           <Box
             key={rate.documentId}
@@ -122,7 +125,7 @@ const TableRate = ({
                 display="flex"
                 justifyContent="center"
               >
-                {isFull ? "Full" : availableRooms}
+                {isFull ? "Full" : availability}
               </Text>
             </Box>
 
@@ -131,12 +134,16 @@ const TableRate = ({
               color="grey.800"
               _hover={{ bg: "white.200" }}
               height="15px"
-              onClick={() => toggleMenu(rate.documentId)}
+              onClick={(e) => {
+                e.stopPropagation();
+                toggleMenu(rate.documentId);
+              }}
               text={"⋮"}
               buttonType={"first"}
             />
             {activeRateId === rate.documentId && (
               <Box
+                id={rate.documentId}
                 top="25px"
                 right="55px"
                 position="absolute"

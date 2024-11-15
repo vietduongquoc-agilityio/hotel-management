@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { useState } from "react";
 import React from "react";
 import {
@@ -9,7 +8,6 @@ import {
   AlertDialogBody,
   AlertDialogFooter,
   useDisclosure,
-  Text,
   useToast,
 } from "@chakra-ui/react";
 
@@ -29,7 +27,6 @@ const DeleteRoom = ({ roomId, onDeleteRoom }: DeleteRoomProps) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const cancelRef = React.useRef(null);
   const [loading, setLoading] = useState(false);
-  const [error,] = useState("");
   const toast = useToast();
 
   const handleDelete = async () => {
@@ -44,7 +41,7 @@ const DeleteRoom = ({ roomId, onDeleteRoom }: DeleteRoomProps) => {
         isClosable: true,
       });
       onClose();
-    } catch (error) {
+    } catch {
       toast({
         title: "Failed to delete rate.",
         description: "An error occurred while deleting the rate.",
@@ -67,14 +64,13 @@ const DeleteRoom = ({ roomId, onDeleteRoom }: DeleteRoomProps) => {
         onClose={onClose}
       >
         <AlertDialogOverlay>
-          <AlertDialogContent bg="white.200">
+          <AlertDialogContent bg="white.200" top="200px">
             <AlertDialogHeader fontSize="lg" fontWeight="bold">
               Delete Room
             </AlertDialogHeader>
 
             <AlertDialogBody>
-              Are you sure you want to delete this room?{" "}
-              {error && <Text color="red.500">{error}</Text>}
+              Are you sure you want to delete this room?
             </AlertDialogBody>
 
             <AlertDialogFooter>

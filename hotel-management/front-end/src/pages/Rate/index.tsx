@@ -11,11 +11,9 @@ import Spinner from "@/components/Spinner";
 
 // Store
 import { useRateStore } from "@/store/RateStore";
-import { useRoomStore } from "@/store/RoomStore";
 
 const RatePage = () => {
   const toast = useToast();
-  const totalOfBooked = useRoomStore((state) => state.totalOfBooked);
 
   // Zustand store for rates
   const { rates, loading, fetchRates, addRate, editRate, deleteRate } =
@@ -23,27 +21,21 @@ const RatePage = () => {
 
   useEffect(() => {
     fetchRates(1, 10);
-  }, []);
+  }, [fetchRates]);
 
   const handleAddRate = async (rateData: NewRateData) => {
     await addRate(rateData);
-    toast({
-      title: "Rate added",
-      description: "Rate has been successfully added.",
-      status: "success",
-      duration: 3000,
-      isClosable: true,
-    });
   };
 
   const handleEditRate = async (updatedRateData: RateData) => {
     const requestPayload = {
       roomType: updatedRateData.roomType,
       cancellationPolicy: updatedRateData.cancellationPolicy,
-      availability: updatedRateData.availability,
       dealPrice: updatedRateData.dealPrice,
       deals: updatedRateData.deals,
       rate: updatedRateData.rate,
+      totalOfRooms: updatedRateData.totalOfRooms,
+      totalOfBooked: updatedRateData.totalOfBooked
     };
 
     await editRate(updatedRateData.documentId, requestPayload);
@@ -58,13 +50,6 @@ const RatePage = () => {
 
   const handleDeleteRate = (deletedRateId: string) => {
     deleteRate(deletedRateId);
-    toast({
-      title: "Rate deleted",
-      description: "Rate has been successfully deleted.",
-      status: "success",
-      duration: 3000,
-      isClosable: true,
-    });
   };
 
   return (
@@ -80,7 +65,6 @@ const RatePage = () => {
           onEditRate={handleEditRate}
           rates={rates}
           onDeleteRate={handleDeleteRate}
-          totalOfBooked={totalOfBooked}
         />
       )}
     </Box>

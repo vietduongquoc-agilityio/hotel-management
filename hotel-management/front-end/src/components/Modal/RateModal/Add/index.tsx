@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable react-refresh/only-export-components */
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import {
@@ -30,8 +28,8 @@ interface FormData {
   roomType: string;
   cancellationPolicy: string;
   price: string;
-  availability: string;
   totalOfBooked: number;
+  totalOfRooms: number
 }
 
 const AddRateModal = ({ onClose, onAddRate }: AddRateModalProps) => {
@@ -50,9 +48,10 @@ const AddRateModal = ({ onClose, onAddRate }: AddRateModalProps) => {
       cancellationPolicy: data.cancellationPolicy,
       deals: "Family Deal",
       dealPrice: data.price,
-      availability: data.availability,
       rate: data.price,
       totalOfBooked: 0,
+      totalOfRooms: data.totalOfRooms,
+      availability: ""
     };
 
     setLoading(true);
@@ -65,7 +64,7 @@ const AddRateModal = ({ onClose, onAddRate }: AddRateModalProps) => {
         isClosable: true,
       });
       onClose();
-    } catch (error) {
+    } catch {
       toast({
         title: "Failed to add rate.",
         description: "An error occurred while creating the rate.",
@@ -109,18 +108,18 @@ const AddRateModal = ({ onClose, onAddRate }: AddRateModalProps) => {
       </FormControl>
 
       <FormControl mb={4}>
-        <FormLabel>Availability Room</FormLabel>
+        <FormLabel>Rooms</FormLabel>
         <Input
-          {...register("availability", {
+          {...register("totalOfRooms", {
             ...validationRules.required,
             ...validationRules.numeric,
           })}
           placeHolder="Enter number of rooms"
           inputType="first"
         />
-        {errors.availability && (
+        {errors.totalOfRooms && (
           <p style={{ color: "red", fontSize: "14px" }}>
-            {errors.availability.message}
+            {errors.totalOfRooms.message}
           </p>
         )}
       </FormControl>

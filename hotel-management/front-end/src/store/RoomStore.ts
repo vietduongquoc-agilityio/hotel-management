@@ -11,14 +11,22 @@ import {
 // InterFace
 import { RoomData, NewRoomData } from "@/interfaces/Room";
 
+// Constant
+import { setBedTypeOptions } from "@/constant/SelectOptions";
+
 interface RoomState {
   rooms: RoomData[];
   totalRooms: number;
   pageCount: number;
   availableRooms: number;
   bookedRooms: number;
+
   loading: boolean;
-  totalOfBooked: number;
+
+  // Store bedType options
+  bedTypeOptions: string[];
+  setBedTypeOptions: (rates: setBedTypeOptions[]) => void;
+
   fetchRooms: (
     currentPage: number,
     pageSize: number,
@@ -29,18 +37,24 @@ interface RoomState {
   editRoom: (roomId: string, updatedData: NewRoomData) => Promise<void>;
   deleteRoom: (roomId: string) => Promise<void>;
   calculateRoomCounts: (rooms: RoomData[]) => void;
-  setTotalOfBooked: (count: number) => void;
 }
 
 export const useRoomStore = create<RoomState>((set) => ({
-  totalOfBooked: 0,
-  setTotalOfBooked: (count: number) => set({ totalOfBooked: count }),
   rooms: [],
   totalRooms: 0,
   pageCount: 1,
   availableRooms: 0,
   bookedRooms: 0,
+  reservedRooms: 0,
+  waitlistRooms: 0,
   loading: false,
+  bedTypeOptions: [],
+  setBedTypeOptions: (rates) => {
+    const uniqueBedTypes = Array.from(
+      new Set(rates.map((rate) => rate.roomType))
+    );
+    set({ bedTypeOptions: uniqueBedTypes });
+  },
 
   fetchRooms: async (currentPage, pageSize, field, value) => {
     set({ loading: true });
@@ -104,6 +118,10 @@ export const useRoomStore = create<RoomState>((set) => ({
     const bookedRooms = rooms.filter(
       (room) => room.roomStatus === "Booked"
     ).length;
-    set({ availableRooms, bookedRooms });
+
+    set({
+      availableRooms,
+      bookedRooms,
+    });
   },
 }));

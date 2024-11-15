@@ -1,4 +1,3 @@
-/* eslint-disable react-refresh/only-export-components */
 import { useState } from "react";
 import {
   ModalFooter,
@@ -85,17 +84,17 @@ const EditRateModal = ({
         )}
       </FormControl>
 
-      <FormControl mb={4} isInvalid={!!errors.availability}>
-        <FormLabel>Availability</FormLabel>
+      <FormControl mb={4} isInvalid={!!errors.totalOfRooms}>
+        <FormLabel>Rooms</FormLabel>
         <Input
-          {...register("availability", {
-            required: "Availability is required",
+          {...register("totalOfRooms", {
+            required: "totalOfRooms is required",
           })}
-          placeHolder="Enter room availability"
+          placeHolder="Enter total rooms"
           inputType="first"
         />
-        {errors.availability?.message && (
-          <p style={{ color: "red" }}>{String(errors.availability.message)}</p>
+        {errors.totalOfRooms?.message && (
+          <p style={{ color: "red" }}>{String(errors.totalOfRooms.message)}</p>
         )}
       </FormControl>
 
