@@ -44,11 +44,6 @@ const TableRate = ({
     setActiveRateId((prev) => (prev === rateId ? null : rateId));
   };
 
-  const handleMenuPoPup = (rateId: string) => (e: React.MouseEvent) => {
-    e.stopPropagation();
-    toggleMenu(rateId);
-  };
-
   if (error) return <Alert status="error">{error}</Alert>;
   if (rates.length === 0)
     return <Alert status="info">No rates available.</Alert>;
@@ -139,7 +134,10 @@ const TableRate = ({
               color="grey.800"
               _hover={{ bg: "white.200" }}
               height="15px"
-              onClick={handleMenuPoPup(rate.documentId)}
+              onClick={(e) => {
+                e.stopPropagation();
+                toggleMenu(rate.documentId);
+              }}
               text={"⋮"}
               buttonType={"first"}
             />
