@@ -47,6 +47,11 @@ const TableRoom = ({
     setActiveRoomId((prev) => (prev === roomId ? null : roomId));
   };
 
+  const handleMenuPoPup = (rateId: string) => (e: React.MouseEvent) => {
+    e.stopPropagation();
+    toggleMenu(rateId);
+  };
+
   if (error) return <Alert status="error">{error}</Alert>;
 
   return (
@@ -121,10 +126,7 @@ const TableRoom = ({
           </Box>
 
           <Button
-            onClick={(e) => {
-              e.stopPropagation();
-              toggleMenu(room.documentId);
-            }}
+            onClick={handleMenuPoPup(room.documentId)}
             bg="white.200"
             color="grey.800"
             _hover={{ bg: "white.200" }}
