@@ -40,6 +40,7 @@ const LabelRoom = ({
   handleSelectedBedType,
   handleSelectedRoomFloor,
   handleSelectedRoomStatus,
+  isAddRoom,
   width = "100%",
 }: LabelRoomProps) => {
   const bedTypeOptions = useRateStore((state) => state.bedTypeOptions);
@@ -153,7 +154,7 @@ const LabelRoom = ({
         </Select>
       </Box>
       <>
-        <AddRoomModal onAddRoom={onAddRoom} />
+        <AddRoomModal onAddRoom={onAddRoom} isDisabled={isAddRoom} />
       </>
     </Box>
   );

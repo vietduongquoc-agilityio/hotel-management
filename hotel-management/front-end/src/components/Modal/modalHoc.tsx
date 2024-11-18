@@ -1,4 +1,6 @@
+import { useLocation } from "react-router-dom";
 import React, { useState } from "react";
+
 import {
   Modal,
   ModalOverlay,
@@ -11,6 +13,9 @@ import {
 //Components
 import Button from "@/components/Button";
 
+//Store
+import { useRateStore } from "@/store/RateStore";
+
 const withModal = (
   WrappedComponent: React.ComponentType<any>,
   modalTitle: string
@@ -18,10 +23,19 @@ const withModal = (
   return (props: any) => {
     const [isOpen, setIsOpen] = useState(false);
     const toggleModal = () => setIsOpen(!isOpen);
+    const { rates } = useRateStore();
+    const { pathname } = useLocation();
+
+    const isDisabled = rates.length === 0 && pathname === "/";
 
     return (
       <>
-        <Button onClick={toggleModal} text={modalTitle} buttonType="first" />
+        <Button
+          isDisabled={isDisabled}
+          onClick={toggleModal}
+          text={modalTitle}
+          buttonType="first"
+        />
         <Modal isOpen={isOpen} onClose={toggleModal}>
           <ModalOverlay />
           <ModalContent bg="white.200" top="160px">
