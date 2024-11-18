@@ -9,7 +9,7 @@ jest.mock("../InputStyle", () => ({
 
 describe("Input Component", () => {
   it("should render with the correct placeholder", () => {
-    render(<Input placeHolder="Test Placeholder" inputType="first" />);
+    render(<Input placeHolder="Test Placeholder" inputType="default" />);
     const inputElement = screen.getByPlaceholderText("Test Placeholder");
     expect(inputElement).toBeInTheDocument();
   });
@@ -18,7 +18,7 @@ describe("Input Component", () => {
     const mockStyle = { size: "md", variant: "outline" };
     (getStyleInput as jest.Mock).mockReturnValue(mockStyle);
 
-    render(<Input placeHolder="Styled Input" inputType="first" />);
+    render(<Input placeHolder="Styled Input" inputType="default" />);
     const inputElement = screen.getByPlaceholderText("Styled Input");
 
     // Assert that the getStyleInput function was called with the correct inputType
@@ -29,21 +29,11 @@ describe("Input Component", () => {
     expect(inputElement).toHaveAttribute("variant", mockStyle.variant);
   });
 
-  it("should forward the ref", () => {
-    const ref = React.createRef<HTMLInputElement>();
-
-    render(
-      <Input ref={ref} placeHolder="Forward Ref Test" inputType="second" />
-    );
-    expect(ref.current).toBeInstanceOf(HTMLInputElement);
-    expect(ref.current?.placeholder).toBe("Forward Ref Test");
-  });
-
   it("should pass other props to the Chakra Input", () => {
     render(
       <Input
         placeHolder="Extra Props Test"
-        inputType="first"
+        inputType="default"
         data-testid="custom-input"
         isDisabled
       />

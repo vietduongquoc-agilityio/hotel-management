@@ -151,7 +151,7 @@ const EditRoomModal = ({
         {loading ? (
           <Spinner />
         ) : (
-          <Button type="submit" text="Edit" buttonType="first" />
+          <Button type="submit" text="Edit" buttonType="default" />
         )}
       </ModalFooter>
     </form>

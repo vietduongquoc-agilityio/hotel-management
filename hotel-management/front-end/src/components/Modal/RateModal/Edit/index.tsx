@@ -62,7 +62,7 @@ const EditRateModal = ({
         <Input
           {...register("roomType", { required: "Room type is required" })}
           placeHolder="Enter room type"
-          inputType="first"
+          inputType="default"
         />
         {errors.roomType?.message && (
           <p style={{ color: "red" }}>{String(errors.roomType.message)}</p>
@@ -76,7 +76,7 @@ const EditRateModal = ({
             required: "Cancellation policy is required",
           })}
           placeHolder="Enter cancellation policy"
-          inputType="first"
+          inputType="default"
         />
         {errors.cancellationPolicy?.message && (
           <p style={{ color: "red" }}>
@@ -92,7 +92,7 @@ const EditRateModal = ({
             required: "totalOfRooms is required",
           })}
           placeHolder="Enter total rooms"
-          inputType="first"
+          inputType="default"
         />
         {errors.totalOfRooms?.message && (
           <p style={{ color: "red" }}>{String(errors.totalOfRooms.message)}</p>
@@ -104,7 +104,7 @@ const EditRateModal = ({
         <Input
           {...register("dealPrice", { required: "Deal price is required" })}
           placeHolder="Enter deal price"
-          inputType="first"
+          inputType="default"
         />
         {errors.dealPrice?.message && (
           <p style={{ color: "red" }}>{String(errors.dealPrice.message)}</p>
@@ -116,7 +116,7 @@ const EditRateModal = ({
         {loading ? (
           <Spinner />
         ) : (
-          <Button type="submit" text="Edit" buttonType="first" />
+          <Button type="submit" text="Edit" buttonType="default" />
         )}
       </ModalFooter>
     </form>

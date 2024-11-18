@@ -11,7 +11,7 @@ const renderWithChakra = (ui: React.ReactElement) => {
 
 describe("Button Component", () => {
   const buttonTypes: buttonType[] = [
-    "first",
+    "default",
     "nextButton",
     "paginationButton",
     "cancelButton",
@@ -19,7 +19,7 @@ describe("Button Component", () => {
   ];
 
   it("should render the button with correct text", () => {
-    renderWithChakra(<Button text="Test Button" buttonType="first" />);
+    renderWithChakra(<Button text="Test Button" buttonType="default" />);
     expect(screen.getByText("Test Button")).toBeInTheDocument();
   });
 

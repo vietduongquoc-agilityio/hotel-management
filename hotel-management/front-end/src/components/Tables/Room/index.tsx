@@ -143,7 +143,7 @@ const TableRoom = ({
             _hover={{ bg: "white.200" }}
             height="15px"
             text={"⋮"}
-            buttonType={"first"}
+            buttonType={"default"}
           />
           {activeRoomId === room.documentId && (
             <Box
