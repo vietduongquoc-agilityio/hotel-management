@@ -1,9 +1,23 @@
 import axios from "axios";
+import { createStandaloneToast } from "@chakra-ui/react";
 
-// InterFace
+// Interfaces
 import { NewRateData } from "@/interfaces/Rate";
 
 const BASE_URL = process.env.VITE_BASE_URL;
+
+const { toast } = createStandaloneToast();
+
+const showErrorToast = (message: string) => {
+  toast({
+    title: "Error",
+    description: message,
+    status: "error",
+    duration: 3000,
+    isClosable: true,
+  });
+};
+
 // Rate Service
 export const getRates = async (page: number, pageSize: number) => {
   try {
@@ -16,20 +30,7 @@ export const getRates = async (page: number, pageSize: number) => {
     });
     return response.data;
   } catch (error) {
-    console.error("Error fetching rate data", error);
-    throw error;
-  }
-};
-
-// Check the list of rooms using a `rate` tool
-export const getRoomsUsingRate = async (rateId: string) => {
-  try {
-    const response = await axios.get(`${BASE_URL}/rooms`, {
-      params: { rateId },
-    });
-    return response.data;
-  } catch (error) {
-    console.error("Error fetching rooms using rate", error);
+    showErrorToast("Failed to fetch rate data.");
     throw error;
   }
 };
@@ -41,19 +42,34 @@ export const createRateApi = async (rateData: NewRateData) => {
     });
     return response.data;
   } catch (error) {
-    console.error("Error in createRate:", error);
+    showErrorToast("Failed to create a new rate.");
     throw error;
   }
 };
 
-export const updateRate = (rateId: string, rateData: NewRateData) => {
-  if (!rateId) throw new Error("Missing document ID for rate update.");
-  return axios
-    .put(`${BASE_URL}/rates/${rateId}`, { data: rateData })
-    .then((response) => response.data);
+export const updateRate = async (rateId: string, rateData: NewRateData) => {
+  if (!rateId) {
+    const errorMessage = "Missing document ID for rate update.";
+    showErrorToast(errorMessage);
+    throw new Error(errorMessage);
+  }
+  try {
+    const response = await axios.put(`${BASE_URL}/rates/${rateId}`, {
+      data: rateData,
+    });
+    return response.data;
+  } catch (error) {
+    showErrorToast("Failed to update the rate.");
+    throw error;
+  }
 };
 
 export const deleteRate = async (rateId: string) => {
-  const response = await axios.delete(`${BASE_URL}/rates/${rateId}`);
-  return response.data;
+  try {
+    const response = await axios.delete(`${BASE_URL}/rates/${rateId}`);
+    return response.data;
+  } catch (error) {
+    showErrorToast("Failed to delete the rate.");
+    throw error;
+  }
 };

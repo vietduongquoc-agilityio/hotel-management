@@ -42,7 +42,7 @@ const EditRateModal = ({
     try {
       await onEditRate(data);
       if (onClose) onClose();
-    } catch (error) {
+    } catch {
       toast({
         title: "Failed to update rate.",
         description: "An error occurred while updating the rate.",
@@ -50,7 +50,6 @@ const EditRateModal = ({
         duration: 3000,
         isClosable: true,
       });
-      console.error("Error updating rate:", error);
     } finally {
       setLoading(false);
     }
@@ -80,7 +79,9 @@ const EditRateModal = ({
           inputType="first"
         />
         {errors.cancellationPolicy?.message && (
-          <p style={{ color: "red" }}>{String(errors.cancellationPolicy.message)}</p>
+          <p style={{ color: "red" }}>
+            {String(errors.cancellationPolicy.message)}
+          </p>
         )}
       </FormControl>
 

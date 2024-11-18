@@ -42,7 +42,7 @@ const AddRoomModal = ({ onClose, onAddRoom }: AddRoomModalProps) => {
   const bedTypeOptions = useRateStore((state) => state.bedTypeOptions);
   const rates = useRateStore((state) => state.rates);
   const editRate = useRateStore((state) => state.editRate);
-  
+
   const {
     register,
     handleSubmit,
@@ -51,7 +51,7 @@ const AddRoomModal = ({ onClose, onAddRoom }: AddRoomModalProps) => {
 
   const onSubmit = async (data: FormData) => {
     const selectedRate = rates.find((rate) => rate.roomType === data.bedType);
-    
+
     if (!selectedRate) {
       toast({
         title: "Error",
@@ -64,7 +64,7 @@ const AddRoomModal = ({ onClose, onAddRoom }: AddRoomModalProps) => {
     }
 
     const { totalOfRooms, totalOfBooked } = selectedRate;
-    
+
     if (totalOfBooked === totalOfRooms) {
       toast({
         title: "Room cannot be added",
@@ -86,7 +86,6 @@ const AddRoomModal = ({ onClose, onAddRoom }: AddRoomModalProps) => {
 
     setLoading(true);
     try {
-
       const { documentId } = selectedRate;
       const requestPayload = {
         roomType: selectedRate.roomType,
@@ -95,11 +94,11 @@ const AddRoomModal = ({ onClose, onAddRoom }: AddRoomModalProps) => {
         deals: selectedRate.deals,
         rate: selectedRate.rate,
         totalOfRooms: selectedRate.totalOfRooms,
-        totalOfBooked: selectedRate.totalOfBooked + 1
+        totalOfBooked: selectedRate.totalOfBooked + 1,
       };
 
       await onAddRoom(newRoomData);
-      await editRate(documentId, requestPayload)
+      await editRate(documentId, requestPayload);
       toast({
         title: "Room added successfully.",
         status: "success",
@@ -107,7 +106,7 @@ const AddRoomModal = ({ onClose, onAddRoom }: AddRoomModalProps) => {
         isClosable: true,
       });
       onClose();
-    } catch (error) {
+    } catch {
       toast({
         title: "Failed to add room.",
         description: "An error occurred while creating the room.",
@@ -115,7 +114,6 @@ const AddRoomModal = ({ onClose, onAddRoom }: AddRoomModalProps) => {
         duration: 3000,
         isClosable: true,
       });
-      console.error("Failed to create room:", error);
     } finally {
       setLoading(false);
     }
