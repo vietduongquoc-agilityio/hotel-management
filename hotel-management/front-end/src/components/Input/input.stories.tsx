@@ -20,6 +20,7 @@ export default {
       description: "The style type of the input (e.g., 'first', 'second')",
     },
   },
+  tags: ['autodocs'],
 } as Meta<typeof Input>;
 
 const Template: StoryFn = (args) => (
