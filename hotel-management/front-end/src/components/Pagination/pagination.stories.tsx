@@ -1,10 +1,15 @@
 import { useState } from "react";
 import { Meta, StoryFn } from "@storybook/react";
 import Pagination from ".";
+import { ChakraProvider } from "@chakra-ui/react";
+import { themeColor } from "@/themes/Base/colors";
 
 export default {
   title: "Components/Pagination",
   component: Pagination,
+  decorators: [
+    (Story) => <ChakraProvider theme={themeColor}>{Story()}</ChakraProvider>,
+  ],
   argTypes: {
     currentPage: {
       control: { type: "number" },
@@ -19,6 +24,7 @@ export default {
       description: "Number of items per page",
     },
   },
+  tags: ["autodocs"],
 } as Meta;
 
 const Template: StoryFn = (args) => {

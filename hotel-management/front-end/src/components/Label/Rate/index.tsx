@@ -6,13 +6,14 @@ import { RateData } from "@/interfaces/Rate";
 //Components
 import AddRateModal from "@/components/Modal/RateModal/Add";
 
-interface LabelRateProps {
+export interface LabelRateProps {
   onAddRate: (roomData: RateData) => void;
+  width: string;
 }
 
-const LabelRate = ({ onAddRate }: LabelRateProps) => {
+const LabelRate = ({ onAddRate, width = "" }: LabelRateProps) => {
   return (
-    <Box display="flex" justifyContent="flex-end" mb={4}>
+    <Box width={width} display="flex" justifyContent="flex-end" mb={4}>
       <AddRateModal onAddRate={onAddRate} />
     </Box>
   );

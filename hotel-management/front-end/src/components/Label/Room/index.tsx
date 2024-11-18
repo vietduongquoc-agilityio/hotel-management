@@ -17,7 +17,8 @@ import { useRateStore } from "@/store/RateStore";
 // Components
 import AddRoomModal from "@/components/Modal/RoomModal/Add";
 
-interface LabelRoomProps {
+export interface LabelRoomProps {
+  width?: string;
   totalRooms: number;
   availableRooms: number;
   bookedRooms: number;
@@ -39,8 +40,8 @@ const LabelRoom = ({
   handleSelectedBedType,
   handleSelectedRoomFloor,
   handleSelectedRoomStatus,
+  width = "100%",
 }: LabelRoomProps) => {
-
   const bedTypeOptions = useRateStore((state) => state.bedTypeOptions);
 
   return (
@@ -50,6 +51,7 @@ const LabelRoom = ({
       justifyContent="space-between"
       alignItems="center"
       mb={4}
+      width={width}
     >
       <UnorderedList styleType="none" m={0} display="flex" gap={4}>
         <ListItem>

@@ -26,6 +26,7 @@ const first: ButtonProps = {
   fontSize: "md",
   variant: "solid",
   fontWeight: "bold",
+  cursor: "pointer",
 };
 
 const nextButton: ButtonProps = {
@@ -43,6 +44,7 @@ const nextButton: ButtonProps = {
   bg: "white.200",
   borderRadius: "8px",
   border: "1px solid #667085",
+  cursor: "pointer",
 };
 
 const paginationButton: ButtonProps = {
@@ -55,6 +57,7 @@ const paginationButton: ButtonProps = {
   _active: {
     color: "blue.500",
   },
+  cursor: "pointer",
 };
 
 const cancelButton: ButtonProps = {
@@ -70,6 +73,7 @@ const cancelButton: ButtonProps = {
     border: "none",
   },
   marginRight: "20px",
+  cursor: "pointer",
 };
 
 const deleteButton: ButtonProps = {
@@ -82,4 +86,5 @@ const deleteButton: ButtonProps = {
   _hover: {
     bg: "red",
   },
+  cursor: "pointer",
 };
