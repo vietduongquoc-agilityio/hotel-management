@@ -3,30 +3,7 @@ import { Box, ChakraProvider } from "@chakra-ui/react";
 import TableRate, { TableRateProps } from ".";
 import { RateData } from "@/interfaces/Rate";
 import { themeColor } from "@/themes/Base/colors";
-
-// Mock Data
-const mockRates: RateData[] = [
-  {
-    documentId: "1",
-    roomType: "King",
-    cancellationPolicy: "Flexible",
-    dealPrice: "1000",
-    deals: "10% off",
-    rate: "1000$",
-    totalOfRooms: 10,
-    totalOfBooked: 5,
-  },
-  {
-    documentId: "2",
-    roomType: "Standard",
-    cancellationPolicy: "Non-refundable",
-    dealPrice: "100",
-    deals: "5% off",
-    rate: "95",
-    totalOfRooms: 20,
-    totalOfBooked: 20,
-  },
-];
+import { mockRates } from "@/mocks/rate";
 
 export default {
   title: "Components/Tables/TableRate",
