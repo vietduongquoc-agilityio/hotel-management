@@ -10,6 +10,7 @@ export default {
   decorators: [
     (Story) => <ChakraProvider theme={themeColor}>{Story()}</ChakraProvider>,
   ],
+  tags: ['autodocs'],
 } as Meta;
 
 const Template: StoryFn<TableRoomProps> = (args) => (

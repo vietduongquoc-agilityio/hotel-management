@@ -11,6 +11,7 @@ export default {
   decorators: [
     (Story) => <ChakraProvider theme={themeColor}>{Story()}</ChakraProvider>,
   ],
+  tags: ['autodocs'],
 } as Meta;
 
 // Template Function

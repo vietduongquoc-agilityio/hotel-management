@@ -8,16 +8,11 @@ export default {
   title: "Layouts/Sidebar",
   component: Sidebar,
   decorators: [
-    (Story: any) => <ChakraProvider theme={themeColor}>{Story()}</ChakraProvider>,
+    (Story: any) => (
+      <ChakraProvider theme={themeColor}>{Story()}</ChakraProvider>
+    ),
   ],
-  argTypes: {
-    textColor: { control: "color", defaultValue: "black" },
-    textDecoration: {
-      control: { type: "select" },
-      options: ["none", "underline", "line-through"],
-      defaultValue: "none",
-    },
-  },
+  tags: ["autodocs"],
 };
 
 const Template: StoryFn = (args) => (
@@ -28,6 +23,4 @@ const Template: StoryFn = (args) => (
 
 export const Default = Template.bind({});
 Default.args = {
-  textColor: "black",
-  textDecoration: "none",
 };

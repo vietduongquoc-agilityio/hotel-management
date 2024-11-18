@@ -24,6 +24,7 @@ export default {
       description: "Number of items per page",
     },
   },
+  tags: ["autodocs"],
 } as Meta;
 
 const Template: StoryFn = (args) => {

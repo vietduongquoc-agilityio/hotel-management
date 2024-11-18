@@ -10,11 +10,12 @@ export default {
   decorators: (Story) => (
     <ChakraProvider theme={themeColor}>{Story()}</ChakraProvider>
   ),
+  tags: ["autodocs"],
 } as Meta;
 
 // Template
 const Template: StoryFn = (args) => (
-  <Box w="1000px" h="100%">
+  <Box w="950px" h="100%">
     <RoomPage {...args} />
   </Box>
 );

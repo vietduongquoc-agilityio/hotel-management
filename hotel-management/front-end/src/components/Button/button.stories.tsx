@@ -25,6 +25,7 @@ export default {
     },
     onClick: { action: "clicked" },
   },
+  tags: ['autodocs'],
 } as Meta<typeof Button>;
 
 const Template: StoryFn = (args) => (

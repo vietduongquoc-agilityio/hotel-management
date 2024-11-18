@@ -25,6 +25,7 @@ export default {
   argTypes: {
     width: { control: "text" },
   },
+  tags: ["autodocs"],
 } as Meta;
 
 // Template for the story
