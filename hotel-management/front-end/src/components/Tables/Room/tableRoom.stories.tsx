@@ -3,14 +3,19 @@ import TableRoom, { TableRoomProps } from "./index";
 import { Box, ChakraProvider } from "@chakra-ui/react";
 import { themeColor } from "@/themes/Base/colors";
 import { mockRooms } from "@/mocks/room";
+import { MemoryRouter } from "react-router-dom";
 
 export default {
   title: "Components/Tables/TableRoom",
   component: TableRoom,
   decorators: [
-    (Story) => <ChakraProvider theme={themeColor}>{Story()}</ChakraProvider>,
+    (Story) => (
+      <ChakraProvider theme={themeColor}>
+        <MemoryRouter>{Story()}</MemoryRouter>
+      </ChakraProvider>
+    ),
   ],
-  tags: ['autodocs'],
+  tags: ["autodocs"],
 } as Meta;
 
 const Template: StoryFn<TableRoomProps> = (args) => (

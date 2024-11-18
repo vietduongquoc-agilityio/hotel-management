@@ -4,14 +4,19 @@ import TableRate, { TableRateProps } from ".";
 import { RateData } from "@/interfaces/Rate";
 import { themeColor } from "@/themes/Base/colors";
 import { mockRates } from "@/mocks/rate";
+import { MemoryRouter } from "react-router-dom";
 
 export default {
   title: "Components/Tables/TableRate",
   component: TableRate,
   decorators: [
-    (Story) => <ChakraProvider theme={themeColor}>{Story()}</ChakraProvider>,
+    (Story) => (
+      <ChakraProvider theme={themeColor}>
+        <MemoryRouter>{Story()}</MemoryRouter>
+      </ChakraProvider>
+    ),
   ],
-  tags: ['autodocs'],
+  tags: ["autodocs"],
 } as Meta;
 
 // Template Function

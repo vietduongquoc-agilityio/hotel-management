@@ -58,7 +58,7 @@ const TableRoom = ({
         borderRadius="10px"
         status="info"
       >
-        No rooms booked
+        No rooms available
       </Alert>
     );
 
