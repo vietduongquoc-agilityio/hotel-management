@@ -48,6 +48,19 @@ const TableRoom = ({
   };
 
   if (error) return <Alert status="error">{error}</Alert>;
+  if (rooms.length === 0)
+    return (
+      <Alert
+        fontWeight="500"
+        mb="50px"
+        mt="20px"
+        color="grey.800"
+        borderRadius="10px"
+        status="info"
+      >
+        No rooms booked
+      </Alert>
+    );
 
   return (
     <Box

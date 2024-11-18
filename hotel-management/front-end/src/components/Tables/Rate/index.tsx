@@ -46,7 +46,16 @@ const TableRate = ({
 
   if (error) return <Alert status="error">{error}</Alert>;
   if (rates.length === 0)
-    return <Alert status="info">No rates available.</Alert>;
+    return (
+      <Alert
+        fontWeight="500"
+        color="grey.800"
+        borderRadius="10px"
+        status="info"
+      >
+        No rates available.
+      </Alert>
+    );
 
   return (
     <Box
