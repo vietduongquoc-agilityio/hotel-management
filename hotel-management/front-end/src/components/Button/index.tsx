@@ -3,7 +3,7 @@ import { getStyleButton } from "./ButtonStyle";
 import { memo } from "react";
 
 export type buttonType =
-  | "first"
+  | "default"
   | "nextButton"
   | "paginationButton"
   | "cancelButton"

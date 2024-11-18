@@ -1,7 +1,7 @@
 import { ButtonProps } from "@chakra-ui/react";
 
 export type ButtonType =
-  | "first"
+  | "default"
   | "paginationButton"
   | "cancelButton"
   | "deleteButton"
@@ -9,7 +9,7 @@ export type ButtonType =
 
 export const getStyleButton = (type: ButtonType): ButtonProps => {
   switch (type) {
-    case "first":
+    case "default":
       return first;
     case "paginationButton":
       return paginationButton;

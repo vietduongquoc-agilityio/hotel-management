@@ -175,7 +175,7 @@ const AddRoomModal = ({ onClose, onAddRoom }: AddRoomModalProps) => {
         {loading ? (
           <Spinner />
         ) : (
-          <Button type="submit" text="Add" buttonType="first" />
+          <Button type="submit" text="Add" buttonType="default" />
         )}
       </ModalFooter>
     </form>

@@ -34,7 +34,7 @@ const withModal = (
           isDisabled={isDisabled}
           onClick={toggleModal}
           text={modalTitle}
-          buttonType="first"
+          buttonType="default"
         />
         <Modal isOpen={isOpen} onClose={toggleModal}>
           <ModalOverlay />

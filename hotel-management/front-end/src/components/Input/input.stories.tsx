@@ -16,15 +16,14 @@ export default {
     },
     inputType: {
       control: { type: "select" },
-      options: ["first", "second"],
-      description: "The style type of the input (e.g., 'first', 'second')",
+      options: ["default"],
     },
   },
   tags: ["autodocs"],
 } as Meta<typeof Input>;
 
 const Template: StoryFn = (args) => (
-  <Input placeHolder={""} inputType={"first"} {...args} />
+  <Input placeHolder={""} inputType={"default"} {...args} />
 );
 
 export const Default = Template.bind({});

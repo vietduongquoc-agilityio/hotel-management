@@ -2,7 +2,7 @@ import { forwardRef, memo } from "react";
 import { Input as InputUI, InputProps } from "@chakra-ui/react";
 import { getStyleInput } from "./InputStyle";
 
-export type InputType = "first" | "second";
+export type InputType = "default";
 
 interface InputTypeProps extends InputProps {
   placeHolder: string;
