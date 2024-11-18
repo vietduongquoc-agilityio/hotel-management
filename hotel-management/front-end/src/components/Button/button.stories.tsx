@@ -15,7 +15,7 @@ export default {
       control: {
         type: "radio",
         options: [
-          "first",
+          "default",
           "nextButton",
           "paginationButton",
           "cancelButton",
@@ -25,17 +25,17 @@ export default {
     },
     onClick: { action: "clicked" },
   },
-  tags: ['autodocs'],
+  tags: ["autodocs"],
 } as Meta<typeof Button>;
 
 const Template: StoryFn = (args) => (
-  <Button text={""} buttonType={"first"} {...args} />
+  <Button text={""} buttonType={"default"} {...args} />
 );
 
 export const Default = Template.bind({});
 Default.args = {
   text: "Button",
-  buttonType: "first" as buttonType,
+  buttonType: "default" as buttonType,
 };
 
 export const Next = Template.bind({});

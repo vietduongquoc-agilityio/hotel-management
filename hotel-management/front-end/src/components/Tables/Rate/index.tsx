@@ -148,7 +148,7 @@ const TableRate = ({
                 toggleMenu(rate.documentId);
               }}
               text={"⋮"}
-              buttonType={"first"}
+              buttonType={"default"}
             />
             {activeRateId === rate.documentId && (
               <Box

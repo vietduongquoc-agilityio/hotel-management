@@ -3,14 +3,19 @@ import LabelRate, { LabelRateProps } from "./index";
 import { RateData } from "@/interfaces/Rate";
 import { ChakraProvider } from "@chakra-ui/react";
 import { themeColor } from "@/themes/Base/colors";
+import { MemoryRouter } from "react-router-dom";
 
 export default {
   title: "Components/Label/LabelRate",
   component: LabelRate,
   decorators: [
-    (Story) => <ChakraProvider theme={themeColor}>{Story()}</ChakraProvider>,
+    (Story) => (
+      <ChakraProvider theme={themeColor}>
+        <MemoryRouter>{Story()}</MemoryRouter>
+      </ChakraProvider>
+    ),
   ],
-  tags: ['autodocs'],
+  tags: ["autodocs"],
 } as Meta;
 
 // Template for the story
@@ -19,7 +24,7 @@ const Template: StoryFn<LabelRateProps> = (args) => <LabelRate {...args} />;
 // Default story
 export const Default = Template.bind({});
 Default.args = {
-  width: "1100px",
+  width: "900px",
   onAddRate: (rateData: RateData) => {
     alert(`New rate added with room type: ${rateData.roomType}`);
   },

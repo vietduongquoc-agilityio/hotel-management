@@ -16,27 +16,19 @@ export default {
     },
     inputType: {
       control: { type: "select" },
-      options: ["first", "second"],
-      description: "The style type of the input (e.g., 'first', 'second')",
+      options: ["default"],
     },
   },
-  tags: ['autodocs'],
+  tags: ["autodocs"],
 } as Meta<typeof Input>;
 
 const Template: StoryFn = (args) => (
-  <Input placeHolder={""} inputType={"first"} {...args} />
+  <Input placeHolder={""} inputType={"default"} {...args} />
 );
 
-export const FirstInputType = Template.bind({});
-FirstInputType.args = {
+export const Default = Template.bind({});
+Default.args = {
   placeHolder: "Enter text",
   inputType: "first",
   width: "300px",
-};
-
-export const SecondInputType = Template.bind({});
-SecondInputType.args = {
-  placeHolder: "Custom Width",
-  inputType: "second",
-  width: "1000px",
 };

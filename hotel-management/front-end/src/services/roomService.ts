@@ -1,4 +1,16 @@
 import axios from "axios";
+import { createStandaloneToast } from "@chakra-ui/react";
+const { toast } = createStandaloneToast();
+
+const showErrorToast = (message: string) => {
+  toast({
+    title: "Error",
+    description: message,
+    status: "error",
+    duration: 3000,
+    isClosable: true,
+  });
+};
 
 //InterFace
 import { NewRoomData } from "@/interfaces/Room";
@@ -30,7 +42,7 @@ export const getRooms = async (
     }
     return response.data;
   } catch (error) {
-    console.error("Error fetching room data", error);
+    showErrorToast("Error fetching room data");
     throw error;
   }
 };
@@ -42,7 +54,7 @@ export const createRoomApi = async (roomData: NewRoomData) => {
     });
     return response.data;
   } catch (error) {
-    console.error("Error in createRoom:", error);
+    showErrorToast("Error in createRoom:");
     throw error;
   }
 };

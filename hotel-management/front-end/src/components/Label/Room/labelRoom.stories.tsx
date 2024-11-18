@@ -4,6 +4,7 @@ import { NewRoomData } from "@/interfaces/Room";
 import { useRateStore } from "@/store/RateStore";
 import { ChakraProvider } from "@chakra-ui/react";
 import { themeColor } from "@/themes/Base/colors";
+import { MemoryRouter } from "react-router-dom";
 
 const mockBedTypeOptions = [
   { value: "single", label: "Single" },
@@ -20,7 +21,11 @@ export default {
   title: "Components/Label/LabelRoom",
   component: LabelRoom,
   decorators: [
-    (Story) => <ChakraProvider theme={themeColor}>{Story()}</ChakraProvider>,
+    (Story) => (
+      <ChakraProvider theme={themeColor}>
+        <MemoryRouter>{Story()}</MemoryRouter>
+      </ChakraProvider>
+    ),
   ],
   argTypes: {
     width: { control: "text" },
@@ -34,7 +39,7 @@ const Template: StoryFn<LabelRoomProps> = (args) => <LabelRoom {...args} />;
 // Default Story
 export const Default = Template.bind({});
 Default.args = {
-  width: "1100px",
+  width: "980px",
   totalRooms: 21,
   availableRooms: 3,
   bookedRooms: 18,

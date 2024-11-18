@@ -57,7 +57,7 @@ const EditRoomModal = ({
       await onEditRoom(data);
 
       if (onClose) onClose();
-    } catch (error) {
+    } catch {
       toast({
         title: "Failed to update room.",
         description: "An error occurred while updating the room.",
@@ -65,7 +65,6 @@ const EditRoomModal = ({
         duration: 3000,
         isClosable: true,
       });
-      console.error("Error updating room:", error);
     } finally {
       setLoading(false);
     }
@@ -152,7 +151,7 @@ const EditRoomModal = ({
         {loading ? (
           <Spinner />
         ) : (
-          <Button type="submit" text="Edit" buttonType="first" />
+          <Button type="submit" text="Edit" buttonType="default" />
         )}
       </ModalFooter>
     </form>
