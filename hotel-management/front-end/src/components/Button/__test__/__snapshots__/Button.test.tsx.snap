@@ -1,0 +1,46 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Button Component applies additional styles passed through ButtonProps 1`] = `
+<div>
+  <button
+    class="chakra-button css-1ab7tyy"
+    type="button"
+  >
+    Styled Button
+  </button>
+  <span
+    hidden=""
+    id="__chakra_env"
+  />
+</div>
+`;
+
+exports[`Button Component applies the correct styles for pagination button 1`] = `
+<div>
+  <button
+    class="chakra-button css-1s0x3py"
+    type="button"
+  >
+    1
+  </button>
+  <span
+    hidden=""
+    id="__chakra_env"
+  />
+</div>
+`;
+
+exports[`Button Component renders the button with the correct text 1`] = `
+<div>
+  <button
+    class="chakra-button css-rbc43c"
+    type="button"
+  >
+    Click Me
+  </button>
+  <span
+    hidden=""
+    id="__chakra_env"
+  />
+</div>
+`;
