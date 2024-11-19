@@ -1,8 +1,10 @@
-import { Meta, StoryFn } from "@storybook/react";
 import { Box, ChakraProvider } from "@chakra-ui/react";
-import RoomPage from "./index";
 import { themeColor } from "@/themes/Base/colors";
+import { Meta, StoryFn } from "@storybook/react";
 import { MemoryRouter } from "react-router-dom";
+
+// Components
+import RoomPage from "./index";
 
 // Storybook metadata
 export default {

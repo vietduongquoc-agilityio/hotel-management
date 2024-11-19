@@ -1,7 +1,7 @@
 import { Meta, StoryFn } from "@storybook/react";
-import Input from ".";
-import { ChakraProvider } from "@chakra-ui/react";
 import { themeColor } from "@/themes/Base/colors";
+import { ChakraProvider } from "@chakra-ui/react";
+import Input from ".";
 
 export default {
   title: "Components/Input",

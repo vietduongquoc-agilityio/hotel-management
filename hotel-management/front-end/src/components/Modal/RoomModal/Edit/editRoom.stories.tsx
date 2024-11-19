@@ -1,9 +1,13 @@
-import { Meta, StoryFn } from "@storybook/react";
-import EditRoomModal from "./";
-import { RoomData } from "@/interfaces/Room";
-import { ChakraProvider } from "@chakra-ui/react";
-import { MemoryRouter } from "react-router-dom";
 import { themeColor } from "@/themes/Base/colors";
+import { ChakraProvider } from "@chakra-ui/react";
+import { Meta, StoryFn } from "@storybook/react";
+import { MemoryRouter } from "react-router-dom";
+
+// Components
+import EditRoomModal from "./";
+
+// InterFace
+import { RoomData } from "@/interfaces/Room";
 
 export default {
   title: "Components/Modals/Room/EditRoomModal",

@@ -2,8 +2,8 @@ import { Box, Text, UnorderedList, ListItem, Alert } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 
 // Interfaces
-import { NewRoomData, RoomData } from "@/interfaces/Room";
-import { NewRateData, RateData } from "@/interfaces/Rate";
+import { RoomData } from "@/interfaces/Room";
+import { RateData } from "@/interfaces/Rate";
 
 // Components
 import EditRoomModal from "@/components/Modal/RoomModal/Edit";
@@ -11,6 +11,8 @@ import DeleteRoom from "@/components/Modal/RoomModal/Delete";
 import EditRateModal from "@/components/Modal/RateModal/Edit";
 import DeleteRate from "@/components/Modal/RateModal/Delete";
 import Button from "@/components/Button";
+
+// Constant
 import {
   roomStatusBackgrounds,
   roomStatusColors,
@@ -29,6 +31,7 @@ const Table = <T extends RoomData | RateData>({
   data,
   type,
   onDelete,
+  onEdit,
 }: TableProps<T>) => {
   const [activeId, setActiveId] = useState<string | null>(null);
 
@@ -220,7 +223,9 @@ const Table = <T extends RoomData | RateData>({
                   <>
                     <EditRoomModal
                       initialRoomData={item as RoomData}
-                      onEditRoom={item as NewRoomData}
+                      onEditRoom={(item: RoomData) => {
+                        onEdit(item as T);
+                      }}
                     />
                     <DeleteRoom
                       roomId={item.documentId}
@@ -231,7 +236,9 @@ const Table = <T extends RoomData | RateData>({
                   <>
                     <EditRateModal
                       initialRateData={item as RateData}
-                      onEditRate={item as NewRateData}
+                      onEditRate={(item: RateData) => {
+                        onEdit(item as T);
+                      }}
                     />
                     <DeleteRate
                       rateId={item.documentId}

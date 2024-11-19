@@ -28,7 +28,9 @@ describe("Pagination Component", () => {
   });
 
   it("disables the 'Next' button on the last page", () => {
-    render(<Pagination {...defaultProps} currentPage={defaultProps.pageCount} />);
+    render(
+      <Pagination {...defaultProps} currentPage={defaultProps.pageCount} />
+    );
     const nextButton = screen.getByText("Next >");
     expect(nextButton).toBeDisabled();
   });
