@@ -3,14 +3,14 @@ import { HStack, VStack } from "@chakra-ui/react";
 // Components
 import Button from "../Button";
 
-interface PaginationProps {
+interface paginationProps {
   currentPage: number;
   setCurrentPage: (page: number) => void;
   pageSize: number;
   pageCount: number;
 }
 
-const Pagination: React.FC<PaginationProps> = ({
+const Pagination: React.FC<paginationProps> = ({
   currentPage,
   setCurrentPage,
   pageCount,
@@ -36,7 +36,7 @@ const Pagination: React.FC<PaginationProps> = ({
           onClick={() => handlePageClick(i)}
           text={`${i}`}
           variant={currentPage === i ? "pagination" : "outline"}
-          buttonType="paginationButton"
+          buttonType="pagination"
           sx={currentPage === i ? { bg: "blue.100", color: "blue.500" } : {}}
           borderRadius="5px"
         />
@@ -53,19 +53,20 @@ const Pagination: React.FC<PaginationProps> = ({
         w="100%"
         maxW="1020px"
         padding="0 25px"
+        mt="40px"
       >
         <Button
           onClick={handlePrevious}
           isDisabled={currentPage === 1}
           text="< Previous"
-          buttonType="nextButton"
+          buttonType="disabled"
         />
         <HStack>{renderPageNumbers()}</HStack>
         <Button
           onClick={handleNext}
           isDisabled={currentPage === pageCount}
           text="Next >"
-          buttonType="nextButton"
+          buttonType="disabled"
         />
       </HStack>
     </VStack>

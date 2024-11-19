@@ -28,7 +28,9 @@ describe("Pagination Component", () => {
   });
 
   it("disables the 'Next' button on the last page", () => {
-    render(<Pagination {...defaultProps} currentPage={defaultProps.pageCount} />);
+    render(
+      <Pagination {...defaultProps} currentPage={defaultProps.pageCount} />
+    );
     const nextButton = screen.getByText("Next >");
     expect(nextButton).toBeDisabled();
   });
@@ -58,8 +60,8 @@ describe("Pagination Component", () => {
 
   it("calls setCurrentPage with the next page when 'Next' is clicked", () => {
     render(<Pagination {...defaultProps} currentPage={3} />);
-    const nextButton = screen.getByText("Next >");
-    fireEvent.click(nextButton);
+    const disables = screen.getByText("Next >");
+    fireEvent.click(disables);
     expect(mockSetCurrentPage).toHaveBeenCalledWith(4);
   });
 });

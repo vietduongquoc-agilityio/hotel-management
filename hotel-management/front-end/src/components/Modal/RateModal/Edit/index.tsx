@@ -7,8 +7,11 @@ import {
 } from "@chakra-ui/react";
 import { useForm } from "react-hook-form";
 
-// Constants
+// InterFace
 import { RateData } from "@/interfaces/Rate";
+
+// Constants
+import { validationRules } from "@/constant/Validate";
 
 // Components
 import withModal from "@/components/Modal/modalHoc";
@@ -60,27 +63,27 @@ const EditRateModal = ({
       <FormControl mb={4} isInvalid={!!errors.roomType}>
         <FormLabel>Rate Type</FormLabel>
         <Input
-          {...register("roomType", { required: "Room type is required" })}
+          {...register("roomType", validationRules.required)}
           placeHolder="Enter room type"
-          inputType="default"
+          inputType="primary"
         />
         {errors.roomType?.message && (
-          <p style={{ color: "red" }}>{String(errors.roomType.message)}</p>
+          <p style={{ color: "red", fontSize: "14px" }}>
+            {errors.roomType.message}
+          </p>
         )}
       </FormControl>
 
       <FormControl mb={4} isInvalid={!!errors.cancellationPolicy}>
         <FormLabel>Cancellation Policy</FormLabel>
         <Input
-          {...register("cancellationPolicy", {
-            required: "Cancellation policy is required",
-          })}
+          {...register("cancellationPolicy", validationRules.required)}
           placeHolder="Enter cancellation policy"
-          inputType="default"
+          inputType="primary"
         />
         {errors.cancellationPolicy?.message && (
-          <p style={{ color: "red" }}>
-            {String(errors.cancellationPolicy.message)}
+          <p style={{ color: "red", fontSize: "14px" }}>
+            {errors.cancellationPolicy.message}
           </p>
         )}
       </FormControl>
@@ -89,34 +92,42 @@ const EditRateModal = ({
         <FormLabel>Rooms</FormLabel>
         <Input
           {...register("totalOfRooms", {
-            required: "totalOfRooms is required",
+            ...validationRules.required,
+            ...validationRules.numeric,
           })}
           placeHolder="Enter total rooms"
-          inputType="default"
+          inputType="primary"
         />
         {errors.totalOfRooms?.message && (
-          <p style={{ color: "red" }}>{String(errors.totalOfRooms.message)}</p>
+          <p style={{ color: "red", fontSize: "14px" }}>
+            {errors.totalOfRooms.message}
+          </p>
         )}
       </FormControl>
 
       <FormControl mb={4} isInvalid={!!errors.dealPrice}>
         <FormLabel>Deal Price</FormLabel>
         <Input
-          {...register("dealPrice", { required: "Deal price is required" })}
+          {...register("dealPrice", {
+            ...validationRules.required,
+            ...validationRules.numeric,
+          })}
           placeHolder="Enter deal price"
-          inputType="default"
+          inputType="primary"
         />
         {errors.dealPrice?.message && (
-          <p style={{ color: "red" }}>{String(errors.dealPrice.message)}</p>
+          <p style={{ color: "red", fontSize: "14px" }}>
+            {errors.dealPrice.message}
+          </p>
         )}
       </FormControl>
 
       <ModalFooter>
-        <Button onClick={onClose} text="Cancel" buttonType="cancelButton" />
+        <Button onClick={onClose} text="Cancel" buttonType="secondary" />
         {loading ? (
           <Spinner />
         ) : (
-          <Button type="submit" text="Edit" buttonType="default" />
+          <Button type="submit" text="Edit" buttonType="primary" />
         )}
       </ModalFooter>
     </form>

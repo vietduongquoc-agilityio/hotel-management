@@ -1,9 +1,13 @@
-import { Meta, StoryFn } from "@storybook/react";
-import LabelRate, { LabelRateProps } from "./index";
-import { RateData } from "@/interfaces/Rate";
-import { ChakraProvider } from "@chakra-ui/react";
 import { themeColor } from "@/themes/Base/colors";
+import { ChakraProvider } from "@chakra-ui/react";
+import { Meta, StoryFn } from "@storybook/react";
 import { MemoryRouter } from "react-router-dom";
+
+// Components
+import LabelRate, { LabelRateProps } from "./index";
+
+// InterFace
+import { RateData } from "@/interfaces/Rate";
 
 export default {
   title: "Components/Label/LabelRate",

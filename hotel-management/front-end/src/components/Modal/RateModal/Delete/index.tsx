@@ -56,7 +56,7 @@ const DeleteRate = ({ rateId, onDeleteRate }: DeleteRateProps) => {
 
   return (
     <>
-      <Button onClick={onOpen} text="Delete" buttonType="deleteButton"></Button>
+      <Button onClick={onOpen} text="Delete" buttonType="error"></Button>
 
       <AlertDialog
         isOpen={isOpen}
@@ -76,7 +76,7 @@ const DeleteRate = ({ rateId, onDeleteRate }: DeleteRateProps) => {
             <AlertDialogFooter>
               <Button
                 text="Cancel"
-                buttonType="cancelButton"
+                buttonType="secondary"
                 onClick={onClose}
               />
               {loading ? (
@@ -86,7 +86,7 @@ const DeleteRate = ({ rateId, onDeleteRate }: DeleteRateProps) => {
                   onClick={handleDelete}
                   ml={3}
                   text="Confirm Delete"
-                  buttonType="deleteButton"
+                  buttonType="error"
                 />
               )}
             </AlertDialogFooter>

@@ -84,7 +84,7 @@ const AddRateModal = ({ onClose, onAddRate }: AddRateModalProps) => {
         <Input
           {...register("roomType", validationRules.required)}
           placeHolder="Enter room type"
-          inputType="default"
+          inputType="primary"
         />
         {errors.roomType && (
           <p style={{ color: "red", fontSize: "14px" }}>
@@ -98,7 +98,7 @@ const AddRateModal = ({ onClose, onAddRate }: AddRateModalProps) => {
         <Input
           {...register("cancellationPolicy", validationRules.required)}
           placeHolder="Enter cancellation policy"
-          inputType="default"
+          inputType="primary"
         />
         {errors.cancellationPolicy && (
           <p style={{ color: "red", fontSize: "14px" }}>
@@ -115,7 +115,7 @@ const AddRateModal = ({ onClose, onAddRate }: AddRateModalProps) => {
             ...validationRules.numeric,
           })}
           placeHolder="Enter number of rooms"
-          inputType="default"
+          inputType="primary"
         />
         {errors.totalOfRooms && (
           <p style={{ color: "red", fontSize: "14px" }}>
@@ -132,7 +132,7 @@ const AddRateModal = ({ onClose, onAddRate }: AddRateModalProps) => {
             ...validationRules.numeric,
           })}
           placeHolder="Enter room price"
-          inputType="default"
+          inputType="primary"
         />
         {errors.price && (
           <p style={{ color: "red", fontSize: "14px" }}>
@@ -141,11 +141,11 @@ const AddRateModal = ({ onClose, onAddRate }: AddRateModalProps) => {
         )}
       </FormControl>
       <ModalFooter>
-        <Button onClick={onClose} text="Cancel" buttonType="cancelButton" />
+        <Button onClick={onClose} text="Cancel" buttonType="secondary" />
         {loading ? (
           <Spinner />
         ) : (
-          <Button type="submit" text="Add" buttonType="default" />
+          <Button type="submit" text="Add" buttonType="primary" />
         )}
       </ModalFooter>
     </form>

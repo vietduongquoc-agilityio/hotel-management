@@ -1,10 +1,16 @@
-import { Meta, StoryFn } from "@storybook/react";
-import LabelRoom, { LabelRoomProps } from "./index";
-import { NewRoomData } from "@/interfaces/Room";
-import { useRateStore } from "@/store/RateStore";
-import { ChakraProvider } from "@chakra-ui/react";
 import { themeColor } from "@/themes/Base/colors";
+import { ChakraProvider } from "@chakra-ui/react";
+import { Meta, StoryFn } from "@storybook/react";
 import { MemoryRouter } from "react-router-dom";
+
+// Components
+import LabelRoom, { LabelRoomProps } from "./index";
+
+// InterFace
+import { NewRoomData } from "@/interfaces/Room";
+
+// Store
+import { useRateStore } from "@/store/RateStore";
 
 const mockBedTypeOptions = [
   { value: "single", label: "Single" },

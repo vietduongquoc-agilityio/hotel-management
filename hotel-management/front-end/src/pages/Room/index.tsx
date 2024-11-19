@@ -5,7 +5,7 @@ import { Box, Heading, useToast } from "@chakra-ui/react";
 import { NewRoomData, RoomData } from "@/interfaces/Room";
 
 // Components
-import TableRoom from "@/components/Tables/Room";
+import Table from "@/components/Tables";
 import Pagination from "@/components/Pagination";
 import LabelRoom from "@/components/Label/Room";
 import Spinner from "@/components/Spinner";
@@ -124,10 +124,11 @@ const RoomPage = () => {
       {roomsLoading || ratesLoading ? (
         <Spinner />
       ) : (
-        <TableRoom
-          rooms={rooms}
-          onEditRoom={handleEditRoom}
-          onDeleteRoom={handleDeleteRoom}
+        <Table
+          data={rooms}
+          type="room"
+          onDelete={handleDeleteRoom}
+          onEdit={handleEditRoom}
         />
       )}
 

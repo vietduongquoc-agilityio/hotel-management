@@ -3,11 +3,11 @@ import { getStyleButton } from "./ButtonStyle";
 import { memo } from "react";
 
 export type buttonType =
-  | "default"
-  | "nextButton"
-  | "paginationButton"
-  | "cancelButton"
-  | "deleteButton";
+  | "primary"
+  | "disabled"
+  | "pagination"
+  | "secondary"
+  | "error";
 
 interface buttonTypeProps extends ButtonProps {
   text: string;
