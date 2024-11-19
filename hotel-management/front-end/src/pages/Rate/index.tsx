@@ -1,13 +1,13 @@
 import { useEffect } from "react";
 import { Box, Heading, useToast } from "@chakra-ui/react";
 
-//InterFace
+// InterFace
 import { NewRateData, RateData } from "@/interfaces/Rate";
 
 // Components
 import LabelRate from "@/components/Label/Rate";
-import TableRate from "@/components/Tables/Rate";
 import Spinner from "@/components/Spinner";
+import Table from "@/components/Tables";
 
 // Store
 import { useRateStore } from "@/store/RateStore";
@@ -35,7 +35,7 @@ const RatePage = () => {
       deals: updatedRateData.deals,
       rate: updatedRateData.rate,
       totalOfRooms: updatedRateData.totalOfRooms,
-      totalOfBooked: updatedRateData.totalOfBooked
+      totalOfBooked: updatedRateData.totalOfBooked,
     };
 
     await editRate(updatedRateData.documentId, requestPayload);
@@ -61,10 +61,11 @@ const RatePage = () => {
       {loading ? (
         <Spinner />
       ) : (
-        <TableRate
-          onEditRate={handleEditRate}
-          rates={rates}
-          onDeleteRate={handleDeleteRate}
+        <Table
+          data={rates}
+          type="rate"
+          onDelete={handleDeleteRate}
+          onEdit={handleEditRate}
         />
       )}
     </Box>

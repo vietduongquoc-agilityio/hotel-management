@@ -56,7 +56,7 @@ const DeleteRoom = ({ roomId, onDeleteRoom }: DeleteRoomProps) => {
 
   return (
     <>
-      <Button onClick={onOpen} text="Delete" buttonType="deleteButton" />
+      <Button onClick={onOpen} text="Delete" buttonType="error" />
 
       <AlertDialog
         isOpen={isOpen}
@@ -77,14 +77,14 @@ const DeleteRoom = ({ roomId, onDeleteRoom }: DeleteRoomProps) => {
               <Button
                 text="Cancel"
                 onClick={onClose}
-                buttonType="cancelButton"
+                buttonType="secondary"
               />
               {loading ? (
                 <Spinner />
               ) : (
                 <Button
                   text="Confirm Delete"
-                  buttonType="deleteButton"
+                  buttonType="error"
                   onClick={handleDelete}
                   ml={3}
                 />

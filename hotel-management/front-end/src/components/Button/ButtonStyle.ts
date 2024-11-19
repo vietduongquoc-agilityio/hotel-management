@@ -1,35 +1,40 @@
 import { ButtonProps } from "@chakra-ui/react";
 
 export type ButtonType =
-  | "default"
-  | "paginationButton"
-  | "cancelButton"
-  | "deleteButton"
-  | "nextButton";
+  | "primary"
+  | "pagination"
+  | "secondary"
+  | "error"
+  | "disabled";
 
 export const getStyleButton = (type: ButtonType): ButtonProps => {
   switch (type) {
-    case "default":
-      return first;
-    case "paginationButton":
-      return paginationButton;
-    case "cancelButton":
-      return cancelButton;
-    case "deleteButton":
-      return deleteButton;
+    case "primary":
+      return primary;
+    case "pagination":
+      return pagination;
+    case "secondary":
+      return secondary;
+    case "error":
+      return error;
     default:
-      return nextButton;
+      return disabled;
   }
 };
 
-const first: ButtonProps = {
+const primary: ButtonProps = {
   fontSize: "md",
   variant: "solid",
   fontWeight: "bold",
   cursor: "pointer",
+  bg: "blue.600",
+  color: "white.200",
+  _hover: {
+    bg: "blue.800",
+  },
 };
 
-const nextButton: ButtonProps = {
+const disabled: ButtonProps = {
   fontSize: "md",
   variant: "solid",
   fontWeight: "bold",
@@ -47,7 +52,7 @@ const nextButton: ButtonProps = {
   cursor: "pointer",
 };
 
-const paginationButton: ButtonProps = {
+const pagination: ButtonProps = {
   border: "1px solid #ffffff",
   height: "40px",
   size: "sm",
@@ -60,7 +65,7 @@ const paginationButton: ButtonProps = {
   cursor: "pointer",
 };
 
-const cancelButton: ButtonProps = {
+const secondary: ButtonProps = {
   fontSize: "md",
   variant: "solid",
   fontWeight: "bold",
@@ -70,13 +75,13 @@ const cancelButton: ButtonProps = {
   _hover: {
     bg: "error.400",
     color: "white.200",
-    border: "none",
+    border: "1px solid #FFFFFF",
   },
   marginRight: "20px",
   cursor: "pointer",
 };
 
-const deleteButton: ButtonProps = {
+const error: ButtonProps = {
   fontSize: "md",
   variant: "solid",
   fontWeight: "bold",

@@ -147,11 +147,11 @@ const EditRoomModal = ({
       </FormControl>
 
       <ModalFooter>
-        <Button onClick={onClose} text="Cancel" buttonType="cancelButton" />
+        <Button onClick={onClose} text="Cancel" buttonType="secondary" />
         {loading ? (
           <Spinner />
         ) : (
-          <Button type="submit" text="Edit" buttonType="default" />
+          <Button type="submit" text="Edit" buttonType="primary" />
         )}
       </ModalFooter>
     </form>

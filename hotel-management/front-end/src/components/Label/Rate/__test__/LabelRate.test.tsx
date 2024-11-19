@@ -38,7 +38,7 @@ describe("LabelRate Component", () => {
 
   it("should apply the correct width to the Box container", () => {
     render(<LabelRate {...defaultProps} />);
-    const container = screen.getByTestId("add-rate-modal").parentElement; // Parent of AddRateModal is the Box
+    const container = screen.getByTestId("add-rate-modal").parentElement;
     expect(container).toHaveStyle(`width: ${defaultProps.width}`);
   });
 });

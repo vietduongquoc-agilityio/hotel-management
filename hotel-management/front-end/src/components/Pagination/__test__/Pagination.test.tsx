@@ -58,8 +58,8 @@ describe("Pagination Component", () => {
 
   it("calls setCurrentPage with the next page when 'Next' is clicked", () => {
     render(<Pagination {...defaultProps} currentPage={3} />);
-    const nextButton = screen.getByText("Next >");
-    fireEvent.click(nextButton);
+    const disables = screen.getByText("Next >");
+    fireEvent.click(disables);
     expect(mockSetCurrentPage).toHaveBeenCalledWith(4);
   });
 });

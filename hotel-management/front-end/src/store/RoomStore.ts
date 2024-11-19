@@ -45,8 +45,6 @@ export const useRoomStore = create<RoomState>((set) => ({
   pageCount: 1,
   availableRooms: 0,
   bookedRooms: 0,
-  reservedRooms: 0,
-  waitlistRooms: 0,
   loading: false,
   bedTypeOptions: [],
   setBedTypeOptions: (rates) => {

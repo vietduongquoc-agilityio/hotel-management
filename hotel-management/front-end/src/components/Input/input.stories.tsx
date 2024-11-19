@@ -16,19 +16,26 @@ export default {
     },
     inputType: {
       control: { type: "select" },
-      options: ["default"],
+      options: ["primary", "number"],
     },
   },
   tags: ["autodocs"],
 } as Meta<typeof Input>;
 
 const Template: StoryFn = (args) => (
-  <Input placeHolder={""} inputType={"default"} {...args} />
+  <Input placeHolder={""} inputType={"primary"} {...args} />
 );
 
 export const Default = Template.bind({});
 Default.args = {
   placeHolder: "Enter text",
-  inputType: "first",
+  inputType: "primary",
+  width: "300px",
+};
+
+export const Numeric = Template.bind({});
+Numeric.args = {
+  placeHolder: "Enter a number",
+  inputType: "number",
   width: "300px",
 };

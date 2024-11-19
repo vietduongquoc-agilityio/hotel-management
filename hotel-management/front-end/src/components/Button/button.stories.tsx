@@ -15,11 +15,11 @@ export default {
       control: {
         type: "radio",
         options: [
-          "default",
-          "nextButton",
-          "paginationButton",
-          "cancelButton",
-          "deleteButton",
+          "primary",
+          "disabled",
+          "pagination",
+          "secondary",
+          "error",
         ],
       },
     },
@@ -29,35 +29,35 @@ export default {
 } as Meta<typeof Button>;
 
 const Template: StoryFn = (args) => (
-  <Button text={""} buttonType={"default"} {...args} />
+  <Button text={""} buttonType={"primary"} {...args} />
 );
 
-export const Default = Template.bind({});
-Default.args = {
+export const Primary = Template.bind({});
+Primary.args = {
   text: "Button",
-  buttonType: "default" as buttonType,
+  buttonType: "primary" as buttonType,
 };
 
 export const Next = Template.bind({});
 Next.args = {
   text: "Next",
-  buttonType: "nextButton" as buttonType,
+  buttonType: "disabled" as buttonType,
 };
 
 export const Pagination = Template.bind({});
 Pagination.args = {
   text: "1",
-  buttonType: "paginationButton" as buttonType,
+  buttonType: "pagination" as buttonType,
 };
 
 export const Cancel = Template.bind({});
 Cancel.args = {
   text: "Cancel",
-  buttonType: "cancelButton" as buttonType,
+  buttonType: "secondary" as buttonType,
 };
 
 export const Delete = Template.bind({});
 Delete.args = {
   text: "Delete",
-  buttonType: "deleteButton" as buttonType,
+  buttonType: "error" as buttonType,
 };

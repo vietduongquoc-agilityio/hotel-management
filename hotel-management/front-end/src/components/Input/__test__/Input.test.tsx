@@ -8,7 +8,7 @@ jest.mock("../InputStyle", () => ({
 
 describe("Input Component", () => {
   it("should render with the correct placeholder", () => {
-    render(<Input placeHolder="Test Placeholder" inputType="default" />);
+    render(<Input placeHolder="Test Placeholder" inputType="primary" />);
     const inputElement = screen.getByPlaceholderText("Test Placeholder");
     expect(inputElement).toBeInTheDocument();
   });
@@ -17,7 +17,7 @@ describe("Input Component", () => {
     const mockStyle = { size: "md", variant: "outline" };
     (getStyleInput as jest.Mock).mockReturnValue(mockStyle);
 
-    render(<Input placeHolder="Styled Input" inputType="default" />);
+    render(<Input placeHolder="Styled Input" inputType="primary" />);
     const inputElement = screen.getByPlaceholderText("Styled Input");
 
     // Assert that the getStyleInput function was called with the correct inputType
@@ -32,7 +32,7 @@ describe("Input Component", () => {
     render(
       <Input
         placeHolder="Extra Props Test"
-        inputType="default"
+        inputType="primary"
         data-testid="custom-input"
         isDisabled
       />

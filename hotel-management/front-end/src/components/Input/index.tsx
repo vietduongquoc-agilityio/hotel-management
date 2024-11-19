@@ -2,7 +2,7 @@ import { forwardRef, memo } from "react";
 import { Input as InputUI, InputProps } from "@chakra-ui/react";
 import { getStyleInput } from "./InputStyle";
 
-export type InputType = "default";
+export type InputType = "primary" | "number";
 
 interface InputTypeProps extends InputProps {
   placeHolder: string;
@@ -16,6 +16,7 @@ const Input = forwardRef<HTMLInputElement, InputTypeProps>(
     const propsStyle = {
       ...styleFirst,
       placeholder: placeHolder,
+      ...(inputType === "number" && { type: "number" }),
       ...restProps,
     };
 
