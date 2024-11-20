@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`LabelRate Component should render without errors 1`] = `
+<div>
+  <div
+    class="css-1pty2wn"
+  >
+    <div
+      data-testid="add-rate-modal"
+    >
+      AddRateModal
+    </div>
+  </div>
+</div>
+`;

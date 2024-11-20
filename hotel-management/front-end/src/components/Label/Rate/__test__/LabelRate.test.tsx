@@ -15,9 +15,10 @@ describe("LabelRate Component", () => {
   };
 
   it("should render without errors", () => {
-    render(<LabelRate {...defaultProps} />);
-    const container = screen.getByTestId("add-rate-modal");
-    expect(container).toBeInTheDocument();
+    const {container} = render(<LabelRate {...defaultProps} />);
+    expect(container).toMatchSnapshot()
+    const ModalAdd = screen.getByTestId("add-rate-modal");
+    expect(ModalAdd).toBeInTheDocument();
   });
 
   it("should render the AddRateModal component", () => {

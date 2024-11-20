@@ -16,9 +16,8 @@ describe("Pagination Component", () => {
   });
 
   it("renders correctly", () => {
-    render(<Pagination {...defaultProps} />);
-    expect(screen.getByText("< Previous")).toBeInTheDocument();
-    expect(screen.getByText("Next >")).toBeInTheDocument();
+    const { container } = render(<Pagination {...defaultProps} />);
+    expect(container).toMatchSnapshot();
   });
 
   it("disables the 'Previous' button on the first page", () => {
