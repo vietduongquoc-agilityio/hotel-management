@@ -171,11 +171,11 @@ const AddRoomModal = ({ onClose, onAddRoom }: AddRoomModalProps) => {
       </FormControl>
 
       <ModalFooter>
-        <Button onClick={onClose} text="Cancel" buttonType="cancelButton" />
+        <Button onClick={onClose} text="Cancel" buttonType="secondary" />
         {loading ? (
           <Spinner />
         ) : (
-          <Button type="submit" text="Add" buttonType="default" />
+          <Button type="submit" text="Add" buttonType="primary" />
         )}
       </ModalFooter>
     </form>

@@ -1,10 +1,8 @@
 export default {
-  transform: {
-    "^.+\\.tsx?$": "babel-jest",
-  },
+  transformIgnorePatterns: ["/node_modules/(?!(foo|bar)/)", "/bar/"],
   moduleFileExtensions: ["ts", "tsx", "js", "jsx", "json", "node"],
   testEnvironment: "jsdom",
-  setupFilesAfterEnv: ["@testing-library/jest-dom"],
+  setupFilesAfterEnv: ["<rootDir>/jest.setup.js"],
   moduleNameMapper: {
     "^@/(.*)$": "<rootDir>/src/$1",
   },

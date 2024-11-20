@@ -1,8 +1,10 @@
-import { useState } from "react";
-import { Meta, StoryFn } from "@storybook/react";
-import Pagination from ".";
-import { ChakraProvider } from "@chakra-ui/react";
 import { themeColor } from "@/themes/Base/colors";
+import { ChakraProvider } from "@chakra-ui/react";
+import { Meta, StoryFn } from "@storybook/react";
+import { useState } from "react";
+
+// Components
+import Pagination from ".";
 
 export default {
   title: "Components/Pagination",

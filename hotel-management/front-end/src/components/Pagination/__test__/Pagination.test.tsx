@@ -16,9 +16,8 @@ describe("Pagination Component", () => {
   });
 
   it("renders correctly", () => {
-    render(<Pagination {...defaultProps} />);
-    expect(screen.getByText("< Previous")).toBeInTheDocument();
-    expect(screen.getByText("Next >")).toBeInTheDocument();
+    const { container } = render(<Pagination {...defaultProps} />);
+    expect(container).toMatchSnapshot();
   });
 
   it("disables the 'Previous' button on the first page", () => {
@@ -28,7 +27,9 @@ describe("Pagination Component", () => {
   });
 
   it("disables the 'Next' button on the last page", () => {
-    render(<Pagination {...defaultProps} currentPage={defaultProps.pageCount} />);
+    render(
+      <Pagination {...defaultProps} currentPage={defaultProps.pageCount} />
+    );
     const nextButton = screen.getByText("Next >");
     expect(nextButton).toBeDisabled();
   });
@@ -58,8 +59,8 @@ describe("Pagination Component", () => {
 
   it("calls setCurrentPage with the next page when 'Next' is clicked", () => {
     render(<Pagination {...defaultProps} currentPage={3} />);
-    const nextButton = screen.getByText("Next >");
-    fireEvent.click(nextButton);
+    const disables = screen.getByText("Next >");
+    fireEvent.click(disables);
     expect(mockSetCurrentPage).toHaveBeenCalledWith(4);
   });
 });

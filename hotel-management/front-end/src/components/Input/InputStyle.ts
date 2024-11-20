@@ -2,13 +2,21 @@ import { InputType } from ".";
 
 export const getStyleInput = (type: InputType) => {
   switch (type) {
-    case "default": {
-      return first;
+    case "primary": {
+      return primary;
+    }
+    case "number": {
+      return number;
     }
   }
 };
 
-const first = {
+const primary = {
   size: "md",
+  variant: "outline",
+};
+
+const number = {
+  size: "sm",
   variant: "outline",
 };

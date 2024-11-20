@@ -38,7 +38,7 @@ export const Button = defineStyleConfig({
         bg: "blue.100",
       },
     },
-    pagination: {
+    "pagination": {
       bg: "blue.100",
       _active: {
         color: "blue.800",
