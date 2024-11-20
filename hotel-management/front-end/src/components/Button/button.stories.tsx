@@ -16,13 +16,7 @@ export default {
     buttonType: {
       control: {
         type: "radio",
-        options: [
-          "primary",
-          "disabled",
-          "pagination",
-          "secondary",
-          "error",
-        ],
+        options: ["primary", "disabled", "pagination", "secondary", "error"],
       },
     },
     onClick: { action: "clicked" },
@@ -40,8 +34,8 @@ Primary.args = {
   buttonType: "primary" as buttonType,
 };
 
-export const Next = Template.bind({});
-Next.args = {
+export const Disabled = Template.bind({});
+Disabled.args = {
   text: "Next",
   buttonType: "disabled" as buttonType,
 };
@@ -52,14 +46,14 @@ Pagination.args = {
   buttonType: "pagination" as buttonType,
 };
 
-export const Cancel = Template.bind({});
-Cancel.args = {
+export const Secondary = Template.bind({});
+Secondary.args = {
   text: "Cancel",
   buttonType: "secondary" as buttonType,
 };
 
-export const Delete = Template.bind({});
-Delete.args = {
+export const Error = Template.bind({});
+Error.args = {
   text: "Delete",
   buttonType: "error" as buttonType,
 };

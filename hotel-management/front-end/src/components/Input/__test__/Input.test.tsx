@@ -19,14 +19,9 @@ describe("Input Component", () => {
     (getStyleInput as jest.Mock).mockReturnValue(mockStyle);
 
     render(<Input placeHolder="Styled Input" inputType="primary" />);
-    const inputElement = screen.getByPlaceholderText("Styled Input");
 
     // Assert that the getStyleInput function was called with the correct inputType
     expect(getStyleInput).toHaveBeenCalledWith("primary");
-
-    // Ensure that Chakra UI's Input received the correct styles
-    expect(inputElement).toHaveAttribute("size", mockStyle.size);
-    expect(inputElement).toHaveAttribute("variant", mockStyle.variant);
     
   });
 

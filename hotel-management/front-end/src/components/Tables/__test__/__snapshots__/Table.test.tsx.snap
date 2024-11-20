@@ -1,0 +1,171 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Table Component renders table headers for rates 1`] = `
+<div>
+  <div
+    class="css-1y7mht"
+  >
+    <ul
+      class="css-1w40mxc"
+      role="list"
+    >
+      <li
+        class="css-10iu03d"
+      >
+        Room type
+      </li>
+      <li
+        class="css-10iu03d"
+      >
+        Deals
+      </li>
+      <li
+        class="css-10iu03d"
+      >
+        Cancellation policy
+      </li>
+      <li
+        class="css-10iu03d"
+      >
+        Deal price
+      </li>
+      <li
+        class="css-10iu03d"
+      >
+        Rate
+      </li>
+      <li
+        class="css-18knwf5"
+      >
+        Availability
+      </li>
+    </ul>
+    <div
+      class="css-m3cdxu"
+    >
+      <p
+        class="chakra-text css-1oujbce"
+      >
+        Deluxe
+      </p>
+      <p
+        class="chakra-text css-w56oqh"
+      >
+        Summer Deal
+      </p>
+      <p
+        class="chakra-text css-w56oqh"
+      >
+        Free Cancellation
+      </p>
+      <p
+        class="chakra-text css-w56oqh"
+      >
+        200
+        $
+      </p>
+      <p
+        class="chakra-text css-gginlj"
+      >
+        200
+        $
+      </p>
+      <div
+        class="css-ufscxh"
+      >
+        <p
+          class="chakra-text css-4js5pm"
+        >
+          5
+        </p>
+      </div>
+      <button
+        class="chakra-button css-1d4fhah"
+        type="button"
+      >
+        ⋮
+      </button>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Table Component renders table headers for rooms 1`] = `
+<div>
+  <div
+    class="css-1y7mht"
+  >
+    <ul
+      class="css-1w40mxc"
+      role="list"
+    >
+      <li
+        class="css-10iu03d"
+      >
+        Room number
+      </li>
+      <li
+        class="css-17i31e1"
+      >
+        Bed type
+      </li>
+      <li
+        class="css-10iu03d"
+      >
+        Room floor
+      </li>
+      <li
+        class="css-qn161l"
+      >
+        Room facility
+      </li>
+      <li
+        class="css-140n14"
+      >
+        Status
+      </li>
+    </ul>
+    <div
+      class="css-m3cdxu"
+    >
+      <p
+        class="chakra-text css-1dmpze8"
+      >
+        101
+      </p>
+      <p
+        class="chakra-text css-ufscxh"
+      >
+        Single
+         Bed
+      </p>
+      <p
+        class="chakra-text css-w56oqh"
+      >
+        1
+         Floor
+      </p>
+      <p
+        class="chakra-text css-v8ppkx"
+      >
+        Air Conditioning
+      </p>
+      <div
+        class="css-flri6o"
+      >
+        <p
+          class="chakra-text css-5xbs4a"
+        >
+          Available
+        </p>
+      </div>
+      <button
+        class="chakra-button css-1d4fhah"
+        type="button"
+      >
+        ⋮
+      </button>
+    </div>
+  </div>
+</div>
+`;
