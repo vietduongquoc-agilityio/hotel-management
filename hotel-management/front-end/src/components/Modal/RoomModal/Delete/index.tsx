@@ -13,7 +13,7 @@ import {
 
 // Components
 import Spinner from "@/components/Spinner";
-import Button from "@/components/Button";
+import { Button } from "@/components";
 
 //Services
 import { deleteRoom } from "@/services/roomService";
@@ -77,7 +77,7 @@ const DeleteRoom = ({ roomId, onDeleteRoom }: DeleteRoomProps) => {
               <Button
                 text="Cancel"
                 onClick={onClose}
-                buttonType="secondary"
+                buttonType="warning"
               />
               {loading ? (
                 <Spinner />

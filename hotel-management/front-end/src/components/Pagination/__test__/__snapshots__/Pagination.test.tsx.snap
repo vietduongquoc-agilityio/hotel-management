@@ -10,7 +10,7 @@ exports[`Pagination Component renders correctly 1`] = `
     >
       <button
         class="chakra-button css-57a4je"
-        disabled=""
+        secondary=""
         type="button"
       >
         &lt; Previous

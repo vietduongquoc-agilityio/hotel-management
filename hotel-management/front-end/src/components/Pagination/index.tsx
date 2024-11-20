@@ -59,14 +59,14 @@ const Pagination: React.FC<paginationProps> = ({
           onClick={handlePrevious}
           isDisabled={currentPage === 1}
           text="< Previous"
-          buttonType="disabled"
+          buttonType="secondary"
         />
         <HStack>{renderPageNumbers()}</HStack>
         <Button
           onClick={handleNext}
           isDisabled={currentPage === pageCount}
           text="Next >"
-          buttonType="disabled"
+          buttonType="secondary"
         />
       </HStack>
     </VStack>

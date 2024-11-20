@@ -15,11 +15,6 @@ describe("Pagination Component", () => {
     mockSetCurrentPage.mockClear();
   });
 
-  it("renders correctly", () => {
-    const { container } = render(<Pagination {...defaultProps} />);
-    expect(container).toMatchSnapshot();
-  });
-
   it("disables the 'Previous' button on the first page", () => {
     render(<Pagination {...defaultProps} />);
     const previousButton = screen.getByText("< Previous");

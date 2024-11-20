@@ -15,7 +15,7 @@ import {
 import { useRateStore } from "@/store/RateStore";
 
 // Components
-import AddRoomModal from "@/components/Modal/RoomModal/Add";
+import { AddRoomModal } from "@/components";
 
 export interface LabelRoomProps {
   width?: string;

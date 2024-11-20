@@ -4,9 +4,9 @@ import { memo } from "react";
 
 export type buttonType =
   | "primary"
-  | "disabled"
-  | "pagination"
   | "secondary"
+  | "pagination"
+  | "warning"
   | "error";
 
 interface buttonTypeProps extends ButtonProps {

@@ -5,9 +5,7 @@ import { Box, Heading, useToast } from "@chakra-ui/react";
 import { NewRoomData, RoomData } from "@/interfaces/Room";
 
 // Components
-import Table from "@/components/Tables";
-import Pagination from "@/components/Pagination";
-import LabelRoom from "@/components/Label/Room";
+import { LabelRoom, Pagination, Table } from "@/components";
 import Spinner from "@/components/Spinner";
 
 // Store
