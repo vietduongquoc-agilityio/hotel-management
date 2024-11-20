@@ -22,8 +22,8 @@ import { useRateStore } from "@/store/RateStore";
 
 // Components
 import withModal from "@/components/Modal/modalHoc";
-import Button from "@/components/Button";
 import Spinner from "@/components/Spinner";
+import { Button } from "@/components";
 
 interface AddRoomModalProps {
   onClose: () => void;
@@ -171,7 +171,7 @@ const AddRoomModal = ({ onClose, onAddRoom }: AddRoomModalProps) => {
       </FormControl>
 
       <ModalFooter>
-        <Button onClick={onClose} text="Cancel" buttonType="secondary" />
+        <Button onClick={onClose} text="Cancel" buttonType="warning" />
         {loading ? (
           <Spinner />
         ) : (

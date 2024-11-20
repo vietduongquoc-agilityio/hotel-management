@@ -1,5 +1,6 @@
 import { Meta, StoryFn } from "@storybook/react";
 import { ChakraProvider } from "@chakra-ui/react";
+import { MemoryRouter } from "react-router-dom";
 
 // Components
 import AddRateModal from "./";
@@ -9,7 +10,6 @@ import { NewRateData } from "@/interfaces/Rate";
 
 // Theme
 import { themeColor } from "@/themes/Base/colors";
-import { MemoryRouter } from "react-router-dom";
 
 export default {
   title: "Components/Modals/Rate/AddRateModal",
@@ -38,4 +38,5 @@ const Template: StoryFn<typeof AddRateModal> = (args) => {
 };
 
 export const Default = Template.bind({});
-Default.args = {};
+Default.args = {
+};

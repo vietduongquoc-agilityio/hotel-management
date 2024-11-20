@@ -10,7 +10,6 @@ import Table, { TableProps } from "./";
 import { RoomData } from "@/interfaces/Room";
 import { RateData } from "@/interfaces/Rate";
 
-
 // Mock Data
 const roomData: RoomData[] = [
   {
@@ -35,8 +34,8 @@ const rateData: RateData[] = [
   {
     documentId: "1",
     roomType: "Deluxe",
-    deals: "Breakfast Included",
-    cancellationPolicy: "Free Cancellation",
+    deals: "Family Deal",
+    cancellationPolicy: "Flexible",
     dealPrice: "120",
     rate: "150",
     totalOfRooms: 10,

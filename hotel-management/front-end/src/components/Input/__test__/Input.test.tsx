@@ -22,7 +22,6 @@ describe("Input Component", () => {
 
     // Assert that the getStyleInput function was called with the correct inputType
     expect(getStyleInput).toHaveBeenCalledWith("primary");
-    
   });
 
   it("should pass other props to the Chakra Input", () => {

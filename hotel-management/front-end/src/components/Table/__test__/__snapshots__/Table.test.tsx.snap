@@ -62,29 +62,27 @@ exports[`Table Component renders table headers for rates 1`] = `
         class="chakra-text css-w56oqh"
       >
         200
-        $
       </p>
       <p
-        class="chakra-text css-gginlj"
+        class="chakra-text css-1dmpze8"
       >
         200
-        $
+      </p>
+      <p
+        class="chakra-text css-27rlwr"
+      >
+        5
       </p>
       <div
-        class="css-ufscxh"
+        class="css-u8uklq"
       >
-        <p
-          class="chakra-text css-4js5pm"
+        <button
+          class="chakra-button css-1d4fhah"
+          type="button"
         >
-          5
-        </p>
+          ⋮
+        </button>
       </div>
-      <button
-        class="chakra-button css-1d4fhah"
-        type="button"
-      >
-        ⋮
-      </button>
     </div>
   </div>
 </div>
@@ -120,7 +118,7 @@ exports[`Table Component renders table headers for rooms 1`] = `
         Room facility
       </li>
       <li
-        class="css-140n14"
+        class="css-14uvbdo"
       >
         Status
       </li>
@@ -136,35 +134,33 @@ exports[`Table Component renders table headers for rooms 1`] = `
       <p
         class="chakra-text css-ufscxh"
       >
-        Single
-         Bed
+        Single Bed
       </p>
       <p
         class="chakra-text css-w56oqh"
       >
-        1
-         Floor
+        1 Floor
       </p>
       <p
         class="chakra-text css-v8ppkx"
       >
         Air Conditioning
       </p>
+      <p
+        class="chakra-text css-1hcog7o"
+      >
+        Available
+      </p>
       <div
-        class="css-flri6o"
+        class="css-ekszn"
       >
-        <p
-          class="chakra-text css-5xbs4a"
+        <button
+          class="chakra-button css-1d4fhah"
+          type="button"
         >
-          Available
-        </p>
+          ⋮
+        </button>
       </div>
-      <button
-        class="chakra-button css-1d4fhah"
-        type="button"
-      >
-        ⋮
-      </button>
     </div>
   </div>
 </div>

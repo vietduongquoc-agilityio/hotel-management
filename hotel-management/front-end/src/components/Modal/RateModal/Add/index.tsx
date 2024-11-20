@@ -15,9 +15,9 @@ import { validationRules } from "@/constant/Validate";
 
 // Components
 import withModal from "@/components/Modal/modalHoc";
-import Button from "@/components/Button";
-import Input from "@/components/Input";
 import Spinner from "@/components/Spinner";
+import { Button, Input } from "@/components";
+
 
 interface AddRateModalProps {
   onClose: () => void;
@@ -141,7 +141,7 @@ const AddRateModal = ({ onClose, onAddRate }: AddRateModalProps) => {
         )}
       </FormControl>
       <ModalFooter>
-        <Button onClick={onClose} text="Cancel" buttonType="secondary" />
+        <Button onClick={onClose} text="Cancel" buttonType="warning" />
         {loading ? (
           <Spinner />
         ) : (
