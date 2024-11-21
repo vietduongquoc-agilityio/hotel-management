@@ -222,4 +222,6 @@ const Table = <T extends RoomData | RateData>({
   );
 };
 
-export default memo(Table);
+const genericMemo: <T>(component: T) => T = memo;
+
+export default genericMemo(Table);

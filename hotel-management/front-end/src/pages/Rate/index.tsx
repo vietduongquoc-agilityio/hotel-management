@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { Box, Heading, useToast } from "@chakra-ui/react";
 
-// InterFace
+// Interfaces
 import { NewRateData, RateData } from "@/interfaces";
 
 // Components
