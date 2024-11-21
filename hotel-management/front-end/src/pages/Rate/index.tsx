@@ -2,11 +2,10 @@ import { useEffect } from "react";
 import { Box, Heading, useToast } from "@chakra-ui/react";
 
 // InterFace
-import { NewRateData, RateData } from "@/interfaces/Rate";
+import { NewRateData, RateData } from "@/interfaces";
 
 // Components
-import { LabelRate, Table } from "@/components";
-import Spinner from "@/components/Spinner";
+import { LabelRate, Table, Spinner } from "@/components";
 
 // Store
 import { useRateStore } from "@/store/RateStore";

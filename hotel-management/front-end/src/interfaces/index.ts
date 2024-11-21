@@ -1,5 +1,12 @@
-import { RateData } from "./Rate";
-import { RoomData } from "./Room";
+import { RateData, NewRateData } from "./Rate";
+import { RoomData, NewRoomData } from "./Room";
 import { EditFunctionType, DeleteFunctionType } from "./Table";
 
-export type { RateData, RoomData, EditFunctionType, DeleteFunctionType };
+export type {
+  RateData,
+  NewRateData,
+  NewRoomData,
+  RoomData,
+  EditFunctionType,
+  DeleteFunctionType,
+};

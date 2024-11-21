@@ -12,8 +12,7 @@ import {
 import React from "react";
 
 // Components
-import Spinner from "@/components/Spinner";
-import { Button } from "@/components";
+import { Button, Spinner } from "@/components";
 
 //Services
 import { deleteRate } from "@/services/rateServices";

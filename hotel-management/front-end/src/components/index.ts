@@ -6,6 +6,7 @@ import LabelRate from "./Label/Rate";
 import LabelRoom from "./Label/Room";
 
 // Modal
+import withModal from "./Modal/modalHoc";
 import AddRateModal from "./Modal/RateModal/Add";
 import EditRateModal from "./Modal/RateModal/Edit";
 import DeleteRate from "./Modal/RateModal/Delete";
@@ -18,12 +19,14 @@ import Pagination from "./Pagination";
 import LoadingSpinner from "./Spinner";
 import Table from "./Table";
 import Toast from "./Toast";
+import Spinner from "./Spinner";
 
 export {
   Button,
   Input,
   LabelRate,
   LabelRoom,
+  withModal,
   AddRateModal,
   EditRateModal,
   DeleteRate,
@@ -32,6 +35,7 @@ export {
   DeleteRoom,
   Pagination,
   LoadingSpinner,
+  Spinner,
   Table,
   Toast,
 };

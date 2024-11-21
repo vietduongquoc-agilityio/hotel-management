@@ -12,8 +12,7 @@ import {
 } from "@chakra-ui/react";
 
 // Components
-import Spinner from "@/components/Spinner";
-import { Button } from "@/components";
+import { Button, Spinner } from "@/components";
 
 //Services
 import { deleteRoom } from "@/services/roomService";
@@ -74,11 +73,7 @@ const DeleteRoom = ({ roomId, onDeleteRoom }: DeleteRoomProps) => {
             </AlertDialogBody>
 
             <AlertDialogFooter>
-              <Button
-                text="Cancel"
-                onClick={onClose}
-                buttonType="warning"
-              />
+              <Button text="Cancel" onClick={onClose} buttonType="warning" />
               {loading ? (
                 <Spinner />
               ) : (
