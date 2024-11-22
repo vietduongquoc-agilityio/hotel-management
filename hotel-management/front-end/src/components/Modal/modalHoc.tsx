@@ -11,7 +11,7 @@ import {
 } from "@chakra-ui/react";
 
 //Components
-import Button from "@/components/Button";
+import { Button } from "@/components";
 
 //Store
 import { useRateStore } from "@/store/RateStore";

@@ -2,11 +2,10 @@ import { useEffect, useState } from "react";
 import { Box, Heading, useToast } from "@chakra-ui/react";
 
 // InterFace
-import { NewRoomData, RoomData } from "@/interfaces/Room";
+import { NewRoomData, RoomData } from "@/interfaces";
 
 // Components
-import { LabelRoom, Pagination, Table } from "@/components";
-import Spinner from "@/components/Spinner";
+import { LabelRoom, Pagination, Spinner, Table } from "@/components";
 
 // Store
 import { useRoomStore } from "@/store/RoomStore";

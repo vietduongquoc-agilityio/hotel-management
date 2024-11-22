@@ -21,9 +21,7 @@ import { NewRoomData } from "@/interfaces/Room";
 import { useRateStore } from "@/store/RateStore";
 
 // Components
-import withModal from "@/components/Modal/modalHoc";
-import Spinner from "@/components/Spinner";
-import { Button } from "@/components";
+import { Button, Spinner, withModal } from "@/components";
 
 interface AddRoomModalProps {
   onClose: () => void;

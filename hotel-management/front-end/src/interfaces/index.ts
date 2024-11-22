@@ -1,5 +1,3 @@
-import { RateData } from "./Rate";
-import { RoomData } from "./Room";
-import { EditFunctionType, DeleteFunctionType } from "./Table";
-
-export type { RateData, RoomData, EditFunctionType, DeleteFunctionType };
+export * from "./Rate";
+export * from "./Room";
+export * from "./Table";

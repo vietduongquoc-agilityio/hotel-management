@@ -1,5 +1,5 @@
 import { Box, Text, UnorderedList, ListItem, Alert } from "@chakra-ui/react";
-import { useEffect, useState } from "react";
+import { memo, useEffect, useState } from "react";
 
 // Interfaces
 import {
@@ -186,6 +186,8 @@ const Table = <T extends RoomData | RateData>({
                 }}
                 text={"⋮"}
                 buttonType={"primary"}
+                variant={"contained"}
+                colorScheme={"primary"}
               />
             </Box>
 
@@ -220,4 +222,6 @@ const Table = <T extends RoomData | RateData>({
   );
 };
 
-export default Table;
+const genericMemo: <T>(component: T) => T = memo;
+
+export default genericMemo(Table);

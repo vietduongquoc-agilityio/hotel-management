@@ -8,16 +8,13 @@ import {
 } from "@chakra-ui/react";
 
 // InterFace
-import { NewRateData } from "@/interfaces/Rate";
+import { NewRateData } from "@/interfaces";
 
 // Constants
 import { validationRules } from "@/constant/Validate";
 
 // Components
-import withModal from "@/components/Modal/modalHoc";
-import Spinner from "@/components/Spinner";
-import { Button, Input } from "@/components";
-
+import { Button, Input, Spinner, withModal } from "@/components";
 
 interface AddRateModalProps {
   onClose: () => void;
@@ -29,7 +26,7 @@ interface FormData {
   cancellationPolicy: string;
   price: string;
   totalOfBooked: number;
-  totalOfRooms: number
+  totalOfRooms: number;
 }
 
 const AddRateModal = ({ onClose, onAddRate }: AddRateModalProps) => {
@@ -51,7 +48,7 @@ const AddRateModal = ({ onClose, onAddRate }: AddRateModalProps) => {
       rate: data.price,
       totalOfBooked: 0,
       totalOfRooms: data.totalOfRooms,
-      availability: ""
+      availability: "",
     };
 
     setLoading(true);
