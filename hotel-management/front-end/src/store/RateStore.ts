@@ -7,7 +7,7 @@ import {
   updateRate,
   createRateApi,
   deleteRate as deleteRateApi,
-} from "@/services/rateServices";
+} from "@/services/Rate/rateServices";
 
 // InterFace
 import { RateData, NewRateData } from "@/interfaces/Rate";

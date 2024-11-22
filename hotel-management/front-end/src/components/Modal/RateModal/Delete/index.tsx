@@ -15,7 +15,7 @@ import React from "react";
 import { Button, Spinner } from "@/components";
 
 //Services
-import { deleteRate } from "@/services/rateServices";
+import { deleteRate } from "@/services/Rate/rateServices";
 
 interface DeleteRateProps {
   rateId: string;

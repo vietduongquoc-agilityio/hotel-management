@@ -1,0 +1,26 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`roomService getRooms should fetch rooms with pagination data 1`] = `
+{
+  "pagination": {
+    "page": 1,
+    "pageCount": 1,
+    "pageSize": 10,
+    "total": 2,
+  },
+  "rooms": [
+    {
+      "attributes": {
+        "name": "Room 1",
+      },
+      "id": "1",
+    },
+    {
+      "attributes": {
+        "name": "Room 2",
+      },
+      "id": "2",
+    },
+  ],
+}
+`;

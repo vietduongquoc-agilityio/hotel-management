@@ -15,7 +15,7 @@ import { validationRules } from "@/constant/Validate";
 import { roomFloorOptions } from "@/constant/SelectOptions";
 
 // InterFace
-import { NewRoomData } from "@/interfaces/Room";
+import { NewRoomData } from "@/interfaces";
 
 // Store
 import { useRateStore } from "@/store/RateStore";

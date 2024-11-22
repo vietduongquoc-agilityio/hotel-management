@@ -6,7 +6,7 @@ import {
   createRoomApi,
   updateRoom,
   deleteRoom,
-} from "@/services/roomService";
+} from "@/services/Room/roomService";
 
 // InterFace
 import { RoomData, NewRoomData } from "@/interfaces/Room";
