@@ -1,21 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`rateService createRateApi should create a new rate and match snapshot 1`] = `
-{
-  "data": {
-    "attributes": {
-      "availability": 5,
-      "cancellationPolicy": "Flexible",
-      "dealPrice": 0,
-      "deals": "None",
-      "rate": 200,
-      "roomType": "Deluxe",
-    },
-    "id": "1",
-  },
-}
-`;
-
 exports[`rateService deleteRate should delete a rate by ID and match snapshot 1`] = `
 {
   "message": "Rate deleted successfully",
@@ -47,22 +31,6 @@ exports[`rateService getRates should fetch rates with pagination and match snaps
       "pageSize": 10,
       "total": 2,
     },
-  },
-}
-`;
-
-exports[`rateService updateRate should update a rate by ID and match snapshot 1`] = `
-{
-  "data": {
-    "attributes": {
-      "availability": 3,
-      "cancellationPolicy": "Moderate",
-      "dealPrice": 20,
-      "deals": "Spring Discount",
-      "rate": 180,
-      "roomType": "Updated Deluxe",
-    },
-    "id": "1",
   },
 }
 `;

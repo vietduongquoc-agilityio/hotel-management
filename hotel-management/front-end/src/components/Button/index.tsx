@@ -5,7 +5,7 @@ import { memo } from "react";
 export type buttonType =
   | "primary"
   | "secondary"
-  | "pagination"
+  | "surface"
   | "warning"
   | "error";
 

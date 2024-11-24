@@ -19,14 +19,14 @@ describe("Button Component", () => {
     expect(container).toMatchSnapshot();
   });
 
-  it("applies the correct styles for pagination button", () => {
-    render(<Button buttonType="pagination" text="1" onClick={() => {}} />, {
+  it("applies the correct styles for surface button", () => {
+    render(<Button buttonType="surface" text="1" onClick={() => {}} />, {
       wrapper: Wrapper,
     });
     const button = screen.getByText(/1/i);
     expect(button).toHaveStyle("border: 1px solid #ffffff");
     expect(button).toHaveStyle("height: 40px");
-    expect(button).toHaveStyle("width: 40px");
+    expect(button).toHaveStyle("width: auto");
   });
 
   it("applies additional styles passed through ButtonProps", () => {
