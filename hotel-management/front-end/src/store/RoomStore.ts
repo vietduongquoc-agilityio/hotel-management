@@ -1,18 +1,13 @@
 import { create } from "zustand";
 
 // Services
-import {
-  getRooms,
-  createRoomApi,
-  updateRoom,
-  deleteRoom,
-} from "@/services/Room/roomService";
+import { getRooms, createRoomApi, updateRoom, deleteRoom } from "@/services";
 
 // InterFace
-import { RoomData, NewRoomData } from "@/interfaces/Room";
+import { RoomData, NewRoomData } from "@/interfaces";
 
 // Constant
-import { setBedTypeOptions } from "@/constant/SelectOptions";
+import { setBedTypeOptions } from "@/constant";
 
 interface RoomState {
   rooms: RoomData[];

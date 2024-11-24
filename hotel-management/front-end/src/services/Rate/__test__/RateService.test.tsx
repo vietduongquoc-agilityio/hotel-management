@@ -1,12 +1,7 @@
 import axios from "axios";
 import MockAdapter from "axios-mock-adapter";
-import {
-  getRates,
-  createRateApi,
-  updateRate,
-  deleteRate,
-} from "@/services/Rate/rateServices";
-import { NewRateData } from "@/interfaces/Rate";
+import { getRates, createRateApi, updateRate, deleteRate } from "@/services";
+import { NewRateData } from "@/interfaces";
 
 jest.mock("@chakra-ui/react", () => ({
   createStandaloneToast: jest.fn(() => ({

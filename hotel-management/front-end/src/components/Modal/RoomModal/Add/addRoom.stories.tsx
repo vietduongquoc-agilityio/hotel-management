@@ -1,9 +1,16 @@
 import { Meta, StoryFn } from "@storybook/react";
 import { ChakraProvider } from "@chakra-ui/react";
-import AddRoomModal from "./";
-import { NewRoomData } from "@/interfaces/Room";
-import { useRateStore } from "@/store/RateStore";
 import { MemoryRouter } from "react-router-dom";
+
+import AddRoomModal from "./";
+
+// Interfaces
+import { NewRoomData } from "@/interfaces";
+
+// Store
+import { useRateStore } from "@/store";
+
+// Themes
 import { themeColor } from "@/themes/Base/colors";
 
 // Mock Store Data

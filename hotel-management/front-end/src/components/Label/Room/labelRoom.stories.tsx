@@ -7,10 +7,10 @@ import { MemoryRouter } from "react-router-dom";
 import LabelRoom, { LabelRoomProps } from "./index";
 
 // InterFace
-import { NewRoomData } from "@/interfaces/Room";
+import { NewRoomData } from "@/interfaces";
 
 // Store
-import { useRateStore } from "@/store/RateStore";
+import { useRateStore } from "@/store";
 
 const mockBedTypeOptions = [
   { value: "single", label: "Single" },

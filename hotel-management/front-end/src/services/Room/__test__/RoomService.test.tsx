@@ -6,8 +6,8 @@ import {
   getRoomById,
   updateRoom,
   deleteRoom,
-} from "@/services/Room/roomService";
-import { NewRoomData } from "@/interfaces/Room";
+} from "@/services";
+import { NewRoomData } from "@/interfaces";
 
 const mock = new MockAdapter(axios);
 const BASE_URL = process.env.VITE_BASE_URL;

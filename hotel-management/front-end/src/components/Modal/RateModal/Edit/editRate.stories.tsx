@@ -5,7 +5,7 @@ import { ChakraProvider } from "@chakra-ui/react";
 import EditRateModal from "./";
 
 // Mock Data
-import { RateData } from "@/interfaces/Rate";
+import { RateData } from "@/interfaces";
 
 // Theme
 import { themeColor } from "@/themes/Base/colors";

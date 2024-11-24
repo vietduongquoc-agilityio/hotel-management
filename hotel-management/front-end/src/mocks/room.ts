@@ -1,4 +1,4 @@
-import { RoomData } from "@/interfaces/Room";
+import { RoomData } from "@/interfaces";
 
 export const mockRooms: RoomData[] = [
   {

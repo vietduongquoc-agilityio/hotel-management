@@ -7,7 +7,7 @@ import { MemoryRouter } from "react-router-dom";
 import EditRoomModal from "./";
 
 // InterFace
-import { RoomData } from "@/interfaces/Room";
+import { RoomData } from "@/interfaces";
 
 export default {
   title: "Components/Modals/Room/EditRoomModal",
