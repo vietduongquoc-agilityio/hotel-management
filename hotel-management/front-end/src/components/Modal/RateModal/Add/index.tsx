@@ -11,7 +11,7 @@ import {
 import { NewRateData } from "@/interfaces";
 
 // Constants
-import { validationRules } from "@/constant/Validate";
+import { validationRules } from "@/constant";
 
 // Components
 import { Button, Input, Spinner, withModal } from "@/components";

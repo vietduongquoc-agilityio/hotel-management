@@ -1,0 +1,36 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`rateService deleteRate should delete a rate by ID and match snapshot 1`] = `
+{
+  "message": "Rate deleted successfully",
+}
+`;
+
+exports[`rateService getRates should fetch rates with pagination and match snapshot 1`] = `
+{
+  "data": [
+    {
+      "attributes": {
+        "name": "Rate 1",
+        "price": 100,
+      },
+      "id": "1",
+    },
+    {
+      "attributes": {
+        "name": "Rate 2",
+        "price": 150,
+      },
+      "id": "2",
+    },
+  ],
+  "meta": {
+    "pagination": {
+      "page": 1,
+      "pageCount": 1,
+      "pageSize": 10,
+      "total": 2,
+    },
+  },
+}
+`;

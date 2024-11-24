@@ -15,7 +15,7 @@ import {
 import { Button, Spinner } from "@/components";
 
 //Services
-import { deleteRoom } from "@/services/roomService";
+import { deleteRoom } from "@/services";
 
 interface DeleteRoomProps {
   roomId: string;

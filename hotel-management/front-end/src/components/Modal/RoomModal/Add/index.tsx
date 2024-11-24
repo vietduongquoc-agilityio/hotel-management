@@ -11,14 +11,13 @@ import {
 import { useForm } from "react-hook-form";
 
 // Constants
-import { validationRules } from "@/constant/Validate";
-import { roomFloorOptions } from "@/constant/SelectOptions";
+import { validationRules, roomFloorOptions } from "@/constant";
 
 // InterFace
-import { NewRoomData } from "@/interfaces/Room";
+import { NewRoomData } from "@/interfaces";
 
 // Store
-import { useRateStore } from "@/store/RateStore";
+import { useRateStore } from "@/store";
 
 // Components
 import { Button, Spinner, withModal } from "@/components";

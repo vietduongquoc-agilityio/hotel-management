@@ -13,7 +13,7 @@ const showErrorToast = (message: string) => {
 };
 
 //InterFace
-import { NewRoomData } from "@/interfaces/Room";
+import { NewRoomData } from "@/interfaces";
 
 const BASE_URL = process.env.VITE_BASE_URL;
 

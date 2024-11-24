@@ -6,7 +6,7 @@ import { MemoryRouter } from "react-router-dom";
 import AddRateModal from "./";
 
 // Mock Data
-import { NewRateData } from "@/interfaces/Rate";
+import { NewRateData } from "@/interfaces";
 
 // Theme
 import { themeColor } from "@/themes/Base/colors";
@@ -38,5 +38,4 @@ const Template: StoryFn<typeof AddRateModal> = (args) => {
 };
 
 export const Default = Template.bind({});
-Default.args = {
-};
+Default.args = {};

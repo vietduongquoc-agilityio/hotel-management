@@ -7,8 +7,7 @@ import { themeColor } from "@/themes/Base/colors";
 import Table, { TableProps } from "./";
 
 // InterFace
-import { RoomData } from "@/interfaces/Room";
-import { RateData } from "@/interfaces/Rate";
+import { RoomData, RateData } from "@/interfaces";
 
 // Mock Data
 const roomData: RoomData[] = [

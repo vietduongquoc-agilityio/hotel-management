@@ -1,12 +1,8 @@
-// Interfaces
-import { RoomData } from "@/interfaces/Room";
-
 // Constant
-import {
-  roomStatusBackgrounds,
-  roomStatusColors,
-} from "@/constant/SelectOptions";
-import { RateData } from "@/interfaces/Rate";
+import { roomStatusBackgrounds, roomStatusColors } from "@/constant";
+
+// Interfaces
+import { RoomData, RateData } from "@/interfaces";
 
 export const renderRoomBody = (room: RoomData) => {
   const { roomNumber, bedType, roomFloor, roomFacility, roomStatus } = room;

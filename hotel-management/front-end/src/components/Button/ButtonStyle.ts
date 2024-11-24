@@ -1,6 +1,6 @@
 export type ButtonType =
   | "primary"
-  | "pagination"
+  | "surface"
   | "warning"
   | "error"
   | "secondary";
@@ -9,8 +9,8 @@ export const getStyleButton = (type: ButtonType) => {
   switch (type) {
     case "primary":
       return primary;
-    case "pagination":
-      return pagination;
+    case "surface":
+      return surface;
     case "warning":
       return warning;
     case "error":
@@ -49,11 +49,11 @@ const secondary = {
   cursor: "pointer",
 };
 
-const pagination = {
+const surface = {
   border: "1px solid #ffffff",
   height: "40px",
   size: "sm",
-  width: "40px",
+  width: "auto",
   color: "grey.400",
   _hover: { color: "blue.500", bg: "blue.100" },
   _active: {

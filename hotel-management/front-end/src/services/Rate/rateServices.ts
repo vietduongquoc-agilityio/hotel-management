@@ -2,7 +2,7 @@ import axios from "axios";
 import { createStandaloneToast } from "@chakra-ui/react";
 
 // Interfaces
-import { NewRateData } from "@/interfaces/Rate";
+import { NewRateData } from "@/interfaces";
 
 const BASE_URL = process.env.VITE_BASE_URL;
 

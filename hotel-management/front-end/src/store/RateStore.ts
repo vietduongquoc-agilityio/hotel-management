@@ -7,10 +7,10 @@ import {
   updateRate,
   createRateApi,
   deleteRate as deleteRateApi,
-} from "@/services/rateServices";
+} from "@/services";
 
 // InterFace
-import { RateData, NewRateData } from "@/interfaces/Rate";
+import { RateData, NewRateData } from "@/interfaces";
 
 interface RateState {
   rates: RateData[];
