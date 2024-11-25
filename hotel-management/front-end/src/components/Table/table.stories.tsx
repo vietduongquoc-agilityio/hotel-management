@@ -4,7 +4,7 @@ import { MemoryRouter } from "react-router-dom";
 import { themeColor } from "@/themes/Base/colors";
 
 // Components
-import Table, { TableProps } from "./";
+import Table, { TableProps } from ".";
 
 // InterFace
 import { RoomData, RateData } from "@/interfaces";

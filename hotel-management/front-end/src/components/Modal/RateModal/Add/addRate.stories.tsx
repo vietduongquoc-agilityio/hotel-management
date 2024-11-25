@@ -3,7 +3,7 @@ import { ChakraProvider } from "@chakra-ui/react";
 import { MemoryRouter } from "react-router-dom";
 
 // Components
-import AddRateModal from "./";
+import AddRateModal from ".";
 
 // Mock Data
 import { NewRateData } from "@/interfaces";

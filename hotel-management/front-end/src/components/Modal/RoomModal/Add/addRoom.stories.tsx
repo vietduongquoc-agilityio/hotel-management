@@ -2,7 +2,7 @@ import { Meta, StoryFn } from "@storybook/react";
 import { ChakraProvider } from "@chakra-ui/react";
 import { MemoryRouter } from "react-router-dom";
 
-import AddRoomModal from "./";
+import AddRoomModal from ".";
 
 // Interfaces
 import { NewRoomData } from "@/interfaces";
