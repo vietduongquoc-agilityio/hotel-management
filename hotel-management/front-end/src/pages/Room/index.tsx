@@ -2,17 +2,14 @@ import { useEffect, useState } from "react";
 import { Box, Heading, useToast } from "@chakra-ui/react";
 
 // InterFace
-import { NewRoomData, RoomData } from "@/interfaces/Room";
+import { NewRoomData, RoomData } from "@/interfaces";
 
 // Components
-import Table from "@/components/Tables";
-import Pagination from "@/components/Pagination";
-import LabelRoom from "@/components/Label/Room";
-import Spinner from "@/components/Spinner";
+import { LabelRoom, Pagination, Spinner, Table } from "@/components";
 
 // Store
-import { useRoomStore } from "@/store/RoomStore";
-import { useRateStore } from "@/store/RateStore";
+import { useRoomStore } from "@/store";
+import { useRateStore } from "@/store";
 
 const RoomPage = () => {
   const {

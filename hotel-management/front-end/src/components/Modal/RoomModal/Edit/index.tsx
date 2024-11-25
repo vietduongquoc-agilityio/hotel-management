@@ -15,18 +15,16 @@ import {
   roomFloorOptions,
   roomStatusColors,
   roomStatusOptions,
-} from "@/constant/SelectOptions";
+} from "@/constant";
 
 // Interface
-import { RoomData } from "@/interfaces/Room";
+import { RoomData } from "@/interfaces";
 
 // Store
-import { useRateStore } from "@/store/RateStore";
+import { useRateStore } from "@/store";
 
 // Components
-import withModal from "@/components/Modal/modalHoc";
-import Button from "@/components/Button";
-import Spinner from "@/components/Spinner";
+import { Button, Spinner, withModal } from "@/components";
 
 interface EditRoomModalProps {
   onClose: () => void;
@@ -147,7 +145,7 @@ const EditRoomModal = ({
       </FormControl>
 
       <ModalFooter>
-        <Button onClick={onClose} text="Cancel" buttonType="secondary" />
+        <Button onClick={onClose} text="Cancel" buttonType="warning" />
         {loading ? (
           <Spinner />
         ) : (

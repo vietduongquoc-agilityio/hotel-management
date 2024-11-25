@@ -1,7 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import Table from "../index";
-import { RateData } from "@/interfaces/Rate";
-import { RoomData } from "@/interfaces/Room";
+import { RateData, RoomData } from "@/interfaces";
 
 describe("Table Component", () => {
   const mockOnDelete = jest.fn();

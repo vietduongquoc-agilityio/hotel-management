@@ -11,19 +11,16 @@ import {
 import { useForm } from "react-hook-form";
 
 // Constants
-import { validationRules } from "@/constant/Validate";
-import { roomFloorOptions } from "@/constant/SelectOptions";
+import { validationRules, roomFloorOptions } from "@/constant";
 
 // InterFace
-import { NewRoomData } from "@/interfaces/Room";
+import { NewRoomData } from "@/interfaces";
 
 // Store
-import { useRateStore } from "@/store/RateStore";
+import { useRateStore } from "@/store";
 
 // Components
-import withModal from "@/components/Modal/modalHoc";
-import Button from "@/components/Button";
-import Spinner from "@/components/Spinner";
+import { Button, Spinner, withModal } from "@/components";
 
 interface AddRoomModalProps {
   onClose: () => void;
@@ -171,7 +168,7 @@ const AddRoomModal = ({ onClose, onAddRoom }: AddRoomModalProps) => {
       </FormControl>
 
       <ModalFooter>
-        <Button onClick={onClose} text="Cancel" buttonType="secondary" />
+        <Button onClick={onClose} text="Cancel" buttonType="warning" />
         {loading ? (
           <Spinner />
         ) : (

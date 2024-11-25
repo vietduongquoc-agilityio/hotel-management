@@ -4,12 +4,10 @@ import { MemoryRouter } from "react-router-dom";
 import { themeColor } from "@/themes/Base/colors";
 
 // Components
-import Table, { TableProps } from "./";
+import Table, { TableProps } from ".";
 
 // InterFace
-import { RoomData } from "@/interfaces/Room";
-import { RateData } from "@/interfaces/Rate";
-
+import { RoomData, RateData } from "@/interfaces";
 
 // Mock Data
 const roomData: RoomData[] = [
@@ -35,8 +33,8 @@ const rateData: RateData[] = [
   {
     documentId: "1",
     roomType: "Deluxe",
-    deals: "Breakfast Included",
-    cancellationPolicy: "Free Cancellation",
+    deals: "Family Deal",
+    cancellationPolicy: "Flexible",
     dealPrice: "120",
     rate: "150",
     totalOfRooms: 10,

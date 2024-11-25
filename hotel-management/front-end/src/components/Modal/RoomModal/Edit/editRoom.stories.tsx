@@ -4,10 +4,10 @@ import { Meta, StoryFn } from "@storybook/react";
 import { MemoryRouter } from "react-router-dom";
 
 // Components
-import EditRoomModal from "./";
+import EditRoomModal from ".";
 
 // InterFace
-import { RoomData } from "@/interfaces/Room";
+import { RoomData } from "@/interfaces";
 
 export default {
   title: "Components/Modals/Room/EditRoomModal",

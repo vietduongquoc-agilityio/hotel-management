@@ -12,11 +12,10 @@ import {
 import React from "react";
 
 // Components
-import Spinner from "@/components/Spinner";
-import Button from "@/components/Button";
+import { Button, Spinner } from "@/components";
 
 //Services
-import { deleteRate } from "@/services/rateServices";
+import { deleteRate } from "@/services";
 
 interface DeleteRateProps {
   rateId: string;
@@ -74,11 +73,7 @@ const DeleteRate = ({ rateId, onDeleteRate }: DeleteRateProps) => {
             </AlertDialogBody>
 
             <AlertDialogFooter>
-              <Button
-                text="Cancel"
-                buttonType="secondary"
-                onClick={onClose}
-              />
+              <Button text="Cancel" buttonType="warning" onClick={onClose} />
               {loading ? (
                 <Spinner />
               ) : (

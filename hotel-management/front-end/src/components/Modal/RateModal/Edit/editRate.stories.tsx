@@ -2,10 +2,10 @@ import { Meta, StoryFn } from "@storybook/react";
 import { ChakraProvider } from "@chakra-ui/react";
 
 // Components
-import EditRateModal from "./";
+import EditRateModal from ".";
 
 // Mock Data
-import { RateData } from "@/interfaces/Rate";
+import { RateData } from "@/interfaces";
 
 // Theme
 import { themeColor } from "@/themes/Base/colors";

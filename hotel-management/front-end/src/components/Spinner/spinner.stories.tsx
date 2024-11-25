@@ -1,6 +1,6 @@
 import { Meta, StoryFn } from "@storybook/react";
 import { Spinner, Box, SpinnerProps, ChakraProvider } from "@chakra-ui/react";
-import LoadingSpinner from "./";
+import LoadingSpinner from ".";
 import { MemoryRouter } from "react-router-dom";
 import { themeColor } from "@/themes/Base/colors";
 

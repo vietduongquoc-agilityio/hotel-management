@@ -35,8 +35,8 @@ const Pagination: React.FC<paginationProps> = ({
           key={i}
           onClick={() => handlePageClick(i)}
           text={`${i}`}
-          variant={currentPage === i ? "pagination" : "outline"}
-          buttonType="pagination"
+          variant={currentPage === i ? "surface" : "outline"}
+          buttonType="surface"
           sx={currentPage === i ? { bg: "blue.100", color: "blue.500" } : {}}
           borderRadius="5px"
         />
@@ -59,14 +59,14 @@ const Pagination: React.FC<paginationProps> = ({
           onClick={handlePrevious}
           isDisabled={currentPage === 1}
           text="< Previous"
-          buttonType="disabled"
+          buttonType="secondary"
         />
         <HStack>{renderPageNumbers()}</HStack>
         <Button
           onClick={handleNext}
           isDisabled={currentPage === pageCount}
           text="Next >"
-          buttonType="disabled"
+          buttonType="secondary"
         />
       </HStack>
     </VStack>

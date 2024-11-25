@@ -1,28 +1,26 @@
-import { ButtonProps } from "@chakra-ui/react";
-
 export type ButtonType =
   | "primary"
-  | "pagination"
-  | "secondary"
+  | "surface"
+  | "warning"
   | "error"
-  | "disabled";
+  | "secondary";
 
-export const getStyleButton = (type: ButtonType): ButtonProps => {
+export const getStyleButton = (type: ButtonType) => {
   switch (type) {
     case "primary":
       return primary;
-    case "pagination":
-      return pagination;
-    case "secondary":
-      return secondary;
+    case "surface":
+      return surface;
+    case "warning":
+      return warning;
     case "error":
       return error;
     default:
-      return disabled;
+      return secondary;
   }
 };
 
-const primary: ButtonProps = {
+const primary = {
   fontSize: "md",
   variant: "solid",
   fontWeight: "bold",
@@ -34,10 +32,9 @@ const primary: ButtonProps = {
   },
 };
 
-const disabled: ButtonProps = {
+const secondary = {
   fontSize: "md",
   variant: "solid",
-  fontWeight: "bold",
   color: "grey.500",
   _hover: {
     bg: "blue.100",
@@ -52,11 +49,11 @@ const disabled: ButtonProps = {
   cursor: "pointer",
 };
 
-const pagination: ButtonProps = {
+const surface = {
   border: "1px solid #ffffff",
   height: "40px",
   size: "sm",
-  width: "40px",
+  width: "auto",
   color: "grey.400",
   _hover: { color: "blue.500", bg: "blue.100" },
   _active: {
@@ -65,7 +62,7 @@ const pagination: ButtonProps = {
   cursor: "pointer",
 };
 
-const secondary: ButtonProps = {
+const warning = {
   fontSize: "md",
   variant: "solid",
   fontWeight: "bold",
@@ -81,7 +78,7 @@ const secondary: ButtonProps = {
   cursor: "pointer",
 };
 
-const error: ButtonProps = {
+const error = {
   fontSize: "md",
   variant: "solid",
   fontWeight: "bold",

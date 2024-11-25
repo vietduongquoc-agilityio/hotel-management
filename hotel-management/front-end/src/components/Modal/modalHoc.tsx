@@ -11,10 +11,10 @@ import {
 } from "@chakra-ui/react";
 
 //Components
-import Button from "@/components/Button";
+import { Button } from "@/components";
 
 //Store
-import { useRateStore } from "@/store/RateStore";
+import { useRateStore } from "@/store";
 
 const withModal = (
   WrappedComponent: React.ComponentType<any>,

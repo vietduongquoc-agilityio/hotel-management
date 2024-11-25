@@ -8,16 +8,13 @@ import {
 import { useForm } from "react-hook-form";
 
 // InterFace
-import { RateData } from "@/interfaces/Rate";
+import { RateData } from "@/interfaces";
 
 // Constants
-import { validationRules } from "@/constant/Validate";
+import { validationRules } from "@/constant";
 
 // Components
-import withModal from "@/components/Modal/modalHoc";
-import Button from "@/components/Button";
-import Input from "@/components/Input";
-import Spinner from "@/components/Spinner";
+import { Button, Input, Spinner, withModal } from "@/components";
 
 interface EditRateModalProps {
   onClose: () => void;
@@ -123,7 +120,7 @@ const EditRateModal = ({
       </FormControl>
 
       <ModalFooter>
-        <Button onClick={onClose} text="Cancel" buttonType="secondary" />
+        <Button onClick={onClose} text="Cancel" buttonType="warning" />
         {loading ? (
           <Spinner />
         ) : (

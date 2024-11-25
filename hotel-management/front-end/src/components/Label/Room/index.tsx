@@ -2,20 +2,20 @@ import { Box, UnorderedList, ListItem, Text, Select } from "@chakra-ui/react";
 import { ChangeEvent } from "react";
 
 // InterFace
-import { NewRoomData } from "@/interfaces/Room";
+import { NewRoomData } from "@/interfaces";
 
 // Constants
 import {
   roomFloorOptions,
   roomStatusColors,
   roomStatusOptions,
-} from "@/constant/SelectOptions";
+} from "@/constant";
 
 // Store
-import { useRateStore } from "@/store/RateStore";
+import { useRateStore } from "@/store";
 
 // Components
-import AddRoomModal from "@/components/Modal/RoomModal/Add";
+import { AddRoomModal } from "@/components";
 
 export interface LabelRoomProps {
   width?: string;
