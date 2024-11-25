@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Toast should call useToast with correct parameters for info toast 1`] = `
+{
+  "current": {
+    "showToast": [Function],
+  },
+}
+`;

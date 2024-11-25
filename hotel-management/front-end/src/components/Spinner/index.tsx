@@ -3,6 +3,7 @@ import { Spinner, Box } from "@chakra-ui/react";
 const LoadingSpinner = () => {
   return (
     <Box
+      data-testid="loading-spinner-box"
       display="flex"
       justifyContent="center"
       alignItems="center"
