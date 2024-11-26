@@ -37,7 +37,7 @@ const RoomPage = () => {
 
   useEffect(() => {
     fetchRates(currentPage, pageSize);
-  }, [currentPage, fetchRates]);
+  }, []);
 
   useEffect(() => {
     fetchRooms(currentPage, pageSize);
