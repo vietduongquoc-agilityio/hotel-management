@@ -14,7 +14,7 @@ import {
 import { Button } from "@/components";
 
 //Store
-import { useRateStore } from "@/store";
+import { useRateStore } from "@/stores";
 
 const withModal = (
   WrappedComponent: React.ComponentType<any>,

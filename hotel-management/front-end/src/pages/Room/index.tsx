@@ -8,8 +8,8 @@ import { NewRoomData, RoomData } from "@/interfaces";
 import { LabelRoom, Pagination, Spinner, Table } from "@/components";
 
 // Store
-import { useRoomStore } from "@/store";
-import { useRateStore } from "@/store";
+import { useRoomStore } from "@/stores";
+import { useRateStore } from "@/stores";
 
 const RoomPage = () => {
   const {

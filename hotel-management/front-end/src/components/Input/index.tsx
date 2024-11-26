@@ -1,6 +1,6 @@
 import { Input as InputUI, InputProps } from "@chakra-ui/react";
 import { forwardRef, memo } from "react";
-import { getStyleInput } from "./InputStyle";
+import { getStyleInput } from "./input-style";
 
 export type InputType = "primary" | "number";
 

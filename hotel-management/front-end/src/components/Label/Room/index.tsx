@@ -9,10 +9,10 @@ import {
   roomFloorOptions,
   roomStatusColors,
   roomStatusOptions,
-} from "@/constant";
+} from "@/constants";
 
 // Store
-import { useRateStore } from "@/store";
+import { useRateStore } from "@/stores";
 
 // Components
 import { AddRoomModal } from "@/components";

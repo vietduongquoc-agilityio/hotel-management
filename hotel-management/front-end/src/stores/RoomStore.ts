@@ -7,7 +7,7 @@ import { getRooms, createRoomApi, updateRoom, deleteRoom } from "@/services";
 import { RoomData, NewRoomData } from "@/interfaces";
 
 // Constant
-import { setBedTypeOptions } from "@/constant";
+import { setBedTypeOptions } from "@/constants";
 
 interface RoomState {
   rooms: RoomData[];

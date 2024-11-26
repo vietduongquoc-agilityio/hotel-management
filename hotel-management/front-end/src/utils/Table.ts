@@ -1,5 +1,5 @@
 // Constant
-import { roomStatusBackgrounds, roomStatusColors } from "@/constant";
+import { roomStatusBackgrounds, roomStatusColors } from "@/constants";
 
 // Interfaces
 import { RoomData, RateData } from "@/interfaces";

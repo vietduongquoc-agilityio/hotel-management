@@ -8,7 +8,7 @@ import { NewRateData, RateData } from "@/interfaces";
 import { LabelRate, Table, Spinner } from "@/components";
 
 // Store
-import { useRateStore } from "@/store";
+import { useRateStore } from "@/stores";
 
 const RatePage = () => {
   const toast = useToast();

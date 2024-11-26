@@ -15,13 +15,13 @@ import {
   roomFloorOptions,
   roomStatusColors,
   roomStatusOptions,
-} from "@/constant";
+} from "@/constants";
 
 // Interface
 import { RoomData } from "@/interfaces";
 
 // Store
-import { useRateStore } from "@/store";
+import { useRateStore } from "@/stores";
 
 // Components
 import { Button, Spinner, withModal } from "@/components";

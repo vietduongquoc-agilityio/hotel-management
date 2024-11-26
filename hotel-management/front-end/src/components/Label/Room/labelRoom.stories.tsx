@@ -10,7 +10,7 @@ import LabelRoom, { LabelRoomProps } from "./index";
 import { NewRoomData } from "@/interfaces";
 
 // Store
-import { useRateStore } from "@/store";
+import { useRateStore } from "@/stores";
 
 const mockBedTypeOptions = [
   { value: "single", label: "Single" },

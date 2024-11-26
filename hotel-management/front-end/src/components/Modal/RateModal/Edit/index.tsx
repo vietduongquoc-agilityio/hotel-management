@@ -11,7 +11,7 @@ import { useForm } from "react-hook-form";
 import { RateData } from "@/interfaces";
 
 // Constants
-import { validationRules } from "@/constant";
+import { validationRules } from "@/constants";
 
 // Components
 import { Button, Input, Spinner, withModal } from "@/components";
