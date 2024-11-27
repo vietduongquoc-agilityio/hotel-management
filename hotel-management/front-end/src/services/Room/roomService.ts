@@ -1,5 +1,8 @@
 import axios from "axios";
 import { createStandaloneToast } from "@chakra-ui/react";
+//InterFace
+import { NewRoomData } from "@/interfaces";
+
 const { toast } = createStandaloneToast();
 
 const showErrorToast = (message: string) => {
@@ -11,9 +14,6 @@ const showErrorToast = (message: string) => {
     isClosable: true,
   });
 };
-
-//InterFace
-import { NewRoomData } from "@/interfaces";
 
 const BASE_URL = process.env.VITE_BASE_URL;
 
@@ -48,28 +48,26 @@ export const getRooms = async (
 };
 
 export const createRoomApi = async (roomData: NewRoomData) => {
-  try {
-    const response = await axios.post(`${BASE_URL}/rooms`, {
-      data: roomData,
-    });
-    return response.data;
-  } catch (error) {
-    showErrorToast("Error in createRoom:");
-    throw error;
-  }
+  const response = await axios.post(`${BASE_URL}/rooms`, {
+    data: roomData,
+  });
+  return { message: "Room created successfully", data: response.data };
 };
 
-export const getRoomById = (roomId: string) =>
-  axios.get(`${BASE_URL}/rooms/${roomId}`).then((response) => response.data);
+export const getRoomById = async (roomId: string) => {
+  const response = await axios.get(`${BASE_URL}/rooms/${roomId}`);
+  return { message: "Room fetched successfully", data: response.data };
+};
 
-export const updateRoom = (roomId: string, roomData: NewRoomData) => {
+export const updateRoom = async (roomId: string, roomData: NewRoomData) => {
   if (!roomId) throw new Error("Missing document ID for room update.");
-  return axios
-    .put(`${BASE_URL}/rooms/${roomId}`, { data: roomData })
-    .then((response) => response.data);
+  const response = await axios.put(`${BASE_URL}/rooms/${roomId}`, {
+    data: roomData,
+  });
+  return { message: "Room updated successfully", data: response.data };
 };
 
 export const deleteRoom = async (roomId: string) => {
   const response = await axios.delete(`${BASE_URL}/rooms/${roomId}`);
-  return response.data;
+  return { message: "Room deleted successfully", data: response.data };
 };
