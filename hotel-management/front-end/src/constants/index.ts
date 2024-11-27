@@ -1,2 +1,2 @@
-export * from "./SelectOptions";
-export * from "./Validate";
+export * from "./selectOptions";
+export * from "./validate";
