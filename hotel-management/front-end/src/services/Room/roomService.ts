@@ -49,7 +49,7 @@ export const getRooms = async (
 
 export const createRoomApi = async (roomData: NewRoomData) => {
   const response = await axios.post(`${BASE_URL}/rooms`, {
-    data: roomData,
+    data: { roomData },
   });
   return { message: "Room created successfully", data: response.data };
 };

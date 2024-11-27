@@ -36,15 +36,10 @@ export const getRates = async (page: number, pageSize: number) => {
 };
 
 export const createRateApi = async (rateData: NewRateData) => {
-  try {
-    const response = await axios.post(`${BASE_URL}/rates`, {
-      data: rateData,
-    });
-    return response.data;
-  } catch (error) {
-    showErrorToast("Failed to create a new rate.");
-    throw error;
-  }
+  const response = await axios.post(`${BASE_URL}/rates`, {
+    data: { rateData },
+  });
+  return { message: "Rate created successfully", data: response.data };
 };
 
 export const updateRate = async (rateId: string, rateData: NewRateData) => {
@@ -53,23 +48,14 @@ export const updateRate = async (rateId: string, rateData: NewRateData) => {
     showErrorToast(errorMessage);
     throw new Error(errorMessage);
   }
-  try {
-    const response = await axios.put(`${BASE_URL}/rates/${rateId}`, {
-      data: rateData,
-    });
-    return response.data;
-  } catch (error) {
-    showErrorToast("Failed to update the rate.");
-    throw error;
-  }
+
+  const response = await axios.put(`${BASE_URL}/rates/${rateId}`, {
+    data: rateData,
+  });
+  return { message: "Rate updated successfully", data: response.data };
 };
 
 export const deleteRate = async (rateId: string) => {
-  try {
-    const response = await axios.delete(`${BASE_URL}/rates/${rateId}`);
-    return response.data;
-  } catch (error) {
-    showErrorToast("Failed to delete the rate.");
-    throw error;
-  }
+  const response = await axios.delete(`${BASE_URL}/rates/${rateId}`);
+  return { message: "Room deleted successfully", data: response.data };
 };
