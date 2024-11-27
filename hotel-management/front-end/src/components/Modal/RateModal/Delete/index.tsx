@@ -12,7 +12,7 @@ import {
 import React from "react";
 
 // Components
-import { Button, Spinner } from "@/components";
+import { Button } from "@/components";
 
 //Services
 import { deleteRate } from "@/services";
@@ -26,10 +26,10 @@ const DeleteRate = ({ rateId, onDeleteRate }: DeleteRateProps) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const cancelRef = React.useRef(null);
   const toast = useToast();
-  const [loading, setLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleDelete = async () => {
-    setLoading(true);
+    setIsLoading(true);
     try {
       await deleteRate(rateId);
       onDeleteRate(rateId);
@@ -49,7 +49,7 @@ const DeleteRate = ({ rateId, onDeleteRate }: DeleteRateProps) => {
         isClosable: true,
       });
     } finally {
-      setLoading(false);
+      setIsLoading(false);
     }
   };
 
@@ -74,16 +74,13 @@ const DeleteRate = ({ rateId, onDeleteRate }: DeleteRateProps) => {
 
             <AlertDialogFooter>
               <Button text="Cancel" buttonType="warning" onClick={onClose} />
-              {loading ? (
-                <Spinner />
-              ) : (
-                <Button
-                  onClick={handleDelete}
-                  ml={3}
-                  text="Confirm Delete"
-                  buttonType="error"
-                />
-              )}
+              <Button
+                isLoading={isLoading}
+                onClick={handleDelete}
+                ml={3}
+                text="Confirm Delete"
+                buttonType="error"
+              />
             </AlertDialogFooter>
           </AlertDialogContent>
         </AlertDialogOverlay>

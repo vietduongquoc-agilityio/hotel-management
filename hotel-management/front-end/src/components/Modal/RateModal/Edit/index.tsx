@@ -34,11 +34,11 @@ const EditRateModal = ({
   } = useForm({
     defaultValues: initialRateData,
   });
-  const [loading, setLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const toast = useToast();
 
   const onSubmit = async (data: RateData) => {
-    setLoading(true);
+    setIsLoading(true);
     try {
       await onEditRate(data);
       if (onClose) onClose();
@@ -51,7 +51,7 @@ const EditRateModal = ({
         isClosable: true,
       });
     } finally {
-      setLoading(false);
+      setIsLoading(false);
     }
   };
 
@@ -120,12 +120,17 @@ const EditRateModal = ({
       </FormControl>
 
       <ModalFooter>
-        <Button onClick={onClose} text="Cancel" buttonType="warning" />
-        {loading ? (
-          <Spinner />
-        ) : (
-          <Button type="submit" text="Edit" buttonType="primary" />
-        )}
+        <Button
+          onClick={onClose}
+          text="Cancel"
+          buttonType="warning"
+        />
+        <Button
+          isLoading={isLoading}
+          type="submit"
+          text="Edit"
+          buttonType="primary"
+        />
       </ModalFooter>
     </form>
   );

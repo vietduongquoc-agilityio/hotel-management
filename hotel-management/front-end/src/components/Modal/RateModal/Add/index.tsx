@@ -138,8 +138,13 @@ const AddRateModal = ({ onClose, onAddRate }: AddRateModalProps) => {
         )}
       </FormControl>
       <ModalFooter>
-        <Button isLoading={isLoading} onClick={onClose} text="Cancel" buttonType="warning" />
-        <Button isLoading={isLoading} type="submit" text="Add" buttonType="primary" />
+        <Button onClick={onClose} text="Cancel" buttonType="warning" />
+        <Button
+          isLoading={isLoading}
+          type="submit"
+          text="Add"
+          buttonType="primary"
+        />
       </ModalFooter>
     </form>
   );

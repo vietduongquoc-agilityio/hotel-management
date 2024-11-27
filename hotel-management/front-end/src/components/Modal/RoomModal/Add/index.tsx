@@ -34,7 +34,7 @@ interface FormData {
 }
 
 const AddRoomModal = ({ onClose, onAddRoom }: AddRoomModalProps) => {
-  const [loading, setLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const toast = useToast();
   const bedTypeOptions = useRateStore((state) => state.bedTypeOptions);
   const rates = useRateStore((state) => state.rates);
@@ -81,7 +81,7 @@ const AddRoomModal = ({ onClose, onAddRoom }: AddRoomModalProps) => {
       roomStatus: "Available",
     };
 
-    setLoading(true);
+    setIsLoading(true);
     try {
       const { documentId } = selectedRate;
       const requestPayload = {
@@ -112,7 +112,7 @@ const AddRoomModal = ({ onClose, onAddRoom }: AddRoomModalProps) => {
         isClosable: true,
       });
     } finally {
-      setLoading(false);
+      setIsLoading(false);
     }
   };
 
@@ -169,11 +169,12 @@ const AddRoomModal = ({ onClose, onAddRoom }: AddRoomModalProps) => {
 
       <ModalFooter>
         <Button onClick={onClose} text="Cancel" buttonType="warning" />
-        {loading ? (
-          <Spinner />
-        ) : (
-          <Button type="submit" text="Add" buttonType="primary" />
-        )}
+        <Button
+          isLoading={isLoading}
+          type="submit"
+          text="Add"
+          buttonType="primary"
+        />
       </ModalFooter>
     </form>
   );

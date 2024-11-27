@@ -45,12 +45,12 @@ const EditRoomModal = ({
     defaultValues: initialRoomData,
   });
 
-  const [loading, setLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const toast = useToast();
   const bedTypeOptions = useRateStore((state) => state.bedTypeOptions);
 
   const onSubmit = async (data: RoomData) => {
-    setLoading(true);
+    setIsLoading(true);
     try {
       await onEditRoom(data);
 
@@ -64,7 +64,7 @@ const EditRoomModal = ({
         isClosable: true,
       });
     } finally {
-      setLoading(false);
+      setIsLoading(false);
     }
   };
 
@@ -146,11 +146,12 @@ const EditRoomModal = ({
 
       <ModalFooter>
         <Button onClick={onClose} text="Cancel" buttonType="warning" />
-        {loading ? (
-          <Spinner />
-        ) : (
-          <Button type="submit" text="Edit" buttonType="primary" />
-        )}
+        <Button
+          isLoading={isLoading}
+          type="submit"
+          text="Edit"
+          buttonType="primary"
+        />
       </ModalFooter>
     </form>
   );
