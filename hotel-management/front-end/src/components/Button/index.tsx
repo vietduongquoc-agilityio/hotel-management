@@ -23,7 +23,11 @@ const Button = (ButtonTypeProps: buttonTypeProps) => {
     ...styleProps,
   };
 
-  return <ButtonUI {...propsStyle}>{text}</ButtonUI>;
+  return (
+    <ButtonUI {...propsStyle}>
+      {text}
+    </ButtonUI>
+  );
 };
 
 export default memo(Button);
