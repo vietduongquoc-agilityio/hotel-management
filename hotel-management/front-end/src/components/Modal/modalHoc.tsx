@@ -7,7 +7,6 @@ import {
   ModalContent,
   ModalHeader,
   ModalBody,
-  ModalFooter,
 } from "@chakra-ui/react";
 
 //Components
@@ -43,7 +42,6 @@ const withModal = (
             <ModalBody>
               <WrappedComponent {...props} onClose={toggleModal} />
             </ModalBody>
-            <ModalFooter></ModalFooter>
           </ModalContent>
         </Modal>
       </>
