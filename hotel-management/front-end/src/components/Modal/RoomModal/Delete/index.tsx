@@ -12,7 +12,7 @@ import {
 } from "@chakra-ui/react";
 
 // Components
-import { Button, Spinner } from "@/components";
+import { Button } from "@/components";
 
 //Services
 import { deleteRoom } from "@/services";

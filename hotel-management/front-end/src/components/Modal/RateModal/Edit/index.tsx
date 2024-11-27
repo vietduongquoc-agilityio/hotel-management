@@ -14,7 +14,7 @@ import { RateData } from "@/interfaces";
 import { validationRules } from "@/constants";
 
 // Components
-import { Button, Input, Spinner, withModal } from "@/components";
+import { Button, Input, withModal } from "@/components";
 
 interface EditRateModalProps {
   onClose: () => void;
