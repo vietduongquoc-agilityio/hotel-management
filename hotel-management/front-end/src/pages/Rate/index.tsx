@@ -14,7 +14,7 @@ const RatePage = () => {
   const toast = useToast();
 
   // Zustand store for rates
-  const { rates, loading, fetchRates, addRate, editRate, deleteRate } =
+  const { rates, isLoading, fetchRates, addRate, editRate, deleteRate } =
     useRateStore();
 
   useEffect(() => {
@@ -56,7 +56,7 @@ const RatePage = () => {
         Rates
       </Heading>
       <LabelRate onAddRate={handleAddRate} width={""} />
-      {loading ? (
+      {isLoading ? (
         <Spinner />
       ) : (
         <Table
