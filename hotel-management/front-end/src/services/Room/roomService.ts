@@ -21,7 +21,7 @@ export const getRooms = async (
   page: number,
   pageSize: number,
   field?: string,
-  value?: string
+  value?: string,
 ) => {
   try {
     const filters = field && value ? { [`filters[${field}]`]: value } : {};
@@ -48,26 +48,43 @@ export const getRooms = async (
 };
 
 export const createRoomApi = async (roomData: NewRoomData) => {
-  const response = await axios.post(`${BASE_URL}/rooms`, {
-    data: { roomData },
-  });
-  return { message: "Room created successfully", data: response.data };
+  try {
+    const response = await axios.post(`${BASE_URL}/rooms`, {
+      data: roomData,
+    });
+    return response.data;
+  } catch (error) {
+    showErrorToast("Error in createRoom:");
+    throw error;
+  }
 };
 
 export const getRoomById = async (roomId: string) => {
-  const response = await axios.get(`${BASE_URL}/rooms/${roomId}`);
-  return { message: "Room fetched successfully", data: response.data };
+  try {
+    const response = await axios.get(`${BASE_URL}/rooms/${roomId}`);
+    return { message: "Room fetched successfully", data: response.data };
+  } catch (error) {
+    showErrorToast("Error fetching room details");
+  }
 };
 
 export const updateRoom = async (roomId: string, roomData: NewRoomData) => {
-  if (!roomId) throw new Error("Missing document ID for room update.");
-  const response = await axios.put(`${BASE_URL}/rooms/${roomId}`, {
-    data: roomData,
-  });
-  return { message: "Room updated successfully", data: response.data };
+  try {
+    if (!roomId) throw new Error("Missing document ID for room update.");
+    const response = await axios.put(`${BASE_URL}/rooms/${roomId}`, {
+      data: roomData,
+    });
+    return { message: "Room updated successfully", data: response.data };
+  } catch (error) {
+    showErrorToast("Error updating room");
+  }
 };
 
 export const deleteRoom = async (roomId: string) => {
-  const response = await axios.delete(`${BASE_URL}/rooms/${roomId}`);
-  return { message: "Room deleted successfully", data: response.data };
+  try {
+    const response = await axios.delete(`${BASE_URL}/rooms/${roomId}`);
+    return { message: "Room deleted successfully", data: response.data };
+  } catch (error) {
+    showErrorToast("Error deleting room");
+  }
 };

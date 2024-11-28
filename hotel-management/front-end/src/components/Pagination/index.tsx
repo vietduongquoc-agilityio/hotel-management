@@ -15,6 +15,8 @@ const Pagination: React.FC<paginationProps> = ({
   setCurrentPage,
   pageCount,
 }) => {
+  const visibleRange = 5;
+
   const handlePrevious = () => {
     if (currentPage > 1) setCurrentPage(currentPage - 1);
   };
@@ -29,6 +31,26 @@ const Pagination: React.FC<paginationProps> = ({
 
   const renderPageNumbers = () => {
     const pageNumbers = [];
+    const startPage = Math.max(currentPage - Math.floor(visibleRange / 2), 1);
+    const endPage = Math.min(startPage + visibleRange - 1, pageCount);
+
+    if (startPage > 1) {
+      pageNumbers.push(
+        <Button
+          key="first"
+          onClick={() => handlePageClick(1)}
+          text="1"
+          variant={currentPage === 1 ? "surface" : "outline"}
+          buttonType="surface"
+          sx={currentPage === 1 ? { bg: "blue.100", color: "blue.500" } : {}}
+          borderRadius="5px"
+        />
+      );
+      if (startPage > 2) {
+        pageNumbers.push(<span key="dots-start">...</span>);
+      }
+    }
+
     for (let i = 1; i <= pageCount; i++) {
       pageNumbers.push(
         <Button
@@ -42,6 +64,28 @@ const Pagination: React.FC<paginationProps> = ({
         />
       );
     }
+
+    if (endPage < pageCount) {
+      if (endPage < pageCount - 1) {
+        pageNumbers.push(<span key="dots-end">...</span>);
+      }
+      pageNumbers.push(
+        <Button
+          key={pageCount}
+          onClick={() => handlePageClick(pageCount)}
+          text={`${pageCount}`}
+          variant={currentPage === pageCount ? "surface" : "outline"}
+          buttonType="surface"
+          sx={
+            currentPage === pageCount
+              ? { bg: "blue.100", color: "blue.500" }
+              : {}
+          }
+          borderRadius="5px"
+        />
+      );
+    }
+
     return pageNumbers;
   };
 

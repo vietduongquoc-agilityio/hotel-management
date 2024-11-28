@@ -36,10 +36,15 @@ export const getRates = async (page: number, pageSize: number) => {
 };
 
 export const createRateApi = async (rateData: NewRateData) => {
-  const response = await axios.post(`${BASE_URL}/rates`, {
-    data: { rateData },
-  });
-  return { message: "Rate created successfully", data: response.data };
+  try {
+    const response = await axios.post(`${BASE_URL}/rates`, {
+      data: rateData,
+    });
+    return response.data;
+  } catch (error) {
+    showErrorToast("Failed to create a new rate.");
+    throw error;
+  }
 };
 
 export const updateRate = async (rateId: string, rateData: NewRateData) => {
