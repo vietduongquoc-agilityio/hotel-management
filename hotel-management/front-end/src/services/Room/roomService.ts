@@ -21,7 +21,7 @@ export const getRooms = async (
   page: number,
   pageSize: number,
   field?: string,
-  value?: string,
+  value?: string
 ) => {
   try {
     const filters = field && value ? { [`filters[${field}]`]: value } : {};
@@ -64,7 +64,7 @@ export const getRoomById = async (roomId: string) => {
     const response = await axios.get(`${BASE_URL}/rooms/${roomId}`);
     return { message: "Room fetched successfully", data: response.data };
   } catch (error) {
-    showErrorToast("Error fetching room details");
+    return { message: "Error fetching room details", data: null };
   }
 };
 
@@ -76,7 +76,7 @@ export const updateRoom = async (roomId: string, roomData: NewRoomData) => {
     });
     return { message: "Room updated successfully", data: response.data };
   } catch (error) {
-    showErrorToast("Error updating room");
+    return { message: "Error updated room details", data: null };
   }
 };
 
@@ -85,6 +85,6 @@ export const deleteRoom = async (roomId: string) => {
     const response = await axios.delete(`${BASE_URL}/rooms/${roomId}`);
     return { message: "Room deleted successfully", data: response.data };
   } catch (error) {
-    showErrorToast("Error deleting room");
+    return { message: "Error deleted room details", data: null };
   }
 };
