@@ -42,8 +42,7 @@ export const getRooms = async (
     }
     return response.data;
   } catch (error) {
-    showErrorToast("Error fetching room data");
-    throw error;
+    return { message: "Error fetching room data", data: null };
   }
 };
 
@@ -54,8 +53,7 @@ export const createRoomApi = async (roomData: NewRoomData) => {
     });
     return response.data;
   } catch (error) {
-    showErrorToast("Error in createRoom:");
-    throw error;
+    return { message: "Error in createRoom:", data: null };
   }
 };
 
