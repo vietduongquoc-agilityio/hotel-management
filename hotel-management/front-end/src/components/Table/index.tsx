@@ -26,7 +26,7 @@ export interface TableProps<T> {
   type: "room" | "rate";
   error?: string | null;
   onDelete: (id: string) => void;
-  onEdit: <T>(updatedData: T) => void;
+  onEdit: (updatedData: T) => void;
 }
 
 const Table = <T extends RoomData | RateData>({
@@ -37,6 +37,7 @@ const Table = <T extends RoomData | RateData>({
   onEdit,
 }: TableProps<T>) => {
   const [activeId, setActiveId] = useState<string | null>(null);
+  const editFunction = onEdit as <T>(updatedData: T) => void;
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -208,7 +209,10 @@ const Table = <T extends RoomData | RateData>({
                 borderRadius="8px"
                 w="80px"
               >
-                <EditFunctionModal initialData={item} onEditFunction={onEdit} />
+                <EditFunctionModal
+                  initialData={item}
+                  onEditFunction={editFunction}
+                />
                 <DeleteFunctionModal
                   documentId={item.documentId}
                   onDeleteFunction={onDelete}
