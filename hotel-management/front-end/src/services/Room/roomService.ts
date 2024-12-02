@@ -1,19 +1,6 @@
 import axios from "axios";
-import { createStandaloneToast } from "@chakra-ui/react";
 //InterFace
 import { NewRoomData } from "@/interfaces";
-
-const { toast } = createStandaloneToast();
-
-const showErrorToast = (message: string) => {
-  toast({
-    title: "Error",
-    description: message,
-    status: "error",
-    duration: 3000,
-    isClosable: true,
-  });
-};
 
 const BASE_URL = process.env.VITE_BASE_URL;
 

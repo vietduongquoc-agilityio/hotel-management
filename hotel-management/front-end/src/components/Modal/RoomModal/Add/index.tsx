@@ -23,8 +23,9 @@ import { useRateStore } from "@/stores";
 import { Button, withModal } from "@/components";
 
 interface AddRoomModalProps {
-  onClose: () => void;
   onAddRoom: (roomData: NewRoomData) => void;
+  onClose: () => void;
+  isDisabled: boolean;
 }
 
 interface FormData {
@@ -33,7 +34,7 @@ interface FormData {
   roomFacility: string;
 }
 
-const AddRoomModal = ({ onClose, onAddRoom }: AddRoomModalProps) => {
+const AddRoomModal = ({ onAddRoom, onClose }: AddRoomModalProps) => {
   const [isLoading, setIsLoading] = useState(false);
   const toast = useToast();
   const bedTypeOptions = useRateStore((state) => state.bedTypeOptions);
@@ -102,7 +103,6 @@ const AddRoomModal = ({ onClose, onAddRoom }: AddRoomModalProps) => {
         duration: 3000,
         isClosable: true,
       });
-      onClose();
     } catch {
       toast({
         title: "Failed to add room.",
@@ -168,7 +168,7 @@ const AddRoomModal = ({ onClose, onAddRoom }: AddRoomModalProps) => {
       </FormControl>
 
       <ModalFooter>
-        <Button onClick={onClose} text="Cancel" buttonType="warning" />
+        <Button text="Cancel" buttonType="warning" onClick={onClose} />
         <Button
           isLoading={isLoading}
           type="submit"

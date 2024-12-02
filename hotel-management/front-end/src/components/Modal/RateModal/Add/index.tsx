@@ -17,8 +17,8 @@ import { validationRules } from "@/constants";
 import { Button, Input, withModal } from "@/components";
 
 interface AddRateModalProps {
-  onClose: () => void;
   onAddRate: (rateData: NewRateData) => void;
+  onClose: () => void;
 }
 
 interface FormData {
@@ -29,7 +29,7 @@ interface FormData {
   totalOfRooms: number;
 }
 
-const AddRateModal = ({ onClose, onAddRate }: AddRateModalProps) => {
+const AddRateModal = ({ onAddRate, onClose }: AddRateModalProps) => {
   const [isLoading, setIsLoading] = useState(false);
   const toast = useToast();
 
@@ -60,7 +60,6 @@ const AddRateModal = ({ onClose, onAddRate }: AddRateModalProps) => {
         duration: 3000,
         isClosable: true,
       });
-      onClose();
     } catch {
       toast({
         title: "Failed to add rate.",
@@ -138,7 +137,7 @@ const AddRateModal = ({ onClose, onAddRate }: AddRateModalProps) => {
         )}
       </FormControl>
       <ModalFooter>
-        <Button onClick={onClose} text="Cancel" buttonType="warning" />
+        <Button text="Cancel" buttonType="warning" onClick={onClose} />
         <Button
           isLoading={isLoading}
           type="submit"

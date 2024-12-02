@@ -7,7 +7,7 @@ import { MemoryRouter } from "react-router-dom";
 import LabelRate, { LabelRateProps } from "./index";
 
 // InterFace
-import { RateData } from "@/interfaces/Rate";
+import { NewRateData } from "@/interfaces/Rate";
 
 export default {
   title: "Components/Label/LabelRate",
@@ -29,7 +29,7 @@ const Template: StoryFn<LabelRateProps> = (args) => <LabelRate {...args} />;
 export const Default = Template.bind({});
 Default.args = {
   width: "900px",
-  onAddRate: (rateData: RateData) => {
+  onAddRate: (rateData: NewRateData) => {
     alert(`New rate added with room type: ${rateData.roomType}`);
   },
 };
