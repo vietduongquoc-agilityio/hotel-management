@@ -15,11 +15,11 @@ import { Button } from "@/components";
 //Store
 import { useRateStore } from "@/stores";
 
-const withModal = (
-  WrappedComponent: React.ComponentType<any>,
+const withModal = <P extends object>(
+  WrappedComponent: React.ComponentType<P>,
   modalTitle: string
 ) => {
-  return (props: any) => {
+  return (props: P) => {
     const [isOpen, setIsOpen] = useState(false);
     const toggleModal = () => setIsOpen(!isOpen);
     const { rates } = useRateStore();

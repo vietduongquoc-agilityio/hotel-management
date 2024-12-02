@@ -17,7 +17,7 @@ import { validationRules } from "@/constants";
 import { Button, Input, withModal } from "@/components";
 
 interface EditRateModalProps {
-  onClose: () => void;
+  onClose?: () => void;
   onEditRate: (updatedRateData: RateData) => void;
   initialRateData: RateData;
 }
@@ -120,11 +120,7 @@ const EditRateModal = ({
       </FormControl>
 
       <ModalFooter>
-        <Button
-          onClick={onClose}
-          text="Cancel"
-          buttonType="warning"
-        />
+        <Button onClick={onClose} text="Cancel" buttonType="warning" />
         <Button
           isLoading={isLoading}
           type="submit"

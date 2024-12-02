@@ -37,6 +37,7 @@ const Table = <T extends RoomData | RateData>({
   onEdit,
 }: TableProps<T>) => {
   const [activeId, setActiveId] = useState<string | null>(null);
+  const editFunction = onEdit as <T>(updatedData: T) => void;
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -107,12 +108,12 @@ const Table = <T extends RoomData | RateData>({
   }: EditFunctionType<T>) => {
     return type === "room" ? (
       <EditRoomModal
-        initialRoomData={initialData}
+        initialRoomData={initialData as RoomData}
         onEditRoom={onEditFunction}
       />
     ) : (
       <EditRateModal
-        initialRateData={initialData}
+        initialRateData={initialData as RateData}
         onEditRate={onEditFunction}
       />
     );
@@ -208,7 +209,10 @@ const Table = <T extends RoomData | RateData>({
                 borderRadius="8px"
                 w="80px"
               >
-                <EditFunctionModal initialData={item} onEditFunction={onEdit} />
+                <EditFunctionModal
+                  initialData={item}
+                  onEditFunction={editFunction}
+                />
                 <DeleteFunctionModal
                   documentId={item.documentId}
                   onDeleteFunction={onDelete}

@@ -27,7 +27,7 @@ import { useRateStore } from "@/stores";
 import { Button, withModal } from "@/components";
 
 interface EditRoomModalProps {
-  onClose: () => void;
+  onClose?: () => void;
   onEditRoom: (roomData: RoomData) => void;
   initialRoomData: RoomData;
 }
