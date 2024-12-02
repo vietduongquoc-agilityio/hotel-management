@@ -33,7 +33,6 @@ export default [
         { allowConstantExport: true }, // Warn for non-constant exports
       ],
       "react-refresh/only-export-components": "off",
-      "@typescript-eslint/no-explicit-any": "off", // Disable `any` rule
     },
   },
 ];
