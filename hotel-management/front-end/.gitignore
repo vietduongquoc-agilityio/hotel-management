@@ -14,6 +14,7 @@ storybook-static
 *.__mocks__
 *.local
 /coverage
+*.env
 
 # Editor directories and files
 .vscode/*

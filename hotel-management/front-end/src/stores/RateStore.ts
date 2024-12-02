@@ -15,7 +15,7 @@ import { RateData, NewRateData } from "@/interfaces";
 interface RateState {
   rates: RateData[];
   bedTypeOptions: { value: string; label: string }[];
-  loading: boolean;
+  isLoading: boolean;
   fetchRates: (currentPage: number, pageSize: number) => Promise<void>;
   addRate: (rateData: NewRateData) => Promise<void>;
   editRate: (rateId: string, updatedData: NewRateData) => Promise<void>;
@@ -26,10 +26,10 @@ export const useRateStore = create<RateState>()(
   devtools((set) => ({
     bedTypeOptions: [],
     rates: [],
-    loading: false,
+    isLoading: false,
 
     fetchRates: async (currentPage, pageSize) => {
-      set({ loading: true });
+      set({ isLoading: true });
       try {
         const { data } = await getRates(currentPage, pageSize);
         const resultTypeBed = data.map((item: RateData) => ({
@@ -49,7 +49,7 @@ export const useRateStore = create<RateState>()(
       } catch (error) {
         console.error("Error fetching rates:", error);
       } finally {
-        set({ loading: false });
+        set({ isLoading: false });
       }
     },
 

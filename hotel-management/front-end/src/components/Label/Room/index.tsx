@@ -44,6 +44,7 @@ const LabelRoom = ({
   width = "100%",
 }: LabelRoomProps) => {
   const bedTypeOptions = useRateStore((state) => state.bedTypeOptions);
+  const closeModal = () => {};
 
   return (
     <Box
@@ -154,7 +155,11 @@ const LabelRoom = ({
         </Select>
       </Box>
       <>
-        <AddRoomModal onAddRoom={onAddRoom} isDisabled={isAddRoom} />
+        <AddRoomModal
+          onAddRoom={onAddRoom}
+          isDisabled={isAddRoom}
+          onClose={closeModal}
+        />
       </>
     </Box>
   );

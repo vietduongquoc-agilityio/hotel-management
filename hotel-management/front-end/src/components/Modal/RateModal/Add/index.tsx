@@ -14,11 +14,11 @@ import { NewRateData } from "@/interfaces";
 import { validationRules } from "@/constants";
 
 // Components
-import { Button, Input, Spinner, withModal } from "@/components";
+import { Button, Input, withModal } from "@/components";
 
 interface AddRateModalProps {
-  onClose: () => void;
   onAddRate: (rateData: NewRateData) => void;
+  onClose: () => void;
 }
 
 interface FormData {
@@ -29,8 +29,8 @@ interface FormData {
   totalOfRooms: number;
 }
 
-const AddRateModal = ({ onClose, onAddRate }: AddRateModalProps) => {
-  const [loading, setLoading] = useState(false);
+const AddRateModal = ({ onAddRate, onClose }: AddRateModalProps) => {
+  const [isLoading, setIsLoading] = useState(false);
   const toast = useToast();
 
   const {
@@ -51,7 +51,7 @@ const AddRateModal = ({ onClose, onAddRate }: AddRateModalProps) => {
       availability: "",
     };
 
-    setLoading(true);
+    setIsLoading(true);
     try {
       await onAddRate(newRateData);
       toast({
@@ -60,7 +60,6 @@ const AddRateModal = ({ onClose, onAddRate }: AddRateModalProps) => {
         duration: 3000,
         isClosable: true,
       });
-      onClose();
     } catch {
       toast({
         title: "Failed to add rate.",
@@ -70,7 +69,7 @@ const AddRateModal = ({ onClose, onAddRate }: AddRateModalProps) => {
         isClosable: true,
       });
     } finally {
-      setLoading(false);
+      setIsLoading(false);
     }
   };
 
@@ -138,12 +137,13 @@ const AddRateModal = ({ onClose, onAddRate }: AddRateModalProps) => {
         )}
       </FormControl>
       <ModalFooter>
-        <Button onClick={onClose} text="Cancel" buttonType="warning" />
-        {loading ? (
-          <Spinner />
-        ) : (
-          <Button type="submit" text="Add" buttonType="primary" />
-        )}
+        <Button text="Cancel" buttonType="warning" onClick={onClose} />
+        <Button
+          isLoading={isLoading}
+          type="submit"
+          text="Add"
+          buttonType="primary"
+        />
       </ModalFooter>
     </form>
   );

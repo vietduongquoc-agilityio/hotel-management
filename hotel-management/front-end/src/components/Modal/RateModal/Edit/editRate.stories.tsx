@@ -40,7 +40,7 @@ const Template: StoryFn<typeof EditRateModal> = (args) => {
 export const Default = Template.bind({});
 Default.args = {
   initialRateData: {
-    id: "1",
+    documentId: "1",
     roomType: "Deluxe Room",
     cancellationPolicy: "24-hour notice",
     totalOfRooms: 10,

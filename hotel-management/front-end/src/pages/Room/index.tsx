@@ -18,13 +18,13 @@ const RoomPage = () => {
     pageCount,
     availableRooms,
     bookedRooms,
-    loading: roomsLoading,
+    isLoading: roomsLoading,
     fetchRooms,
     addRoom,
     editRoom,
     deleteRoom,
   } = useRoomStore();
-  const { rates, loading: ratesLoading, fetchRates } = useRateStore();
+  const { rates, isLoading: ratesLoading, fetchRates } = useRateStore();
 
   const [currentPage, setCurrentPage] = useState(1);
   const pageSize = 10;

@@ -16,7 +16,7 @@ interface RoomState {
   availableRooms: number;
   bookedRooms: number;
 
-  loading: boolean;
+  isLoading: boolean;
 
   // Store bedType options
   bedTypeOptions: string[];
@@ -40,7 +40,7 @@ export const useRoomStore = create<RoomState>((set) => ({
   pageCount: 1,
   availableRooms: 0,
   bookedRooms: 0,
-  loading: false,
+  isLoading: false,
   bedTypeOptions: [],
   setBedTypeOptions: (rates) => {
     const uniqueBedTypes = Array.from(
@@ -50,7 +50,7 @@ export const useRoomStore = create<RoomState>((set) => ({
   },
 
   fetchRooms: async (currentPage, pageSize, field, value) => {
-    set({ loading: true });
+    set({ isLoading: true });
     try {
       const { rooms, pagination } = await getRooms(
         currentPage,
@@ -67,7 +67,7 @@ export const useRoomStore = create<RoomState>((set) => ({
     } catch (error) {
       console.error("Error fetching rooms:", error);
     } finally {
-      set({ loading: false });
+      set({ isLoading: false });
     }
   },
 

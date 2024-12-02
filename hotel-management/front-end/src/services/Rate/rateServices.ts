@@ -30,8 +30,7 @@ export const getRates = async (page: number, pageSize: number) => {
     });
     return response.data;
   } catch (error) {
-    showErrorToast("Failed to fetch rate data.");
-    throw error;
+    return { message: "Failed to fetch rate data", data: null };
   }
 };
 
@@ -42,8 +41,7 @@ export const createRateApi = async (rateData: NewRateData) => {
     });
     return response.data;
   } catch (error) {
-    showErrorToast("Failed to create a new rate.");
-    throw error;
+    return { message: "Error updated room details", data: null };
   }
 };
 
@@ -57,19 +55,17 @@ export const updateRate = async (rateId: string, rateData: NewRateData) => {
     const response = await axios.put(`${BASE_URL}/rates/${rateId}`, {
       data: rateData,
     });
-    return response.data;
+    return { message: "Rate updated successfully", data: response.data };
   } catch (error) {
-    showErrorToast("Failed to update the rate.");
-    throw error;
+    return { message: "Error updated room details", data: null };
   }
 };
 
 export const deleteRate = async (rateId: string) => {
   try {
     const response = await axios.delete(`${BASE_URL}/rates/${rateId}`);
-    return response.data;
+    return { message: "Room deleted successfully", data: response.data };
   } catch (error) {
-    showErrorToast("Failed to delete the rate.");
-    throw error;
+    return { message: "Error deleted room details", data: null };
   }
 };

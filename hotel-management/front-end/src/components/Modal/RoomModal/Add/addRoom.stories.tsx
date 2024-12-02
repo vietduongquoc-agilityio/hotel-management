@@ -52,10 +52,19 @@ const onAddRoom = async (roomData: NewRoomData) => {
   console.log("Room added:", roomData);
 };
 
+const onClose = () => {
+  console.log("Close: ", onClose);
+};
+
 const Template: StoryFn = (args) => (
   <ChakraProvider theme={themeColor}>
     <MemoryRouter>
-      <AddRoomModal {...args} />
+      <AddRoomModal
+        {...args}
+        isDisabled
+        onAddRoom={onAddRoom}
+        onClose={onClose}
+      />
     </MemoryRouter>
   </ChakraProvider>
 );

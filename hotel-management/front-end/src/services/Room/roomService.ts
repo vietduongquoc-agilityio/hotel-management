@@ -1,17 +1,4 @@
 import axios from "axios";
-import { createStandaloneToast } from "@chakra-ui/react";
-const { toast } = createStandaloneToast();
-
-const showErrorToast = (message: string) => {
-  toast({
-    title: "Error",
-    description: message,
-    status: "error",
-    duration: 3000,
-    isClosable: true,
-  });
-};
-
 //InterFace
 import { NewRoomData } from "@/interfaces";
 
@@ -42,8 +29,7 @@ export const getRooms = async (
     }
     return response.data;
   } catch (error) {
-    showErrorToast("Error fetching room data");
-    throw error;
+    return { message: "Error fetching room data", data: null };
   }
 };
 
@@ -54,22 +40,36 @@ export const createRoomApi = async (roomData: NewRoomData) => {
     });
     return response.data;
   } catch (error) {
-    showErrorToast("Error in createRoom:");
-    throw error;
+    return { message: "Error in createRoom:", data: null };
   }
 };
 
-export const getRoomById = (roomId: string) =>
-  axios.get(`${BASE_URL}/rooms/${roomId}`).then((response) => response.data);
+export const getRoomById = async (roomId: string) => {
+  try {
+    const response = await axios.get(`${BASE_URL}/rooms/${roomId}`);
+    return { message: "Room fetched successfully", data: response.data };
+  } catch (error) {
+    return { message: "Error fetching room details", data: null };
+  }
+};
 
-export const updateRoom = (roomId: string, roomData: NewRoomData) => {
-  if (!roomId) throw new Error("Missing document ID for room update.");
-  return axios
-    .put(`${BASE_URL}/rooms/${roomId}`, { data: roomData })
-    .then((response) => response.data);
+export const updateRoom = async (roomId: string, roomData: NewRoomData) => {
+  try {
+    if (!roomId) throw new Error("Missing document ID for room update.");
+    const response = await axios.put(`${BASE_URL}/rooms/${roomId}`, {
+      data: roomData,
+    });
+    return { message: "Room updated successfully", data: response.data };
+  } catch (error) {
+    return { message: "Error updated room details", data: null };
+  }
 };
 
 export const deleteRoom = async (roomId: string) => {
-  const response = await axios.delete(`${BASE_URL}/rooms/${roomId}`);
-  return response.data;
+  try {
+    const response = await axios.delete(`${BASE_URL}/rooms/${roomId}`);
+    return { message: "Room deleted successfully", data: response.data };
+  } catch (error) {
+    return { message: "Error deleted room details", data: null };
+  }
 };

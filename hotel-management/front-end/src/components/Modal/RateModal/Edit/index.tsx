@@ -14,10 +14,10 @@ import { RateData } from "@/interfaces";
 import { validationRules } from "@/constants";
 
 // Components
-import { Button, Input, Spinner, withModal } from "@/components";
+import { Button, Input, withModal } from "@/components";
 
 interface EditRateModalProps {
-  onClose: () => void;
+  onClose?: () => void;
   onEditRate: (updatedRateData: RateData) => void;
   initialRateData: RateData;
 }
@@ -34,11 +34,11 @@ const EditRateModal = ({
   } = useForm({
     defaultValues: initialRateData,
   });
-  const [loading, setLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const toast = useToast();
 
   const onSubmit = async (data: RateData) => {
-    setLoading(true);
+    setIsLoading(true);
     try {
       await onEditRate(data);
       if (onClose) onClose();
@@ -51,7 +51,7 @@ const EditRateModal = ({
         isClosable: true,
       });
     } finally {
-      setLoading(false);
+      setIsLoading(false);
     }
   };
 
@@ -121,11 +121,12 @@ const EditRateModal = ({
 
       <ModalFooter>
         <Button onClick={onClose} text="Cancel" buttonType="warning" />
-        {loading ? (
-          <Spinner />
-        ) : (
-          <Button type="submit" text="Edit" buttonType="primary" />
-        )}
+        <Button
+          isLoading={isLoading}
+          type="submit"
+          text="Edit"
+          buttonType="primary"
+        />
       </ModalFooter>
     </form>
   );

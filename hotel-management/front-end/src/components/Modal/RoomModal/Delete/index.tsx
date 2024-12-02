@@ -12,7 +12,7 @@ import {
 } from "@chakra-ui/react";
 
 // Components
-import { Button, Spinner } from "@/components";
+import { Button } from "@/components";
 
 //Services
 import { deleteRoom } from "@/services";
@@ -25,11 +25,11 @@ interface DeleteRoomProps {
 const DeleteRoom = ({ roomId, onDeleteRoom }: DeleteRoomProps) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const cancelRef = React.useRef(null);
-  const [loading, setLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const toast = useToast();
 
   const handleDelete = async () => {
-    setLoading(true);
+    setIsLoading(true);
     try {
       await deleteRoom(roomId);
       onDeleteRoom(roomId);
@@ -49,7 +49,7 @@ const DeleteRoom = ({ roomId, onDeleteRoom }: DeleteRoomProps) => {
         isClosable: true,
       });
     } finally {
-      setLoading(false);
+      setIsLoading(false);
     }
   };
 
@@ -74,16 +74,13 @@ const DeleteRoom = ({ roomId, onDeleteRoom }: DeleteRoomProps) => {
 
             <AlertDialogFooter>
               <Button text="Cancel" onClick={onClose} buttonType="warning" />
-              {loading ? (
-                <Spinner />
-              ) : (
-                <Button
-                  text="Confirm Delete"
-                  buttonType="error"
-                  onClick={handleDelete}
-                  ml={3}
-                />
-              )}
+              <Button
+                isLoading={isLoading}
+                text="Confirm Delete"
+                buttonType="error"
+                onClick={handleDelete}
+                ml={3}
+              />
             </AlertDialogFooter>
           </AlertDialogContent>
         </AlertDialogOverlay>
