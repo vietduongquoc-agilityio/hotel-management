@@ -26,7 +26,7 @@ export interface TableProps<T> {
   type: "room" | "rate";
   error?: string | null;
   onDelete: (id: string) => void;
-  onEdit: (updatedData: T) => void;
+  onEdit: <T>(updatedData: T) => void;
 }
 
 const Table = <T extends RoomData | RateData>({
@@ -107,12 +107,12 @@ const Table = <T extends RoomData | RateData>({
   }: EditFunctionType<T>) => {
     return type === "room" ? (
       <EditRoomModal
-        initialRoomData={initialData}
+        initialRoomData={initialData as RoomData}
         onEditRoom={onEditFunction}
       />
     ) : (
       <EditRateModal
-        initialRateData={initialData}
+        initialRateData={initialData as RateData}
         onEditRate={onEditFunction}
       />
     );
