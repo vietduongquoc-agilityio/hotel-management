@@ -8,15 +8,14 @@ import dealIcon from "@/assets/icons/deal.svg";
 
 const Sidebar = () => {
   const location = useLocation();
-  const isActive = (path: string) => location.pathname === path;
-  const bgStyle = isActive("/") ? "blue.100" : "transparent";
-  const textColorStyle = isActive("/") ? "blue.600" : "grey.600";
-  const bgStyleRate = isActive("/rate") ? "blue.100" : "transparent";
-  const textColorStyleRate = isActive("/rate") ? "blue.600" : "grey.600";
-  const bgStyleGuest = isActive("/guest") ? "blue.100" : "transparent";
-  const textColorStyleGuest = isActive("/guest") ? "blue.600" : "grey.600";
-  const bgStyleDeal = isActive("/deal") ? "blue.100" : "transparent";
-  const textColorStyleDeal = isActive("/deal") ? "blue.600" : "grey.600";
+
+  // Navigation items array
+  const navItems = [
+    { path: "/", label: "Room", icon: roomIcon },
+    { path: "/rate", label: "Rate", icon: rateIcon },
+    { path: "/guest", label: "Guest", icon: guestIcon },
+    { path: "/deal", label: "Deal", icon: dealIcon },
+  ];
 
   return (
     <VStack
@@ -35,90 +34,32 @@ const Sidebar = () => {
         fontSize="14px"
         fontWeight="500"
       >
-        <ListItem>
-          <Link
-            as={RouterLink}
-            to="/guest"
-            display="flex"
-            alignItems="center"
-            borderRadius="10px"
-            bg={bgStyleGuest}
-            textColor={textColorStyleGuest}
-            _hover={{
-              bg: "blue.100",
-              transition: "background-color 0.2s ease",
-              textColor: "blue.600",
-            }}
-            w="196px"
-            p="8px 12px"
-          >
-            <Image src={guestIcon} alt="Rate" mr="15px" />
-            Guest
-          </Link>
-        </ListItem>
-        <ListItem>
-          <Link
-            as={RouterLink}
-            to="/"
-            display="flex"
-            alignItems="center"
-            borderRadius="10px"
-            bg={bgStyle}
-            textColor={textColorStyle}
-            _hover={{
-              bg: "blue.100",
-              textColor: "blue.600",
-              transition: "background-color 0.2s ease",
-            }}
-            w="196px"
-            p="8px 12px"
-          >
-            <Image src={roomIcon} alt="Room" mr="15px" />
-            Room
-          </Link>
-        </ListItem>
-        <ListItem>
-          <Link
-            as={RouterLink}
-            to="/deal"
-            display="flex"
-            alignItems="center"
-            borderRadius="10px"
-            bg={bgStyleDeal}
-            textColor={textColorStyleDeal}
-            _hover={{
-              bg: "blue.100",
-              transition: "background-color 0.2s ease",
-              textColor: "blue.600",
-            }}
-            w="196px"
-            p="8px 12px"
-          >
-            <Image src={dealIcon} alt="Rate" mr="15px" />
-            Deal
-          </Link>
-        </ListItem>
-        <ListItem>
-          <Link
-            as={RouterLink}
-            to="/rate"
-            display="flex"
-            alignItems="center"
-            borderRadius="10px"
-            bg={bgStyleRate}
-            textColor={textColorStyleRate}
-            _hover={{
-              bg: "blue.100",
-              transition: "background-color 0.2s ease",
-              textColor: "blue.600",
-            }}
-            w="196px"
-            p="8px 12px"
-          >
-            <Image src={rateIcon} alt="Rate" mr="15px" />
-            Rate
-          </Link>
-        </ListItem>
+        {navItems.map(({ path, label, icon }) => {
+          const isActive = location.pathname === path;
+          return (
+            <ListItem key={path}>
+              <Link
+                as={RouterLink}
+                to={path}
+                display="flex"
+                alignItems="center"
+                borderRadius="10px"
+                bg={isActive ? "blue.100" : "transparent"}
+                textColor={isActive ? "blue.600" : "grey.600"}
+                _hover={{
+                  bg: "blue.100",
+                  transition: "background-color 0.2s ease",
+                  textColor: "blue.600",
+                }}
+                w="196px"
+                p="8px 12px"
+              >
+                <Image src={icon} alt={label} mr="15px" />
+                {label}
+              </Link>
+            </ListItem>
+          );
+        })}
       </List>
     </VStack>
   );
