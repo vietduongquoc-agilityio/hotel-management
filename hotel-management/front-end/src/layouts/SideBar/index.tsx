@@ -3,6 +3,8 @@ import { Link as RouterLink, useLocation } from "react-router-dom";
 import roomIcon from "@/assets/icons/room.svg";
 import logoIcon from "@/assets/icons/logo.svg";
 import rateIcon from "@/assets/icons/rate.svg";
+import guestIcon from "@/assets/icons/guest.svg";
+import dealIcon from "@/assets/icons/deal.svg";
 
 const Sidebar = () => {
   const location = useLocation();
@@ -11,6 +13,10 @@ const Sidebar = () => {
   const textColorStyle = isActive("/") ? "blue.600" : "grey.600";
   const bgStyleRate = isActive("/rate") ? "blue.100" : "transparent";
   const textColorStyleRate = isActive("/rate") ? "blue.600" : "grey.600";
+  const bgStyleGuest = isActive("/guest") ? "blue.100" : "transparent";
+  const textColorStyleGuest = isActive("/guest") ? "blue.600" : "grey.600";
+  const bgStyleDeal = isActive("/deal") ? "blue.100" : "transparent";
+  const textColorStyleDeal = isActive("/deal") ? "blue.600" : "grey.600";
 
   return (
     <VStack
@@ -32,6 +38,27 @@ const Sidebar = () => {
         <ListItem>
           <Link
             as={RouterLink}
+            to="/guest"
+            display="flex"
+            alignItems="center"
+            borderRadius="10px"
+            bg={bgStyleGuest}
+            textColor={textColorStyleGuest}
+            _hover={{
+              bg: "blue.100",
+              transition: "background-color 0.2s ease",
+              textColor: "blue.600",
+            }}
+            w="196px"
+            p="8px 12px"
+          >
+            <Image src={guestIcon} alt="Rate" mr="15px" />
+            Guest
+          </Link>
+        </ListItem>
+        <ListItem>
+          <Link
+            as={RouterLink}
             to="/"
             display="flex"
             alignItems="center"
@@ -48,6 +75,27 @@ const Sidebar = () => {
           >
             <Image src={roomIcon} alt="Room" mr="15px" />
             Room
+          </Link>
+        </ListItem>
+        <ListItem>
+          <Link
+            as={RouterLink}
+            to="/deal"
+            display="flex"
+            alignItems="center"
+            borderRadius="10px"
+            bg={bgStyleDeal}
+            textColor={textColorStyleDeal}
+            _hover={{
+              bg: "blue.100",
+              transition: "background-color 0.2s ease",
+              textColor: "blue.600",
+            }}
+            w="196px"
+            p="8px 12px"
+          >
+            <Image src={dealIcon} alt="Rate" mr="15px" />
+            Deal
           </Link>
         </ListItem>
         <ListItem>
