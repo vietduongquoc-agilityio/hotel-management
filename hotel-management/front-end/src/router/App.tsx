@@ -10,6 +10,7 @@ import RoomPage from "@/pages/Room";
 import RatePage from "@/pages/Rate";
 import theme from "@/themes/Themes";
 import GuestPage from "@/pages/Guest";
+import DealPage from "@/pages/Deal";
 
 const App = () => {
   return (
@@ -20,6 +21,7 @@ const App = () => {
             <Route index element={<RoomPage />} />
             <Route path="rate" element={<RatePage />} />
             <Route path="guest" element={<GuestPage />} />
+            <Route path="deal" element={<DealPage />} />
           </Route>
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>
