@@ -27,6 +27,7 @@ const primary = {
   cursor: "pointer",
   bg: "blue.600",
   color: "white.200",
+  borderRadius: "8px",
   _hover: {
     bg: "blue.800",
   },
