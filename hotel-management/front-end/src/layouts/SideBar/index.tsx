@@ -1,21 +1,10 @@
 import { VStack, Image, Link, List, ListItem } from "@chakra-ui/react";
 import { Link as RouterLink, useLocation } from "react-router-dom";
-import roomIcon from "@/assets/icons/room.svg";
 import logoIcon from "@/assets/icons/logo.svg";
-import rateIcon from "@/assets/icons/rate.svg";
-import guestIcon from "@/assets/icons/guest.svg";
-import dealIcon from "@/assets/icons/deal.svg";
+import { navItems } from "@/constants/navIteams";
 
 const Sidebar = () => {
   const location = useLocation();
-
-  // Navigation items array
-  const navItems = [
-    { path: "/", label: "Room", icon: roomIcon },
-    { path: "/rate", label: "Rate", icon: rateIcon },
-    { path: "/guest", label: "Guest", icon: guestIcon },
-    { path: "/deal", label: "Deal", icon: dealIcon },
-  ];
 
   return (
     <VStack
