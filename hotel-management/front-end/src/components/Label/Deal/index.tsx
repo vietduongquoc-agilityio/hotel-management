@@ -1,7 +1,7 @@
 import { Box, ListItem, UnorderedList, Text } from "@chakra-ui/react";
 
 // Components
-import Button from "@/components/Button";
+import { Button } from "@/components";
 
 const LabelDeal = () => {
   return (

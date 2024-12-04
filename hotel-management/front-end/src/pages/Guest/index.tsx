@@ -1,5 +1,7 @@
-import LabelGuest from "@/components/Label/Guest";
 import { Box, Heading } from "@chakra-ui/react";
+
+// Components
+import { LabelGuest } from "@/components";
 
 const GuestPage = () => {
   return (

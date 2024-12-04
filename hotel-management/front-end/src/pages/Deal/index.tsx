@@ -1,5 +1,7 @@
-import LabelDeal from "@/components/Label/Deal";
 import { Box, Heading } from "@chakra-ui/react";
+
+// Components
+import { LabelDeal } from "@/components";
 
 const DealPage = () => {
   return (

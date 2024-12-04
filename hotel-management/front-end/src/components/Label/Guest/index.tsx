@@ -1,7 +1,7 @@
 import { Box, Select } from "@chakra-ui/react";
 
 // Components
-import Button from "@/components/Button";
+import { Button } from "@/components";
 
 const LabelGuest = () => {
   return (

@@ -4,6 +4,8 @@ import Input from "./Input";
 // Label
 import LabelRate from "./Label/Rate";
 import LabelRoom from "./Label/Room";
+import LabelDeal from "./Label/Deal";
+import LabelGuest from "./Label/Guest";
 
 // Modal
 import withModal from "./Modal/modalHoc";
@@ -26,6 +28,8 @@ export {
   Input,
   LabelRate,
   LabelRoom,
+  LabelDeal,
+  LabelGuest,
   withModal,
   AddRateModal,
   EditRateModal,
