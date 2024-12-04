@@ -1,16 +1,10 @@
 import { VStack, Image, Link, List, ListItem } from "@chakra-ui/react";
 import { Link as RouterLink, useLocation } from "react-router-dom";
-import roomIcon from "@/assets/icons/room.svg";
 import logoIcon from "@/assets/icons/logo.svg";
-import rateIcon from "@/assets/icons/rate.svg";
+import { navItems } from "@/constants/navIteams";
 
 const Sidebar = () => {
   const location = useLocation();
-  const isActive = (path: string) => location.pathname === path;
-  const bgStyle = isActive("/") ? "blue.100" : "transparent";
-  const textColorStyle = isActive("/") ? "blue.600" : "grey.600";
-  const bgStyleRate = isActive("/rate") ? "blue.100" : "transparent";
-  const textColorStyleRate = isActive("/rate") ? "blue.600" : "grey.600";
 
   return (
     <VStack
@@ -29,48 +23,32 @@ const Sidebar = () => {
         fontSize="14px"
         fontWeight="500"
       >
-        <ListItem>
-          <Link
-            as={RouterLink}
-            to="/"
-            display="flex"
-            alignItems="center"
-            borderRadius="10px"
-            bg={bgStyle}
-            textColor={textColorStyle}
-            _hover={{
-              bg: "blue.100",
-              textColor: "blue.600",
-              transition: "background-color 0.2s ease",
-            }}
-            w="196px"
-            p="8px 12px"
-          >
-            <Image src={roomIcon} alt="Room" mr="15px" />
-            Room
-          </Link>
-        </ListItem>
-        <ListItem>
-          <Link
-            as={RouterLink}
-            to="/rate"
-            display="flex"
-            alignItems="center"
-            borderRadius="10px"
-            bg={bgStyleRate}
-            textColor={textColorStyleRate}
-            _hover={{
-              bg: "blue.100",
-              transition: "background-color 0.2s ease",
-              textColor: "blue.600",
-            }}
-            w="196px"
-            p="8px 12px"
-          >
-            <Image src={rateIcon} alt="Rate" mr="15px" />
-            Rate
-          </Link>
-        </ListItem>
+        {navItems.map(({ path, label, icon }) => {
+          const isActive = location.pathname === path;
+          return (
+            <ListItem key={path}>
+              <Link
+                as={RouterLink}
+                to={path}
+                display="flex"
+                alignItems="center"
+                borderRadius="10px"
+                bg={isActive ? "blue.100" : "transparent"}
+                textColor={isActive ? "blue.600" : "grey.600"}
+                _hover={{
+                  bg: "blue.100",
+                  transition: "background-color 0.2s ease",
+                  textColor: "blue.600",
+                }}
+                w="196px"
+                p="8px 12px"
+              >
+                <Image src={icon} alt={label} mr="15px" />
+                {label}
+              </Link>
+            </ListItem>
+          );
+        })}
       </List>
     </VStack>
   );
