@@ -1,15 +1,14 @@
 import { useState } from "react";
-import {
-  FormControl,
-  FormLabel,
-  Select,
-  ModalFooter,
-} from "@chakra-ui/react";
+import { FormControl, FormLabel, Select, ModalFooter } from "@chakra-ui/react";
 
 // Components
 import { Input, withModal, Button } from "@/components";
 
-const AddGuestModal = () => {
+interface AddGuestModalProps {
+  onClose: () => void;
+}
+
+const AddGuestModal = ({ onClose }: AddGuestModalProps) => {
   const [stayDuration, setStayDuration] = useState<number>(0);
   const [pricePerNight, setPricePerNight] = useState<number>(0);
   const [totalAmount, setTotalAmount] = useState<number>(0);
@@ -75,12 +74,17 @@ const AddGuestModal = () => {
 
       <FormControl mb={4}>
         <FormLabel>Total Amount</FormLabel>
-        <Input placeHolder="" inputType="number" value={totalAmount}></Input>
+        <Input
+          isDisabled
+          placeHolder=""
+          inputType="number"
+          value={totalAmount}
+        ></Input>
       </FormControl>
 
       <ModalFooter>
-        <Button text="Cancel" buttonType="warning" />
-        <Button w="100px" type="submit" text="Add" buttonType="primary"/>
+        <Button text="Cancel" buttonType="warning" onClick={onClose} />
+        <Button w="100px" type="submit" text="Add" buttonType="primary" />
       </ModalFooter>
     </form>
   );
