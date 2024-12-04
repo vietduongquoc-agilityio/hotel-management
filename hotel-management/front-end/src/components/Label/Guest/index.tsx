@@ -4,6 +4,8 @@ import { Box, Select } from "@chakra-ui/react";
 import { AddGuestModal } from "@/components";
 
 const LabelGuest = () => {
+  const closeModal = () => {};
+
   return (
     <>
       <Box
@@ -35,7 +37,7 @@ const LabelGuest = () => {
           ></Select>
         </Box>
         <>
-          <AddGuestModal />
+          <AddGuestModal onClose={closeModal} />
         </>
       </Box>
     </>
