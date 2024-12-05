@@ -1,85 +1,154 @@
-import { useState } from "react";
 import { FormControl, FormLabel, Select, ModalFooter } from "@chakra-ui/react";
+import { useForm } from "react-hook-form";
 
 // Components
 import { Input, withModal, Button } from "@/components";
+
+// Constants
+import { validationRules } from "@/constants";
+
+// Utils
+import { generateCode } from "@/utils";
 
 interface AddGuestModalProps {
   onClose: () => void;
 }
 
+interface FormData {
+  guestName: string;
+  roomType: string;
+  stay: number;
+  price: number;
+  registrationNumber: string;
+  totalAmount: number;
+  checkInDate: Date;
+}
+
 const AddGuestModal = ({ onClose }: AddGuestModalProps) => {
-  const [stayDuration, setStayDuration] = useState<number>(0);
-  const [pricePerNight, setPricePerNight] = useState<number>(0);
-  const [totalAmount, setTotalAmount] = useState<number>(0);
+  const defaultRegistrationNumber = generateCode();
 
-  const handleCalculateTotal = (duration: number, price: number) => {
-    const total = duration * price;
-    setTotalAmount(total);
-  };
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormData>({
+    defaultValues: {
+      registrationNumber: defaultRegistrationNumber,
+    },
+  });
 
-  const handleStayDurationChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = parseInt(e.target.value, 10) || 0;
-    setStayDuration(value);
-    handleCalculateTotal(value, pricePerNight);
-  };
-
-  const handlePricePerNightChange = (
-    e: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    const value = parseFloat(e.target.value) || 0;
-    setPricePerNight(value);
-    handleCalculateTotal(stayDuration, value);
+  const onSubmit = async (data: FormData) => {
+    console.log("On submit guest", data);
   };
 
   return (
-    <form>
+    <form onSubmit={handleSubmit(onSubmit)}>
       <FormControl mb={4}>
         <FormLabel>Guest Name</FormLabel>
-        <Input placeHolder="Enter name" inputType="primary" />
+        <Input
+          {...register("guestName", validationRules.required)}
+          placeHolder="Enter name"
+          inputType="primary"
+        />
+        {errors.guestName && (
+          <p style={{ color: "red", fontSize: "14px" }}>
+            {errors.guestName.message}
+          </p>
+        )}
       </FormControl>
 
       <FormControl mb={4}>
         <FormLabel>Registration Number</FormLabel>
-        <Input placeHolder="" inputType="primary" />
+        <Input
+          {...register("registrationNumber", validationRules.required)}
+          placeHolder=""
+          inputType="primary"
+        />
+        {errors.registrationNumber && (
+          <p style={{ color: "red", fontSize: "14px" }}>
+            {errors.registrationNumber.message}
+          </p>
+        )}
       </FormControl>
 
       <FormControl mb={4}>
         <FormLabel>Check-in Date</FormLabel>
-        <Input type="date" placeHolder="" inputType="number" />
+        <Input
+          {...register("checkInDate", validationRules.required)}
+          type="date"
+          placeHolder=""
+          inputType="number"
+        />
+        {errors.checkInDate && (
+          <p style={{ color: "red", fontSize: "14px" }}>
+            {errors.checkInDate.message}
+          </p>
+        )}
       </FormControl>
 
       <FormControl mb={4}>
         <FormLabel>Room Type</FormLabel>
-        <Select placeholder="Select room type"></Select>
+        <Select
+          {...register("roomType", validationRules.required)}
+          placeholder="Select room type"
+        ></Select>
+        {errors.roomType && (
+          <p style={{ color: "red", fontSize: "14px" }}>
+            {errors.roomType.message}
+          </p>
+        )}
       </FormControl>
 
       <FormControl mb={4}>
         <FormLabel>Stay by nights</FormLabel>
         <Input
-          placeHolder=""
+          {...register("stay", {
+            ...validationRules.required,
+            ...validationRules.numeric,
+          })}
+          placeHolder="Enter number stay"
           inputType="number"
-          onChange={handleStayDurationChange}
         ></Input>
+        {errors.stay && (
+          <p style={{ color: "red", fontSize: "14px" }}>
+            {errors.stay.message}
+          </p>
+        )}
       </FormControl>
 
       <FormControl mb={4}>
         <FormLabel>Price</FormLabel>
         <Input
-          placeHolder=""
+          {...register("price", {
+            ...validationRules.required,
+            ...validationRules.numeric,
+          })}
+          placeHolder="Enter room price"
           inputType="number"
-          onChange={handlePricePerNightChange}
         ></Input>
+        {errors.price && (
+          <p style={{ color: "red", fontSize: "14px" }}>
+            {errors.price.message}
+          </p>
+        )}
       </FormControl>
 
       <FormControl mb={4}>
         <FormLabel>Total Amount</FormLabel>
         <Input
+          {...register("totalAmount", {
+            ...validationRules.required,
+            ...validationRules.numeric,
+          })}
           isDisabled
-          placeHolder=""
+          placeHolder="Enter total amount"
           inputType="number"
-          value={totalAmount}
         ></Input>
+        {errors.totalAmount && (
+          <p style={{ color: "red", fontSize: "14px" }}>
+            {errors.totalAmount.message}
+          </p>
+        )}
       </FormControl>
 
       <ModalFooter>
