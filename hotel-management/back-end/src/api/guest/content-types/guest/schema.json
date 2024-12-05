@@ -1,0 +1,43 @@
+{
+  "kind": "collectionType",
+  "collectionName": "guests",
+  "info": {
+    "singularName": "guest",
+    "pluralName": "guests",
+    "displayName": "guest"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "guestName": {
+      "type": "string",
+      "required": true
+    },
+    "roomType": {
+      "type": "string",
+      "required": true
+    },
+    "stay": {
+      "required": true,
+      "type": "integer"
+    },
+    "price": {
+      "type": "string",
+      "required": true
+    },
+    "registrationNumber": {
+      "type": "string",
+      "required": true
+    },
+    "totalAmount": {
+      "type": "integer",
+      "required": true
+    },
+    "checkInDate": {
+      "type": "date",
+      "required": true
+    }
+  }
+}

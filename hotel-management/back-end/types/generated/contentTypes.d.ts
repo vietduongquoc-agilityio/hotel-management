@@ -586,6 +586,37 @@ export interface ApiCategoryCategory extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiDealDeal extends Struct.CollectionTypeSchema {
+  collectionName: 'deals';
+  info: {
+    singularName: 'deal';
+    pluralName: 'deals';
+    displayName: 'deal';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    dealName: Schema.Attribute.String & Schema.Attribute.Required;
+    referenceNumber: Schema.Attribute.String & Schema.Attribute.Required;
+    startDate: Schema.Attribute.Date & Schema.Attribute.Required;
+    endDate: Schema.Attribute.Date & Schema.Attribute.Required;
+    roomType: Schema.Attribute.String & Schema.Attribute.Required;
+    statusDeal: Schema.Attribute.String & Schema.Attribute.Required;
+    reservationsLeft: Schema.Attribute.Integer & Schema.Attribute.Required;
+    createdAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    publishedAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<'oneToMany', 'api::deal.deal'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiGlobalGlobal extends Struct.SingleTypeSchema {
   collectionName: 'globals';
   info: {
@@ -614,6 +645,37 @@ export interface ApiGlobalGlobal extends Struct.SingleTypeSchema {
       'oneToMany',
       'api::global.global'
     > &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiGuestGuest extends Struct.CollectionTypeSchema {
+  collectionName: 'guests';
+  info: {
+    singularName: 'guest';
+    pluralName: 'guests';
+    displayName: 'guest';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    guestName: Schema.Attribute.String & Schema.Attribute.Required;
+    roomType: Schema.Attribute.String & Schema.Attribute.Required;
+    stay: Schema.Attribute.Integer & Schema.Attribute.Required;
+    price: Schema.Attribute.String & Schema.Attribute.Required;
+    registrationNumber: Schema.Attribute.String & Schema.Attribute.Required;
+    totalAmount: Schema.Attribute.Integer & Schema.Attribute.Required;
+    checkInDate: Schema.Attribute.Date & Schema.Attribute.Required;
+    createdAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    publishedAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<'oneToMany', 'api::guest.guest'> &
       Schema.Attribute.Private;
   };
 }
@@ -1098,7 +1160,9 @@ declare module '@strapi/strapi' {
       'api::about.about': ApiAboutAbout;
       'api::author.author': ApiAuthorAuthor;
       'api::category.category': ApiCategoryCategory;
+      'api::deal.deal': ApiDealDeal;
       'api::global.global': ApiGlobalGlobal;
+      'api::guest.guest': ApiGuestGuest;
       'api::rate.rate': ApiRateRate;
       'api::room.room': ApiRoomRoom;
       'api::status.status': ApiStatusStatus;
