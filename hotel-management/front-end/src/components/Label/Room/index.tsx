@@ -60,7 +60,7 @@ const LabelRoom = ({
           <Text
             border="1px solid rgb(152, 159, 173)"
             borderRadius="100px"
-            p="8px 20px"
+            p="8px 17px"
             _hover={{
               border: "1px solid rgb(21, 112, 239)",
               bg: "blue.100",

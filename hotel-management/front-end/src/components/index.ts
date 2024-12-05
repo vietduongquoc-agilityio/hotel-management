@@ -19,6 +19,8 @@ import DeleteRoom from "./Modal/RoomModal/Delete";
 
 import AddGuestModal from "./Modal/GuestModal/Add"
 
+import AddDealModal from "./Modal/Deal/Add"
+
 import Pagination from "./Pagination";
 import LoadingSpinner from "./Spinner";
 import Table from "./Table";
@@ -45,4 +47,5 @@ export {
   Table,
   Toast,
   AddGuestModal,
+  AddDealModal,
 };

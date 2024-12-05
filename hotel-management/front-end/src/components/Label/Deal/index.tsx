@@ -1,9 +1,10 @@
 import { Box, ListItem, UnorderedList, Text } from "@chakra-ui/react";
 
 // Components
-import { Button } from "@/components";
+import { AddDealModal } from "@/components";
 
 const LabelDeal = () => {
+  const closeModal = () => {};
   return (
     <Box
       cursor="pointer"
@@ -45,7 +46,7 @@ const LabelDeal = () => {
         </ListItem>
       </UnorderedList>
       <>
-        <Button text={"Add Deal"} buttonType={"primary"}></Button>
+        <AddDealModal onClose={closeModal} width={""} />
       </>
     </Box>
   );
