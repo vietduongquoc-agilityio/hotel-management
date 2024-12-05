@@ -1,9 +1,11 @@
 import { Box, Select } from "@chakra-ui/react";
 
 // Components
-import { Button } from "@/components";
+import { AddGuestModal } from "@/components";
 
 const LabelGuest = () => {
+  const closeModal = () => {};
+
   return (
     <>
       <Box
@@ -34,7 +36,9 @@ const LabelGuest = () => {
             placeholder="Filter Price"
           ></Select>
         </Box>
-        <Button text={"Add Guest"} buttonType={"primary"}></Button>
+        <>
+          <AddGuestModal onClose={closeModal} />
+        </>
       </Box>
     </>
   );

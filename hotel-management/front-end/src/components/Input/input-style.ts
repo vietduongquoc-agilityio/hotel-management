@@ -17,6 +17,6 @@ const primary = {
 };
 
 const number = {
-  size: "sm",
+  size: "md",
   variant: "outline",
 };
