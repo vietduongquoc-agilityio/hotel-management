@@ -6,7 +6,7 @@ import { MemoryRouter } from "react-router-dom";
 import AddGuestModal from ".";
 
 // Theme
-import { themeColor } from "@/themes/Base/colors";
+import { themeColor } from "@/themes/Base";
 
 export default {
   title: "Components/Modals/Guest/AddGuestModal",

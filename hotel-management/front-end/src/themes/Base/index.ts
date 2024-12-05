@@ -1,4 +1,4 @@
-import { colors } from "./colors";
+import { colors, themeColor } from "./colors";
 import { borderRadius, sizes } from "./metrics";
 import { Fonts, fontSizes } from "./typography";
 
@@ -9,3 +9,5 @@ export const bases = {
   borderRadius,
   sizes,
 };
+
+export { themeColor };
