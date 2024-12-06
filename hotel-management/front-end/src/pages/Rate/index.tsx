@@ -11,31 +11,30 @@ import { LabelRate, Table, Spinner } from "@/components";
 import { useRateStore } from "@/stores";
 
 // Hooks
-import { useRate } from "@/hooks";
+import { useRates } from "@/hooks";
 
 const RatePage = () => {
   const toast = useToast();
 
   // Zustand store for rates
-  const { rates, isLoading, fetchRates, addRate, editRate, deleteRate } =
+  const { fetchRates, addRate, editRate, deleteRate } =
     useRateStore();
 
-  const { isPending, isError, data, error } = useRate();
+  const {
+    rates,
+    isLoading,
+    useAddRate,
+    useEditRate,
+    useDeleteRate,
+  } = useRates(1, 10);
 
-  console.log(isPending);
-
-  console.log(isError);
-
-  console.log(data);
-
-  console.log(error);
-
-  // useEffect(() => {
-  //   fetchRates(1, 10);
-  // }, [fetchRates]);
+  useEffect(() => {
+    fetchRates(1, 10);
+  }, [fetchRates]);
 
   const handleAddRate = async (rateData: NewRateData) => {
-    await addRate(rateData);
+    // await addRate(rateData);
+    await useAddRate.mutateAsync(rateData);
   };
 
   const handleEditRate = async (updatedRateData: RateData) => {
