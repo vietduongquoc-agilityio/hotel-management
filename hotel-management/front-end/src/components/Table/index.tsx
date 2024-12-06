@@ -25,7 +25,7 @@ import {
   renderRateBody,
   renderGuestBody,
   tableHeaders,
-} from "@/utils/Table";
+} from "@/utils";
 
 export interface TableProps<T> {
   data: T[];

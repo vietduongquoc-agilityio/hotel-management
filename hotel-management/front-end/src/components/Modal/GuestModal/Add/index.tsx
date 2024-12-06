@@ -1,5 +1,12 @@
-import { FormControl, FormLabel, Select, ModalFooter } from "@chakra-ui/react";
+import {
+  FormControl,
+  FormLabel,
+  Select,
+  ModalFooter,
+  useToast,
+} from "@chakra-ui/react";
 import { useForm } from "react-hook-form";
+import { ChangeEvent, useEffect, useState } from "react";
 
 // Components
 import { Input, withModal, Button } from "@/components";
@@ -7,11 +14,19 @@ import { Input, withModal, Button } from "@/components";
 // Constants
 import { validationRules } from "@/constants";
 
+// InterFace
+import { NewGuestData } from "@/interfaces";
+
 // Utils
 import { generateCode } from "@/utils";
 
+// Stores
+import { useRateStore } from "@/stores";
+
 interface AddGuestModalProps {
+  onAddRate: (rateData: NewGuestData) => void;
   onClose: () => void;
+  handleSelectedBedType: (event: ChangeEvent<HTMLSelectElement>) => void;
 }
 
 interface FormData {
@@ -24,21 +39,69 @@ interface FormData {
   checkInDate: Date;
 }
 
-const AddGuestModal = ({ onClose }: AddGuestModalProps) => {
+const AddGuestModal = ({
+  onClose,
+  onAddRate,
+  handleSelectedBedType,
+}: AddGuestModalProps) => {
   const defaultRegistrationNumber = generateCode();
+  const [isLoading, setIsLoading] = useState(false);
+  const toast = useToast();
+  const bedTypeOptions = useRateStore((state) => state.bedTypeOptions);
 
   const {
     register,
     handleSubmit,
     formState: { errors },
+    watch,
+    setValue,
   } = useForm<FormData>({
     defaultValues: {
-      registrationNumber: defaultRegistrationNumber,
+      registrationNumber: `#${defaultRegistrationNumber}`,
+      stay: 0,
+      price: 0,
+      totalAmount: 0,
     },
   });
 
+  const stay = watch("stay");
+  const price = watch("price");
+
+  useEffect(() => {
+    const calculatedTotalAmount = stay * price;
+    setValue("totalAmount", calculatedTotalAmount);
+  }, [stay, price, setValue]);
+
   const onSubmit = async (data: FormData) => {
-    console.log("On submit guest", data);
+    const newGuestData: NewGuestData = {
+      roomType: data.roomType,
+      guestName: data.guestName,
+      stay: data.stay,
+      price: data.price,
+      registrationNumber: data.registrationNumber,
+      totalAmount: data.totalAmount,
+      checkInDate: data.checkInDate,
+    };
+    setIsLoading(true);
+    try {
+      await onAddRate(newGuestData);
+      toast({
+        title: "Rate added successfully.",
+        status: "success",
+        duration: 3000,
+        isClosable: true,
+      });
+    } catch {
+      toast({
+        title: "Failed to add rate.",
+        description: "An error occurred while creating the rate.",
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+      });
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -90,8 +153,15 @@ const AddGuestModal = ({ onClose }: AddGuestModalProps) => {
         <FormLabel>Room Type</FormLabel>
         <Select
           {...register("roomType", validationRules.required)}
+          onChange={handleSelectedBedType}
           placeholder="Select room type"
-        ></Select>
+        >
+          {bedTypeOptions.map((option, index) => (
+            <option key={`${option.value}-${index}`} value={option.value}>
+              {option.label}
+            </option>
+          ))}
+        </Select>
         {errors.roomType && (
           <p style={{ color: "red", fontSize: "14px" }}>
             {errors.roomType.message}
@@ -153,7 +223,13 @@ const AddGuestModal = ({ onClose }: AddGuestModalProps) => {
 
       <ModalFooter>
         <Button text="Cancel" buttonType="warning" onClick={onClose} />
-        <Button w="100px" type="submit" text="Add" buttonType="primary" />
+        <Button
+          w="100px"
+          type="submit"
+          text="Add"
+          buttonType="primary"
+          isLoading={isLoading}
+        />
       </ModalFooter>
     </form>
   );

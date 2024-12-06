@@ -16,7 +16,7 @@ interface TableCell {
   borderRadius?: string;
   fontSize?: string;
   m?: string;
-  bg?: string; 
+  bg?: string;
 }
 
 export const renderRoomBody = (room: RoomData): TableCell[] => {
@@ -110,9 +110,8 @@ export const renderRateBody = (rate: RateData): TableCell[] => {
 };
 
 export const renderGuestBody = (guest: GuestData): TableCell[] => {
-  const { guestName, roomType, stay, price, registrationNumber } = guest;
-
-  const totalAmountPayable = stay * price;
+  const { guestName, roomType, stay, price, registrationNumber, totalAmount } =
+    guest;
 
   return [
     {
@@ -133,13 +132,13 @@ export const renderGuestBody = (guest: GuestData): TableCell[] => {
       width: "15%",
     },
     {
-      value: `$${registrationNumber}`,
+      value: registrationNumber,
       width: "15%",
       color: "grey.900",
       fontWeight: "500",
     },
     {
-      value: `$${totalAmountPayable}`,
+      value: `$${totalAmount}`,
       width: "65px",
       display: "flex",
       p: "2px 4px",

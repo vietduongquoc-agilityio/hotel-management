@@ -11,6 +11,7 @@ import {
 
 // InterFace
 import { RateData, NewRateData } from "@/interfaces";
+// import { queryByRole } from "@testing-library/react";
 
 interface RateState {
   rates: RateData[];
@@ -88,3 +89,34 @@ export const useRateStore = create<RateState>()(
     },
   }))
 );
+
+// import { create } from "zustand";
+// import { devtools } from "zustand/middleware";
+
+// // Interface
+// import { RateData } from "@/interfaces";
+
+// interface RateState {
+//   rates: RateData[];
+//   bedTypeOptions: { value: string; label: string }[];
+//   saveRate: (
+//     data: RateData[],
+//     bedType: { value: string; label: string }[]
+//   ) => void;
+// }
+
+// export const useRateStore = create<RateState>()(
+//   devtools((set) => ({
+//     bedTypeOptions: [],
+//     rates: [],
+//     saveRate: (
+//       data: RateData[],
+//       bedType: { value: string; label: string }[]
+//     ) => {
+//       set({
+//         rates: data,
+//         bedTypeOptions: bedType,
+//       });
+//     },
+//   }))
+// );

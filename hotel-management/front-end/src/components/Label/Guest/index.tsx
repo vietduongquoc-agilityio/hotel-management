@@ -1,9 +1,18 @@
+import { ChangeEvent } from "react";
 import { Box, Select } from "@chakra-ui/react";
 
 // Components
 import { AddGuestModal } from "@/components";
 
-const LabelGuest = () => {
+// InterFace
+import { NewGuestData } from "@/interfaces";
+
+export interface LabelGuestProps {
+  onAddGuest: (roomData: NewGuestData) => void;
+  handleSelectedBedType: (event: ChangeEvent<HTMLSelectElement>) => void;
+}
+
+const LabelGuest = ({ onAddGuest, handleSelectedBedType }: LabelGuestProps) => {
   const closeModal = () => {};
 
   return (
@@ -37,7 +46,11 @@ const LabelGuest = () => {
           ></Select>
         </Box>
         <>
-          <AddGuestModal onClose={closeModal} />
+          <AddGuestModal
+            onClose={closeModal}
+            onAddRate={onAddGuest}
+            handleSelectedBedType={handleSelectedBedType}
+          />
         </>
       </Box>
     </>

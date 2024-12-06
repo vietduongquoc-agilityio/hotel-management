@@ -9,16 +9,21 @@ import LabelGuest from "./Label/Guest";
 
 // Modal
 import withModal from "./Modal/modalHoc";
+
+// Rate Modal
 import AddRateModal from "./Modal/RateModal/Add";
 import EditRateModal from "./Modal/RateModal/Edit";
 import DeleteRate from "./Modal/RateModal/Delete";
 
+// Room Modal
 import AddRoomModal from "./Modal/RoomModal/Add";
 import EditRoomModal from "./Modal/RoomModal/Edit";
 import DeleteRoom from "./Modal/RoomModal/Delete";
 
+// Guest Modal
 import AddGuestModal from "./Modal/GuestModal/Add"
 
+// Deal Modal
 import AddDealModal from "./Modal/Deal/Add"
 
 import Pagination from "./Pagination";
