@@ -11,7 +11,6 @@ import {
 
 // InterFace
 import { RateData, NewRateData } from "@/interfaces";
-// import { queryByRole } from "@testing-library/react";
 
 interface RateState {
   rates: RateData[];

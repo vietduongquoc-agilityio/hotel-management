@@ -7,7 +7,7 @@ import { LabelGuest, Spinner, Table } from "@/components";
 // InterFaces
 import { GuestData, NewGuestData } from "@/interfaces";
 
-//
+// Hooks
 import { useGuest } from "@/hooks/guest";
 
 const GuestPage = () => {
@@ -16,7 +16,7 @@ const GuestPage = () => {
   useGuest();
   const toast = useToast();
   
-  const  handleSelectedBedType = (_event: ChangeEvent<HTMLSelectElement>) => void
+  const handleSelectedBedType = (_event: ChangeEvent<HTMLSelectElement>) => void
 
   useEffect(() => {
     fetchGuests(1, 10);
