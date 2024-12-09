@@ -1,9 +1,7 @@
-
-
 // Libs
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { getRates, createRateApi, updateRate, deleteRate } from '@/services';
-import { NewRateData } from '@/interfaces';
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { getRates, createRateApi, updateRate, deleteRate } from "@/services";
+import { NewRateData, RateData } from "@/interfaces";
 import { createStandaloneToast } from "@chakra-ui/react";
 
 // Constants
@@ -25,14 +23,14 @@ export const useRates = (page: number, pageSize: number) => {
 
   // Fetch Rates Data using React Query's `useQuery`
   const { data, isLoading, error } = useQuery({
-    queryKey: ['rates', { page, pageSize }],
+    queryKey: ["rates", { page, pageSize }],
     queryFn: () => getRates(page, pageSize),
   });
 
   const useAddRate = useMutation({
     mutationFn: createRateApi,
     onSuccess: () => {
-      queryClient.invalidateQueries(['rates', { page, pageSize }]);
+      queryClient.invalidateQueries(["rates", { page, pageSize }]);
       toast({
         title: "Rate Created",
         description: "Rate added successfully!",
@@ -47,10 +45,15 @@ export const useRates = (page: number, pageSize: number) => {
   });
 
   const useEditRate = useMutation({
-    mutationFn: ({ rateId, rateData }: { rateId: string; rateData: NewRateData }) => 
-      updateRate(rateId, rateData),
+    mutationFn: ({
+      rateId,
+      updatedData,
+    }: {
+      rateId: string;
+      updatedData: RateData;
+    }) => updateRate(rateId, updatedData),
     onSuccess: () => {
-      queryClient.invalidateQueries(['rates', { page, pageSize }]);
+      queryClient.invalidateQueries(["rates", { page, pageSize }]);
       toast({
         title: "Rate Updated",
         description: "Rate updated successfully!",
@@ -67,7 +70,7 @@ export const useRates = (page: number, pageSize: number) => {
   const useDeleteRate = useMutation({
     mutationFn: deleteRate,
     onSuccess: () => {
-      queryClient.invalidateQueries(['rates', { page, pageSize }]);
+      queryClient.invalidateQueries(["rates", { page, pageSize }]);
       toast({
         title: "Rate Deleted",
         description: "Rate deleted successfully!",
