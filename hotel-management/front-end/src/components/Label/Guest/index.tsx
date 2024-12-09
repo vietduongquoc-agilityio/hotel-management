@@ -48,7 +48,7 @@ const LabelGuest = ({ onAddGuest, handleSelectedBedType }: LabelGuestProps) => {
         <>
           <AddGuestModal
             onClose={closeModal}
-            onAddRate={onAddGuest}
+            onAddGuest={onAddGuest}
             handleSelectedBedType={handleSelectedBedType}
           />
         </>

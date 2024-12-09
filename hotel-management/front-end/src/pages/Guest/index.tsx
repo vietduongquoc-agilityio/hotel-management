@@ -22,7 +22,7 @@ const GuestPage = () => {
     fetchGuests(1, 10);
   }, [fetchGuests]);
 
-  const handleAddRate = async (guestData: NewGuestData) => {
+  const handleAddGuest = async (guestData: NewGuestData) => {
     await createGuest(guestData);
   };
 
@@ -57,7 +57,7 @@ const GuestPage = () => {
         Guest
       </Heading>
       <LabelGuest
-        onAddGuest={handleAddRate}
+        onAddGuest={handleAddGuest}
         handleSelectedBedType={handleSelectedBedType}
       />
       {isLoading ? (

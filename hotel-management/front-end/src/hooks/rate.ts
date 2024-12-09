@@ -31,13 +31,6 @@ export const useRates = (page: number, pageSize: number) => {
     mutationFn: createRateApi,
     onSuccess: () => {
       queryClient.invalidateQueries(["rates", { page, pageSize }]);
-      toast({
-        title: "Rate Created",
-        description: "Rate added successfully!",
-        status: "success",
-        duration: 3000,
-        isClosable: true,
-      });
     },
     onError: () => {
       showErrorToast("Failed to create rate.");
@@ -71,13 +64,6 @@ export const useRates = (page: number, pageSize: number) => {
     mutationFn: deleteRate,
     onSuccess: () => {
       queryClient.invalidateQueries(["rates", { page, pageSize }]);
-      toast({
-        title: "Rate Deleted",
-        description: "Rate deleted successfully!",
-        status: "success",
-        duration: 3000,
-        isClosable: true,
-      });
     },
     onError: () => {
       showErrorToast("Failed to delete rate.");

@@ -8,6 +8,7 @@ import {
   RateData,
   RoomData,
   GuestData,
+  DealData,
 } from "@/interfaces";
 
 // Components
@@ -21,21 +22,22 @@ import {
 
 // utils
 import {
+  tableHeaders,
   renderRoomBody,
   renderRateBody,
   renderGuestBody,
-  tableHeaders,
+  renderDealBody,
 } from "@/utils";
 
 export interface TableProps<T> {
   data: T[];
-  type: "room" | "rate" | "guest";
+  type: "room" | "rate" | "guest" | "deal";
   error?: string | null;
   onDelete: (id: string) => void;
   onEdit: (updatedData: T) => void;
 }
 
-const Table = <T extends RoomData | RateData | GuestData>({
+const Table = <T extends RoomData | RateData | GuestData | DealData>({
   error,
   data,
   type,
@@ -83,7 +85,9 @@ const Table = <T extends RoomData | RateData | GuestData>({
         ? renderRoomBody(item as RoomData)
         : type === "rate"
         ? renderRateBody(item as RateData)
-        : renderGuestBody(item as GuestData);
+        : type === "guest"
+        ? renderGuestBody(item as GuestData)
+        : renderDealBody(item as DealData);
 
     return (
       <>
@@ -101,7 +105,9 @@ const Table = <T extends RoomData | RateData | GuestData>({
             justifyContent={item.justifyContent}
             fontSize={item?.fontSize}
           >
-            {item.value}
+            {item.value instanceof Date
+              ? item.value.toLocaleString()
+              : item.value}
           </Text>
         ))}
       </>

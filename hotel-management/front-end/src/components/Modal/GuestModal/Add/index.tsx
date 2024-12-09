@@ -24,7 +24,7 @@ import { generateCode } from "@/utils";
 import { useRateStore } from "@/stores";
 
 interface AddGuestModalProps {
-  onAddRate: (rateData: NewGuestData) => void;
+  onAddGuest: (guestData: NewGuestData) => void;
   onClose: () => void;
   handleSelectedBedType: (event: ChangeEvent<HTMLSelectElement>) => void;
 }
@@ -41,7 +41,7 @@ interface FormData {
 
 const AddGuestModal = ({
   onClose,
-  onAddRate,
+  onAddGuest,
   handleSelectedBedType,
 }: AddGuestModalProps) => {
   const defaultRegistrationNumber = generateCode();
@@ -84,17 +84,17 @@ const AddGuestModal = ({
     };
     setIsLoading(true);
     try {
-      await onAddRate(newGuestData);
+      await onAddGuest(newGuestData);
       toast({
-        title: "Rate added successfully.",
+        title: "Guest added successfully.",
         status: "success",
         duration: 3000,
         isClosable: true,
       });
     } catch {
       toast({
-        title: "Failed to add rate.",
-        description: "An error occurred while creating the rate.",
+        title: "Failed to add guest.",
+        description: "An error occurred while creating the guest.",
         status: "error",
         duration: 3000,
         isClosable: true,
