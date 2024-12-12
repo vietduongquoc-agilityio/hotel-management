@@ -2,7 +2,7 @@
 import { roomStatusBackgrounds, roomStatusColors } from "@/constants";
 
 // Interfaces
-import { RoomData, RateData, GuestData, DealData } from "@/interfaces";
+import { RoomData, RateData, DealData } from "@/interfaces";
 
 // Interfaces for row properties
 interface TableCell {
@@ -109,46 +109,6 @@ export const renderRateBody = (rate: RateData): TableCell[] => {
   ];
 };
 
-export const renderGuestBody = (guest: GuestData): TableCell[] => {
-  const { guestName, roomType, stay, price, registrationNumber, totalAmount } =
-    guest;
-
-  return [
-    {
-      value: `#${guestName}`,
-      width: "15%",
-      color: "grey.900",
-    },
-    {
-      value: roomType,
-      width: "15%",
-    },
-    {
-      value: stay,
-      width: "16%",
-    },
-    {
-      value: `${price} nights`,
-      width: "15%",
-    },
-    {
-      value: registrationNumber,
-      width: "15%",
-      color: "grey.900",
-      fontWeight: "500",
-    },
-    {
-      value: `$${totalAmount}`,
-      width: "65px",
-      display: "flex",
-      p: "2px 4px",
-      borderRadius: "16px",
-      fontSize: "",
-      m: "",
-    },
-  ];
-};
-
 export const renderDealBody = (deal: DealData): TableCell[] => {
   const {
     dealName,
@@ -212,15 +172,6 @@ export const tableHeaders = (type: string) => {
       { label: "Deal price", width: "15%" },
       { label: "Rate", width: "15%" },
       { label: "Availability", width: "26%" },
-    ];
-  } else if (type === "guest") {
-    return [
-      { label: "Reservation ID", width: "15%" },
-      { label: "Guest Name", width: "15%" },
-      { label: "Room Type", width: "15%" },
-      { label: "Stay Duration", width: "15%" },
-      { label: "Price per Night", width: "15%" },
-      { label: "Total Amount", width: "26%" },
     ];
   } else if (type === "deal") {
     return [

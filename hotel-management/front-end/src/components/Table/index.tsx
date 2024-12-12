@@ -7,7 +7,6 @@ import {
   EditFunctionType,
   RateData,
   RoomData,
-  GuestData,
   DealData,
 } from "@/interfaces";
 
@@ -25,7 +24,6 @@ import {
   tableHeaders,
   renderRoomBody,
   renderRateBody,
-  renderGuestBody,
   renderDealBody,
 } from "@/utils";
 
@@ -37,7 +35,7 @@ export interface TableProps<T> {
   onEdit: (updatedData: T) => void;
 }
 
-const Table = <T extends RoomData | RateData | GuestData | DealData>({
+const Table = <T extends RoomData | RateData | DealData>({
   error,
   data,
   type,
@@ -85,8 +83,6 @@ const Table = <T extends RoomData | RateData | GuestData | DealData>({
         ? renderRoomBody(item as RoomData)
         : type === "rate"
         ? renderRateBody(item as RateData)
-        : type === "guest"
-        ? renderGuestBody(item as GuestData)
         : renderDealBody(item as DealData);
 
     return (
