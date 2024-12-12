@@ -17,9 +17,9 @@ const RatePage = () => {
   const toast = useToast();
 
   // Zustand store for rates
-  const { fetchRates, editRate } = useRateStore();
+  const { fetchRates, editRate} = useRateStore();
 
-  const { rates, isLoading, useAddRate, useEditRate, useDeleteRate } = useRates(
+  const { rates, isLoading, useAddRate, useDeleteRate } = useRates(
     1,
     10
   );

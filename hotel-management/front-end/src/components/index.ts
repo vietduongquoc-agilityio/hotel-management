@@ -5,6 +5,7 @@ import Input from "./Input";
 import LabelRate from "./Label/Rate";
 import LabelRoom from "./Label/Room";
 import LabelDeal from "./Label/Deal";
+import LabelGuest from "./Label/Guest";
 
 // Modal
 import withModal from "./Modal/modalHoc";
@@ -20,7 +21,10 @@ import EditRoomModal from "./Modal/RoomModal/Edit";
 import DeleteRoom from "./Modal/RoomModal/Delete";
 
 // Deal Modal
-import AddDealModal from "./Modal/Deal/Add"
+import AddDealModal from "./Modal/Deal/Add";
+
+// Guest Modal
+import AddGuestModal from "./Modal/Guest/Add";
 
 import Pagination from "./Pagination";
 import LoadingSpinner from "./Spinner";
@@ -47,4 +51,6 @@ export {
   Table,
   Toast,
   AddDealModal,
+  AddGuestModal,
+  LabelGuest,
 };
