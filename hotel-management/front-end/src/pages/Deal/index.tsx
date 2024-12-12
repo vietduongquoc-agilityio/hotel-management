@@ -1,24 +1,44 @@
 import { Box, Heading, useToast } from "@chakra-ui/react";
-import { ChangeEvent, useEffect } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 
 // Components
-import { LabelDeal, Table } from "@/components";
+import { LabelDeal, Spinner, Table } from "@/components";
 
 // Stores
-import { useDealStore } from "@/stores";
+import { useDealStore, useRateStore } from "@/stores";
 
 // InterFace
 import { DealData, NewDealData } from "@/interfaces";
 
 const DealPage = () => {
   const toast = useToast();
-  const { deals, fetchDeals, createDeal, deleteDeal, editDeal } =
-    useDealStore();
+  const {
+    deals,
+    fetchDeals,
+    createDeal,
+    deleteDeal,
+    editDeal,
+    isLoading: guestsLoading,
+  } = useDealStore();
+  const { rates, isLoading: ratesLoading, fetchRates } = useRateStore();
+  const pageSize = 10;
+  const [isAddRoom, setIsAddRoom] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const handleSelectedBedType = (_event: ChangeEvent<HTMLSelectElement>) => void 
+  
+  useEffect(() => {
+    fetchRates(currentPage, pageSize);
+  }, []);
 
-  const handleSelectedBedType = (_event: ChangeEvent<HTMLSelectElement>) =>
-    void useEffect(() => {
-      fetchDeals(1, 10);
-    }, [fetchDeals]);
+  useEffect(() => {
+    fetchDeals(currentPage, pageSize);
+  }, [fetchDeals, currentPage]);
+
+  useEffect(() => {
+    if (rates.length > 0) {
+      setIsAddRoom(true);
+    }
+  }, [rates]);
 
   const handleAddDeal = async (newDeal: NewDealData) => {
     await createDeal(newDeal);
@@ -56,16 +76,20 @@ const DealPage = () => {
       </Heading>
 
       <LabelDeal
+        isAddRoom={isAddRoom}
         onAddDeal={handleAddDeal}
         handleSelectedBedType={handleSelectedBedType}
       />
-
-      <Table
-        type="deal"
-        onDelete={handleDeleteDeal}
-        onEdit={handleEditDeal}
-        data={deals}
-      />
+      {guestsLoading || ratesLoading ? (
+        <Spinner />
+      ) : (
+        <Table
+          type="deal"
+          onDelete={handleDeleteDeal}
+          onEdit={handleEditDeal}
+          data={deals}
+        />
+      )}
     </Box>
   );
 };

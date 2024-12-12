@@ -161,24 +161,24 @@ export const renderGuestBody = (guest: GuestData): TableCell[] => {
 
   return [
     {
-      value: `#${guestName}`,
+      value: registrationNumber,
       width: "15%",
       color: "grey.900",
     },
     {
-      value: roomType,
+      value: guestName,
       width: "15%",
     },
     {
-      value: stay,
+      value: roomType,
       width: "16%",
     },
     {
-      value: `${price} nights`,
+      value: `${stay} nights`,
       width: "15%",
     },
     {
-      value: registrationNumber,
+      value: price,
       width: "15%",
       color: "grey.900",
       fontWeight: "500",

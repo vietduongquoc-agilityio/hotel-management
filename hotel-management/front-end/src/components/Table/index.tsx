@@ -14,8 +14,10 @@ import {
 // Components
 import {
   Button,
+  DeleteGuest,
   DeleteRate,
   DeleteRoom,
+  EditGuestModal,
   EditRateModal,
   EditRoomModal,
 } from "@/components";
@@ -120,28 +122,45 @@ const Table = <T extends RoomData | RateData | GuestData | DealData>({
     initialData,
     onEditFunction,
   }: EditFunctionType<T>) => {
-    return type === "room" ? (
-      <EditRoomModal
-        initialRoomData={initialData as RoomData}
-        onEditRoom={onEditFunction}
-      />
-    ) : (
-      <EditRateModal
-        initialRateData={initialData as RateData}
-        onEditRate={onEditFunction}
-      />
-    );
+    if (type === "room") {
+      return (
+        <EditRoomModal
+          initialRoomData={initialData as RoomData}
+          onEditRoom={onEditFunction}
+        />
+      );
+    } else if (type === "rate") {
+      return (
+        <EditRateModal
+          initialRateData={initialData as RateData}
+          onEditRate={onEditFunction}
+        />
+      );
+    } else if (type === "guest") {
+      return (
+        <EditGuestModal
+          initialGuestData={initialData as GuestData}
+          onEditGuest={onEditFunction}
+        />
+      );
+    } else {
+      return null;
+    }
   };
 
   const DeleteFunctionModal = ({
     documentId,
     onDeleteFunction,
   }: DeleteFunctionType) => {
-    return type === "room" ? (
-      <DeleteRoom roomId={documentId} onDeleteRoom={onDeleteFunction} />
-    ) : (
-      <DeleteRate rateId={documentId} onDeleteRate={onDeleteFunction} />
-    );
+    if (type === "room") {
+      return <DeleteRoom roomId={documentId} onDeleteRoom={onDeleteFunction} />;
+    } else if (type === "rate") {
+      return <DeleteRate rateId={documentId} onDeleteRate={onDeleteFunction} />;
+    } else if (type === "guest") {
+      return (
+        <DeleteGuest guestId={documentId} onDeleteGuest={onDeleteFunction} />
+      );
+    }
   };
 
   return (

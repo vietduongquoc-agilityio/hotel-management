@@ -15,6 +15,7 @@ import {
   roomFloorOptions,
   roomStatusColors,
   roomStatusOptions,
+  validationRules,
 } from "@/constants";
 
 // Interface
@@ -120,7 +121,7 @@ const EditRoomModal = ({
         <Textarea
           defaultValue={initialRoomData.roomFacility}
           maxLength={500}
-          {...register("roomFacility")}
+          {...register("roomFacility", validationRules.required)}
         />
         {errors.roomFacility && (
           <p style={{ color: "red" }}>{errors.roomFacility.message}</p>
