@@ -1,2 +1,2 @@
-export * from "./Rate"
+export * from "./rate"
 export * from "./guest"

@@ -79,19 +79,19 @@ export const useGuestStore = create<GuestState>()(
           ),
         }));
       } catch (error) {
-        console.error("Error editing rate:", error);
+        console.error("Error editing guest:", error);
       }
     },
 
     // Delete a guest
-    deleteRate: async (guestId: string) => {
+    deleteGuest: async (guestId: string) => {
       try {
         await deleteGuest(guestId);
         set((state) => ({
           guests: state.guests.filter((guest) => guest.documentId !== guestId),
         }));
       } catch (error) {
-        console.error("Error deleting rate:", error);
+        console.error("Error deleting guest:", error);
       }
     },
   }))

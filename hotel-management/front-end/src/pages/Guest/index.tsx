@@ -8,7 +8,7 @@ import { LabelGuest, Spinner, Table } from "@/components";
 import { GuestData, NewGuestData } from "@/interfaces";
 
 // Hooks
-import { useGuest } from "@/hooks/guest";
+import { useGuest } from "@/hooks";
 
 const GuestPage = () => {
   

@@ -30,7 +30,7 @@ export const getGuests = async (page: number, pageSize: number) => {
     });
     return response.data;
   } catch (error) {
-    return { message: "Failed to fetch rate data", data: null };
+    return { message: "Failed to fetch guest data", data: null };
   }
 };
 
@@ -41,7 +41,7 @@ export const createGuestApi = async (guestData: NewGuestData) => {
     });
     return response.data;
   } catch (error) {
-    return { message: "Error updated room details", data: null };
+    return { message: "Error updated guest details", data: null };
   }
 };
 
@@ -57,7 +57,7 @@ export const updateGuest = async (guestId: string, guestData: NewGuestData) => {
     });
     return { message: "Guest updated successfully", data: response.data };
   } catch (error) {
-    return { message: "Error updated room details", data: null };
+    return { message: "Error updated guest details", data: null };
   }
 };
 

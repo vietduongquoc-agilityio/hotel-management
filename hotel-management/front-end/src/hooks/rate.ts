@@ -47,6 +47,7 @@ export const useRates = (page: number, pageSize: number) => {
     }) => updateRate(rateId, updatedData),
     onSuccess: () => {
       queryClient.invalidateQueries(["rates", { page, pageSize }]);
+      
       toast({
         title: "Rate Updated",
         description: "Rate updated successfully!",
