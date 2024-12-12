@@ -122,29 +122,30 @@ const Table = <T extends RoomData | RateData | GuestData | DealData>({
     initialData,
     onEditFunction,
   }: EditFunctionType<T>) => {
-    if (type === "room") {
-      return (
-        <EditRoomModal
-          initialRoomData={initialData as RoomData}
-          onEditRoom={onEditFunction}
-        />
-      );
-    } else if (type === "rate") {
-      return (
-        <EditRateModal
-          initialRateData={initialData as RateData}
-          onEditRate={onEditFunction}
-        />
-      );
-    } else if (type === "guest") {
-      return (
-        <EditGuestModal
-          initialGuestData={initialData as GuestData}
-          onEditGuest={onEditFunction}
-        />
-      );
-    } else {
-      return null;
+    switch (type) {
+      case "room":
+        return (
+          <EditRoomModal
+            initialRoomData={initialData as RoomData}
+            onEditRoom={onEditFunction}
+          />
+        );
+      case "rate":
+        return (
+          <EditRateModal
+            initialRateData={initialData as RateData}
+            onEditRate={onEditFunction}
+          />
+        );
+      case "guest":
+        return (
+          <EditGuestModal
+            initialGuestData={initialData as GuestData}
+            onEditGuest={onEditFunction}
+          />
+        );
+      default:
+        return null;
     }
   };
 
@@ -152,14 +153,21 @@ const Table = <T extends RoomData | RateData | GuestData | DealData>({
     documentId,
     onDeleteFunction,
   }: DeleteFunctionType) => {
-    if (type === "room") {
-      return <DeleteRoom roomId={documentId} onDeleteRoom={onDeleteFunction} />;
-    } else if (type === "rate") {
-      return <DeleteRate rateId={documentId} onDeleteRate={onDeleteFunction} />;
-    } else if (type === "guest") {
-      return (
-        <DeleteGuest guestId={documentId} onDeleteGuest={onDeleteFunction} />
-      );
+    switch (type) {
+      case "room":
+        return (
+          <DeleteRoom roomId={documentId} onDeleteRoom={onDeleteFunction} />
+        );
+      case "rate":
+        return (
+          <DeleteRate rateId={documentId} onDeleteRate={onDeleteFunction} />
+        );
+      case "guest":
+        return (
+          <DeleteGuest guestId={documentId} onDeleteGuest={onDeleteFunction} />
+        );
+      default:
+        return null;
     }
   };
 

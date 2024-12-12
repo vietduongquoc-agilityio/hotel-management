@@ -11,10 +11,19 @@ import {
 } from "@chakra-ui/react";
 import React from "react";
 
+// Constants
+import {
+  DELETE_GUEST_CONFIRMATION,
+  DELETE_ERROR_DESCRIPTION,
+  DELETE_ERROR_MESSAGE,
+  DELETE_GUEST_TITLE,
+  DELETE_SUCCESS_MESSAGE,
+} from "@/constants";
+
 // Components
 import { Button } from "@/components";
 
-//Services
+// Services
 import { deleteGuest } from "@/services";
 
 interface DeleteGuestProps {
@@ -34,7 +43,7 @@ const DeleteGuest = ({ guestId, onDeleteGuest }: DeleteGuestProps) => {
       await deleteGuest(guestId);
       onDeleteGuest(guestId);
       toast({
-        title: "Rate deleted successfully.",
+        title: DELETE_SUCCESS_MESSAGE,
         status: "success",
         duration: 3000,
         isClosable: true,
@@ -42,8 +51,8 @@ const DeleteGuest = ({ guestId, onDeleteGuest }: DeleteGuestProps) => {
       onClose();
     } catch {
       toast({
-        title: "Failed to delete rate.",
-        description: "An error occurred while deleting the rate.",
+        title: DELETE_ERROR_MESSAGE,
+        description: DELETE_ERROR_DESCRIPTION,
         status: "error",
         duration: 3000,
         isClosable: true,
@@ -65,12 +74,10 @@ const DeleteGuest = ({ guestId, onDeleteGuest }: DeleteGuestProps) => {
         <AlertDialogOverlay>
           <AlertDialogContent bg="white.200" top="200px">
             <AlertDialogHeader fontSize="lg" fontWeight="bold">
-              Delete Guest
+              {DELETE_GUEST_TITLE}
             </AlertDialogHeader>
 
-            <AlertDialogBody>
-              Are you sure you want to delete this guest?
-            </AlertDialogBody>
+            <AlertDialogBody>{DELETE_GUEST_CONFIRMATION}</AlertDialogBody>
 
             <AlertDialogFooter>
               <Button text="Cancel" buttonType="warning" onClick={onClose} />

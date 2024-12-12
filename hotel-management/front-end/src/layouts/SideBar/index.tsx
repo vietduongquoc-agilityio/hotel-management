@@ -1,7 +1,7 @@
 import { VStack, Image, Link, List, ListItem } from "@chakra-ui/react";
 import { Link as RouterLink, useLocation } from "react-router-dom";
 import logoIcon from "@/assets/icons/logo.svg";
-import { navItems } from "@/constants/navIteams";
+import { navItems } from "@/constants";
 
 const Sidebar = () => {
   const location = useLocation();
