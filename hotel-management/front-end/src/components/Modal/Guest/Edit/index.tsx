@@ -12,7 +12,7 @@ import { useState } from "react";
 import { Input, withModal, Button } from "@/components";
 
 // Constants
-import { validationRules } from "@/constants";
+import { validationRules, EDIT_GUEST_MESSAGE } from "@/constants";
 
 // InterFace
 import { GuestData } from "@/interfaces";
@@ -51,8 +51,8 @@ const EditGuestModal = ({
       if (onClose) onClose();
     } catch {
       toast({
-        title: "Failed to update guest.",
-        description: "An error occurred while updating the guest.",
+        title: EDIT_GUEST_MESSAGE.ERROR,
+        description: EDIT_GUEST_MESSAGE.ERROR_DESCRIPTION,
         status: "error",
         duration: 3000,
         isClosable: true,

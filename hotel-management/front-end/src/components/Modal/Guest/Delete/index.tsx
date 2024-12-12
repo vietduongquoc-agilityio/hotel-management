@@ -12,13 +12,7 @@ import {
 import React from "react";
 
 // Constants
-import {
-  DELETE_GUEST_CONFIRMATION,
-  DELETE_ERROR_DESCRIPTION,
-  DELETE_ERROR_MESSAGE,
-  DELETE_GUEST_TITLE,
-  DELETE_SUCCESS_MESSAGE,
-} from "@/constants";
+import { DELETE_GUEST_MESSAGE } from "@/constants";
 
 // Components
 import { Button } from "@/components";
@@ -43,7 +37,7 @@ const DeleteGuest = ({ guestId, onDeleteGuest }: DeleteGuestProps) => {
       await deleteGuest(guestId);
       onDeleteGuest(guestId);
       toast({
-        title: DELETE_SUCCESS_MESSAGE,
+        title: DELETE_GUEST_MESSAGE.SUCCESS,
         status: "success",
         duration: 3000,
         isClosable: true,
@@ -51,8 +45,8 @@ const DeleteGuest = ({ guestId, onDeleteGuest }: DeleteGuestProps) => {
       onClose();
     } catch {
       toast({
-        title: DELETE_ERROR_MESSAGE,
-        description: DELETE_ERROR_DESCRIPTION,
+        title: DELETE_GUEST_MESSAGE.ERROR,
+        description: DELETE_GUEST_MESSAGE.ERROR_DESCRIPTION,
         status: "error",
         duration: 3000,
         isClosable: true,
@@ -74,10 +68,12 @@ const DeleteGuest = ({ guestId, onDeleteGuest }: DeleteGuestProps) => {
         <AlertDialogOverlay>
           <AlertDialogContent bg="white.200" top="200px">
             <AlertDialogHeader fontSize="lg" fontWeight="bold">
-              {DELETE_GUEST_TITLE}
+              {DELETE_GUEST_MESSAGE.TITLE}
             </AlertDialogHeader>
 
-            <AlertDialogBody>{DELETE_GUEST_CONFIRMATION}</AlertDialogBody>
+            <AlertDialogBody>
+              {DELETE_GUEST_MESSAGE.CONFIRMATION}
+            </AlertDialogBody>
 
             <AlertDialogFooter>
               <Button text="Cancel" buttonType="warning" onClick={onClose} />
