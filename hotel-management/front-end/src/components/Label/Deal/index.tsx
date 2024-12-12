@@ -8,6 +8,7 @@ import { AddDealModal } from "@/components";
 import { NewDealData } from "@/interfaces";
 
 export interface LabelDealProps {
+  isAddRoom: boolean;
   onAddDeal: (roomData: NewDealData) => void;
   handleSelectedBedType: (event: ChangeEvent<HTMLSelectElement>) => void;
 }

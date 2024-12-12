@@ -14,8 +14,10 @@ import {
 // Components
 import {
   Button,
+  DeleteGuest,
   DeleteRate,
   DeleteRoom,
+  EditGuestModal,
   EditRateModal,
   EditRoomModal,
 } from "@/components";
@@ -120,28 +122,53 @@ const Table = <T extends RoomData | RateData | GuestData | DealData>({
     initialData,
     onEditFunction,
   }: EditFunctionType<T>) => {
-    return type === "room" ? (
-      <EditRoomModal
-        initialRoomData={initialData as RoomData}
-        onEditRoom={onEditFunction}
-      />
-    ) : (
-      <EditRateModal
-        initialRateData={initialData as RateData}
-        onEditRate={onEditFunction}
-      />
-    );
+    switch (type) {
+      case "room":
+        return (
+          <EditRoomModal
+            initialRoomData={initialData as RoomData}
+            onEditRoom={onEditFunction}
+          />
+        );
+      case "rate":
+        return (
+          <EditRateModal
+            initialRateData={initialData as RateData}
+            onEditRate={onEditFunction}
+          />
+        );
+      case "guest":
+        return (
+          <EditGuestModal
+            initialGuestData={initialData as GuestData}
+            onEditGuest={onEditFunction}
+          />
+        );
+      default:
+        return null;
+    }
   };
 
   const DeleteFunctionModal = ({
     documentId,
     onDeleteFunction,
   }: DeleteFunctionType) => {
-    return type === "room" ? (
-      <DeleteRoom roomId={documentId} onDeleteRoom={onDeleteFunction} />
-    ) : (
-      <DeleteRate rateId={documentId} onDeleteRate={onDeleteFunction} />
-    );
+    switch (type) {
+      case "room":
+        return (
+          <DeleteRoom roomId={documentId} onDeleteRoom={onDeleteFunction} />
+        );
+      case "rate":
+        return (
+          <DeleteRate rateId={documentId} onDeleteRate={onDeleteFunction} />
+        );
+      case "guest":
+        return (
+          <DeleteGuest guestId={documentId} onDeleteGuest={onDeleteFunction} />
+        );
+      default:
+        return null;
+    }
   };
 
   return (

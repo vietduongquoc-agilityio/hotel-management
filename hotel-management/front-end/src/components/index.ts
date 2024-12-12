@@ -25,6 +25,8 @@ import AddDealModal from "./Modal/Deal/Add";
 
 // Guest Modal
 import AddGuestModal from "./Modal/Guest/Add";
+import EditGuestModal from "./Modal/Guest/Edit"
+import DeleteGuest from "./Modal/Guest/Delete";
 
 import Pagination from "./Pagination";
 import LoadingSpinner from "./Spinner";
@@ -52,5 +54,7 @@ export {
   Toast,
   AddDealModal,
   AddGuestModal,
+  EditGuestModal,
   LabelGuest,
+  DeleteGuest,
 };
