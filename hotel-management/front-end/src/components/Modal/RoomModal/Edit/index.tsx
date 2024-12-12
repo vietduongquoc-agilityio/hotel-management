@@ -129,7 +129,7 @@ const EditRoomModal = ({
       </FormControl>
 
       <FormControl mb={4} isInvalid={!!errors.roomStatus}>
-        <FormLabel>Status</FormLabel>
+        <FormLabel>Status Room</FormLabel>
         <Select
           defaultValue={initialRoomData.roomStatus}
           {...register("roomStatus")}

@@ -47,7 +47,12 @@ const EditGuestModal = ({
     setIsLoading(true);
     try {
       await onEditGuest(data);
-
+      toast({
+        title: EDIT_GUEST_MESSAGE.SUCCESS,
+        status: "success",
+        duration: 3000,
+        isClosable: true,
+      });
       if (onClose) onClose();
     } catch {
       toast({
