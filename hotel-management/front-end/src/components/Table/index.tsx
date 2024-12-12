@@ -7,6 +7,7 @@ import {
   EditFunctionType,
   RateData,
   RoomData,
+  DealData,
 } from "@/interfaces";
 
 // Components
@@ -19,17 +20,22 @@ import {
 } from "@/components";
 
 // utils
-import { renderRoomBody, renderRateBody, tableHeaders } from "@/utils/Table";
+import {
+  tableHeaders,
+  renderRoomBody,
+  renderRateBody,
+  renderDealBody,
+} from "@/utils";
 
 export interface TableProps<T> {
   data: T[];
-  type: "room" | "rate";
+  type: "room" | "rate" | "guest" | "deal";
   error?: string | null;
   onDelete: (id: string) => void;
   onEdit: (updatedData: T) => void;
 }
 
-const Table = <T extends RoomData | RateData>({
+const Table = <T extends RoomData | RateData | DealData>({
   error,
   data,
   type,
@@ -71,11 +77,13 @@ const Table = <T extends RoomData | RateData>({
       </Alert>
     );
 
-  const renderRow = (item: RoomData | RateData) => {
+  const renderRow = (item: T) => {
     const result =
       type === "room"
         ? renderRoomBody(item as RoomData)
-        : renderRateBody(item as RateData);
+        : type === "rate"
+        ? renderRateBody(item as RateData)
+        : renderDealBody(item as DealData);
 
     return (
       <>
@@ -93,7 +101,9 @@ const Table = <T extends RoomData | RateData>({
             justifyContent={item.justifyContent}
             fontSize={item?.fontSize}
           >
-            {item.value}
+            {item.value instanceof Date
+              ? item.value.toLocaleString()
+              : item.value}
           </Text>
         ))}
       </>
@@ -160,7 +170,7 @@ const Table = <T extends RoomData | RateData>({
           </ListItem>
         ))}
       </UnorderedList>
-      {data.map((item) => {
+      {data.map((item: T) => {
         return (
           <Box
             key={item.documentId}

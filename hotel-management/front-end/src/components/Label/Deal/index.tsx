@@ -1,9 +1,18 @@
 import { Box, ListItem, UnorderedList, Text } from "@chakra-ui/react";
+import { ChangeEvent } from "react";
 
 // Components
 import { AddDealModal } from "@/components";
 
-const LabelDeal = () => {
+// InterFaces
+import { NewDealData } from "@/interfaces";
+
+export interface LabelDealProps {
+  onAddDeal: (roomData: NewDealData) => void;
+  handleSelectedBedType: (event: ChangeEvent<HTMLSelectElement>) => void;
+}
+
+const LabelDeal = ({ onAddDeal, handleSelectedBedType }: LabelDealProps) => {
   const closeModal = () => {};
   return (
     <Box
@@ -46,7 +55,12 @@ const LabelDeal = () => {
         </ListItem>
       </UnorderedList>
       <>
-        <AddDealModal onClose={closeModal} width={""} />
+        <AddDealModal
+          onClose={closeModal}
+          width={""}
+          onAddDeal={onAddDeal}
+          handleSelectedBedType={handleSelectedBedType}
+        />
       </>
     </Box>
   );
