@@ -17,9 +17,11 @@ import {
   DeleteGuest,
   DeleteRate,
   DeleteRoom,
+  DeleteDeal,
   EditGuestModal,
   EditRateModal,
   EditRoomModal,
+  EditDealModal,
 } from "@/components";
 
 // utils
@@ -144,6 +146,13 @@ const Table = <T extends RoomData | RateData | GuestData | DealData>({
             onEditGuest={onEditFunction}
           />
         );
+      case "deal":
+        return (
+          <EditDealModal
+            initialDealData={initialData as DealData}
+            onEditDeal={onEditFunction}
+          />
+        );
       default:
         return null;
     }
@@ -166,6 +175,10 @@ const Table = <T extends RoomData | RateData | GuestData | DealData>({
         return (
           <DeleteGuest guestId={documentId} onDeleteGuest={onDeleteFunction} />
         );
+      case "deal":
+        return (
+          <DeleteDeal dealId={documentId} onDeleteDeal={onDeleteFunction} />
+        )
       default:
         return null;
     }

@@ -34,3 +34,18 @@ export const roomStatusBackgrounds: { [key: string]: string } = {
   Waitlist: "warning.50",
   Blocked: "warning.50",
 };
+
+export const dealStatusColors: { [key: string]: string } = {
+  Ongoing: "blue.400",
+  Full: "error.400",
+};
+
+export const dealStatusBackgrounds: { [key: string]: string } = {
+  Ongoing: "blue.100",
+  Full: "error.50",
+};
+
+export const dealStatusOptions = [
+  { value: "Ongoing", label: "Ongoing" },
+  { value: "Full", label: "Full" },
+];

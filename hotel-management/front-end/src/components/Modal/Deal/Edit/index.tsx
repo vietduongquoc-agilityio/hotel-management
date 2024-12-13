@@ -13,66 +13,50 @@ import {
 import { withModal, Input, Button } from "@/components";
 
 // Constants
-import { validationRules } from "@/constants";
+import {
+  validationRules,
+  EDIT_DEAL_MESSAGE,
+  dealStatusOptions,
+} from "@/constants";
 
 // InterFace
-import { NewDealData } from "@/interfaces";
+import { DealData } from "@/interfaces";
 
 // Stores
 import { useRateStore } from "@/stores";
 
-interface AddDealModalProps {
-  onAddDeal: (dealData: NewDealData) => void;
-  onClose: () => void;
-  width: string;
-  handleSelectedBedType: (event: ChangeEvent<HTMLSelectElement>) => void;
+interface EditDealModalProps {
+  onEditDeal: (updatedDealData: DealData) => void;
+  onClose?: () => void;
+  initialDealData: DealData;
 }
 
-interface FormData {
-  dealName: string;
-  roomType: string;
-  referenceNumber: number;
-  startDate: Date;
-  endDate: Date;
-}
-
-const AddDealModal = ({
+const EditDealModal = ({
   onClose,
-  onAddDeal,
-  handleSelectedBedType,
-}: AddDealModalProps) => {
+  onEditDeal,
+  initialDealData,
+}: EditDealModalProps) => {
   const bedTypeOptions = useRateStore((state) => state.bedTypeOptions);
   const [isLoading, setIsLoading] = useState(false);
   const toast = useToast();
+
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<FormData>();
+  } = useForm({
+    defaultValues: initialDealData,
+  });
 
-  const onSubmit = async (data: FormData) => {
-    const newDealData: NewDealData = {
-      dealName: data.dealName,
-      roomType: data.roomType,
-      startDate: data.startDate,
-      endDate: data.endDate,
-      referenceNumber: "",
-      statusDeal: "Ongoing",
-      reservationsLeft: 0,
-    };
+  const onSubmit = async (data: DealData) => {
     setIsLoading(true);
     try {
-      await onAddDeal(newDealData);
-      toast({
-        title: "Deal added successfully.",
-        status: "success",
-        duration: 3000,
-        isClosable: true,
-      });
+      await onEditDeal(data);
+      if (onClose) onClose();
     } catch {
       toast({
-        title: "Failed to add deal.",
-        description: "An error occurred while creating the deal.",
+        title: EDIT_DEAL_MESSAGE.ERROR,
+        description: EDIT_DEAL_MESSAGE.ERROR_DESCRIPTION,
         status: "error",
         duration: 3000,
         isClosable: true,
@@ -85,9 +69,10 @@ const AddDealModal = ({
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <Box display="flex" justifyContent="space-between">
-        <FormControl mb={4} maxW="320px">
+        <FormControl mb={4} maxW="320px" isInvalid={!!errors.dealName}>
           <FormLabel>Deal Name</FormLabel>
           <Input
+            defaultValue={initialDealData.dealName}
             {...register("dealName", validationRules.required)}
             placeHolder="Enter deal name"
             inputType="primary"
@@ -99,9 +84,10 @@ const AddDealModal = ({
           )}
         </FormControl>
 
-        <FormControl mb={4} maxW="320px">
+        <FormControl mb={4} maxW="320px" isInvalid={!!errors.referenceNumber}>
           <FormLabel>Reference Number</FormLabel>
           <Input
+            defaultValue={initialDealData.referenceNumber}
             {...register("referenceNumber", validationRules.required)}
             placeHolder="Enter reference number"
             inputType="primary"
@@ -114,9 +100,10 @@ const AddDealModal = ({
         </FormControl>
       </Box>
       <Box display="flex" justifyContent="space-between">
-        <FormControl mb={4} maxW="320px">
+        <FormControl mb={4} maxW="320px" isInvalid={!!errors.startDate}>
           <FormLabel>Start Date</FormLabel>
           <Input
+            defaultValue={initialDealData.startDate}
             {...register("startDate", validationRules.required)}
             type="date"
             placeHolder={""}
@@ -129,9 +116,10 @@ const AddDealModal = ({
           )}
         </FormControl>
 
-        <FormControl mb={4} maxW="320px">
+        <FormControl mb={4} maxW="320px" isInvalid={!!errors.endDate}>
           <FormLabel>End Date</FormLabel>
           <Input
+            defaultValue={initialDealData.endDate}
             {...register("endDate", validationRules.required)}
             type="date"
             placeHolder=""
@@ -144,39 +132,47 @@ const AddDealModal = ({
           )}
         </FormControl>
       </Box>
-      <Box display="flex" justifyContent="space-between">
-        <FormControl mb={4} maxW="320px">
-          <FormLabel>Room Type</FormLabel>
-          <Select
-            {...register("roomType", validationRules.required)}
-            onChange={handleSelectedBedType}
-            placeholder="Select room type"
-          >
-            {bedTypeOptions.map((option, index) => (
-              <option key={`${option.value}-${index}`} value={option.value}>
-                {option.label}
-              </option>
-            ))}
-          </Select>
-          {errors.roomType && (
-            <p style={{ color: "red", fontSize: "14px" }}>
-              {errors.roomType.message}
-            </p>
-          )}
-        </FormControl>
+      <FormControl mb={4} maxW="320px" isInvalid={!!errors.roomType}>
+        <FormLabel>Room Type</FormLabel>
+        <Select
+          defaultValue={initialDealData.roomType}
+          {...register("roomType", validationRules.required)}
+        >
+          {bedTypeOptions.map((option, index) => (
+            <option key={`${option.value}-${index}`} value={option.value}>
+              {option.label}
+            </option>
+          ))}
+        </Select>
+        {errors.roomType && (
+          <p style={{ color: "red", fontSize: "14px" }}>
+            {errors.roomType.message}
+          </p>
+        )}
+      </FormControl>
 
-        <FormControl mb={4} maxW="320px">
-          <FormLabel>Status Deal</FormLabel>
-          <Select value="Ongoing" disabled>
-            <option value="Ongoing">Ongoing</option>
-          </Select>
-        </FormControl>
-      </Box>
+      <FormControl mb={4} maxW="320px" isInvalid={!!errors.statusDeal}>
+        <FormLabel>Status Deal</FormLabel>
+        <Select
+          defaultValue={initialDealData.statusDeal}
+          {...register("statusDeal")}
+        >
+          {dealStatusOptions.map((option, index) => (
+            <option key={`${option.value}-${index}`} value={option.value}>
+              {option.label}
+            </option>
+          ))}
+        </Select>
+        {errors.statusDeal && (
+          <p style={{ color: "red" }}>{errors.statusDeal.message}</p>
+        )}
+      </FormControl>
+
       <ModalFooter>
         <Button text="Cancel" buttonType="warning" onClick={onClose} />
         <Button
           w="100px"
-          text="Add Deal"
+          text="Edit"
           buttonType="primary"
           isLoading={isLoading}
           type="submit"
@@ -186,4 +182,4 @@ const AddDealModal = ({
   );
 };
 
-export default withModal(AddDealModal, "Add Deal");
+export default withModal(EditDealModal, "Edit");

@@ -22,10 +22,12 @@ import DeleteRoom from "./Modal/RoomModal/Delete";
 
 // Deal Modal
 import AddDealModal from "./Modal/Deal/Add";
+import EditDealModal from "./Modal/Deal/Edit";
+import DeleteDeal from "./Modal/Deal/Delete";
 
 // Guest Modal
 import AddGuestModal from "./Modal/Guest/Add";
-import EditGuestModal from "./Modal/Guest/Edit"
+import EditGuestModal from "./Modal/Guest/Edit";
 import DeleteGuest from "./Modal/Guest/Delete";
 
 import Pagination from "./Pagination";
@@ -57,4 +59,6 @@ export {
   EditGuestModal,
   LabelGuest,
   DeleteGuest,
+  EditDealModal,
+  DeleteDeal,
 };

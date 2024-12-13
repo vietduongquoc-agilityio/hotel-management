@@ -1,5 +1,10 @@
 // Constant
-import { roomStatusBackgrounds, roomStatusColors } from "@/constants";
+import {
+  roomStatusBackgrounds,
+  roomStatusColors,
+  dealStatusBackgrounds,
+  dealStatusColors,
+} from "@/constants";
 
 // Interfaces
 import { RoomData, RateData, DealData, GuestData } from "@/interfaces";
@@ -146,11 +151,14 @@ export const renderDealBody = (deal: DealData): TableCell[] => {
     {
       value: statusDeal,
       width: "65px",
-      display: "flex",
-      p: "2px 4px",
       borderRadius: "16px",
-      fontSize: "",
-      m: "",
+      p: "4px 8px",
+      m: "auto",
+      bg: dealStatusBackgrounds[statusDeal],
+      display: "flex",
+      justifyContent: "center",
+      color: dealStatusColors[statusDeal],
+      fontSize: "12px",
     },
   ];
 };

@@ -161,7 +161,7 @@ const AddRoomModal = ({ onAddRoom, onClose }: AddRoomModalProps) => {
       </FormControl>
 
       <FormControl mb={4}>
-        <FormLabel>Status</FormLabel>
+        <FormLabel>Status Room</FormLabel>
         <Select value="Available" disabled>
           <option value="Available">Available</option>
         </Select>
