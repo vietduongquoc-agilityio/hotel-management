@@ -8,12 +8,16 @@ import { AddDealModal } from "@/components";
 import { NewDealData } from "@/interfaces";
 
 export interface LabelDealProps {
-  isAddRoom: boolean;
+  isAddDeal: boolean;
   onAddDeal: (roomData: NewDealData) => void;
   handleSelectedBedType: (event: ChangeEvent<HTMLSelectElement>) => void;
 }
 
-const LabelDeal = ({ onAddDeal, handleSelectedBedType }: LabelDealProps) => {
+const LabelDeal = ({
+  onAddDeal,
+  handleSelectedBedType,
+  isAddDeal,
+}: LabelDealProps) => {
   const closeModal = () => {};
   return (
     <Box
@@ -61,6 +65,7 @@ const LabelDeal = ({ onAddDeal, handleSelectedBedType }: LabelDealProps) => {
           width={""}
           onAddDeal={onAddDeal}
           handleSelectedBedType={handleSelectedBedType}
+          isDisabled={isAddDeal}
         />
       </>
     </Box>

@@ -2,13 +2,16 @@ import { Box, Heading, useToast } from "@chakra-ui/react";
 import { ChangeEvent, useEffect, useState } from "react";
 
 // Components
-import { LabelDeal, Spinner, Table } from "@/components";
+import { LabelDeal, Pagination, Spinner, Table } from "@/components";
 
 // Stores
 import { useDealStore, useRateStore } from "@/stores";
 
 // InterFace
 import { DealData, NewDealData } from "@/interfaces";
+
+// Constants
+import { EDIT_DEAL_MESSAGE } from "@/constants";
 
 const DealPage = () => {
   const toast = useToast();
@@ -18,25 +21,22 @@ const DealPage = () => {
     createDeal,
     deleteDeal,
     editDeal,
-    isLoading: guestsLoading,
+    isLoading: dealsLoading,
+    pageCount,
   } = useDealStore();
   const { rates, isLoading: ratesLoading, fetchRates } = useRateStore();
   const pageSize = 10;
-  const [isAddRoom, setIsAddRoom] = useState(false);
+  const [isAddDeal, setIsAddDeal] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const handleSelectedBedType = (_event: ChangeEvent<HTMLSelectElement>) => void 
-  
   useEffect(() => {
     fetchRates(currentPage, pageSize);
-  }, []);
-
-  useEffect(() => {
     fetchDeals(currentPage, pageSize);
   }, [fetchDeals, currentPage]);
 
   useEffect(() => {
     if (rates.length > 0) {
-      setIsAddRoom(true);
+      setIsAddDeal(true);
     }
   }, [rates]);
 
@@ -61,8 +61,8 @@ const DealPage = () => {
 
     await editDeal(updatedDealData.documentId, requestPayload);
     toast({
-      title: "Rate updated",
-      description: "Rate details have been successfully updated.",
+      title: EDIT_DEAL_MESSAGE.SUCCESS,
+      description: EDIT_DEAL_MESSAGE.SUCCESS_DESCRIPTION,
       status: "success",
       duration: 3000,
       isClosable: true,
@@ -76,11 +76,11 @@ const DealPage = () => {
       </Heading>
 
       <LabelDeal
-        isAddRoom={isAddRoom}
+        isAddDeal={isAddDeal}
         onAddDeal={handleAddDeal}
         handleSelectedBedType={handleSelectedBedType}
       />
-      {guestsLoading || ratesLoading ? (
+      {dealsLoading || ratesLoading ? (
         <Spinner />
       ) : (
         <Table
@@ -90,6 +90,13 @@ const DealPage = () => {
           data={deals}
         />
       )}
+
+      <Pagination
+        currentPage={currentPage}
+        setCurrentPage={setCurrentPage}
+        pageSize={pageSize}
+        pageCount={pageCount}
+      />
     </Box>
   );
 };
