@@ -32,10 +32,12 @@ export const useDealStore = create<DealState>()(
     fetchDeals: async (currentPage, pageSize) => {
       set({ isLoading: true });
       try {
-        const { deals, pagination } = await getDeals(currentPage, pageSize);
-        if (deals && pagination) {
+        const { data, meta } = await getDeals(currentPage, pageSize);
+        const { pagination } = meta;
+
+        if (data && pagination) {
           set({
-            deals,
+            deals: data,
             totalDeals: pagination.total || 0,
             isLoading: false,
             pageCount: pagination.pageCount || 1,

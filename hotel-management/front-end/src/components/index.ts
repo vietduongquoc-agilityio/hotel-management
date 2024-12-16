@@ -35,6 +35,7 @@ import LoadingSpinner from "./Spinner";
 import Table from "./Table";
 import Toast from "./Toast";
 import Spinner from "./Spinner";
+import PageSizeSelector from "./PageSizeSelector";
 
 export {
   Button,
@@ -61,4 +62,5 @@ export {
   DeleteGuest,
   EditDealModal,
   DeleteDeal,
+  PageSizeSelector,
 };

@@ -2,7 +2,13 @@ import { Box, Heading, useToast } from "@chakra-ui/react";
 import { ChangeEvent, useEffect, useState } from "react";
 
 // Components
-import { LabelDeal, Pagination, Spinner, Table } from "@/components";
+import {
+  LabelDeal,
+  Pagination,
+  Spinner,
+  Table,
+  PageSizeSelector,
+} from "@/components";
 
 // Stores
 import { useDealStore, useRateStore } from "@/stores";
@@ -25,14 +31,16 @@ const DealPage = () => {
     pageCount,
   } = useDealStore();
   const { rates, isLoading: ratesLoading, fetchRates } = useRateStore();
-  const pageSize = 10;
+  const [pageSize, setPageSize] = useState(10);
   const [isAddDeal, setIsAddDeal] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
-  const handleSelectedBedType = (_event: ChangeEvent<HTMLSelectElement>) => void 
+
+  const handleSelectedBedType = (_event: ChangeEvent<HTMLSelectElement>) => {};
+
   useEffect(() => {
     fetchRates(currentPage, pageSize);
     fetchDeals(currentPage, pageSize);
-  }, [fetchDeals, currentPage]);
+  }, [fetchDeals, fetchRates, currentPage, pageSize]);
 
   useEffect(() => {
     if (rates.length > 0) {
@@ -69,6 +77,11 @@ const DealPage = () => {
     });
   };
 
+  const handlePageSizeChange = (newSize: number) => {
+    setPageSize(newSize);
+    setCurrentPage(1);
+  };
+
   return (
     <Box>
       <Heading mb="16px" fontSize="12px" fontWeight="500" color="grey.500">
@@ -90,13 +103,15 @@ const DealPage = () => {
           data={deals}
         />
       )}
-
-      <Pagination
-        currentPage={currentPage}
-        setCurrentPage={setCurrentPage}
-        pageSize={pageSize}
-        pageCount={pageCount}
-      />
+      <Box display="flex" mt="40px">
+        <PageSizeSelector onPageSizeChange={handlePageSizeChange} />
+        <Pagination
+          currentPage={currentPage}
+          setCurrentPage={setCurrentPage}
+          pageSize={pageSize}
+          pageCount={pageCount}
+        />
+      </Box>
     </Box>
   );
 };
