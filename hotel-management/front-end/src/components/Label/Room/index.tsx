@@ -158,7 +158,6 @@ const LabelRoom = ({
           onAddRoom={onAddRoom}
           isDisabled={isAddRoom}
           onClose={closeModal}
-          bedTypeOptions={bedTypeOptions}
         />
       </>
     </Box>

@@ -60,7 +60,6 @@ const Template: StoryFn = (args) => (
   <ChakraProvider theme={themeColor}>
     <MemoryRouter>
       <AddRoomModal
-        bedTypeOptions={[]}
         {...args}
         isDisabled
         onAddRoom={onAddRoom}
