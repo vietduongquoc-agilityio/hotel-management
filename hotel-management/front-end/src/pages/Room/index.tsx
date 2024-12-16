@@ -14,7 +14,7 @@ import {
 } from "@/components";
 
 // Store
-import { useRoomStore } from "@/stores";
+import { useRateStore, useRoomStore } from "@/stores";
 
 // Hooks
 import { useGetRate } from "@/hooks";
@@ -33,6 +33,8 @@ const RoomPage = () => {
     deleteRoom,
   } = useRoomStore();
 
+  const { saveRate } = useRateStore();
+
   const { data: ratesData } = useGetRate();
 
   const [currentPage, setCurrentPage] = useState(1);
@@ -47,6 +49,10 @@ const RoomPage = () => {
   useEffect(() => {
     if (ratesData?.rates.length > 0) {
       setIsAddRoom(true);
+
+      const { rates, bedTypeOptions } = ratesData || {};
+
+      saveRate(rates, bedTypeOptions);
     }
   }, [ratesData]);
 
@@ -126,7 +132,7 @@ const RoomPage = () => {
         handleSelectedBedType={handleSelectedBedType}
         handleSelectedRoomFloor={handleSelectedRoomFloor}
         handleSelectedRoomStatus={handleSelectedRoomStatus}
-        bedTypeOptions={ratesData?.bedTypeOptions || []}
+        // bedTypeOptions={ratesData?.bedTypeOptions || []}
       />
 
       {roomsLoading ? (

@@ -41,31 +41,6 @@ export const useRateStore = create<RateState>()(
       });
     },
 
-    // fetchRates: async (currentPage, pageSize) => {
-    //   set({ isLoading: true });
-    //   try {
-    //     const { data } = await getRates(currentPage, pageSize);
-    //     const resultTypeBed = data.map((item: RateData) => ({
-    //       value: item.roomType,
-    //       label: `${item.roomType} Bed`,
-    //     }));
-    //     const updatedRates = data.map((item: RateData) => {
-    //       return {
-    //         ...item,
-    //         totalOfBooked: item.totalOfBooked,
-    //       };
-    //     });
-    //     set({
-    //       rates: updatedRates,
-    //       bedTypeOptions: resultTypeBed,
-    //     });
-    //   } catch (error) {
-    //     console.error("Error fetching rates:", error);
-    //   } finally {
-    //     set({ isLoading: false });
-    //   }
-    // },
-
     addRate: async (rateData) => {
       try {
         const { data } = await createRateApi(rateData);

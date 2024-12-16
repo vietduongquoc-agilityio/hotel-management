@@ -13,6 +13,7 @@ import {
 
 // Components
 import { AddRoomModal } from "@/components";
+import { useRateStore } from "@/stores";
 
 export interface LabelRoomProps {
   width?: string;
@@ -20,14 +21,13 @@ export interface LabelRoomProps {
   availableRooms: number;
   bookedRooms: number;
   onAddRoom: (roomData: NewRoomData) => Promise<void>;
-  isAddRoom: boolean;
   selectedBedType: string;
+  isAddRoom: boolean;
   selectedRoomFloor: string;
   selectedRoomStatus: string;
   handleSelectedBedType: (event: ChangeEvent<HTMLSelectElement>) => void;
   handleSelectedRoomFloor: (event: ChangeEvent<HTMLSelectElement>) => void;
   handleSelectedRoomStatus: (event: ChangeEvent<HTMLSelectElement>) => void;
-  bedTypeOptions: { value: string; label: string }[];
 }
 
 const LabelRoom = ({
@@ -38,14 +38,12 @@ const LabelRoom = ({
   handleSelectedBedType,
   handleSelectedRoomFloor,
   handleSelectedRoomStatus,
-  selectedBedType,
-  selectedRoomFloor,
-  selectedRoomStatus,
-  bedTypeOptions,
+
   isAddRoom,
   width = "100%",
 }: LabelRoomProps) => {
   const closeModal = () => {};
+  const bedTypeOptions = useRateStore((state) => state.bedTypeOptions);
 
   return (
     <Box
@@ -110,7 +108,6 @@ const LabelRoom = ({
           width="120px"
           onChange={handleSelectedBedType}
           placeholder="Filter type"
-          value={selectedBedType}
         >
           {bedTypeOptions.map((option, index) => (
             <option key={`${option.value}-${index}`} value={option.value}>
@@ -125,7 +122,6 @@ const LabelRoom = ({
           width="120px"
           placeholder="Filter floor"
           onChange={handleSelectedRoomFloor}
-          value={selectedRoomFloor} 
         >
           {roomFloorOptions.map((option, index) => (
             <option
@@ -149,7 +145,6 @@ const LabelRoom = ({
           width="130px"
           placeholder="Filter status"
           onChange={handleSelectedRoomStatus}
-          value={selectedRoomStatus} 
         >
           {roomStatusOptions.map((option, index) => (
             <option key={`${option.value}-${index}`} value={option.value}>
