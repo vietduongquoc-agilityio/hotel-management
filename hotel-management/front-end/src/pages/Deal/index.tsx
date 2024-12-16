@@ -48,6 +48,11 @@ const DealPage = () => {
     }
   }, [rates]);
 
+  const handlePageSizeChange = (newSize: number) => {
+    setPageSize(newSize);
+    setCurrentPage(1);
+  };
+
   const handleAddDeal = async (newDeal: NewDealData) => {
     await createDeal(newDeal);
   };
@@ -75,11 +80,6 @@ const DealPage = () => {
       duration: 3000,
       isClosable: true,
     });
-  };
-
-  const handlePageSizeChange = (newSize: number) => {
-    setPageSize(newSize);
-    setCurrentPage(1);
   };
 
   return (

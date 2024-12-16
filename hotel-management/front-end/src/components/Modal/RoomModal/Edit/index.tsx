@@ -21,8 +21,8 @@ import {
 // Interface
 import { RoomData } from "@/interfaces";
 
-// Store
-import { useRateStore } from "@/stores";
+// Hooks
+import { useGetRate } from "@/hooks";
 
 // Components
 import { Button, withModal } from "@/components";
@@ -48,7 +48,9 @@ const EditRoomModal = ({
 
   const [isLoading, setIsLoading] = useState(false);
   const toast = useToast();
-  const bedTypeOptions = useRateStore((state) => state.bedTypeOptions);
+
+  const { data } = useGetRate();
+  const bedTypeOptions = data?.bedTypeOptions || [];
 
   const onSubmit = async (data: RoomData) => {
     setIsLoading(true);
@@ -78,11 +80,13 @@ const EditRoomModal = ({
             defaultValue={initialRoomData.bedType}
             {...register("bedType")}
           >
-            {bedTypeOptions.map((option, index) => (
-              <option key={`${option.value}-${index}`} value={option.value}>
-                {option.label}
-              </option>
-            ))}
+            {bedTypeOptions.map(
+              (option: { value: string; label: string }, index: number) => (
+                <option key={`${option.value}-${index}`} value={option.value}>
+                  {option.label}
+                </option>
+              )
+            )}
           </Select>
           {errors.bedType && (
             <p style={{ color: "red" }}>{errors.bedType.message}</p>

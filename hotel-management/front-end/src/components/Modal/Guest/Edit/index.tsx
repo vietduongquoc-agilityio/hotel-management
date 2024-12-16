@@ -102,7 +102,6 @@ const EditGuestModal = ({
       <FormControl mb={4} isInvalid={!!errors.checkInDate}>
         <FormLabel>Check-in Date</FormLabel>
         <Input
-          defaultValue={initialGuestData.checkInDate}
           {...register("checkInDate", validationRules.required)}
           type="date"
           placeHolder=""

@@ -3,7 +3,7 @@ import { devtools } from "zustand/middleware";
 
 // Services
 import {
-  getRates,
+  // getRates,
   updateRate,
   createRateApi,
   deleteRate as deleteRateApi,
@@ -20,6 +20,10 @@ interface RateState {
   addRate: (rateData: NewRateData) => Promise<void>;
   editRate: (rateId: string, updatedData: NewRateData) => Promise<void>;
   deleteRate: (rateId: string) => Promise<void>;
+  saveRate: (
+    data: RateData[],
+    bedType: { value: string; label: string }[]
+  ) => void;
 }
 
 export const useRateStore = create<RateState>()(
@@ -27,31 +31,40 @@ export const useRateStore = create<RateState>()(
     bedTypeOptions: [],
     rates: [],
     isLoading: false,
-
-    fetchRates: async (currentPage, pageSize) => {
-      set({ isLoading: true });
-      try {
-        const { data } = await getRates(currentPage, pageSize);
-        const resultTypeBed = data.map((item: RateData) => ({
-          value: item.roomType,
-          label: `${item.roomType} Bed`,
-        }));
-        const updatedRates = data.map((item: RateData) => {
-          return {
-            ...item,
-            totalOfBooked: item.totalOfBooked,
-          };
-        });
-        set({
-          rates: updatedRates,
-          bedTypeOptions: resultTypeBed,
-        });
-      } catch (error) {
-        console.error("Error fetching rates:", error);
-      } finally {
-        set({ isLoading: false });
-      }
+    saveRate: (
+      data: RateData[],
+      bedType: { value: string; label: string }[]
+    ) => {
+      set({
+        rates: data,
+        bedTypeOptions: bedType,
+      });
     },
+
+    // fetchRates: async (currentPage, pageSize) => {
+    //   set({ isLoading: true });
+    //   try {
+    //     const { data } = await getRates(currentPage, pageSize);
+    //     const resultTypeBed = data.map((item: RateData) => ({
+    //       value: item.roomType,
+    //       label: `${item.roomType} Bed`,
+    //     }));
+    //     const updatedRates = data.map((item: RateData) => {
+    //       return {
+    //         ...item,
+    //         totalOfBooked: item.totalOfBooked,
+    //       };
+    //     });
+    //     set({
+    //       rates: updatedRates,
+    //       bedTypeOptions: resultTypeBed,
+    //     });
+    //   } catch (error) {
+    //     console.error("Error fetching rates:", error);
+    //   } finally {
+    //     set({ isLoading: false });
+    //   }
+    // },
 
     addRate: async (rateData) => {
       try {

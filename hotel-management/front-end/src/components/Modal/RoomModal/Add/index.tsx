@@ -22,10 +22,14 @@ import { useRateStore } from "@/stores";
 // Components
 import { Button, withModal } from "@/components";
 
+// Hooks
+import { useGetRate } from "@/hooks";
+
 interface AddRoomModalProps {
   onAddRoom: (roomData: NewRoomData) => void;
   onClose: () => void;
   isDisabled: boolean;
+  bedTypeOptions: { value: string; label: string }[];
 }
 
 interface FormData {
@@ -34,11 +38,15 @@ interface FormData {
   roomFacility: string;
 }
 
-const AddRoomModal = ({ onAddRoom, onClose }: AddRoomModalProps) => {
+const AddRoomModal = ({
+  onAddRoom,
+  onClose,
+  bedTypeOptions,
+}: AddRoomModalProps) => {
   const [isLoading, setIsLoading] = useState(false);
   const toast = useToast();
-  const bedTypeOptions = useRateStore((state) => state.bedTypeOptions);
-  const rates = useRateStore((state) => state.rates);
+  const { data } = useGetRate();
+  const rates = data?.rates || [];
   const editRate = useRateStore((state) => state.editRate);
 
   const {
@@ -48,7 +56,9 @@ const AddRoomModal = ({ onAddRoom, onClose }: AddRoomModalProps) => {
   } = useForm<FormData>();
 
   const onSubmit = async (data: FormData) => {
-    const selectedRate = rates.find((rate) => rate.roomType === data.bedType);
+    const selectedRate = rates.find(
+      (rate: { roomType: string }) => rate.roomType === data.bedType
+    );
 
     if (!selectedRate) {
       toast({
