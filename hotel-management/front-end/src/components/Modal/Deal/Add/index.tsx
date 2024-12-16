@@ -26,6 +26,7 @@ interface AddDealModalProps {
   onClose: () => void;
   width: string;
   handleSelectedBedType: (event: ChangeEvent<HTMLSelectElement>) => void;
+  isDisabled: boolean;
 }
 
 interface FormData {
@@ -176,7 +177,7 @@ const AddDealModal = ({
         <Button text="Cancel" buttonType="warning" onClick={onClose} />
         <Button
           w="100px"
-          text="Add Deal"
+          text="Add"
           buttonType="primary"
           isLoading={isLoading}
           type="submit"

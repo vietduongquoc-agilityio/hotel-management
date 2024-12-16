@@ -16,6 +16,7 @@ export const EDIT_DEAL_MESSAGE = {
   ERROR: "Failed to edit deal.",
   ERROR_DESCRIPTION: "An error occurred while editing the deal.",
   SUCCESS: "Deal edit successfully.",
+  SUCCESS_DESCRIPTION: "Rate details have been successfully updated.",
 };
 
 export const DELETE_DEAL_MESSAGE = {

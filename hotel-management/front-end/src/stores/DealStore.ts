@@ -12,6 +12,7 @@ interface DealState {
   deals: DealData[];
   totalDeals: number;
   isLoading: boolean;
+  pageCount: number;
   error: string | null;
   fetchDeals: (page: number, pageSize: number) => Promise<void>;
   createDeal: (dealData: NewDealData) => Promise<void>;
@@ -24,29 +25,33 @@ export const useDealStore = create<DealState>()(
   devtools((set) => ({
     deals: [],
     totalDeals: 0,
+    pageCount: 1,
     isLoading: false,
     error: null,
 
-    // Fetch deals from API
-    fetchDeals: async (page, pageSize) => {
+    fetchDeals: async (currentPage, pageSize) => {
       set({ isLoading: true });
       try {
-        const data = await getDeals(page, pageSize);
-        if (data?.data) {
+        const { data, meta } = await getDeals(currentPage, pageSize);
+        const { pagination } = meta;
+
+        if (data && pagination) {
           set({
-            deals: data.data,
-            totalDeals: data.meta.pagination.total,
+            deals: data,
+            totalDeals: pagination.total || 0,
             isLoading: false,
+            pageCount: pagination.pageCount || 1,
           });
         } else {
-          set({ error: data.message, isLoading: false });
+          set({ deals: [], totalDeals: 0, pageCount: 1, isLoading: false });
         }
       } catch (error) {
-        set({ error: "Failed to fetch deals.", isLoading: false });
+        console.error("Error fetching deals:", error);
+      } finally {
+        set({ isLoading: false });
       }
     },
 
-    // Create a new deal
     createDeal: async (dealData) => {
       set({ isLoading: true, error: null });
       try {

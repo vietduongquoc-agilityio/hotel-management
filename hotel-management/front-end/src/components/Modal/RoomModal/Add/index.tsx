@@ -174,6 +174,7 @@ const AddRoomModal = ({ onAddRoom, onClose }: AddRoomModalProps) => {
           type="submit"
           text="Add"
           buttonType="primary"
+          w="100px"
         />
       </ModalFooter>
     </form>

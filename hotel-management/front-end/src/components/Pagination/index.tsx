@@ -97,7 +97,6 @@ const Pagination: React.FC<paginationProps> = ({
         w="100%"
         maxW="1020px"
         padding="0 25px"
-        mt="40px"
       >
         <Button
           onClick={handlePrevious}
