@@ -5,11 +5,19 @@ import { Box, Heading, useToast } from "@chakra-ui/react";
 import { NewRoomData, RoomData } from "@/interfaces";
 
 // Components
-import { LabelRoom, Pagination, Spinner, Table } from "@/components";
+import {
+  LabelRoom,
+  PageSizeSelector,
+  Pagination,
+  Spinner,
+  Table,
+} from "@/components";
 
 // Store
-import { useRoomStore } from "@/stores";
-import { useRateStore } from "@/stores";
+import { useRateStore, useRoomStore } from "@/stores";
+
+// Hooks
+import { useGetRate } from "@/hooks";
 
 const RoomPage = () => {
   const {
@@ -24,10 +32,13 @@ const RoomPage = () => {
     editRoom,
     deleteRoom,
   } = useRoomStore();
-  const { rates, isLoading: ratesLoading, fetchRates } = useRateStore();
+
+  const { saveRate } = useRateStore();
+
+  const { data: ratesData } = useGetRate();
 
   const [currentPage, setCurrentPage] = useState(1);
-  const pageSize = 10;
+  const [pageSize, setPageSize] = useState(10);
   const [bedType, setBedType] = useState("");
   const [roomFloor, setRoomFloor] = useState("");
   const [roomStatus, setRoomStatus] = useState("");
@@ -36,18 +47,23 @@ const RoomPage = () => {
   const toast = useToast();
 
   useEffect(() => {
-    fetchRates(currentPage, pageSize);
-  }, []);
+    if (ratesData?.rates.length > 0) {
+      setIsAddRoom(true);
+
+      const { rates, bedTypeOptions } = ratesData || {};
+
+      saveRate(rates, bedTypeOptions);
+    }
+  }, [ratesData]);
 
   useEffect(() => {
     fetchRooms(currentPage, pageSize);
   }, [fetchRooms, currentPage]);
 
-  useEffect(() => {
-    if (rates.length > 0) {
-      setIsAddRoom(true);
-    }
-  }, [rates]);
+  const handlePageSizeChange = (newSize: number) => {
+    setPageSize(newSize);
+    setCurrentPage(1);
+  };
 
   const handleAddRoom = async (newRoom: NewRoomData) => {
     await addRoom(newRoom);
@@ -116,9 +132,10 @@ const RoomPage = () => {
         handleSelectedBedType={handleSelectedBedType}
         handleSelectedRoomFloor={handleSelectedRoomFloor}
         handleSelectedRoomStatus={handleSelectedRoomStatus}
+        // bedTypeOptions={ratesData?.bedTypeOptions || []}
       />
 
-      {roomsLoading || ratesLoading ? (
+      {roomsLoading ? (
         <Spinner />
       ) : (
         <Table
@@ -128,13 +145,15 @@ const RoomPage = () => {
           onEdit={handleEditRoom}
         />
       )}
-
-      <Pagination
-        currentPage={currentPage}
-        setCurrentPage={setCurrentPage}
-        pageSize={pageSize}
-        pageCount={pageCount}
-      />
+      <Box display="flex" mt="40px">
+        <PageSizeSelector onPageSizeChange={handlePageSizeChange} />
+        <Pagination
+          currentPage={currentPage}
+          setCurrentPage={setCurrentPage}
+          pageSize={pageSize}
+          pageCount={pageCount}
+        />
+      </Box>
     </Box>
   );
 };

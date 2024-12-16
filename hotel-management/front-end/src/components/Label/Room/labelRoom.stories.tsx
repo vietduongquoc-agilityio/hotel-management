@@ -53,7 +53,6 @@ Default.args = {
     alert(`Room added: ${JSON.stringify(roomData)}`);
   },
   isAddRoom: true,
-  selectedBedType: "",
   selectedRoomFloor: "",
   selectedRoomStatus: "",
   handleSelectedBedType: (event) => {

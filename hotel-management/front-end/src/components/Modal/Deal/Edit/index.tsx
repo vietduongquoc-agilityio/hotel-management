@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form";
-import { ChangeEvent, useState } from "react";
+import { useState } from "react";
 import {
   FormControl,
   FormLabel,
@@ -103,7 +103,6 @@ const EditDealModal = ({
         <FormControl mb={4} maxW="320px" isInvalid={!!errors.startDate}>
           <FormLabel>Start Date</FormLabel>
           <Input
-            defaultValue={initialDealData.startDate}
             {...register("startDate", validationRules.required)}
             type="date"
             placeHolder={""}
@@ -119,7 +118,6 @@ const EditDealModal = ({
         <FormControl mb={4} maxW="320px" isInvalid={!!errors.endDate}>
           <FormLabel>End Date</FormLabel>
           <Input
-            defaultValue={initialDealData.endDate}
             {...register("endDate", validationRules.required)}
             type="date"
             placeHolder=""

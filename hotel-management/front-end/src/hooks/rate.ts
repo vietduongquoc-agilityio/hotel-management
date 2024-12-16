@@ -1,82 +1,28 @@
 // Libs
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { getRates, createRateApi, updateRate, deleteRate } from "@/services";
-import { NewRateData, RateData } from "@/interfaces";
-import { createStandaloneToast } from "@chakra-ui/react";
+import { useQuery } from "@tanstack/react-query";
 
-// Constants
-const { toast } = createStandaloneToast();
+// Services
+import { getRates } from "@/services";
 
-// Toast Error Handler
-const showErrorToast = (message: string) => {
-  toast({
-    title: "Error",
-    description: message,
-    status: "error",
-    duration: 3000,
-    isClosable: true,
-  });
-};
+// Interfaces
+import { RateData } from "@/interfaces";
 
-export const useRates = (page: number, pageSize: number) => {
-  const queryClient = useQueryClient();
+export const useGetRate = () => {
+  const { data, isLoading, error, isError } = useQuery({
+    queryKey: ["rates"],
+    queryFn: async () => {
+      const response = await getRates(1, 10);
+      const ratesData = response.data;
 
-  // Fetch Rates Data using React Query's `useQuery`
-  const { data, isLoading, error } = useQuery({
-    queryKey: ["rates", { page, pageSize }],
-    queryFn: () => getRates(page, pageSize),
-  });
+      // Transform data to get bedTypeOptions
+      const bedTypeOptions = ratesData.map((item: RateData) => ({
+        value: item.roomType,
+        label: `${item.roomType} Bed`,
+      }));
 
-  const useAddRate = useMutation({
-    mutationFn: createRateApi,
-    onSuccess: () => {
-      queryClient.invalidateQueries(["rates", { page, pageSize }]);
-    },
-    onError: () => {
-      showErrorToast("Failed to create rate.");
+      return { rates: ratesData, bedTypeOptions };
     },
   });
 
-  const useEditRate = useMutation({
-    mutationFn: ({
-      rateId,
-      updatedData,
-    }: {
-      rateId: string;
-      updatedData: RateData;
-    }) => updateRate(rateId, updatedData),
-    onSuccess: () => {
-      queryClient.invalidateQueries(["rates", { page, pageSize }]);
-      
-      toast({
-        title: "Rate Updated",
-        description: "Rate updated successfully!",
-        status: "success",
-        duration: 3000,
-        isClosable: true,
-      });
-    },
-    onError: () => {
-      showErrorToast("Failed to update rate.");
-    },
-  });
-
-  const useDeleteRate = useMutation({
-    mutationFn: deleteRate,
-    onSuccess: () => {
-      queryClient.invalidateQueries(["rates", { page, pageSize }]);
-    },
-    onError: () => {
-      showErrorToast("Failed to delete rate.");
-    },
-  });
-
-  return {
-    rates: data?.data,
-    error,
-    isLoading,
-    useAddRate,
-    useEditRate,
-    useDeleteRate,
-  };
+  return { data, isLoading, error, isError };
 };

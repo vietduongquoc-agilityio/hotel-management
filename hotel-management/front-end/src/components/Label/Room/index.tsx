@@ -11,11 +11,9 @@ import {
   roomStatusOptions,
 } from "@/constants";
 
-// Store
-import { useRateStore } from "@/stores";
-
 // Components
 import { AddRoomModal } from "@/components";
+import { useRateStore } from "@/stores";
 
 export interface LabelRoomProps {
   width?: string;
@@ -23,8 +21,8 @@ export interface LabelRoomProps {
   availableRooms: number;
   bookedRooms: number;
   onAddRoom: (roomData: NewRoomData) => Promise<void>;
-  isAddRoom: boolean;
   selectedBedType: string;
+  isAddRoom: boolean;
   selectedRoomFloor: string;
   selectedRoomStatus: string;
   handleSelectedBedType: (event: ChangeEvent<HTMLSelectElement>) => void;
@@ -40,11 +38,12 @@ const LabelRoom = ({
   handleSelectedBedType,
   handleSelectedRoomFloor,
   handleSelectedRoomStatus,
+
   isAddRoom,
   width = "100%",
 }: LabelRoomProps) => {
-  const bedTypeOptions = useRateStore((state) => state.bedTypeOptions);
   const closeModal = () => {};
+  const bedTypeOptions = useRateStore((state) => state.bedTypeOptions);
 
   return (
     <Box

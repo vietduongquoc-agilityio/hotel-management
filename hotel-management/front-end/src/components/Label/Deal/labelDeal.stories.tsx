@@ -16,7 +16,18 @@ export default {
   tags: ["autodocs"],
 } as Meta;
 
-const Template: StoryFn = (args) => <LabelDeal {...args} />;
+const Template: StoryFn = (args) => (
+  <LabelDeal
+    isAddDeal={false}
+    onAddDeal={function (): void {
+      throw new Error("Function not implemented.");
+    }}
+    handleSelectedBedType={function (): void {
+      throw new Error("Function not implemented.");
+    }}
+    {...args}
+  />
+);
 
 export const Default = Template.bind({});
 Default.args = {};

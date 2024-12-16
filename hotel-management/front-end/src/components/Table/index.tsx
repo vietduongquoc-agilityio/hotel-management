@@ -178,7 +178,7 @@ const Table = <T extends RoomData | RateData | GuestData | DealData>({
       case "deal":
         return (
           <DeleteDeal dealId={documentId} onDeleteDeal={onDeleteFunction} />
-        )
+        );
       default:
         return null;
     }

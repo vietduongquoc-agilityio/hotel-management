@@ -11,25 +11,32 @@ import { LabelRate, Table, Spinner } from "@/components";
 import { useRateStore } from "@/stores";
 
 // Hooks
-import { useRates } from "@/hooks";
+import { useGetRate } from "@/hooks";
 
 const RatePage = () => {
   const toast = useToast();
 
   // Zustand store for rates
-  const { fetchRates, editRate} = useRateStore();
+  const {
+    rates,
+    saveRate,
+    isLoading: ratesLoading,
+    addRate,
+    editRate,
+    deleteRate,
+    bedTypeOptions,
+  } = useRateStore();
 
-  const { rates, isLoading, useAddRate, useDeleteRate } = useRates(
-    1,
-    10
-  );
+  const { data } = useGetRate();
 
   useEffect(() => {
-    fetchRates(1, 10);
-  }, [fetchRates]);
+    if (data?.rates) {
+      saveRate(data.rates, bedTypeOptions);
+    }
+  }, [data, bedTypeOptions, saveRate]);
 
   const handleAddRate = async (rateData: NewRateData) => {
-    await useAddRate.mutateAsync(rateData);
+    await addRate(rateData);
   };
 
   const handleEditRate = async (updatedRateData: RateData) => {
@@ -54,7 +61,7 @@ const RatePage = () => {
   };
 
   const handleDeleteRate = async (rateId: string) => {
-    await useDeleteRate.mutateAsync(rateId);
+    await deleteRate(rateId);
   };
 
   return (
@@ -63,7 +70,7 @@ const RatePage = () => {
         Rates
       </Heading>
       <LabelRate onAddRate={handleAddRate} width={""} />
-      {isLoading ? (
+      {ratesLoading ? (
         <Spinner />
       ) : (
         <Table
