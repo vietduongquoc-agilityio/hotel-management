@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Box, Heading, useToast } from "@chakra-ui/react";
+import { Box, Heading } from "@chakra-ui/react";
 
 // InterFace
 import { NewRoomData, RoomData } from "@/interfaces";
@@ -30,9 +30,6 @@ const RoomPage = () => {
     availableRooms,
     bookedRooms,
     isLoading: roomsLoading,
-    // addRoom,
-    // editRoom,
-    // deleteRoom,
     calculateRoomCounts,
   } = useRoomStore();
 
@@ -45,7 +42,10 @@ const RoomPage = () => {
   const [roomFloor, setRoomFloor] = useState("");
   const [roomStatus, setRoomStatus] = useState("");
   const [isAddRoom, setIsAddRoom] = useState(false);
-  const toast = useToast();
+
+  const deleteRoom = useDeleteRoom();
+  const createRoom = useCreateRoom();
+  const updateRoom = useUpdateRoom();
 
   const { rooms, pagination } = useGetRoom({
     currentPage,
@@ -73,12 +73,12 @@ const RoomPage = () => {
   };
 
   const handleAddRoom = async (newRoom: NewRoomData) => {
-    await useCreateRoom(newRoom);
+    createRoom.mutate(newRoom);
     setCurrentPage(1);
   };
 
   const handleDeleteRoom = async (deletedRoomId: string) => {
-    await useDeleteRoom(deletedRoomId);
+    deleteRoom.mutate(deletedRoomId);
   };
 
   const handleEditRoom = async (updatedRoomData: RoomData) => {
@@ -90,14 +90,9 @@ const RoomPage = () => {
       roomNumber: updatedRoomData.roomNumber,
     };
 
-    await useUpdateRoom(updatedRoomData.documentId, requestPayload);
-
-    toast({
-      title: "Room updated",
-      description: "Room details have been successfully updated.",
-      status: "success",
-      duration: 3000,
-      isClosable: true,
+    updateRoom.mutate({
+      roomId: updatedRoomData.documentId,
+      requestPayload: requestPayload,
     });
   };
 

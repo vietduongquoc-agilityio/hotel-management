@@ -43,7 +43,7 @@ export const useGetRoom = ({
   };
 };
 
-export const useCreateRoom = (newRoom: NewRoomData) => {
+export const useCreateRoom = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
@@ -54,16 +54,7 @@ export const useCreateRoom = (newRoom: NewRoomData) => {
   });
 };
 
-export const useUpdateRoom = (
-  documentId: string,
-  requestPayload: {
-    bedType: string;
-    roomFacility: string;
-    roomFloor: string;
-    roomStatus: string;
-    roomNumber: string;
-  }
-) => {
+export const useUpdateRoom = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
@@ -75,7 +66,7 @@ export const useUpdateRoom = (
   });
 };
 
-export const useDeleteRoom = (deletedRoomId: string) => {
+export const useDeleteRoom = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
