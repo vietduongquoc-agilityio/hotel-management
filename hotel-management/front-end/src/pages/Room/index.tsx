@@ -17,24 +17,22 @@ import {
 import { useRateStore, useRoomStore } from "@/stores";
 
 // Hooks
-import { useGetRate } from "@/hooks";
+import { useGetRate, useGetRoom } from "@/hooks";
 
 const RoomPage = () => {
   const {
-    rooms,
     totalRooms,
-    pageCount,
     availableRooms,
     bookedRooms,
+    pageCount,
     isLoading: roomsLoading,
-    fetchRooms,
     addRoom,
     editRoom,
     deleteRoom,
+    calculateRoomCounts,
   } = useRoomStore();
 
   const { saveRate } = useRateStore();
-
   const { data: ratesData } = useGetRate();
 
   const [currentPage, setCurrentPage] = useState(1);
@@ -42,23 +40,24 @@ const RoomPage = () => {
   const [bedType, setBedType] = useState("");
   const [roomFloor, setRoomFloor] = useState("");
   const [roomStatus, setRoomStatus] = useState("");
-
   const [isAddRoom, setIsAddRoom] = useState(false);
   const toast = useToast();
+
+  const { rooms } = useGetRoom({ currentPage, pageSize });
 
   useEffect(() => {
     if (ratesData?.rates.length > 0) {
       setIsAddRoom(true);
-
       const { rates, bedTypeOptions } = ratesData || {};
-
       saveRate(rates, bedTypeOptions);
     }
-  }, [ratesData]);
+  }, [ratesData, saveRate]);
 
   useEffect(() => {
-    fetchRooms(currentPage, pageSize);
-  }, [fetchRooms, currentPage]);
+    if (rooms.length > 0) {
+      calculateRoomCounts(rooms);
+    }
+  }, [rooms, calculateRoomCounts]);
 
   const handlePageSizeChange = (newSize: number) => {
     setPageSize(newSize);
@@ -67,6 +66,7 @@ const RoomPage = () => {
 
   const handleAddRoom = async (newRoom: NewRoomData) => {
     await addRoom(newRoom);
+    setCurrentPage(1);
   };
 
   const handleDeleteRoom = async (deletedRoomId: string) => {
@@ -84,7 +84,6 @@ const RoomPage = () => {
 
     await editRoom(updatedRoomData.documentId, requestPayload);
 
-    fetchRooms(currentPage, pageSize);
     toast({
       title: "Room updated",
       description: "Room details have been successfully updated.",
@@ -97,13 +96,11 @@ const RoomPage = () => {
   const handleSelectedBedType = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedBedType = e.target.value;
     setBedType(selectedBedType);
-    fetchRooms(currentPage, pageSize, "bedType", selectedBedType);
   };
 
   const handleSelectedRoomFloor = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedRoomFloor = e.target.value;
     setRoomFloor(selectedRoomFloor);
-    fetchRooms(currentPage, pageSize, "roomFloor", selectedRoomFloor);
   };
 
   const handleSelectedRoomStatus = (
@@ -111,7 +108,6 @@ const RoomPage = () => {
   ) => {
     const selectedRoomStatus = e.target.value;
     setRoomStatus(selectedRoomStatus);
-    fetchRooms(currentPage, pageSize, "roomStatus", selectedRoomStatus);
   };
 
   return (
@@ -132,21 +128,23 @@ const RoomPage = () => {
         handleSelectedBedType={handleSelectedBedType}
         handleSelectedRoomFloor={handleSelectedRoomFloor}
         handleSelectedRoomStatus={handleSelectedRoomStatus}
-        // bedTypeOptions={ratesData?.bedTypeOptions || []}
       />
 
       {roomsLoading ? (
         <Spinner />
       ) : (
         <Table
-          data={rooms}
           type="room"
           onDelete={handleDeleteRoom}
           onEdit={handleEditRoom}
+          data={rooms || []}
         />
       )}
       <Box display="flex" mt="40px">
-        <PageSizeSelector onPageSizeChange={handlePageSizeChange} />
+        <PageSizeSelector
+          onPageSizeChange={handlePageSizeChange}
+          pageSize={pageSize}
+        />
         <Pagination
           currentPage={currentPage}
           setCurrentPage={setCurrentPage}

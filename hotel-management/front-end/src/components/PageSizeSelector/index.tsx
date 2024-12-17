@@ -1,20 +1,20 @@
-import React, { useState } from "react";
+import React from "react";
 import { Select } from "@chakra-ui/react";
 
 interface PageSizeSelectorProps {
+  pageSize: number; 
   onPageSizeChange: (newSize: number) => void;
 }
 
 const PageSizeSelector: React.FC<PageSizeSelectorProps> = ({
+  pageSize,
   onPageSizeChange,
 }) => {
-  const [pageSize, setPageSize] = useState<number>(10);
 
   const handlePageSizeChange = (
     event: React.ChangeEvent<HTMLSelectElement>
   ) => {
     const newSize = Number(event.target.value);
-    setPageSize(newSize);
     onPageSizeChange(newSize);
   };
 

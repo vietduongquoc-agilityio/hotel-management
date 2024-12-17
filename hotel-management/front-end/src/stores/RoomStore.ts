@@ -1,9 +1,9 @@
 import { create } from "zustand";
 
 // Services
-import { getRooms, createRoomApi, updateRoom, deleteRoom } from "@/services";
+import { createRoomApi, updateRoom, deleteRoom } from "@/services";
 
-// InterFace
+// Interfaces
 import { RoomData, NewRoomData } from "@/interfaces";
 
 // Constant
@@ -15,19 +15,10 @@ interface RoomState {
   pageCount: number;
   availableRooms: number;
   bookedRooms: number;
-
   isLoading: boolean;
-
   // Store bedType options
   bedTypeOptions: string[];
   setBedTypeOptions: (rates: setBedTypeOptions[]) => void;
-
-  fetchRooms: (
-    currentPage: number,
-    pageSize: number,
-    field?: string,
-    value?: string
-  ) => Promise<void>;
   addRoom: (roomData: NewRoomData) => Promise<void>;
   editRoom: (roomId: string, updatedData: NewRoomData) => Promise<void>;
   deleteRoom: (roomId: string) => Promise<void>;
@@ -42,33 +33,12 @@ export const useRoomStore = create<RoomState>((set) => ({
   bookedRooms: 0,
   isLoading: false,
   bedTypeOptions: [],
+  
   setBedTypeOptions: (rates) => {
     const uniqueBedTypes = Array.from(
       new Set(rates.map((rate) => rate.roomType))
     );
     set({ bedTypeOptions: uniqueBedTypes });
-  },
-
-  fetchRooms: async (currentPage, pageSize, field, value) => {
-    set({ isLoading: true });
-    try {
-      const { rooms, pagination } = await getRooms(
-        currentPage,
-        pageSize,
-        field,
-        value
-      );
-      set({
-        rooms,
-        totalRooms: pagination.total,
-        pageCount: pagination.pageCount,
-      });
-      useRoomStore.getState().calculateRoomCounts(rooms);
-    } catch (error) {
-      console.error("Error fetching rooms:", error);
-    } finally {
-      set({ isLoading: false });
-    }
   },
 
   addRoom: async (roomData) => {
