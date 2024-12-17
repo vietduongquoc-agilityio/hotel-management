@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import { Select } from "@chakra-ui/react";
 
 interface PageSizeSelectorProps {
@@ -38,4 +38,4 @@ const PageSizeSelector: React.FC<PageSizeSelectorProps> = ({
   );
 };
 
-export default PageSizeSelector;
+export default memo(PageSizeSelector);

@@ -1,12 +1,18 @@
-import { useQuery, useMutation } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 // Services
-import { getRooms, createRoomApi, updateRoom, deleteRoom } from "@/services";
+import { createRoomApi, deleteRoom, getRooms, updateRoom } from "@/services";
 
-// InterFaces
-import { RoomData, NewRoomData } from "@/interfaces";
+// Interfaces
+import { NewRoomData, RoomData } from "@/interfaces";
 
-// Interface for query return
+interface UseGetRoomProps {
+  currentPage: number;
+  pageSize: number;
+  field?: string;
+  value?: string;
+}
+
 interface RoomResponse {
   rooms: RoomData[];
   pagination: {
@@ -18,55 +24,64 @@ interface RoomResponse {
 export const useGetRoom = ({
   currentPage,
   pageSize,
-}: {
-  currentPage: number;
-  pageSize: number;
-}) => {
-  const { data, isLoading, refetch } = useQuery<RoomResponse, Error>({
-    queryKey: ["rooms", currentPage, pageSize],
-    queryFn: async () => await getRooms(currentPage, pageSize),
+  field,
+  value,
+}: UseGetRoomProps) => {
+  const { data, isLoading, error } = useQuery<RoomResponse, Error>({
+    queryKey: ["rooms", currentPage, pageSize, field, value],
+    queryFn: async () => {
+      const response = await getRooms(currentPage, pageSize, field, value);
+      return response as RoomResponse;
+    },
   });
 
-  // Mutation hooks with refetch
-  const addRoomMutation = useMutation<RoomData, Error, NewRoomData>(
-    async (newRoomData: NewRoomData) => {
-      const result = await createRoomApi(newRoomData);
-      return result;
-    },
-    {
-      onSuccess: () => refetch(),
-    }
-  );
-
-  const editRoomMutation = useMutation<
-    RoomData,
-    Error,
-    { roomId: string; updatedData: RoomData }
-  >(
-    async ({ roomId, updatedData }) => {
-      const result = await updateRoom(roomId, updatedData);
-      return result;
-    },
-    {
-      onSuccess: () => refetch(),
-    }
-  );
-
-  const deleteRoomMutation = useMutation<void, Error, string>(
-    async (roomId: string) => {
-      await deleteRoom(roomId);
-    },
-    {
-      onSuccess: () => refetch(),
-    }
-  );
-
   return {
-    isLoading,
     rooms: data?.rooms || [],
-    pagination: data?.pagination || { total: 0, pageCount: 0 },
-    addRoom: addRoomMutation.mutateAsync,
-    editRoom: editRoomMutation.mutateAsync,
-    deleteRoom: deleteRoomMutation.mutateAsync,
+    pagination: data?.pagination,
+    isLoading,
+    error,
   };
+};
+
+export const useCreateRoom = (newRoom: NewRoomData) => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (data: NewRoomData) => createRoomApi(data),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["rooms"] });
+    },
+  });
+};
+
+export const useUpdateRoom = (
+  documentId: string,
+  requestPayload: {
+    bedType: string;
+    roomFacility: string;
+    roomFloor: string;
+    roomStatus: string;
+    roomNumber: string;
+  }
+) => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (data: { roomId: string; requestPayload: NewRoomData }) =>
+      updateRoom(data.roomId, data.requestPayload),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["rooms"] });
+    },
+  });
+};
+
+export const useDeleteRoom = (deletedRoomId: string) => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (roomId: string) => deleteRoom(roomId),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["rooms"] });
+    },
+  });
 };

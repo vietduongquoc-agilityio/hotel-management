@@ -17,7 +17,13 @@ import {
 import { useRateStore, useRoomStore } from "@/stores";
 
 // Hooks
-import { useGetRate, useGetRoom } from "@/hooks";
+import {
+  useCreateRoom,
+  useDeleteRoom,
+  useGetRate,
+  useGetRoom,
+  useUpdateRoom,
+} from "@/hooks";
 
 const RoomPage = () => {
   const {
@@ -41,7 +47,7 @@ const RoomPage = () => {
   const [isAddRoom, setIsAddRoom] = useState(false);
   const toast = useToast();
 
-  const { rooms, pagination, addRoom, editRoom, deleteRoom } = useGetRoom({
+  const { rooms, pagination } = useGetRoom({
     currentPage,
     pageSize,
   });
@@ -67,12 +73,12 @@ const RoomPage = () => {
   };
 
   const handleAddRoom = async (newRoom: NewRoomData) => {
-    await addRoom(newRoom);
+    await useCreateRoom(newRoom);
     setCurrentPage(1);
   };
 
   const handleDeleteRoom = async (deletedRoomId: string) => {
-    await deleteRoom(deletedRoomId);
+    await useDeleteRoom(deletedRoomId);
   };
 
   const handleEditRoom = async (updatedRoomData: RoomData) => {
@@ -84,7 +90,7 @@ const RoomPage = () => {
       roomNumber: updatedRoomData.roomNumber,
     };
 
-    await editRoom(updatedRoomData.documentId, requestPayload);
+    await useUpdateRoom(updatedRoomData.documentId, requestPayload);
 
     toast({
       title: "Room updated",
