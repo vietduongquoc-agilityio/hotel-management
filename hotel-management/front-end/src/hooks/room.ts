@@ -1,18 +1,12 @@
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useMutation } from "@tanstack/react-query";
 
 // Services
-import { getRooms } from "@/services";
+import { getRooms, createRoomApi, updateRoom, deleteRoom } from "@/services";
 
-// Interfaces
-import { RoomData } from "@/interfaces";
+// InterFaces
+import { RoomData, NewRoomData } from "@/interfaces";
 
-interface UseGetRoomProps {
-  currentPage: number;
-  pageSize: number;
-  field?: string;
-  value?: string;
-}
-
+// Interface for query return
 interface RoomResponse {
   rooms: RoomData[];
   pagination: {
@@ -24,22 +18,55 @@ interface RoomResponse {
 export const useGetRoom = ({
   currentPage,
   pageSize,
-  field,
-  value,
-}: UseGetRoomProps) => {
-
-  const { data, isLoading, error } = useQuery<RoomResponse, Error>({
-    queryKey: ["rooms", currentPage, pageSize, field, value],
-    queryFn: async () => {
-      const response = await getRooms(currentPage, pageSize, field, value);
-      return response as RoomResponse;
-    },
+}: {
+  currentPage: number;
+  pageSize: number;
+}) => {
+  const { data, isLoading, refetch } = useQuery<RoomResponse, Error>({
+    queryKey: ["rooms", currentPage, pageSize],
+    queryFn: async () => await getRooms(currentPage, pageSize),
   });
 
+  // Mutation hooks with refetch
+  const addRoomMutation = useMutation<RoomData, Error, NewRoomData>(
+    async (newRoomData: NewRoomData) => {
+      const result = await createRoomApi(newRoomData);
+      return result;
+    },
+    {
+      onSuccess: () => refetch(),
+    }
+  );
+
+  const editRoomMutation = useMutation<
+    RoomData,
+    Error,
+    { roomId: string; updatedData: RoomData }
+  >(
+    async ({ roomId, updatedData }) => {
+      const result = await updateRoom(roomId, updatedData);
+      return result;
+    },
+    {
+      onSuccess: () => refetch(),
+    }
+  );
+
+  const deleteRoomMutation = useMutation<void, Error, string>(
+    async (roomId: string) => {
+      await deleteRoom(roomId);
+    },
+    {
+      onSuccess: () => refetch(),
+    }
+  );
+
   return {
-    rooms: data?.rooms || [],
-    pagination: data?.pagination,
     isLoading,
-    error,
+    rooms: data?.rooms || [],
+    pagination: data?.pagination || { total: 0, pageCount: 0 },
+    addRoom: addRoomMutation.mutateAsync,
+    editRoom: editRoomMutation.mutateAsync,
+    deleteRoom: deleteRoomMutation.mutateAsync,
   };
 };

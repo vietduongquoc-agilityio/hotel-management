@@ -21,14 +21,12 @@ import { useGetRate, useGetRoom } from "@/hooks";
 
 const RoomPage = () => {
   const {
-    totalRooms,
     availableRooms,
     bookedRooms,
-    pageCount,
     isLoading: roomsLoading,
-    addRoom,
-    editRoom,
-    deleteRoom,
+    // addRoom,
+    // editRoom,
+    // deleteRoom,
     calculateRoomCounts,
   } = useRoomStore();
 
@@ -43,7 +41,11 @@ const RoomPage = () => {
   const [isAddRoom, setIsAddRoom] = useState(false);
   const toast = useToast();
 
-  const { rooms } = useGetRoom({ currentPage, pageSize });
+  const { rooms, pagination, addRoom, editRoom, deleteRoom } = useGetRoom({
+    currentPage,
+    pageSize,
+  });
+  const { pageCount = 1, total = 1 } = pagination || {};
 
   useEffect(() => {
     if (ratesData?.rates.length > 0) {
@@ -117,7 +119,7 @@ const RoomPage = () => {
       </Heading>
 
       <LabelRoom
-        totalRooms={totalRooms}
+        totalRooms={total}
         availableRooms={availableRooms}
         bookedRooms={bookedRooms}
         onAddRoom={handleAddRoom}
