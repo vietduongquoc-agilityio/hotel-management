@@ -64,7 +64,6 @@ const GuestPage = () => {
 
   const handleAddGuest = async (guestData: NewGuestData) => {
     createGuest.mutate(guestData);
-    console.log("guestData", guestData);
   };
 
   const handleEditGuest = async (updatedGuestData: GuestData) => {
@@ -87,7 +86,6 @@ const GuestPage = () => {
   const handleDeleteGuest = async (deletedGuestId: string) => {
     deleteGuest.mutate(deletedGuestId);
   };
-  console.log("Rendered guests:", guests);
 
   return (
     <Box>

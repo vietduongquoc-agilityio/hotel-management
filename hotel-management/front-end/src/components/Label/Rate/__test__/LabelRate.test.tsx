@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import LabelRate, { LabelRateProps } from "../";
-import AddRateModal from "@/components/Modal/RateModal/Add";
+import AddRateModal from "@/components/Modal/Rate/Add";
 
 jest.mock("@/components/Modal/RateModal/Add", () => {
   return jest.fn(() => <div data-testid="add-rate-modal">AddRateModal</div>);

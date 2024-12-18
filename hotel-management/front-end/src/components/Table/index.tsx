@@ -20,8 +20,8 @@ import {
   DeleteDeal,
   EditGuestModal,
   EditRateModal,
-  EditRoomModal,
   EditDealModal,
+  EditRoomModal,
 } from "@/components";
 
 // utils
