@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import Input from "../index";
-import { getStyleInput } from "../input-style";
+import { getStyleInput } from "../inputStyle";
 
 jest.mock("../input-style", () => ({
   getStyleInput: jest.fn(),

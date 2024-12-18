@@ -18,7 +18,7 @@ const PageSizeSelector: React.FC<PageSizeSelectorProps> = ({
   };
 
   return (
-    <Box display="flex" textAlign="center" mt="3px" ml="10px">
+    <Box display="flex" textAlign="center" ml="10px">
       <Select
         width="55px"
         height="35px"
