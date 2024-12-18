@@ -19,18 +19,33 @@ const showErrorToast = (message: string) => {
 };
 
 // Guest Service
-export const getGuests = async (page: number, pageSize: number) => {
+export const getGuests = async (
+  page: number,
+  pageSize: number,
+  field?: string,
+  value?: string
+) => {
   try {
+    const filters = field && value ? { [`filters[${field}]`]: value } : {};
     const response = await axios.get(`${BASE_URL}/guests`, {
       params: {
+        ...filters,
         "sort[0]": "createdAt:desc",
         "pagination[page]": page,
         "pagination[pageSize]": pageSize,
       },
     });
+
+    if (response.data && response.data.data && response.data.meta.pagination) {
+      return {
+        guests: response.data.data,
+        pagination: response.data.meta.pagination,
+      };
+    }
+
     return response.data;
   } catch (error) {
-    return { message: "Failed to fetch guest data", data: null };
+    return { message: "Error fetching guest data", data: null };
   }
 };
 

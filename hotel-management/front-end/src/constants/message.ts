@@ -26,3 +26,9 @@ export const DELETE_DEAL_MESSAGE = {
   ERROR: "Failed to delete deal.",
   ERROR_DESCRIPTION: "An error occurred while deleting the deal.",
 };
+
+export const ADD_GUEST_MESSAGE = {
+  ERROR: "Failed to add guest.",
+  ERROR_DESCRIPTION: "An error occurred while creating the guest.",
+  SUCCESS: "Guest added successfully.",
+};
