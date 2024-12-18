@@ -19,6 +19,9 @@ import { useRateStore, useRoomStore } from "@/stores";
 // Hooks
 import { useGetRate } from "@/hooks";
 
+// Constants
+import { DEFAULT_CURRENT_PAGE, DEFAULT_PAGE_SIZE } from "@/constants";
+
 const RoomPage = () => {
   const {
     rooms,
@@ -37,8 +40,8 @@ const RoomPage = () => {
 
   const { data: ratesData } = useGetRate();
 
-  const [currentPage, setCurrentPage] = useState(1);
-  const [pageSize, setPageSize] = useState(10);
+  const [currentPage, setCurrentPage] = useState(DEFAULT_CURRENT_PAGE);
+  const [pageSize, setPageSize] = useState(DEFAULT_PAGE_SIZE);
   const [bedType, setBedType] = useState("");
   const [roomFloor, setRoomFloor] = useState("");
   const [roomStatus, setRoomStatus] = useState("");
@@ -60,7 +63,7 @@ const RoomPage = () => {
 
   const handlePageSizeChange = (newSize: number) => {
     setPageSize(newSize);
-    setCurrentPage(1);
+    setCurrentPage(DEFAULT_CURRENT_PAGE);
   };
 
   const handleAddRoom = async (newRoom: NewRoomData) => {

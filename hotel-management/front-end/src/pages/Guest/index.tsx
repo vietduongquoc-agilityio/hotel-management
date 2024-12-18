@@ -25,6 +25,9 @@ import {
   useGetRate,
 } from "@/hooks";
 
+// Constants
+import { DEFAULT_CURRENT_PAGE, DEFAULT_PAGE_SIZE } from "@/constants";
+
 const GuestPage = () => {
   const { saveRate } = useRateStore();
   const { data: ratesData } = useGetRate();
@@ -32,22 +35,16 @@ const GuestPage = () => {
 
   const handleSelectedBedType = (_event: ChangeEvent<HTMLSelectElement>) => {};
 
-  const [currentPage, setCurrentPage] = useState(1);
-  const [pageSize, setPageSize] = useState(10);
+  const [currentPage, setCurrentPage] = useState(DEFAULT_CURRENT_PAGE);
+  const [pageSize, setPageSize] = useState(DEFAULT_PAGE_SIZE);
   const [isAddGuest, setIsAddGuest] = useState(false);
   
-  const getGuest = useGetGuest({currentPage, pageSize})
   const createGuest = useCreateGuest();
   const updateGuest = useUpdateGuest();
   const deleteGuest = useDeleteGuest();
 
   const { guests, pagination } = useGetGuest({ currentPage, pageSize });
-
   const { pageCount = 1 } = pagination || {};
-
-  useEffect(() => {
-    getGuest;
-  }, [getGuest]);
 
   useEffect(() => {
     if (ratesData?.rates.length > 0) {
@@ -59,7 +56,7 @@ const GuestPage = () => {
 
   const handlePageSizeChange = (newSize: number) => {
     setPageSize(newSize);
-    setCurrentPage(1);
+    setCurrentPage(DEFAULT_CURRENT_PAGE);
   };
 
   const handleAddGuest = async (guestData: NewGuestData) => {

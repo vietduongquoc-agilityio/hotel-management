@@ -9,14 +9,29 @@ interface GuestState {
   totalGuests: number;
   isLoading: boolean;
   error: string | null;
+  reservationNumber: { value: string; label: string }[];
   setGuests: (guests: GuestData[]) => void;
+  saveGuests: (
+    data: GuestData[],
+    referenceNumber: { value: string; label: string }[]
+  ) => void;
 }
 
 export const useGuestStore = create<GuestState>((set) => ({
   guests: [],
+  reservationNumber: [],
   totalGuests: 0,
   isLoading: false,
   error: null,
+  saveGuests: (
+    data: GuestData[],
+    referenceNumber: { value: string; label: string }[]
+  ) => {
+    set({
+      guests: data,
+      reservationNumber: referenceNumber,
+    });
+  },
 
   setGuests: (guests) => {
     set({ guests });
