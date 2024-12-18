@@ -104,7 +104,10 @@ const DealPage = () => {
         />
       )}
       <Box display="flex" mt="40px">
-        <PageSizeSelector onPageSizeChange={handlePageSizeChange} />
+        <PageSizeSelector
+          onPageSizeChange={handlePageSizeChange}
+          pageSize={pageSize}
+        />
         <Pagination
           currentPage={currentPage}
           setCurrentPage={setCurrentPage}

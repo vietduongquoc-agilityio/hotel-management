@@ -3,7 +3,7 @@ import { themeColor } from "@/themes/Base/colors";
 import { ChakraProvider } from "@chakra-ui/react";
 import "@testing-library/jest-dom";
 import React from "react";
-import Button from "../";
+import Button from "..";
 
 // Wrapper component for tests to include ChakraProvider with the custom theme
 const Wrapper = ({ children }: { children: React.ReactNode }) => (

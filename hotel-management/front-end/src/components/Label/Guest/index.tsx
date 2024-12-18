@@ -10,9 +10,10 @@ import { NewGuestData } from "@/interfaces";
 export interface LabelGuestProps {
   onAddGuest: (roomData: NewGuestData) => void;
   handleSelectedBedType: (event: ChangeEvent<HTMLSelectElement>) => void;
+  isAddGuest: boolean;
 }
 
-const LabelGuest = ({ onAddGuest, handleSelectedBedType }: LabelGuestProps) => {
+const LabelGuest = ({ onAddGuest, handleSelectedBedType, isAddGuest}: LabelGuestProps) => {
   const closeModal = () => {};
 
   return (
@@ -50,6 +51,7 @@ const LabelGuest = ({ onAddGuest, handleSelectedBedType }: LabelGuestProps) => {
             onClose={closeModal}
             onAddGuest={onAddGuest}
             handleSelectedBedType={handleSelectedBedType}
+            isDisabled={isAddGuest}
           />
         </>
       </Box>

@@ -12,7 +12,7 @@ import { ChangeEvent, useEffect, useState } from "react";
 import { Input, withModal, Button } from "@/components";
 
 // Constants
-import { validationRules } from "@/constants";
+import { ADD_GUEST_MESSAGE, validationRules } from "@/constants";
 
 // InterFace
 import { NewGuestData } from "@/interfaces";
@@ -27,6 +27,7 @@ interface AddGuestModalProps {
   onAddGuest: (guestData: NewGuestData) => void;
   onClose: () => void;
   handleSelectedBedType: (event: ChangeEvent<HTMLSelectElement>) => void;
+  isDisabled: boolean;
 }
 
 interface FormData {
@@ -86,15 +87,15 @@ const AddGuestModal = ({
     try {
       await onAddGuest(newGuestData);
       toast({
-        title: "Guest added successfully.",
+        title: ADD_GUEST_MESSAGE.SUCCESS,
         status: "success",
         duration: 3000,
         isClosable: true,
       });
     } catch {
       toast({
-        title: "Failed to add guest.",
-        description: "An error occurred while creating the guest.",
+        title: ADD_GUEST_MESSAGE.ERROR,
+        description: ADD_GUEST_MESSAGE.ERROR_DESCRIPTION,
         status: "error",
         duration: 3000,
         isClosable: true,

@@ -1,32 +1,69 @@
-import { Box, Heading, useToast } from "@chakra-ui/react";
-import { ChangeEvent, useEffect } from "react";
+import { Box, Heading } from "@chakra-ui/react";
+import { ChangeEvent, useEffect, useState } from "react";
 
 // Components
-import { LabelGuest, Spinner, Table } from "@/components";
+import {
+  LabelGuest,
+  PageSizeSelector,
+  Pagination,
+  Spinner,
+  Table,
+} from "@/components";
 
 // InterFaces
 import { GuestData, NewGuestData } from "@/interfaces";
 
 // Stores
-import { useGuestStore } from "@/stores";
+import { useGuestStore, useRateStore } from "@/stores";
+
+// Hooks
+import {
+  useCreateGuest,
+  useUpdateGuest,
+  useDeleteGuest,
+  useGetGuest,
+  useGetRate,
+} from "@/hooks";
 
 const GuestPage = () => {
-  const toast = useToast();
-  const {
-    isLoading,
-    guests,
-    fetchGuests,
-    createGuest,
-    updateGuest,
-    deleteGuest,
-  } = useGuestStore();
-  const handleSelectedBedType = (_event: ChangeEvent<HTMLSelectElement>) =>
-    void useEffect(() => {
-      fetchGuests(1, 10);
-    }, [fetchGuests]);
+  const { saveRate } = useRateStore();
+  const { data: ratesData } = useGetRate();
+  const { isLoading: guestsLoading } = useGuestStore();
+
+  const handleSelectedBedType = (_event: ChangeEvent<HTMLSelectElement>) => {};
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const [pageSize, setPageSize] = useState(10);
+  const [isAddGuest, setIsAddGuest] = useState(false);
+  
+  const getGuest = useGetGuest({currentPage, pageSize})
+  const createGuest = useCreateGuest();
+  const updateGuest = useUpdateGuest();
+  const deleteGuest = useDeleteGuest();
+
+  const { guests, pagination } = useGetGuest({ currentPage, pageSize });
+
+  const { pageCount = 1 } = pagination || {};
+
+  useEffect(() => {
+    getGuest;
+  }, [getGuest]);
+
+  useEffect(() => {
+    if (ratesData?.rates.length > 0) {
+      setIsAddGuest(true);
+      const { rates, bedTypeOptions } = ratesData || {};
+      saveRate(rates, bedTypeOptions);
+    }
+  }, [ratesData, saveRate]);
+
+  const handlePageSizeChange = (newSize: number) => {
+    setPageSize(newSize);
+    setCurrentPage(1);
+  };
 
   const handleAddGuest = async (guestData: NewGuestData) => {
-    await createGuest(guestData);
+    createGuest.mutate(guestData);
   };
 
   const handleEditGuest = async (updatedGuestData: GuestData) => {
@@ -40,18 +77,14 @@ const GuestPage = () => {
       totalAmount: updatedGuestData.totalAmount,
     };
 
-    await updateGuest(updatedGuestData.documentId, requestPayload);
-    toast({
-      title: "Guest updated",
-      description: "Guest details have been successfully updated.",
-      status: "success",
-      duration: 3000,
-      isClosable: true,
+    updateGuest.mutate({
+      guestId: updatedGuestData.documentId,
+      requestPayload: requestPayload,
     });
   };
 
   const handleDeleteGuest = async (deletedGuestId: string) => {
-    await deleteGuest(deletedGuestId);
+    deleteGuest.mutate(deletedGuestId);
   };
 
   return (
@@ -62,8 +95,10 @@ const GuestPage = () => {
       <LabelGuest
         onAddGuest={handleAddGuest}
         handleSelectedBedType={handleSelectedBedType}
+        isAddGuest={isAddGuest}
       />
-      {isLoading ? (
+
+      {guestsLoading ? (
         <Spinner />
       ) : (
         <Table
@@ -73,6 +108,18 @@ const GuestPage = () => {
           onEdit={handleEditGuest}
         />
       )}
+      <Box display="flex" mt="40px">
+        <PageSizeSelector
+          onPageSizeChange={handlePageSizeChange}
+          pageSize={pageSize}
+        />
+        <Pagination
+          currentPage={currentPage}
+          setCurrentPage={setCurrentPage}
+          pageSize={pageSize}
+          pageCount={pageCount}
+        />
+      </Box>
     </Box>
   );
 };
