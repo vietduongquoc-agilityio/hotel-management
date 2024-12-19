@@ -9,8 +9,11 @@ import { NewRoomData, RoomData } from "@/interfaces";
 interface UseGetRoomProps {
   currentPage: number;
   pageSize: number;
-  field?: string;
-  value?: string;
+  filters?: {
+    bedType?: string;
+    roomFloor?: string;
+    roomStatus?: string;
+  };
 }
 
 interface RoomResponse {
@@ -24,22 +27,17 @@ interface RoomResponse {
 export const useGetRoom = ({
   currentPage,
   pageSize,
-  field,
-  value,
+  filters,
 }: UseGetRoomProps) => {
-  const { data, isLoading, error } = useQuery<RoomResponse, Error>({
-    queryKey: ["rooms", currentPage, pageSize, field, value],
-    queryFn: async () => {
-      const response = await getRooms(currentPage, pageSize, field, value);
-      return response as RoomResponse;
-    },
+  const { data, isLoading } = useQuery<RoomResponse>({
+    queryKey: ["rooms", currentPage, pageSize, filters],
+    queryFn: () => getRooms(currentPage, pageSize, filters || {}),
   });
-
+  
   return {
     rooms: data?.rooms || [],
     pagination: data?.pagination,
     isLoading,
-    error,
   };
 };
 

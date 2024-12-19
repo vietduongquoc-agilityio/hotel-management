@@ -56,7 +56,13 @@ const RoomPage = () => {
   const { rooms, pagination } = useGetRoom({
     currentPage,
     pageSize,
+    filters: {
+      bedType,
+      roomFloor,
+      roomStatus,
+    },
   });
+
   const { pageCount = 1, total = 1 } = pagination || {};
 
   useEffect(() => {
@@ -85,7 +91,7 @@ const RoomPage = () => {
 
   const handleAddRoom = async (newRoom: NewRoomData) => {
     createRoom.mutate(newRoom);
-    setCurrentPage(1);
+    setCurrentPage(DEFAULT_CURRENT_PAGE);
   };
 
   const handleDeleteRoom = async (deletedRoomId: string) => {
@@ -110,11 +116,13 @@ const RoomPage = () => {
   const handleSelectedBedType = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedBedType = e.target.value;
     setBedType(selectedBedType);
+    setCurrentPage(DEFAULT_CURRENT_PAGE);
   };
 
   const handleSelectedRoomFloor = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedRoomFloor = e.target.value;
     setRoomFloor(selectedRoomFloor);
+    setCurrentPage(DEFAULT_CURRENT_PAGE);
   };
 
   const handleSelectedRoomStatus = (
@@ -122,6 +130,7 @@ const RoomPage = () => {
   ) => {
     const selectedRoomStatus = e.target.value;
     setRoomStatus(selectedRoomStatus);
+    setCurrentPage(DEFAULT_CURRENT_PAGE);
   };
 
   return (
