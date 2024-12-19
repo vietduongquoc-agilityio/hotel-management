@@ -42,9 +42,6 @@ useRateStore.setState({
       dealPrice: "135",
     },
   ],
-  editRate: async (id: string, payload: any) => {
-    console.log("Edit rate called with:", id, payload);
-  },
 });
 
 // Mock Props

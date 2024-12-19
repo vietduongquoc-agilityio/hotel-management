@@ -1,42 +1,57 @@
-import { useEffect } from "react";
+import { useState } from "react";
 import { Box, Heading, useToast } from "@chakra-ui/react";
 
 // Interfaces
 import { NewRateData, RateData } from "@/interfaces";
 
 // Components
-import { LabelRate, Table, Spinner } from "@/components";
+import {
+  LabelRate,
+  Table,
+  Spinner,
+  PageSizeSelector,
+  Pagination,
+} from "@/components";
 
 // Store
 import { useRateStore } from "@/stores";
 
 // Hooks
-import { useGetRate } from "@/hooks";
+import {
+  useCreateRate,
+  useDeleteRate,
+  useGetRate,
+  useUpdateRate,
+} from "@/hooks";
+
+// Constants
+import { DEFAULT_CURRENT_PAGE, DEFAULT_PAGE_SIZE } from "@/constants";
 
 const RatePage = () => {
   const toast = useToast();
 
   // Zustand store for rates
-  const {
-    rates,
-    saveRate,
-    isLoading: ratesLoading,
-    addRate,
-    editRate,
-    deleteRate,
-    bedTypeOptions,
-  } = useRateStore();
+  const { isLoading: ratesLoading } = useRateStore();
 
-  const { data } = useGetRate();
+  const [currentPage, setCurrentPage] = useState(DEFAULT_CURRENT_PAGE);
+  const [pageSize, setPageSize] = useState(DEFAULT_PAGE_SIZE);
+  const { rates, pagination } = useGetRate({
+    currentPage, 
+    pageSize,    
+  });
+  
+  const { pageCount = 1 } = pagination || {};
+  const addRate = useCreateRate();
+  const editRate = useUpdateRate();
+  const deleteRate = useDeleteRate();
 
-  useEffect(() => {
-    if (data?.rates) {
-      saveRate(data.rates, bedTypeOptions);
-    }
-  }, [data, bedTypeOptions, saveRate]);
+  const handlePageSizeChange = (newSize: number) => {
+    setPageSize(newSize);
+    setCurrentPage(DEFAULT_CURRENT_PAGE);
+  };
 
   const handleAddRate = async (rateData: NewRateData) => {
-    await addRate(rateData);
+    addRate.mutate(rateData);
   };
 
   const handleEditRate = async (updatedRateData: RateData) => {
@@ -50,7 +65,7 @@ const RatePage = () => {
       totalOfBooked: updatedRateData.totalOfBooked,
     };
 
-    await editRate(updatedRateData.documentId, requestPayload);
+    editRate.mutate({ rateId: updatedRateData.documentId, requestPayload });
     toast({
       title: "Rate updated",
       description: "Rate details have been successfully updated.",
@@ -61,7 +76,7 @@ const RatePage = () => {
   };
 
   const handleDeleteRate = async (rateId: string) => {
-    await deleteRate(rateId);
+    deleteRate.mutate(rateId);
   };
 
   return (
@@ -80,6 +95,18 @@ const RatePage = () => {
           onEdit={handleEditRate}
         />
       )}
+      <Box display="flex" mt="40px">
+        <PageSizeSelector
+          onPageSizeChange={handlePageSizeChange}
+          pageSize={pageSize}
+        />
+        <Pagination
+          currentPage={currentPage}
+          setCurrentPage={setCurrentPage}
+          pageSize={pageSize}
+          pageCount={pageCount}
+        />
+      </Box>
     </Box>
   );
 };

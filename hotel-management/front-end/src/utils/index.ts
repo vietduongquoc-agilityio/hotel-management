@@ -1,2 +1,2 @@
-export * from "./generaterCode"
-export * from "./table"
+export * from "./GeneraterCode"
+export * from "./Table"

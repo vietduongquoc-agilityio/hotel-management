@@ -1,28 +1,86 @@
-// Libs
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 // Services
-import { getRates } from "@/services";
+import { createRateApi, deleteRate, getRates, updateRate } from "@/services";
 
 // Interfaces
-import { RateData } from "@/interfaces";
+import { NewRateData, RateData } from "@/interfaces";
 
-export const useGetRate = () => {
-  const { data, isLoading, error, isError } = useQuery({
-    queryKey: ["rates"],
+interface UseGetRateProps {
+  currentPage: number;
+  pageSize: number;
+}
+
+interface RateResponse {
+  rates: RateData[];
+  pagination: {
+    total: number;
+    pageCount: number;
+  };
+}
+
+export const useGetRate = ({
+  currentPage,
+  pageSize,
+}: UseGetRateProps) => {
+  const { data, isLoading, error } = useQuery<RateResponse, Error>({
+    queryKey: ["rates", currentPage, pageSize],
     queryFn: async () => {
-      const response = await getRates(1, 10);
-      const ratesData = response.data;
-
-      // Transform data to get bedTypeOptions
-      const bedTypeOptions = ratesData.map((item: RateData) => ({
-        value: item.roomType,
-        label: `${item.roomType} Bed`,
-      }));
-
-      return { rates: ratesData, bedTypeOptions };
+      const response = await getRates(currentPage, pageSize);
+      return response as RateResponse;
     },
   });
 
-  return { data, isLoading, error, isError };
+  return {
+    rates: data?.rates || [],
+    pagination: data?.pagination,
+    isLoading,
+    error,
+  };
+};
+
+export const useCreateRate = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (data: NewRateData) => createRateApi(data),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["rates"] });
+      console.log("Rate created successfully.");
+    },
+    onError: (err: Error) => {
+      console.error("Failed to create rate:", err.message);
+    },
+  });
+};
+
+export const useUpdateRate = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (data: { rateId: string; requestPayload: NewRateData }) =>
+      updateRate(data.rateId, data.requestPayload),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["rates"] });
+      console.log("Rate updated successfully.");
+    },
+    onError: (err: Error) => {
+      console.error("Failed to update rate:", err.message);
+    },
+  });
+};
+
+export const useDeleteRate = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (rateId: string) => deleteRate(rateId),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["rates"] });
+      console.log("Rate deleted successfully.");
+    },
+    onError: (err: Error) => {
+      console.error("Failed to delete rate:", err.message);
+    },
+  });
 };

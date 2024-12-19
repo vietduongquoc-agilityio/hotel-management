@@ -7,7 +7,7 @@ import { MemoryRouter } from "react-router-dom";
 import LabelRate, { LabelRateProps } from "./index";
 
 // InterFace
-import { NewRateData } from "@/interfaces/rate";
+import { NewRateData } from "@/interfaces";
 
 export default {
   title: "Components/Label/LabelRate",

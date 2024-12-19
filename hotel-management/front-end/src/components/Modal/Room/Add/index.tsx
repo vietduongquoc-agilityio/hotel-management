@@ -22,6 +22,9 @@ import { useRateStore } from "@/stores";
 // Components
 import { Button, withModal } from "@/components";
 
+// Hooks
+import { useUpdateRate } from "@/hooks";
+
 interface AddRoomModalProps {
   onAddRoom: (roomData: NewRoomData) => void;
   onClose: () => void;
@@ -39,7 +42,7 @@ const AddRoomModal = ({ onAddRoom, onClose }: AddRoomModalProps) => {
   const toast = useToast();
   const bedTypeOptions = useRateStore((state) => state.bedTypeOptions);
   const rates = useRateStore((state) => state.rates);
-  const editRate = useRateStore((state) => state.editRate);
+  const editRate = useUpdateRate();
   const {
     register,
     handleSubmit,
@@ -95,7 +98,7 @@ const AddRoomModal = ({ onAddRoom, onClose }: AddRoomModalProps) => {
       };
 
       await onAddRoom(newRoomData);
-      await editRate(documentId, requestPayload);
+      await editRate.mutate({rateId:documentId, requestPayload});
       toast({
         title: "Room added successfully.",
         status: "success",

@@ -37,7 +37,10 @@ const RoomPage = () => {
   } = useRoomStore();
 
   const { saveRate } = useRateStore();
-  const { data: ratesData } = useGetRate();
+  const { rates } = useGetRate({
+    currentPage: DEFAULT_CURRENT_PAGE,
+    pageSize: DEFAULT_PAGE_SIZE,
+  });
 
   const [currentPage, setCurrentPage] = useState(DEFAULT_CURRENT_PAGE);
   const [pageSize, setPageSize] = useState(DEFAULT_PAGE_SIZE);
@@ -57,12 +60,17 @@ const RoomPage = () => {
   const { pageCount = 1, total = 1 } = pagination || {};
 
   useEffect(() => {
-    if (ratesData?.rates.length > 0) {
+    if (rates.length > 0) {
       setIsAddRoom(true);
-      const { rates, bedTypeOptions } = ratesData || {};
+      const bedTypeOptions = rates.map((item) => ({
+        value: item.roomType,
+        label: `${item.roomType} Bed`,
+      }));
       saveRate(rates, bedTypeOptions);
+    } else {
+      setIsAddRoom(false);
     }
-  }, [ratesData, saveRate]);
+  }, [rates, saveRate]);
 
   useEffect(() => {
     if (rooms.length > 0) {
@@ -163,5 +171,3 @@ const RoomPage = () => {
 };
 
 export default RoomPage;
-
-

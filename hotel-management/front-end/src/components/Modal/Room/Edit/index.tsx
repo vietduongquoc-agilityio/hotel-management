@@ -12,6 +12,8 @@ import { useState } from "react";
 
 // Constants
 import {
+  DEFAULT_CURRENT_PAGE,
+  DEFAULT_PAGE_SIZE,
   roomFloorOptions,
   roomStatusColors,
   roomStatusOptions,
@@ -49,8 +51,14 @@ const EditRoomModal = ({
   const [isLoading, setIsLoading] = useState(false);
   const toast = useToast();
 
-  const { data } = useGetRate();
-  const bedTypeOptions = data?.bedTypeOptions || [];
+  const { rates } = useGetRate({
+    currentPage: DEFAULT_CURRENT_PAGE,
+    pageSize: DEFAULT_PAGE_SIZE,
+  });
+  const bedTypeOptions = rates.map((item) => ({
+    value: item.roomType,
+    label: `${item.roomType} Bed`,
+  }));
 
   const onSubmit = async (data: RoomData) => {
     setIsLoading(true);
