@@ -17,48 +17,61 @@ import { useDealStore, useRateStore } from "@/stores";
 import { DealData, NewDealData } from "@/interfaces";
 
 // Constants
-import { EDIT_DEAL_MESSAGE } from "@/constants";
+import {
+  DEFAULT_CURRENT_PAGE,
+  DEFAULT_PAGE_SIZE,
+  EDIT_DEAL_MESSAGE,
+} from "@/constants";
+
+// Hooks
+import {
+  useCreateDeal,
+  useDeleteDeal,
+  useGetDeal,
+  useGetRate,
+  useUpdateDeal,
+} from "@/hooks";
 
 const DealPage = () => {
   const toast = useToast();
-  const {
-    deals,
-    fetchDeals,
-    createDeal,
-    deleteDeal,
-    editDeal,
-    isLoading: dealsLoading,
-    pageCount,
-  } = useDealStore();
-  const { rates, isLoading: ratesLoading, fetchRates } = useRateStore();
-  const [pageSize, setPageSize] = useState(10);
+  const { isLoading: dealsLoading } = useDealStore();
+
+  const { saveRate } = useRateStore();
+  const { data: ratesData } = useGetRate();
+  const { isLoading: ratesLoading } = useRateStore();
+
+  const [pageSize, setPageSize] = useState(DEFAULT_PAGE_SIZE);
   const [isAddDeal, setIsAddDeal] = useState(false);
-  const [currentPage, setCurrentPage] = useState(1);
+  const [currentPage, setCurrentPage] = useState(DEFAULT_CURRENT_PAGE);
+
+  const { deals, pagination } = useGetDeal({ currentPage, pageSize });
+  const { pageCount = 1 } = pagination || {};
+
+  const createDeal = useCreateDeal();
+  const updateDeal = useUpdateDeal();
+  const deleteDeal = useDeleteDeal();
 
   const handleSelectedBedType = (_event: ChangeEvent<HTMLSelectElement>) => {};
 
   useEffect(() => {
-    fetchRates(currentPage, pageSize);
-    fetchDeals(currentPage, pageSize);
-  }, [fetchDeals, fetchRates, currentPage, pageSize]);
-
-  useEffect(() => {
-    if (rates.length > 0) {
+    if (ratesData?.rates.length > 0) {
       setIsAddDeal(true);
+      const { rates, bedTypeOptions } = ratesData || {};
+      saveRate(rates, bedTypeOptions);
     }
-  }, [rates]);
+  }, [ratesData, saveRate]);
 
   const handlePageSizeChange = (newSize: number) => {
     setPageSize(newSize);
-    setCurrentPage(1);
+    setCurrentPage(DEFAULT_CURRENT_PAGE);
   };
 
   const handleAddDeal = async (newDeal: NewDealData) => {
-    await createDeal(newDeal);
+    createDeal.mutate(newDeal);
   };
 
   const handleDeleteDeal = async (deletedDealId: string) => {
-    await deleteDeal(deletedDealId);
+    deleteDeal.mutate(deletedDealId);
   };
 
   const handleEditDeal = async (updatedDealData: DealData) => {
@@ -72,7 +85,10 @@ const DealPage = () => {
       reservationsLeft: updatedDealData.reservationsLeft,
     };
 
-    await editDeal(updatedDealData.documentId, requestPayload);
+    updateDeal.mutate({
+      dealId: updatedDealData.documentId,
+      requestPayload,
+    });
     toast({
       title: EDIT_DEAL_MESSAGE.SUCCESS,
       description: EDIT_DEAL_MESSAGE.SUCCESS_DESCRIPTION,

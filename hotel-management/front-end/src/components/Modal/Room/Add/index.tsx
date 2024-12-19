@@ -40,7 +40,6 @@ const AddRoomModal = ({ onAddRoom, onClose }: AddRoomModalProps) => {
   const bedTypeOptions = useRateStore((state) => state.bedTypeOptions);
   const rates = useRateStore((state) => state.rates);
   const editRate = useRateStore((state) => state.editRate);
-
   const {
     register,
     handleSubmit,

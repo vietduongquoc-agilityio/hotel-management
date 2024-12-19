@@ -121,8 +121,14 @@ export const renderDealBody = (deal: DealData): TableCell[] => {
     endDate,
     roomType,
     statusDeal,
-    reservationsLeft,
+    startDate,
   } = deal;
+
+  // Calculate reservations left using Date objects
+  const reservationsLeft =
+    (new Date(endDate).getTime() - new Date(startDate).getTime()) /
+    // Convert milliseconds to days
+    (1000 * 60 * 60 * 24);
 
   return [
     {
@@ -135,7 +141,8 @@ export const renderDealBody = (deal: DealData): TableCell[] => {
       width: "15%",
     },
     {
-      value: reservationsLeft,
+      // Display as an integer value
+      value: Math.round(reservationsLeft),
       width: "16%",
     },
     {

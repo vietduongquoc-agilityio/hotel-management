@@ -1,2 +1,3 @@
 export * from "./rate"
-export * from './room'
+export * from "./guest"
+export * from "./deal"
