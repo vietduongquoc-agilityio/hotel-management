@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Box, Heading, useToast } from "@chakra-ui/react";
+import { Box, Heading } from "@chakra-ui/react";
 
 // InterFace
 import { NewRoomData, RoomData } from "@/interfaces";
@@ -17,27 +17,26 @@ import {
 import { useRateStore, useRoomStore } from "@/stores";
 
 // Hooks
-import { useGetRate } from "@/hooks";
+import {
+  useCreateRoom,
+  useDeleteRoom,
+  useGetRate,
+  useGetRoom,
+  useUpdateRoom,
+} from "@/hooks";
 
 // Constants
 import { DEFAULT_CURRENT_PAGE, DEFAULT_PAGE_SIZE } from "@/constants";
 
 const RoomPage = () => {
   const {
-    rooms,
-    totalRooms,
-    pageCount,
     availableRooms,
     bookedRooms,
     isLoading: roomsLoading,
-    fetchRooms,
-    addRoom,
-    editRoom,
-    deleteRoom,
+    calculateRoomCounts,
   } = useRoomStore();
 
   const { saveRate } = useRateStore();
-
   const { data: ratesData } = useGetRate();
 
   const [currentPage, setCurrentPage] = useState(DEFAULT_CURRENT_PAGE);
@@ -45,9 +44,17 @@ const RoomPage = () => {
   const [bedType, setBedType] = useState("");
   const [roomFloor, setRoomFloor] = useState("");
   const [roomStatus, setRoomStatus] = useState("");
-
   const [isAddRoom, setIsAddRoom] = useState(false);
-  const toast = useToast();
+
+  const deleteRoom = useDeleteRoom();
+  const createRoom = useCreateRoom();
+  const updateRoom = useUpdateRoom();
+
+  const { rooms, pagination } = useGetRoom({
+    currentPage,
+    pageSize,
+  });
+  const { pageCount = 1, total = 1 } = pagination || {};
 
   useEffect(() => {
     if (ratesData?.rates.length > 0) {
@@ -55,11 +62,13 @@ const RoomPage = () => {
       const { rates, bedTypeOptions } = ratesData || {};
       saveRate(rates, bedTypeOptions);
     }
-  }, [ratesData]);
+  }, [ratesData, saveRate]);
 
   useEffect(() => {
-    fetchRooms(currentPage, pageSize);
-  }, [fetchRooms, currentPage]);
+    if (rooms.length > 0) {
+      calculateRoomCounts(rooms);
+    }
+  }, [rooms, calculateRoomCounts]);
 
   const handlePageSizeChange = (newSize: number) => {
     setPageSize(newSize);
@@ -67,11 +76,12 @@ const RoomPage = () => {
   };
 
   const handleAddRoom = async (newRoom: NewRoomData) => {
-    await addRoom(newRoom);
+    createRoom.mutate(newRoom);
+    setCurrentPage(1);
   };
 
   const handleDeleteRoom = async (deletedRoomId: string) => {
-    await deleteRoom(deletedRoomId);
+    deleteRoom.mutate(deletedRoomId);
   };
 
   const handleEditRoom = async (updatedRoomData: RoomData) => {
@@ -83,28 +93,20 @@ const RoomPage = () => {
       roomNumber: updatedRoomData.roomNumber,
     };
 
-    await editRoom(updatedRoomData.documentId, requestPayload);
-
-    fetchRooms(currentPage, pageSize);
-    toast({
-      title: "Room updated",
-      description: "Room details have been successfully updated.",
-      status: "success",
-      duration: 3000,
-      isClosable: true,
+    updateRoom.mutate({
+      roomId: updatedRoomData.documentId,
+      requestPayload: requestPayload,
     });
   };
 
   const handleSelectedBedType = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedBedType = e.target.value;
     setBedType(selectedBedType);
-    fetchRooms(currentPage, pageSize, "bedType", selectedBedType);
   };
 
   const handleSelectedRoomFloor = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedRoomFloor = e.target.value;
     setRoomFloor(selectedRoomFloor);
-    fetchRooms(currentPage, pageSize, "roomFloor", selectedRoomFloor);
   };
 
   const handleSelectedRoomStatus = (
@@ -112,7 +114,6 @@ const RoomPage = () => {
   ) => {
     const selectedRoomStatus = e.target.value;
     setRoomStatus(selectedRoomStatus);
-    fetchRooms(currentPage, pageSize, "roomStatus", selectedRoomStatus);
   };
 
   return (
@@ -122,7 +123,7 @@ const RoomPage = () => {
       </Heading>
 
       <LabelRoom
-        totalRooms={totalRooms}
+        totalRooms={total}
         availableRooms={availableRooms}
         bookedRooms={bookedRooms}
         onAddRoom={handleAddRoom}
@@ -139,10 +140,10 @@ const RoomPage = () => {
         <Spinner />
       ) : (
         <Table
-          data={rooms}
           type="room"
           onDelete={handleDeleteRoom}
           onEdit={handleEditRoom}
+          data={rooms || []}
         />
       )}
       <Box display="flex" mt="40px">
@@ -162,3 +163,5 @@ const RoomPage = () => {
 };
 
 export default RoomPage;
+
+
