@@ -7,14 +7,18 @@ const BASE_URL = process.env.VITE_BASE_URL;
 export const getRooms = async (
   page: number,
   pageSize: number,
-  field?: string,
-  value?: string
+  filters: { [key: string]: string } = {}
 ) => {
   try {
-    const filters = field && value ? { [`filters[${field}]`]: value } : {};
+    const filterParams = Object.keys(filters).reduce((acc, field) => {
+      if (filters[field]) {
+        acc[`filters[${field}]`] = filters[field];
+      }
+      return acc;
+    }, {} as { [key: string]: string });
     const response = await axios.get(`${BASE_URL}/rooms`, {
       params: {
-        ...filters,
+        ...filterParams,
         "sort[0]": "createdAt:desc",
         "pagination[page]": page,
         "pagination[pageSize]": pageSize,
