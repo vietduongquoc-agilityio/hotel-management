@@ -37,7 +37,10 @@ const DealPage = () => {
   const { isLoading: dealsLoading } = useDealStore();
 
   const { saveRate } = useRateStore();
-  const { data: ratesData } = useGetRate();
+  const { rates } = useGetRate({
+    currentPage: DEFAULT_CURRENT_PAGE,
+    pageSize: DEFAULT_PAGE_SIZE,
+  });
   const { isLoading: ratesLoading } = useRateStore();
 
   const [pageSize, setPageSize] = useState(DEFAULT_PAGE_SIZE);
@@ -54,12 +57,15 @@ const DealPage = () => {
   const handleSelectedBedType = (_event: ChangeEvent<HTMLSelectElement>) => {};
 
   useEffect(() => {
-    if (ratesData?.rates.length > 0) {
+    if (rates.length > 0) {
       setIsAddDeal(true);
-      const { rates, bedTypeOptions } = ratesData || {};
+      const bedTypeOptions = rates.map((item) => ({
+        value: item.roomType,
+        label: `${item.roomType} Bed`,
+      }));
       saveRate(rates, bedTypeOptions);
     }
-  }, [ratesData, saveRate]);
+  }, [rates, saveRate]);
 
   const handlePageSizeChange = (newSize: number) => {
     setPageSize(newSize);

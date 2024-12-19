@@ -30,7 +30,10 @@ import { DEFAULT_CURRENT_PAGE, DEFAULT_PAGE_SIZE } from "@/constants";
 
 const GuestPage = () => {
   const { saveRate } = useRateStore();
-  const { data: ratesData } = useGetRate();
+  const { rates } = useGetRate({
+    currentPage: DEFAULT_CURRENT_PAGE,
+    pageSize: DEFAULT_PAGE_SIZE,
+  });
   const { isLoading: guestsLoading } = useGuestStore();
 
   const handleSelectedBedType = (_event: ChangeEvent<HTMLSelectElement>) => {};
@@ -38,7 +41,7 @@ const GuestPage = () => {
   const [currentPage, setCurrentPage] = useState(DEFAULT_CURRENT_PAGE);
   const [pageSize, setPageSize] = useState(DEFAULT_PAGE_SIZE);
   const [isAddGuest, setIsAddGuest] = useState(false);
-  
+
   const createGuest = useCreateGuest();
   const updateGuest = useUpdateGuest();
   const deleteGuest = useDeleteGuest();
@@ -47,12 +50,17 @@ const GuestPage = () => {
   const { pageCount = 1 } = pagination || {};
 
   useEffect(() => {
-    if (ratesData?.rates.length > 0) {
+    if (rates.length > 0) {
       setIsAddGuest(true);
-      const { rates, bedTypeOptions } = ratesData || {};
+      const bedTypeOptions = rates.map((item) => ({
+        value: item.roomType,
+        label: `${item.roomType} Bed`,
+      }));
       saveRate(rates, bedTypeOptions);
+    } else {
+      setIsAddGuest(false);
     }
-  }, [ratesData, saveRate]);
+  }, [rates, saveRate]);
 
   const handlePageSizeChange = (newSize: number) => {
     setPageSize(newSize);
