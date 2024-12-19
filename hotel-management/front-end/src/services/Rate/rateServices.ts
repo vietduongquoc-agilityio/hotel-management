@@ -19,7 +19,10 @@ const showErrorToast = (message: string) => {
 };
 
 // Rate Service
-export const getRates = async (page: number, pageSize: number) => {
+export const getRates = async (
+  page: number,
+  pageSize: number,
+) => {
   try {
     const response = await axios.get(`${BASE_URL}/rates`, {
       params: {
@@ -28,9 +31,15 @@ export const getRates = async (page: number, pageSize: number) => {
         "pagination[pageSize]": pageSize,
       },
     });
+    if (response.data && response.data.data && response.data.meta.pagination) {
+      return {
+        rates: response.data.data,
+        pagination: response.data.meta.pagination,
+      };
+    }
     return response.data;
   } catch (error) {
-    return { message: "Failed to fetch rate data", data: null };
+    return { message: "Error fetching rate data", data: null };
   }
 };
 
@@ -41,7 +50,7 @@ export const createRateApi = async (rateData: NewRateData) => {
     });
     return response.data;
   } catch (error) {
-    return { message: "Error updated room details", data: null };
+    return { message: "Error updated rate details", data: null };
   }
 };
 
@@ -57,15 +66,15 @@ export const updateRate = async (rateId: string, rateData: NewRateData) => {
     });
     return { message: "Rate updated successfully", data: response.data };
   } catch (error) {
-    return { message: "Error updated room details", data: null };
+    return { message: "Error updated rate details", data: null };
   }
 };
 
 export const deleteRate = async (rateId: string) => {
   try {
     const response = await axios.delete(`${BASE_URL}/rates/${rateId}`);
-    return { message: "Room deleted successfully", data: response.data };
+    return { message: "Rate deleted successfully", data: response.data };
   } catch (error) {
-    return { message: "Error deleted room details", data: null };
+    return { message: "Error deleted rate details", data: null };
   }
 };
