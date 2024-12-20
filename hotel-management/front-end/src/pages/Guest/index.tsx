@@ -37,6 +37,9 @@ const GuestPage = () => {
   const { isLoading: guestsLoading } = useGuestStore();
 
   const handleSelectedBedType = (_event: ChangeEvent<HTMLSelectElement>) => {};
+  const [guestName, setGuestName] = useState("");
+  const [stay, setStay] = useState("");
+  const [price, setPrice] = useState("");
 
   const [currentPage, setCurrentPage] = useState(DEFAULT_CURRENT_PAGE);
   const [pageSize, setPageSize] = useState(DEFAULT_PAGE_SIZE);
@@ -46,7 +49,11 @@ const GuestPage = () => {
   const updateGuest = useUpdateGuest();
   const deleteGuest = useDeleteGuest();
 
-  const { guests, pagination } = useGetGuest({ currentPage, pageSize });
+  const { guests, pagination } = useGetGuest({
+    currentPage,
+    pageSize,
+    filters: { guestName, stay, price },
+  });
   const { pageCount = 1 } = pagination || {};
 
   useEffect(() => {
@@ -61,6 +68,14 @@ const GuestPage = () => {
       setIsAddGuest(false);
     }
   }, [rates, saveRate]);
+
+  useEffect(() => {
+    if (guests.length > 0) {
+      useGuestStore.getState().setGuestNameOptions(guests);
+      useGuestStore.getState().setStayOptions(guests);
+      useGuestStore.getState().setPriceOptions(guests);
+    }
+  }, [guests]);
 
   const handlePageSizeChange = (newSize: number) => {
     setPageSize(newSize);
@@ -92,6 +107,24 @@ const GuestPage = () => {
     deleteGuest.mutate(deletedGuestId);
   };
 
+  const handleSelectedGuestName = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const selectedGuestName = e.target.value;
+    setGuestName(selectedGuestName);
+    setCurrentPage(DEFAULT_CURRENT_PAGE);
+  };
+
+  const handleSelectedStay = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const selectedStay = e.target.value;
+    setStay(selectedStay);
+    setCurrentPage(DEFAULT_CURRENT_PAGE);
+  };
+
+  const handleSelectedPrice = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const selectedPrice = e.target.value;
+    setPrice(selectedPrice);
+    setCurrentPage(DEFAULT_CURRENT_PAGE);
+  };
+
   return (
     <Box>
       <Heading mb="16px" fontSize="12px" fontWeight="500" color="grey.500">
@@ -101,6 +134,12 @@ const GuestPage = () => {
         onAddGuest={handleAddGuest}
         handleSelectedBedType={handleSelectedBedType}
         isAddGuest={isAddGuest}
+        selectedGuestName={guestName}
+        selectedStay={stay}
+        selectedPrice={price}
+        handleSelectedGuestName={handleSelectedGuestName}
+        handleSelectedStay={handleSelectedStay}
+        handleSelectedPrice={handleSelectedPrice}
       />
 
       {guestsLoading ? (
