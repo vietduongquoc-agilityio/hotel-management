@@ -25,7 +25,11 @@ import {
 } from "@/hooks";
 
 // Constants
-import { DEFAULT_CURRENT_PAGE, DEFAULT_PAGE_SIZE } from "@/constants";
+import {
+  DEFAULT_CURRENT_PAGE,
+  DEFAULT_PAGE_SIZE,
+  EDIT_RATE_MESSAGE,
+} from "@/constants";
 
 const RatePage = () => {
   const toast = useToast();
@@ -36,10 +40,10 @@ const RatePage = () => {
   const [currentPage, setCurrentPage] = useState(DEFAULT_CURRENT_PAGE);
   const [pageSize, setPageSize] = useState(DEFAULT_PAGE_SIZE);
   const { rates, pagination } = useGetRate({
-    currentPage, 
-    pageSize,    
+    currentPage,
+    pageSize,
   });
-  
+
   const { pageCount = 1 } = pagination || {};
   const addRate = useCreateRate();
   const editRate = useUpdateRate();
@@ -67,8 +71,8 @@ const RatePage = () => {
 
     editRate.mutate({ rateId: updatedRateData.documentId, requestPayload });
     toast({
-      title: "Rate updated",
-      description: "Rate details have been successfully updated.",
+      title: EDIT_RATE_MESSAGE.SUCCESS,
+      description: EDIT_RATE_MESSAGE.SUCCESS_DESCRIPTION,
       status: "success",
       duration: 3000,
       isClosable: true,

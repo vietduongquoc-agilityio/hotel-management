@@ -17,6 +17,9 @@ import { Button } from "@/components";
 //Services
 import { deleteRoom } from "@/services";
 
+// Constants
+import { DELETE_ROOM_MESSAGE } from "@/constants";
+
 interface DeleteRoomProps {
   roomId: string;
   onDeleteRoom: (roomId: string) => void;
@@ -34,7 +37,7 @@ const DeleteRoom = ({ roomId, onDeleteRoom }: DeleteRoomProps) => {
       await deleteRoom(roomId);
       onDeleteRoom(roomId);
       toast({
-        title: "Rate deleted successfully.",
+        title: DELETE_ROOM_MESSAGE.SUCCESS,
         status: "success",
         duration: 3000,
         isClosable: true,
@@ -42,8 +45,8 @@ const DeleteRoom = ({ roomId, onDeleteRoom }: DeleteRoomProps) => {
       onClose();
     } catch {
       toast({
-        title: "Failed to delete rate.",
-        description: "An error occurred while deleting the rate.",
+        title: DELETE_ROOM_MESSAGE.ERROR,
+        description: DELETE_ROOM_MESSAGE.ERROR_DESCRIPTION,
         status: "error",
         duration: 3000,
         isClosable: true,
@@ -65,11 +68,11 @@ const DeleteRoom = ({ roomId, onDeleteRoom }: DeleteRoomProps) => {
         <AlertDialogOverlay>
           <AlertDialogContent bg="white.200" top="200px">
             <AlertDialogHeader fontSize="lg" fontWeight="bold">
-              Delete Room
+              {DELETE_ROOM_MESSAGE.TITLE}
             </AlertDialogHeader>
 
             <AlertDialogBody>
-              Are you sure you want to delete this room?
+              {DELETE_ROOM_MESSAGE.CONFIRMATION}
             </AlertDialogBody>
 
             <AlertDialogFooter>
