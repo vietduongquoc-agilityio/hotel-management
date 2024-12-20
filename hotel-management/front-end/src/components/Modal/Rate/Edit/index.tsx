@@ -11,7 +11,7 @@ import { useForm } from "react-hook-form";
 import { RateData } from "@/interfaces";
 
 // Constants
-import { validationRules } from "@/constants";
+import { EDIT_RATE_MESSAGE, validationRules } from "@/constants";
 
 // Components
 import { Button, Input, withModal } from "@/components";
@@ -44,8 +44,8 @@ const EditRateModal = ({
       if (onClose) onClose();
     } catch {
       toast({
-        title: "Failed to update rate.",
-        description: "An error occurred while updating the rate.",
+        title: EDIT_RATE_MESSAGE.ERROR,
+        description: EDIT_RATE_MESSAGE.ERROR_DESCRIPTION,
         status: "error",
         duration: 3000,
         isClosable: true,
