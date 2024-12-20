@@ -14,8 +14,11 @@ import { GuestData, NewGuestData } from "@/interfaces";
 interface UseGetGuestProps {
   currentPage: number;
   pageSize: number;
-  field?: string;
-  value?: string;
+  filters?: {
+    guestName?: string;
+    stay?: string;
+    price?: string;
+  };
 }
 
 interface GuestResponse {
@@ -29,13 +32,12 @@ interface GuestResponse {
 export const useGetGuest = ({
   currentPage,
   pageSize,
-  field,
-  value,
+  filters,
 }: UseGetGuestProps) => {
   const { data, isLoading, error } = useQuery<GuestResponse, Error>({
-    queryKey: ["guests", currentPage, pageSize, field, value],
+    queryKey: ["guests", currentPage, pageSize, filters],
     queryFn: async () => {
-      const response = await getGuests(currentPage, pageSize, value, field);
+      const response = await getGuests(currentPage, pageSize, filters || {});
       return response as GuestResponse;
     },
   });

@@ -6,15 +6,32 @@ import { AddGuestModal } from "@/components";
 
 // InterFace
 import { NewGuestData } from "@/interfaces";
+import { useGuestStore } from "@/stores";
 
 export interface LabelGuestProps {
   onAddGuest: (roomData: NewGuestData) => void;
   handleSelectedBedType: (event: ChangeEvent<HTMLSelectElement>) => void;
   isAddGuest: boolean;
+  selectedGuestName: string;
+  selectedStay: string;
+  selectedPrice: string;
+  handleSelectedGuestName: (event: ChangeEvent<HTMLSelectElement>) => void;
+  handleSelectedStay: (event: ChangeEvent<HTMLSelectElement>) => void;
+  handleSelectedPrice: (event: ChangeEvent<HTMLSelectElement>) => void;
 }
 
-const LabelGuest = ({ onAddGuest, handleSelectedBedType, isAddGuest}: LabelGuestProps) => {
+const LabelGuest = ({
+  onAddGuest,
+  handleSelectedBedType,
+  isAddGuest,
+  handleSelectedGuestName,
+  handleSelectedStay,
+  handleSelectedPrice,
+}: LabelGuestProps) => {
   const closeModal = () => {};
+  const guestNameOptions = useGuestStore((state) => state.guestNameOptions);
+  const stayOptions = useGuestStore((state) => state.stayOptions);
+  const priceOptions = useGuestStore((state) => state.priceOptions);
 
   return (
     <>
@@ -32,19 +49,40 @@ const LabelGuest = ({ onAddGuest, handleSelectedBedType, isAddGuest}: LabelGuest
             cursor="pointer"
             width="120px"
             placeholder="Filter Name"
-          ></Select>
+            onChange={handleSelectedGuestName}
+          >
+            {guestNameOptions.map((option, index) => (
+              <option key={`${option.value}-${index}`} value={option.value}>
+                {option.label}
+              </option>
+            ))}
+          </Select>
           <Select
             fontSize="13px"
             cursor="pointer"
             width="120px"
             placeholder="Filter Stay"
-          ></Select>
+            onChange={handleSelectedStay}
+          >
+            {stayOptions.map((option, index) => (
+              <option key={`${option.value}-${index}`} value={option.value}>
+                {option.label}
+              </option>
+            ))}
+          </Select>
           <Select
             fontSize="13px"
             cursor="pointer"
             width="120px"
             placeholder="Filter Price"
-          ></Select>
+            onChange={handleSelectedPrice}
+          >
+            {priceOptions.map((option, index) => (
+              <option key={`${option.value}-${index}`} value={option.value}>
+                {option.label}
+              </option>
+            ))}
+          </Select>
         </Box>
         <>
           <AddGuestModal
