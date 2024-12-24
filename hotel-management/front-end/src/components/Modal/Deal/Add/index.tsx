@@ -79,7 +79,10 @@ const AddDealModal = ({
         isClosable: true,
       });
     } finally {
-      setIsLoading(false);
+      setIsLoading(true);
+      setTimeout(() => {
+        onClose();
+      }, 1000);
     }
   };
 

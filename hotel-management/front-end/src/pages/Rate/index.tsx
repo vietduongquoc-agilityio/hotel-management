@@ -13,9 +13,6 @@ import {
   Pagination,
 } from "@/components";
 
-// Store
-import { useRateStore } from "@/stores";
-
 // Hooks
 import {
   useCreateRate,
@@ -34,12 +31,9 @@ import {
 const RatePage = () => {
   const toast = useToast();
 
-  // Zustand store for rates
-  const { isLoading: ratesLoading } = useRateStore();
-
   const [currentPage, setCurrentPage] = useState(DEFAULT_CURRENT_PAGE);
   const [pageSize, setPageSize] = useState(DEFAULT_PAGE_SIZE);
-  const { rates, pagination } = useGetRate({
+  const { rates, pagination, isLoading: ratesLoading } = useGetRate({
     currentPage,
     pageSize,
   });

@@ -52,7 +52,6 @@ const EditDealModal = ({
     setIsLoading(true);
     try {
       await onEditDeal(data);
-      if (onClose) onClose();
     } catch {
       toast({
         title: EDIT_DEAL_MESSAGE.ERROR,
@@ -62,7 +61,7 @@ const EditDealModal = ({
         isClosable: true,
       });
     } finally {
-      setIsLoading(false);
+      setIsLoading(true);
     }
   };
 
@@ -174,6 +173,7 @@ const EditDealModal = ({
           buttonType="primary"
           isLoading={isLoading}
           type="submit"
+          onClick={onClose}
         />
       </ModalFooter>
     </form>
