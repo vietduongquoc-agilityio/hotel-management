@@ -60,6 +60,7 @@ const AddRateModal = ({ onAddRate, onClose }: AddRateModalProps) => {
         duration: 3000,
         isClosable: true,
       });
+      if (onClose) onClose();
     } catch {
       toast({
         title: ADD_RATE_MESSAGE.ERROR,

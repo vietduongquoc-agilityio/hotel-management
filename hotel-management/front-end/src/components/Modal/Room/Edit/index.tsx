@@ -65,7 +65,6 @@ const EditRoomModal = ({
     setIsLoading(true);
     try {
       await onEditRoom(data);
-
       if (onClose) onClose();
     } catch {
       toast({

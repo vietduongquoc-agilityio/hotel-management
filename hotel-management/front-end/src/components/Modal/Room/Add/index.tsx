@@ -109,6 +109,7 @@ const AddRoomModal = ({ onAddRoom, onClose }: AddRoomModalProps) => {
         duration: 3000,
         isClosable: true,
       });
+      if (onClose) onClose();
     } catch {
       toast({
         title: ADD_ROOM_MESSAGE.ERROR,
