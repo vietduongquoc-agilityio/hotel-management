@@ -29,12 +29,7 @@ import {
 import { DEFAULT_CURRENT_PAGE, DEFAULT_PAGE_SIZE } from "@/constants";
 
 const RoomPage = () => {
-  const {
-    availableRooms,
-    bookedRooms,
-    isLoading: roomsLoading,
-    calculateRoomCounts,
-  } = useRoomStore();
+  const { availableRooms, bookedRooms, calculateRoomCounts } = useRoomStore();
 
   const { saveRate } = useRateStore();
   const { rates } = useGetRate({
@@ -53,7 +48,11 @@ const RoomPage = () => {
   const createRoom = useCreateRoom();
   const updateRoom = useUpdateRoom();
 
-  const { rooms, pagination } = useGetRoom({
+  const {
+    rooms,
+    pagination,
+    isLoading: roomsLoading,
+  } = useGetRoom({
     currentPage,
     pageSize,
     filters: {
@@ -132,6 +131,8 @@ const RoomPage = () => {
     setRoomStatus(selectedRoomStatus);
     setCurrentPage(DEFAULT_CURRENT_PAGE);
   };
+
+  console.log("roomsLoading:", roomsLoading, "rooms:", rooms);
 
   return (
     <Box>

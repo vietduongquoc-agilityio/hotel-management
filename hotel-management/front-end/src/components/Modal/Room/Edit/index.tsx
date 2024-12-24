@@ -65,7 +65,12 @@ const EditRoomModal = ({
     setIsLoading(true);
     try {
       await onEditRoom(data);
-      if (onClose) onClose();
+      toast({
+        title: EDIT_ROOM_MESSAGE.SUCCESS,
+        status: "success",
+        duration: 3000,
+        isClosable: true,
+      });
     } catch {
       toast({
         title: EDIT_ROOM_MESSAGE.ERROR,
@@ -75,7 +80,7 @@ const EditRoomModal = ({
         isClosable: true,
       });
     } finally {
-      setIsLoading(false);
+      setIsLoading(true);
     }
   };
 
@@ -164,6 +169,7 @@ const EditRoomModal = ({
           type="submit"
           text="Edit"
           buttonType="primary"
+          onClick={onClose}
         />
       </ModalFooter>
     </form>

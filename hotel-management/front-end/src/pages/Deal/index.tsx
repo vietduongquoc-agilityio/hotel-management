@@ -11,7 +11,7 @@ import {
 } from "@/components";
 
 // Stores
-import { useDealStore, useRateStore } from "@/stores";
+import { useRateStore } from "@/stores";
 
 // InterFace
 import { DealData, NewDealData } from "@/interfaces";
@@ -34,10 +34,9 @@ import {
 
 const DealPage = () => {
   const toast = useToast();
-  const { isLoading: dealsLoading } = useDealStore();
 
   const { saveRate } = useRateStore();
-  const { rates } = useGetRate({
+  const { rates, isLoading: dealsLoading } = useGetRate({
     currentPage: DEFAULT_CURRENT_PAGE,
     pageSize: DEFAULT_PAGE_SIZE,
   });
