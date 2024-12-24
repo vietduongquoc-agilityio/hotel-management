@@ -27,7 +27,7 @@ import { useRateStore } from "@/stores";
 
 interface EditDealModalProps {
   onEditDeal: (updatedDealData: DealData) => void;
-  onClose?: () => void;
+  onClose: () => void;
   initialDealData: DealData;
 }
 
@@ -52,7 +52,6 @@ const EditDealModal = ({
     setIsLoading(true);
     try {
       await onEditDeal(data);
-      if (onClose) onClose();
     } catch {
       toast({
         title: EDIT_DEAL_MESSAGE.ERROR,
@@ -62,7 +61,8 @@ const EditDealModal = ({
         isClosable: true,
       });
     } finally {
-      setIsLoading(false);
+      setIsLoading(true);
+      onClose();
     }
   };
 

@@ -30,11 +30,10 @@ import { DEFAULT_CURRENT_PAGE, DEFAULT_PAGE_SIZE } from "@/constants";
 
 const GuestPage = () => {
   const { saveRate } = useRateStore();
-  const { rates } = useGetRate({
+  const { rates, isLoading: guestsLoading } = useGetRate({
     currentPage: DEFAULT_CURRENT_PAGE,
     pageSize: DEFAULT_PAGE_SIZE,
   });
-  const { isLoading: guestsLoading } = useGuestStore();
 
   const handleSelectedBedType = (_event: ChangeEvent<HTMLSelectElement>) => {};
   const [guestName, setGuestName] = useState("");

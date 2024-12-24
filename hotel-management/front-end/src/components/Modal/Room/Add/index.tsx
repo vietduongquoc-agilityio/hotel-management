@@ -54,42 +54,41 @@ const AddRoomModal = ({ onAddRoom, onClose }: AddRoomModalProps) => {
   } = useForm<FormData>();
 
   const onSubmit = async (data: FormData) => {
-    const selectedRate = rates.find((rate) => rate.roomType === data.bedType);
-
-    if (!selectedRate) {
-      toast({
-        title: "Error",
-        description: ADD_ROOM_MESSAGE.ERROR_SELECTED_BED_TYPE,
-        status: "error",
-        duration: 3000,
-        isClosable: true,
-      });
-      return;
-    }
-
-    const { totalOfRooms, totalOfBooked } = selectedRate;
-
-    if (totalOfBooked === totalOfRooms) {
-      toast({
-        title: ADD_ROOM_MESSAGE.ERROR_FULLY,
-        description: ADD_ROOM_MESSAGE.ERROR_FULLY_ERROR_DESCRIPTION,
-        status: "error",
-        duration: 3000,
-        isClosable: true,
-      });
-      return;
-    }
-
-    const newRoomData: NewRoomData = {
-      roomNumber: "ID",
-      bedType: data.bedType,
-      roomFloor: data.roomFloor,
-      roomFacility: data.roomFacility,
-      roomStatus: "Available",
-    };
-
     setIsLoading(true);
     try {
+      const selectedRate = rates.find((rate) => rate.roomType === data.bedType);
+      if (!selectedRate) {
+        toast({
+          title: "Error",
+          description: ADD_ROOM_MESSAGE.ERROR_SELECTED_BED_TYPE,
+          status: "error",
+          duration: 3000,
+          isClosable: true,
+        });
+        return;
+      }
+
+      const { totalOfRooms, totalOfBooked } = selectedRate;
+
+      if (totalOfBooked === totalOfRooms) {
+        toast({
+          title: ADD_ROOM_MESSAGE.ERROR_FULLY,
+          description: ADD_ROOM_MESSAGE.ERROR_FULLY_ERROR_DESCRIPTION,
+          status: "error",
+          duration: 3000,
+          isClosable: true,
+        });
+        return;
+      }
+
+      const newRoomData: NewRoomData = {
+        roomNumber: "ID",
+        bedType: data.bedType,
+        roomFloor: data.roomFloor,
+        roomFacility: data.roomFacility,
+        roomStatus: "Available",
+      };
+
       const { documentId } = selectedRate;
       const requestPayload = {
         roomType: selectedRate.roomType,
@@ -103,14 +102,14 @@ const AddRoomModal = ({ onAddRoom, onClose }: AddRoomModalProps) => {
 
       await onAddRoom(newRoomData);
       await editRate.mutate({ rateId: documentId, requestPayload });
+
       toast({
         title: ADD_ROOM_MESSAGE.SUCCESS,
         status: "success",
         duration: 3000,
         isClosable: true,
       });
-      if (onClose) onClose();
-    } catch {
+    } catch (error) {
       toast({
         title: ADD_ROOM_MESSAGE.ERROR,
         description: ADD_ROOM_MESSAGE.ERROR_DESCRIPTION,
@@ -119,7 +118,10 @@ const AddRoomModal = ({ onAddRoom, onClose }: AddRoomModalProps) => {
         isClosable: true,
       });
     } finally {
-      setIsLoading(false);
+      setIsLoading(true);
+      setTimeout(() => {
+        onClose();
+      }, 1000);
     }
   };
 
@@ -177,11 +179,11 @@ const AddRoomModal = ({ onAddRoom, onClose }: AddRoomModalProps) => {
       <ModalFooter>
         <Button text="Cancel" buttonType="warning" onClick={onClose} />
         <Button
-          isLoading={isLoading}
           type="submit"
           text="Add"
           buttonType="primary"
           w="100px"
+          isLoading={isLoading}
         />
       </ModalFooter>
     </form>
