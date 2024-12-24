@@ -11,7 +11,7 @@ import {
 import { NewRateData } from "@/interfaces";
 
 // Constants
-import { validationRules } from "@/constants";
+import { ADD_RATE_MESSAGE, validationRules } from "@/constants";
 
 // Components
 import { Button, Input, withModal } from "@/components";
@@ -55,15 +55,16 @@ const AddRateModal = ({ onAddRate, onClose }: AddRateModalProps) => {
     try {
       await onAddRate(newRateData);
       toast({
-        title: "Rate added successfully.",
+        title: ADD_RATE_MESSAGE.SUCCESS,
         status: "success",
         duration: 3000,
         isClosable: true,
       });
+      if (onClose) onClose();
     } catch {
       toast({
-        title: "Failed to add rate.",
-        description: "An error occurred while creating the rate.",
+        title: ADD_RATE_MESSAGE.ERROR,
+        description: ADD_RATE_MESSAGE.ERROR_DESCRIPTION,
         status: "error",
         duration: 3000,
         isClosable: true,

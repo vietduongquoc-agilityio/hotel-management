@@ -11,7 +11,11 @@ import {
 import { useForm } from "react-hook-form";
 
 // Constants
-import { validationRules, roomFloorOptions } from "@/constants";
+import {
+  validationRules,
+  roomFloorOptions,
+  ADD_ROOM_MESSAGE,
+} from "@/constants";
 
 // InterFace
 import { NewRoomData } from "@/interfaces";
@@ -55,7 +59,7 @@ const AddRoomModal = ({ onAddRoom, onClose }: AddRoomModalProps) => {
     if (!selectedRate) {
       toast({
         title: "Error",
-        description: "Please select a valid bed type.",
+        description: ADD_ROOM_MESSAGE.ERROR_SELECTED_BED_TYPE,
         status: "error",
         duration: 3000,
         isClosable: true,
@@ -67,8 +71,8 @@ const AddRoomModal = ({ onAddRoom, onClose }: AddRoomModalProps) => {
 
     if (totalOfBooked === totalOfRooms) {
       toast({
-        title: "Room cannot be added",
-        description: "Selected room type is fully booked.",
+        title: ADD_ROOM_MESSAGE.ERROR_FULLY,
+        description: ADD_ROOM_MESSAGE.ERROR_FULLY_ERROR_DESCRIPTION,
         status: "error",
         duration: 3000,
         isClosable: true,
@@ -98,17 +102,18 @@ const AddRoomModal = ({ onAddRoom, onClose }: AddRoomModalProps) => {
       };
 
       await onAddRoom(newRoomData);
-      await editRate.mutate({rateId:documentId, requestPayload});
+      await editRate.mutate({ rateId: documentId, requestPayload });
       toast({
-        title: "Room added successfully.",
+        title: ADD_ROOM_MESSAGE.SUCCESS,
         status: "success",
         duration: 3000,
         isClosable: true,
       });
+      if (onClose) onClose();
     } catch {
       toast({
-        title: "Failed to add room.",
-        description: "An error occurred while creating the room.",
+        title: ADD_ROOM_MESSAGE.ERROR,
+        description: ADD_ROOM_MESSAGE.ERROR_DESCRIPTION,
         status: "error",
         duration: 3000,
         isClosable: true,

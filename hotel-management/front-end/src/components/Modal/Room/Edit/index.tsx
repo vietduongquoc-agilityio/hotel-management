@@ -14,6 +14,7 @@ import { useState } from "react";
 import {
   DEFAULT_CURRENT_PAGE,
   DEFAULT_PAGE_SIZE,
+  EDIT_ROOM_MESSAGE,
   roomFloorOptions,
   roomStatusColors,
   roomStatusOptions,
@@ -64,12 +65,11 @@ const EditRoomModal = ({
     setIsLoading(true);
     try {
       await onEditRoom(data);
-
       if (onClose) onClose();
     } catch {
       toast({
-        title: "Failed to update room.",
-        description: "An error occurred while updating the room.",
+        title: EDIT_ROOM_MESSAGE.ERROR,
+        description: EDIT_ROOM_MESSAGE.ERROR_DESCRIPTION,
         status: "error",
         duration: 3000,
         isClosable: true,

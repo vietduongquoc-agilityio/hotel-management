@@ -92,6 +92,7 @@ const AddGuestModal = ({
         duration: 3000,
         isClosable: true,
       });
+      if (onClose) onClose();
     } catch {
       toast({
         title: ADD_GUEST_MESSAGE.ERROR,

@@ -16,6 +16,7 @@ import { Button } from "@/components";
 
 //Services
 import { deleteRate } from "@/services";
+import { DELETE_RATE_MESSAGE } from "@/constants";
 
 interface DeleteRateProps {
   rateId: string;
@@ -34,7 +35,7 @@ const DeleteRate = ({ rateId, onDeleteRate }: DeleteRateProps) => {
       await deleteRate(rateId);
       onDeleteRate(rateId);
       toast({
-        title: "Rate deleted successfully.",
+        title: DELETE_RATE_MESSAGE.SUCCESS,
         status: "success",
         duration: 3000,
         isClosable: true,
@@ -42,8 +43,8 @@ const DeleteRate = ({ rateId, onDeleteRate }: DeleteRateProps) => {
       onClose();
     } catch {
       toast({
-        title: "Failed to delete rate.",
-        description: "An error occurred while deleting the rate.",
+        title: DELETE_RATE_MESSAGE.ERROR,
+        description: DELETE_RATE_MESSAGE.ERROR_DESCRIPTION,
         status: "error",
         duration: 3000,
         isClosable: true,
@@ -65,11 +66,11 @@ const DeleteRate = ({ rateId, onDeleteRate }: DeleteRateProps) => {
         <AlertDialogOverlay>
           <AlertDialogContent bg="white.200" top="200px">
             <AlertDialogHeader fontSize="lg" fontWeight="bold">
-              Delete Rate
+              {DELETE_RATE_MESSAGE.TITLE}
             </AlertDialogHeader>
 
             <AlertDialogBody>
-              Are you sure you want to delete this rate?
+              {DELETE_RATE_MESSAGE.CONFIRMATION}
             </AlertDialogBody>
 
             <AlertDialogFooter>
