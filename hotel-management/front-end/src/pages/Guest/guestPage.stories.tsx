@@ -1,18 +1,18 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { Meta, StoryFn } from "@storybook/react";
-import { ChakraProvider } from "@chakra-ui/react";
-import { MemoryRouter } from "react-router-dom";
+import { Box, ChakraProvider } from "@chakra-ui/react";
 import { themeColor } from "@/themes/Base/colors";
+import { Meta, StoryFn } from "@storybook/react";
+import { MemoryRouter } from "react-router-dom";
 
 // Components
-import RoomPage from ".";
+import GuestPage from "./index";
 
 // Mock Data and Decorators
 const queryClient = new QueryClient();
 
 export default {
-  title: "Pages/RoomPage",
-  component: RoomPage,
+  title: "Pages/Guest",
+  component: GuestPage,
   decorators: (Story) => (
     <QueryClientProvider client={queryClient}>
       <ChakraProvider theme={themeColor}>
@@ -23,9 +23,12 @@ export default {
   tags: ["autodocs"],
 } as Meta;
 
-const Template: StoryFn = (args) => <RoomPage {...args} />;
-
+// Template for the story
+const Template: StoryFn = (args) => (
+  <Box w="950px" h="100%">
+    <GuestPage {...args} />
+  </Box>
+);
 // Default Story
 export const Default = Template.bind({});
-Default.args = {
-};
+Default.args = {};

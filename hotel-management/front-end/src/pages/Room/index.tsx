@@ -135,7 +135,7 @@ const RoomPage = () => {
   console.log("roomsLoading:", roomsLoading, "rooms:", rooms);
 
   return (
-    <Box>
+    <Box width="1000px">
       <Heading mb="16px" fontSize="12px" fontWeight="500" color="grey.500">
         Room
       </Heading>
