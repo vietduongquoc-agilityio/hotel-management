@@ -31,7 +31,7 @@ import { useGetRate } from "@/hooks";
 import { Button, withModal } from "@/components";
 
 interface EditRoomModalProps {
-  onClose: () => void;
+  onClose?: () => void;
   onEditRoom: (roomData: RoomData) => void;
   initialRoomData: RoomData;
 }
@@ -81,7 +81,6 @@ const EditRoomModal = ({
       });
     } finally {
       setIsLoading(true);
-      onClose();
     }
   };
 
@@ -170,6 +169,7 @@ const EditRoomModal = ({
           type="submit"
           text="Edit"
           buttonType="primary"
+          onClick={onClose}
         />
       </ModalFooter>
     </form>

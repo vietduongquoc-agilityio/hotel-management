@@ -27,7 +27,7 @@ import { useRateStore } from "@/stores";
 
 interface EditDealModalProps {
   onEditDeal: (updatedDealData: DealData) => void;
-  onClose: () => void;
+  onClose?: () => void;
   initialDealData: DealData;
 }
 
@@ -62,7 +62,6 @@ const EditDealModal = ({
       });
     } finally {
       setIsLoading(true);
-      onClose();
     }
   };
 
@@ -174,6 +173,7 @@ const EditDealModal = ({
           buttonType="primary"
           isLoading={isLoading}
           type="submit"
+          onClick={onClose}
         />
       </ModalFooter>
     </form>
