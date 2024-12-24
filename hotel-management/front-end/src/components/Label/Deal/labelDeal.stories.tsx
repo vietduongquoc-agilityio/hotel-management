@@ -1,7 +1,11 @@
-import { Meta, StoryFn } from "@storybook/react";
 import { ChakraProvider } from "@chakra-ui/react";
+import { Meta, StoryFn } from "@storybook/react";
+import { MemoryRouter } from "react-router-dom";
 import { themeColor } from "@/themes/Base/colors";
-import LabelDeal from "./index";
+
+// Components
+import LabelDeal, { LabelDealProps } from "./index";
+
 
 export default {
   title: "Components/Label/LabelDeal",
@@ -9,25 +13,27 @@ export default {
   decorators: [
     (Story) => (
       <ChakraProvider theme={themeColor}>
-        <Story />
+        <MemoryRouter>{Story()}</MemoryRouter>
       </ChakraProvider>
     ),
   ],
+  argTypes: {
+    isAddDeal: { control: "boolean" },
+  },
   tags: ["autodocs"],
 } as Meta;
 
-const Template: StoryFn = (args) => (
-  <LabelDeal
-    isAddDeal={false}
-    onAddDeal={function (): void {
-      throw new Error("Function not implemented.");
-    }}
-    handleSelectedBedType={function (): void {
-      throw new Error("Function not implemented.");
-    }}
-    {...args}
-  />
-);
+// Template for the story
+const Template: StoryFn<LabelDealProps> = (args) => <LabelDeal {...args} />;
 
+// Default Story
 export const Default = Template.bind({});
-Default.args = {};
+Default.args = {
+  isAddDeal: true,
+  onAddDeal: (dealData) => {
+    alert(`Deal added: ${JSON.stringify(dealData)}`);
+  },
+  handleSelectedBedType: (event) => {
+    console.log("Bed type selected:", event.target.value);
+  },
+};

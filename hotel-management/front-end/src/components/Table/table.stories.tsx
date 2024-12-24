@@ -7,7 +7,7 @@ import { themeColor } from "@/themes/Base/colors";
 import Table, { TableProps } from ".";
 
 // InterFace
-import { RoomData, RateData } from "@/interfaces";
+import { RoomData, RateData, GuestData, DealData } from "@/interfaces";
 
 // Mock Data
 const roomData: RoomData[] = [
@@ -52,9 +52,55 @@ const rateData: RateData[] = [
   },
 ];
 
+const guestData: GuestData[] = [
+  {
+    roomType: "King",
+    guestName: "Alex",
+    stay: 2,
+    price: 1000,
+    registrationNumber: "#2222",
+    totalAmount: 2000,
+    checkInDate: new Date("2024-12-01"),
+    documentId: "1",
+  },
+  {
+    roomType: "Queen",
+    guestName: "Anna",
+    stay: 4,
+    price: 1000,
+    registrationNumber: "#1111",
+    totalAmount: 4000,
+    checkInDate: new Date("2024-12-05"),
+    documentId: "2",
+  },
+];
+
+const dealData: DealData[] = [
+  {
+    dealName: "Alex",
+    referenceNumber: "1111",
+    startDate: new Date("2024-12-24"),
+    endDate: new Date("2024-12-26"),
+    roomType: "King",
+    statusDeal: "Full",
+    reservationsLeft: 2,
+    documentId: "1"
+  },
+  {
+    dealName: "Anna",
+    referenceNumber: "2222",
+    startDate: new Date("2024-12-27"),
+    endDate: new Date("2024-12-29"),
+    roomType: "Queen",
+    statusDeal: "Ongoing",
+    reservationsLeft: 2,
+    documentId: "2"
+  },
+];
+
 // Handlers
 const handleDelete = (id: string) => alert(`Deleted item with ID: ${id}`);
-const handleEdit = (updatedData: RoomData | RateData) =>
+const handleEdit = (updatedData: RoomData | RateData | GuestData | DealData) =>
   alert(`Edited item: ${JSON.stringify(updatedData, null, 2)}`);
 
 // Meta
@@ -63,7 +109,7 @@ export default {
   component: Table,
   argTypes: {
     type: {
-      control: { type: "select", options: ["room", "rate"] },
+      control: { type: "select", options: ["room", "rate", "deal", "guest"] },
     },
   },
   tags: ["autodocs"],
@@ -77,9 +123,9 @@ export default {
 } as Meta;
 
 // Template
-const Template: StoryFn<TableProps<RoomData | RateData>> = (args) => (
-  <Table {...args} />
-);
+const Template: StoryFn<TableProps<RoomData | RateData | GuestData | DealData>> = (
+  args
+) => <Table {...args} />;
 
 // Stories
 export const RoomTable = Template.bind({});
@@ -119,6 +165,38 @@ ErrorState.args = {
   data: [],
   type: "room",
   error: "Failed to fetch data. Please try again later.",
+  onDelete: handleDelete,
+  onEdit: handleEdit,
+};
+
+export const GuestTable = Template.bind({});
+GuestTable.args = {
+  data: guestData,
+  type: "guest",
+  onDelete: handleDelete,
+  onEdit: handleEdit,
+};
+
+export const EmptyGuestTable = Template.bind({});
+EmptyGuestTable.args = {
+  data: [],
+  type: "guest",
+  onDelete: handleDelete,
+  onEdit: handleEdit,
+};
+
+export const DealTable = Template.bind({});
+DealTable.args = {
+  data: dealData,
+  type: "deal",
+  onDelete: handleDelete,
+  onEdit: handleEdit,
+};
+
+export const EmptyDealTable = Template.bind({});
+EmptyDealTable.args = {
+  data: [],
+  type: "deal",
   onDelete: handleDelete,
   onEdit: handleEdit,
 };
