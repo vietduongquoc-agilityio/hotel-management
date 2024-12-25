@@ -1,0 +1,55 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`PageSizeSelector Component renders correctly and matches snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="css-1cqyf5n"
+  >
+    <div
+      class="chakra-select__wrapper css-4j1rev"
+    >
+      <select
+        class="chakra-select css-1hlb958"
+      >
+        <option
+          value="8"
+        >
+          8
+        </option>
+        <option
+          value="10"
+        >
+          10
+        </option>
+        <option
+          value="12"
+        >
+          12
+        </option>
+        <option
+          value="15"
+        >
+          15
+        </option>
+      </select>
+      <div
+        class="chakra-select__icon-wrapper css-162mkon"
+      >
+        <svg
+          aria-hidden="true"
+          class="chakra-select__icon"
+          focusable="false"
+          role="presentation"
+          style="width: 1em; height: 1em; color: currentColor;"
+          viewBox="0 0 24 24"
+        >
+          <path
+            d="M16.59 8.59L12 13.17 7.41 8.59 6 10l6 6 6-6z"
+            fill="currentColor"
+          />
+        </svg>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;
