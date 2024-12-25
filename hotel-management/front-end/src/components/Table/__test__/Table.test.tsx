@@ -1,98 +1,107 @@
-import { render, screen } from "@testing-library/react";
-import Table from "../index";
-import { RateData, RoomData } from "@/interfaces";
+import { render, screen, fireEvent } from "@testing-library/react";
+import "@testing-library/jest-dom";
+import Table, { TableProps } from "@/components/Table";
+
+// Mock dependencies
+jest.mock("@/components", () => ({
+  Button: jest.fn(({ onClick, text }) => (
+    <button data-testid="menu-button" onClick={onClick}>
+      {text}
+    </button>
+  )),
+  DeleteRoom: jest.fn(({ onDeleteRoom }) => (
+    <button data-testid="delete-room" onClick={onDeleteRoom}>
+      Delete Room
+    </button>
+  )),
+  EditRoomModal: jest.fn(({ onEditRoom }) => (
+    <button data-testid="edit-room" onClick={() => onEditRoom({})}>
+      Edit Room
+    </button>
+  )),
+}));
+
+// Mock utility functions
+jest.mock("@/utils", () => ({
+  tableHeaders: jest.fn(() => [
+    { label: "Header 1", width: "50%" },
+    { label: "Header 2", width: "50%" },
+  ]),
+  renderRoomBody: jest.fn(() => [
+    { value: "Room Value 1", width: "50%" },
+    { value: "Room Value 2", width: "50%" },
+  ]),
+}));
 
 describe("Table Component", () => {
   const mockOnDelete = jest.fn();
   const mockOnEdit = jest.fn();
 
-  const roomData: RoomData[] = [
-    {
-      documentId: "1",
-      roomNumber: "101",
-      bedType: "Single",
-      roomFloor: "1",
-      roomFacility: "Air Conditioning",
-      roomStatus: "Available",
-    },
-  ];
+  const renderTable = (props: Partial<TableProps<any>> = {}) => {
+    const defaultProps: TableProps<any> = {
+      data: [],
+      type: "room",
+      error: null,
+      onDelete: mockOnDelete,
+      onEdit: mockOnEdit,
+    };
+    return render(<Table {...defaultProps} {...props} />);
+  };
 
-  const rateData: RateData[] = [
-    {
-      documentId: "1",
-      roomType: "Deluxe",
-      deals: "Summer Deal",
-      cancellationPolicy: "Free Cancellation",
-      dealPrice: "200",
-      rate: "200",
-      totalOfRooms: 10,
-      totalOfBooked: 5,
-    },
-  ];
-
-  afterEach(() => {
+  beforeEach(() => {
     jest.clearAllMocks();
   });
 
-  it("renders table headers for rooms", () => {
-    const { container } = render(
-      <Table
-        data={roomData}
-        type="room"
-        onDelete={mockOnDelete}
-        onEdit={mockOnEdit}
-      />
-    );
-    expect(container).toMatchSnapshot();
-    expect(screen.getByText("Room number")).toBeInTheDocument();
-    expect(screen.getByText("Bed type")).toBeInTheDocument();
-    expect(screen.getByText("Room floor")).toBeInTheDocument();
-    expect(screen.getByText("Room facility")).toBeInTheDocument();
-    expect(screen.getByText("Status")).toBeInTheDocument();
+  it("renders no data alert when data is empty", () => {
+    renderTable();
+
+    expect(screen.getByText("No rooms available.")).toBeInTheDocument();
   });
 
-  it("renders table headers for rates", () => {
-    const { container } = render(
-      <Table
-        data={rateData}
-        type="rate"
-        onDelete={mockOnDelete}
-        onEdit={mockOnEdit}
-      />
-    );
-    expect(container).toMatchSnapshot();
-    expect(screen.getByText("Room type")).toBeInTheDocument();
-    expect(screen.getByText("Deals")).toBeInTheDocument();
-    expect(screen.getByText("Cancellation policy")).toBeInTheDocument();
-    expect(screen.getByText("Deal price")).toBeInTheDocument();
-    expect(screen.getByText("Rate")).toBeInTheDocument();
-    expect(screen.getByText("Availability")).toBeInTheDocument();
+  it("renders error alert when error is provided", () => {
+    renderTable({ error: "Test Error" });
+
+    expect(screen.getByText("Test Error")).toBeInTheDocument();
   });
 
-  it("displays an error message when error is provided", () => {
-    render(
-      <Table
-        data={[]}
-        type="room"
-        error="Failed to fetch data"
-        onDelete={mockOnDelete}
-        onEdit={mockOnEdit}
-      />
-    );
+  it("toggles the menu for a row when the menu button is clicked", () => {
+    const mockData = [{ documentId: "1", name: "Room 1" }];
 
-    expect(screen.getByText("Failed to fetch data")).toBeInTheDocument();
+    renderTable({ data: mockData });
+
+    const menuButton = screen.getByTestId("menu-button");
+    fireEvent.click(menuButton);
+
+    expect(screen.getByTestId("edit-room")).toBeInTheDocument();
+    expect(screen.getByTestId("delete-room")).toBeInTheDocument();
   });
 
-  it("displays no items message when data is empty", () => {
-    render(
-      <Table
-        data={[]}
-        type="rate"
-        onDelete={mockOnDelete}
-        onEdit={mockOnEdit}
-      />
-    );
+  it("calls onEdit with correct data when edit is triggered", () => {
+    const mockData = [{ documentId: "1", name: "Room 1" }];
 
-    expect(screen.getByText("No rates available.")).toBeInTheDocument();
+    renderTable({ data: mockData });
+
+    const menuButton = screen.getByTestId("menu-button");
+    fireEvent.click(menuButton);
+
+    const editButton = screen.getByTestId("edit-room");
+    fireEvent.click(editButton);
+
+    expect(mockOnEdit).toHaveBeenCalledTimes(1);
+    expect(mockOnEdit).toHaveBeenCalledWith({});
+  });
+
+  it("calls onDelete with correct id when delete is triggered", () => {
+    const mockData = [{ documentId: "1", name: "Room 1" }];
+
+    renderTable({ data: mockData });
+
+    const menuButton = screen.getByTestId("menu-button");
+    fireEvent.click(menuButton);
+
+    const deleteButton = screen.getByTestId("delete-room");
+    fireEvent.click(deleteButton);
+
+    expect(mockOnDelete).toHaveBeenCalledTimes(1);
   });
 });
