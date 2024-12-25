@@ -102,9 +102,7 @@ const AddGuestModal = ({
       });
     } finally {
       setIsLoading(true);
-      setTimeout(() => {
-        onClose();
-      }, 1000);
+      onClose();
     }
   };
 

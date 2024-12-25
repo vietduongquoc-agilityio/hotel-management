@@ -1,0 +1,74 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`guestService createGuestApi should create a new guest and match snapshot 1`] = `
+{
+  "data": {
+    "attributes": {
+      "checkInDate": "2024-12-25T00:00:00.000Z",
+      "guestName": "John Doe",
+      "price": 200,
+      "registrationNumber": "REG123",
+      "roomType": "Deluxe",
+      "stay": 3,
+      "totalAmount": 600,
+    },
+    "id": "1",
+  },
+}
+`;
+
+exports[`guestService deleteGuest should delete a guest by ID and match snapshot 1`] = `
+{
+  "data": {
+    "message": "Guest deleted successfully",
+  },
+  "message": "Guest deleted successfully",
+}
+`;
+
+exports[`guestService getGuests should fetch guests with pagination and filters and match snapshot 1`] = `
+{
+  "guests": [
+    {
+      "attributes": {
+        "guestName": "John Doe",
+        "stay": 3,
+      },
+      "id": "1",
+    },
+    {
+      "attributes": {
+        "guestName": "Jane Smith",
+        "stay": 2,
+      },
+      "id": "2",
+    },
+  ],
+  "pagination": {
+    "page": 1,
+    "pageCount": 1,
+    "pageSize": 10,
+    "total": 2,
+  },
+}
+`;
+
+exports[`guestService updateGuest should update a guest by ID and match snapshot 1`] = `
+{
+  "data": {
+    "data": {
+      "attributes": {
+        "checkInDate": "2024-12-20T00:00:00.000Z",
+        "guestName": "Jane Smith",
+        "price": 300,
+        "registrationNumber": "REG456",
+        "roomType": "Suite",
+        "stay": 5,
+        "totalAmount": 1500,
+      },
+      "id": "1",
+    },
+  },
+  "message": "Guest updated successfully",
+}
+`;

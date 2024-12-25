@@ -70,9 +70,7 @@ const AddRateModal = ({ onAddRate, onClose }: AddRateModalProps) => {
       });
     } finally {
       setIsLoading(true);
-      setTimeout(() => {
         onClose();
-      }, 1000);
     }
   };
 

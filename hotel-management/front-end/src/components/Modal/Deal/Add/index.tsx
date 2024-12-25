@@ -80,9 +80,7 @@ const AddDealModal = ({
       });
     } finally {
       setIsLoading(true);
-      setTimeout(() => {
-        onClose();
-      }, 1000);
+      onClose();
     }
   };
 
