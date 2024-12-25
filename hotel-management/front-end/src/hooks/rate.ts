@@ -46,7 +46,6 @@ export const useCreateRate = () => {
     mutationFn: (data: NewRateData) => createRateApi(data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["rates"] });
-      console.log("Rate created successfully.");
     },
     onError: (err: Error) => {
       console.error("Failed to create rate:", err.message);
@@ -62,7 +61,6 @@ export const useUpdateRate = () => {
       updateRate(data.rateId, data.requestPayload),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["rates"] });
-      console.log("Rate updated successfully.");
     },
     onError: (err: Error) => {
       console.error("Failed to update rate:", err.message);
@@ -77,7 +75,6 @@ export const useDeleteRate = () => {
     mutationFn: (rateId: string) => deleteRate(rateId),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["rates"] });
-      console.log("Rate deleted successfully.");
     },
     onError: (err: Error) => {
       console.error("Failed to delete rate:", err.message);

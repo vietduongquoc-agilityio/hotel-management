@@ -119,9 +119,7 @@ const AddRoomModal = ({ onAddRoom, onClose }: AddRoomModalProps) => {
       });
     } finally {
       setIsLoading(true);
-      setTimeout(() => {
-        onClose();
-      }, 1000);
+      onClose();
     }
   };
 
