@@ -1,3 +1,4 @@
+// Guest messages
 export const DELETE_GUEST_MESSAGE = {
   TITLE: "Delete Guest",
   CONFIRMATION: "Are you sure you want to delete this guest?",
@@ -12,6 +13,13 @@ export const EDIT_GUEST_MESSAGE = {
   SUCCESS: "Guest edit successfully.",
 };
 
+export const ADD_GUEST_MESSAGE = {
+  ERROR: "Failed to add guest.",
+  ERROR_DESCRIPTION: "An error occurred while creating the guest.",
+  SUCCESS: "Guest added successfully.",
+};
+
+// Deal messages
 export const EDIT_DEAL_MESSAGE = {
   ERROR: "Failed to edit deal.",
   ERROR_DESCRIPTION: "An error occurred while editing the deal.",
@@ -27,12 +35,15 @@ export const DELETE_DEAL_MESSAGE = {
   ERROR_DESCRIPTION: "An error occurred while deleting the deal.",
 };
 
-export const ADD_GUEST_MESSAGE = {
-  ERROR: "Failed to add guest.",
-  ERROR_DESCRIPTION: "An error occurred while creating the guest.",
-  SUCCESS: "Guest added successfully.",
+export const ADD_DEAL_MESSAGE = {
+  ERROR: "Failed to add deal.",
+  ERROR_DESCRIPTION: "An error occurred while creating the deal.",
+  SUCCESS: "Deal added successfully.",
+  ERROR_SELECTED_BED_TYPE: "Please select a valid bed type.",
+  ERROR_FULLY: "Deal cannot be added",
 };
 
+// Room messages
 export const ADD_ROOM_MESSAGE = {
   ERROR: "Failed to add room.",
   ERROR_DESCRIPTION: "An error occurred while creating the room.",
@@ -57,6 +68,8 @@ export const EDIT_ROOM_MESSAGE = {
   SUCCESS_DESCRIPTION: "Room details have been successfully updated.",
 };
 
+
+// Rate messages
 export const ADD_RATE_MESSAGE = {
   ERROR: "Failed to add rate.",
   ERROR_DESCRIPTION: "An error occurred while creating the rate.",

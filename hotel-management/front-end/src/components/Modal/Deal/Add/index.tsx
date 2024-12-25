@@ -13,13 +13,13 @@ import {
 import { withModal, Input, Button } from "@/components";
 
 // Constants
-import { validationRules } from "@/constants";
+import { ADD_DEAL_MESSAGE, validationRules } from "@/constants";
 
 // InterFace
 import { NewDealData } from "@/interfaces";
 
 // Stores
-import { useRateStore } from "@/stores";
+import { useGuestStore, useRateStore } from "@/stores";
 
 interface AddDealModalProps {
   onAddDeal: (dealData: NewDealData) => void;
@@ -43,8 +43,10 @@ const AddDealModal = ({
   handleSelectedBedType,
 }: AddDealModalProps) => {
   const bedTypeOptions = useRateStore((state) => state.bedTypeOptions);
+  const referenceNumber = useGuestStore((state) => state.reservationNumber);
   const [isLoading, setIsLoading] = useState(false);
   const toast = useToast();
+
   const {
     register,
     handleSubmit,
@@ -57,7 +59,7 @@ const AddDealModal = ({
       roomType: data.roomType,
       startDate: data.startDate,
       endDate: data.endDate,
-      referenceNumber: "",
+      referenceNumber: referenceNumber.toString(),
       statusDeal: "Ongoing",
       reservationsLeft: 0,
     };
@@ -65,15 +67,15 @@ const AddDealModal = ({
     try {
       await onAddDeal(newDealData);
       toast({
-        title: "Deal added successfully.",
+        title: ADD_DEAL_MESSAGE.SUCCESS,
         status: "success",
         duration: 3000,
         isClosable: true,
       });
     } catch {
       toast({
-        title: "Failed to add deal.",
-        description: "An error occurred while creating the deal.",
+        title: ADD_DEAL_MESSAGE.ERROR,
+        description: ADD_DEAL_MESSAGE.ERROR_DESCRIPTION,
         status: "error",
         duration: 3000,
         isClosable: true,
@@ -107,6 +109,7 @@ const AddDealModal = ({
             {...register("referenceNumber", validationRules.required)}
             placeHolder="Enter reference number"
             inputType="primary"
+            value={referenceNumber}
           />
           {errors.referenceNumber && (
             <p style={{ color: "red", fontSize: "14px" }}>
