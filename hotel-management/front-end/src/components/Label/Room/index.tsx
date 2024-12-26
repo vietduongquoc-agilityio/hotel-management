@@ -38,7 +38,6 @@ const LabelRoom = ({
   handleSelectedBedType,
   handleSelectedRoomFloor,
   handleSelectedRoomStatus,
-
   isAddRoom,
   width = "100%",
 }: LabelRoomProps) => {

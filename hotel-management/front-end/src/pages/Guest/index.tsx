@@ -30,7 +30,7 @@ import { DEFAULT_CURRENT_PAGE, DEFAULT_PAGE_SIZE } from "@/constants";
 
 const GuestPage = () => {
   const { saveRate } = useRateStore();
-  const { rates, isLoading: guestsLoading } = useGetRate({
+  const { rates } = useGetRate({
     currentPage: DEFAULT_CURRENT_PAGE,
     pageSize: DEFAULT_PAGE_SIZE,
   });
@@ -48,7 +48,11 @@ const GuestPage = () => {
   const updateGuest = useUpdateGuest();
   const deleteGuest = useDeleteGuest();
 
-  const { guests, pagination } = useGetGuest({
+  const {
+    guests,
+    pagination,
+    isLoading: guestsLoading,
+  } = useGetGuest({
     currentPage,
     pageSize,
     filters: { guestName, stay, price },
@@ -145,7 +149,7 @@ const GuestPage = () => {
         <Spinner />
       ) : (
         <Table
-          data={guests}
+          data={guests || []}
           type="guest"
           onDelete={handleDeleteGuest}
           onEdit={handleEditGuest}
