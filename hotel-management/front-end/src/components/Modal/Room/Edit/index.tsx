@@ -41,7 +41,6 @@ const EditRoomModal = ({
   onClose,
   onEditRoom,
 }: EditRoomModalProps) => {
-  console.log("Initial Room Data:", initialRoomData);
   const {
     handleSubmit,
     register,
