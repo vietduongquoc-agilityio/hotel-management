@@ -63,6 +63,12 @@ const RoomPage = () => {
   });
 
   const { pageCount = 1, total = 1 } = pagination || {};
+  
+  useEffect(() => {
+    if (rooms.length > 0) {
+      calculateRoomCounts(rooms);
+    }
+  }, [rooms, calculateRoomCounts]);
 
   useEffect(() => {
     if (rates.length > 0) {
@@ -76,12 +82,6 @@ const RoomPage = () => {
       setIsAddRoom(false);
     }
   }, [rates, saveRate]);
-
-  useEffect(() => {
-    if (rooms.length > 0) {
-      calculateRoomCounts(rooms);
-    }
-  }, [rooms, calculateRoomCounts]);
 
   const handlePageSizeChange = (newSize: number) => {
     setPageSize(newSize);
