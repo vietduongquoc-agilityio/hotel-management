@@ -29,7 +29,7 @@ export const useGetRoom = ({
   pageSize,
   filters,
 }: UseGetRoomProps) => {
-  const { data, isLoading } = useQuery<RoomResponse>({
+  const { data, isFetching } = useQuery<RoomResponse>({
     queryKey: ["rooms", currentPage, pageSize, filters],
     queryFn: () => getRooms(currentPage, pageSize, filters || {}),
   });
@@ -37,7 +37,7 @@ export const useGetRoom = ({
   return {
     rooms: data?.rooms || [],
     pagination: data?.pagination,
-    isLoading,
+    isLoading: isFetching,
   };
 };
 

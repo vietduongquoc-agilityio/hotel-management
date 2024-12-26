@@ -23,7 +23,7 @@ export const useGetRate = ({
   currentPage,
   pageSize,
 }: UseGetRateProps) => {
-  const { data, isLoading, error } = useQuery<RateResponse, Error>({
+  const { data, isFetching, error } = useQuery<RateResponse, Error>({
     queryKey: ["rates", currentPage, pageSize],
     queryFn: async () => {
       const response = await getRates(currentPage, pageSize);
@@ -34,7 +34,7 @@ export const useGetRate = ({
   return {
     rates: data?.rates || [],
     pagination: data?.pagination,
-    isLoading,
+    isLoading: isFetching,
     error,
   };
 };
