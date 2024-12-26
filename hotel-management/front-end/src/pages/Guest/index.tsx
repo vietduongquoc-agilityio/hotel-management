@@ -80,6 +80,12 @@ const GuestPage = () => {
     }
   }, [guests]);
 
+  useEffect(() => {
+    setGuestName("");
+    setStay("");
+    setPrice("");
+  }, [guests]);
+
   const handlePageSizeChange = (newSize: number) => {
     setPageSize(newSize);
     setCurrentPage(DEFAULT_CURRENT_PAGE);
