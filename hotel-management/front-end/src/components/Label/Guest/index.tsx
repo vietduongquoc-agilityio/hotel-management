@@ -24,6 +24,9 @@ const LabelGuest = ({
   onAddGuest,
   handleSelectedBedType,
   isAddGuest,
+  selectedGuestName,
+  selectedStay,
+  selectedPrice,
   handleSelectedGuestName,
   handleSelectedStay,
   handleSelectedPrice,
@@ -32,7 +35,7 @@ const LabelGuest = ({
   const guestNameOptions = useGuestStore((state) => state.guestNameOptions);
   const stayOptions = useGuestStore((state) => state.stayOptions);
   const priceOptions = useGuestStore((state) => state.priceOptions);
-
+  
   return (
     <>
       <Box
@@ -50,6 +53,7 @@ const LabelGuest = ({
             width="120px"
             placeholder="Filter Name"
             onChange={handleSelectedGuestName}
+            value={selectedGuestName}
           >
             {guestNameOptions.map((option, index) => (
               <option key={`${option.value}-${index}`} value={option.value}>
@@ -63,6 +67,7 @@ const LabelGuest = ({
             width="120px"
             placeholder="Filter Stay"
             onChange={handleSelectedStay}
+            value={selectedStay} 
           >
             {stayOptions.map((option, index) => (
               <option key={`${option.value}-${index}`} value={option.value}>
@@ -76,6 +81,7 @@ const LabelGuest = ({
             width="120px"
             placeholder="Filter Price"
             onChange={handleSelectedPrice}
+            value={selectedPrice}
           >
             {priceOptions.map((option, index) => (
               <option key={`${option.value}-${index}`} value={option.value}>

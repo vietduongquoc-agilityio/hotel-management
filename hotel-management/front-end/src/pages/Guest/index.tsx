@@ -80,12 +80,6 @@ const GuestPage = () => {
     }
   }, [guests]);
 
-  useEffect(() => {
-    setGuestName("");
-    setStay("");
-    setPrice("");
-  }, [guests]);
-
   const handlePageSizeChange = (newSize: number) => {
     setPageSize(newSize);
     setCurrentPage(DEFAULT_CURRENT_PAGE);
@@ -119,19 +113,16 @@ const GuestPage = () => {
   const handleSelectedGuestName = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedGuestName = e.target.value;
     setGuestName(selectedGuestName);
-    setCurrentPage(DEFAULT_CURRENT_PAGE);
   };
 
   const handleSelectedStay = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedStay = e.target.value;
     setStay(selectedStay);
-    setCurrentPage(DEFAULT_CURRENT_PAGE);
   };
 
   const handleSelectedPrice = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedPrice = e.target.value;
     setPrice(selectedPrice);
-    setCurrentPage(DEFAULT_CURRENT_PAGE);
   };
 
   return (
