@@ -27,7 +27,7 @@ export const useGetDeal = ({
   field,
   value,
 }: UseGetDealProps) => {
-  const { data, isLoading, error } = useQuery<DealResponse, Error>({
+  const { data, isFetching, error } = useQuery<DealResponse, Error>({
     queryKey: ["deals", currentPage, pageSize, field, value],
     queryFn: async () => {
       const response = await getDeals(currentPage, pageSize, value, field);
@@ -38,7 +38,7 @@ export const useGetDeal = ({
   return {
     deals: data?.deals || [],
     pagination: data?.pagination,
-    isLoading,
+    isLoading: isFetching,
     error,
   };
 };

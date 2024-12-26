@@ -34,7 +34,7 @@ export const useGetGuest = ({
   pageSize,
   filters,
 }: UseGetGuestProps) => {
-  const { data, isLoading, error } = useQuery<GuestResponse, Error>({
+  const { data, isFetching , error } = useQuery<GuestResponse, Error>({
     queryKey: ["guests", currentPage, pageSize, filters],
     queryFn: async () => {
       const response = await getGuests(currentPage, pageSize, filters || {});
@@ -45,7 +45,7 @@ export const useGetGuest = ({
   return {
     guests: data?.guests || [],
     pagination: data?.pagination,
-    isLoading,
+    isLoading: isFetching ,
     error,
   };
 };
