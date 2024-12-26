@@ -143,6 +143,7 @@ const EditGuestModal = ({
           })}
           placeHolder="Enter number stay"
           inputType="number"
+          isReadOnly
         ></Input>
         {errors.stay && (
           <p style={{ color: "red", fontSize: "14px" }}>
@@ -161,6 +162,7 @@ const EditGuestModal = ({
           })}
           placeHolder="Enter room price"
           inputType="number"
+          isReadOnly
         ></Input>
         {errors.price && (
           <p style={{ color: "red", fontSize: "14px" }}>

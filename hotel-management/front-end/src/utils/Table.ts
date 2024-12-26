@@ -220,7 +220,7 @@ export const tableHeaders = (type: string) => {
       { label: "Status", width: "16%", ml: "12px" },
     ];
   } else if (type === "rate") {
-    [
+    return [
       { label: "Room type", width: "15%" },
       { label: "Deals", width: "15%" },
       { label: "Cancellation policy", width: "15%" },

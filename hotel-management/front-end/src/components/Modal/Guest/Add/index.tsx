@@ -128,6 +128,7 @@ const AddGuestModal = ({
           {...register("registrationNumber", validationRules.required)}
           placeHolder=""
           inputType="primary"
+          isReadOnly
         />
         {errors.registrationNumber && (
           <p style={{ color: "red", fontSize: "14px" }}>

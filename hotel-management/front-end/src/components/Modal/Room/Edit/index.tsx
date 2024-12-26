@@ -12,8 +12,6 @@ import { useState } from "react";
 
 // Constants
 import {
-  DEFAULT_CURRENT_PAGE,
-  DEFAULT_PAGE_SIZE,
   EDIT_ROOM_MESSAGE,
   roomFloorOptions,
   roomStatusColors,
@@ -24,11 +22,9 @@ import {
 // Interface
 import { RoomData } from "@/interfaces";
 
-// Hooks
-import { useGetRate } from "@/hooks";
-
 // Components
 import { Button, withModal } from "@/components";
+import { useRateStore } from "@/stores";
 
 interface EditRoomModalProps {
   onClose?: () => void;
@@ -46,25 +42,18 @@ const EditRoomModal = ({
     register,
     formState: { errors },
   } = useForm({
-    defaultValues: initialRoomData,
+    defaultValues: initialRoomData  || {},
   });
-
+  
   const [isLoading, setIsLoading] = useState(false);
   const toast = useToast();
-
-  const { rates } = useGetRate({
-    currentPage: DEFAULT_CURRENT_PAGE,
-    pageSize: DEFAULT_PAGE_SIZE,
-  });
-  const bedTypeOptions = rates.map((item) => ({
-    value: item.roomType,
-    label: `${item.roomType} Bed`,
-  }));
+  const bedTypeOptions = useRateStore((state) => state.bedTypeOptions);
 
   const onSubmit = async (data: RoomData) => {
     setIsLoading(true);
     try {
       await onEditRoom(data);
+      if (onClose) onClose();
       toast({
         title: EDIT_ROOM_MESSAGE.SUCCESS,
         status: "success",
@@ -80,7 +69,7 @@ const EditRoomModal = ({
         isClosable: true,
       });
     } finally {
-      setIsLoading(true);
+      setIsLoading(false);
     }
   };
 
@@ -169,7 +158,6 @@ const EditRoomModal = ({
           type="submit"
           text="Edit"
           buttonType="primary"
-          onClick={onClose}
         />
       </ModalFooter>
     </form>
