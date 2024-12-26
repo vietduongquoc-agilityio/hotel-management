@@ -41,14 +41,15 @@ const EditRoomModal = ({
   onClose,
   onEditRoom,
 }: EditRoomModalProps) => {
+  console.log("Initial Room Data:", initialRoomData);
   const {
     handleSubmit,
     register,
     formState: { errors },
   } = useForm({
-    defaultValues: initialRoomData,
+    defaultValues: initialRoomData  || {},
   });
-
+  
   const [isLoading, setIsLoading] = useState(false);
   const toast = useToast();
 
@@ -65,6 +66,7 @@ const EditRoomModal = ({
     setIsLoading(true);
     try {
       await onEditRoom(data);
+      if (onClose) onClose();
       toast({
         title: EDIT_ROOM_MESSAGE.SUCCESS,
         status: "success",
@@ -80,7 +82,7 @@ const EditRoomModal = ({
         isClosable: true,
       });
     } finally {
-      setIsLoading(true);
+      setIsLoading(false);
     }
   };
 
@@ -169,7 +171,6 @@ const EditRoomModal = ({
           type="submit"
           text="Edit"
           buttonType="primary"
-          onClick={onClose}
         />
       </ModalFooter>
     </form>
