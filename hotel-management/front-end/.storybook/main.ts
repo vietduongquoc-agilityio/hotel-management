@@ -1,3 +1,4 @@
+import { mergeConfig } from "vite";
 import type { StorybookConfig } from "@storybook/react-vite";
 
 const config: StorybookConfig = {
@@ -17,6 +18,16 @@ const config: StorybookConfig = {
     "@chakra-ui/react": {
       disable: true,
     },
+  },
+  async viteFinal(config) {
+    return mergeConfig(config, {
+      define: {
+        "process.env": JSON.stringify({
+          NODE_ENV: "development",
+          STORYBOOK: true,
+        }),
+      },
+    });
   },
 };
 export default config;
