@@ -19,6 +19,22 @@ describe("Button Component", () => {
     expect(container).toMatchSnapshot();
   });
 
+  it("renders the button with the correct text", () => {
+    const { container } = render(
+      <Button buttonType="warning" text="Click Me" onClick={() => {}} />,
+      { wrapper: Wrapper }
+    );
+    expect(container).toMatchSnapshot();
+  });
+
+  it("renders the button with the correct text", () => {
+    const { container } = render(
+      <Button buttonType="error" text="Click Me" onClick={() => {}} />,
+      { wrapper: Wrapper }
+    );
+    expect(container).toMatchSnapshot();
+  });
+
   it("applies the correct styles for surface button", () => {
     render(<Button buttonType="surface" text="1" onClick={() => {}} />, {
       wrapper: Wrapper,

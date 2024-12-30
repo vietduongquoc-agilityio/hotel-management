@@ -1,152 +1,170 @@
 import axios from "axios";
-import MockAdapter from "axios-mock-adapter";
-import { getRates, createRateApi, updateRate, deleteRate } from "@/services";
+import {
+  getRates,
+  createRateApi,
+  updateRate,
+  deleteRate,
+} from "@/services/Rate/rateServices";
+
+// InterFace
 import { NewRateData } from "@/interfaces";
 
-jest.mock("@chakra-ui/react", () => ({
-  createStandaloneToast: jest.fn(() => ({
-    toast: jest.fn(),
-  })),
-}));
+jest.mock("axios");
+const mockedAxios = axios as jest.Mocked<typeof axios>;
 
-const mock = new MockAdapter(axios);
 const BASE_URL = process.env.VITE_BASE_URL;
 
 describe("rateService", () => {
   afterEach(() => {
-    mock.reset();
     jest.clearAllMocks();
   });
 
   describe("getRates", () => {
-    it("should fetch rates with pagination and match snapshot", async () => {
+    it("should return rates data successfully", async () => {
       const mockResponse = {
-        data: [
-          { id: "1", attributes: { name: "Rate 1", price: 100 } },
-          { id: "2", attributes: { name: "Rate 2", price: 150 } },
-        ],
-        meta: { pagination: { page: 1, pageSize: 10, pageCount: 1, total: 2 } },
+        data: {
+          data: [{ id: "1", name: "Rate 1" }],
+          meta: { pagination: { page: 1 } },
+        },
       };
 
-      mock.onGet(`${BASE_URL}/rates`).reply(200, mockResponse);
+      mockedAxios.get.mockResolvedValue(mockResponse);
 
-      const result = await getRates(1, 10);
-      expect(result).toMatchSnapshot();
+      const response = await getRates(1, 10);
+
+      expect(mockedAxios.get).toHaveBeenCalledWith(`${BASE_URL}/rates`, {
+        params: {
+          "sort[0]": "createdAt:desc",
+          "pagination[page]": 1,
+          "pagination[pageSize]": 10,
+        },
+      });
+      expect(response).toEqual({
+        rates: mockResponse.data.data,
+        pagination: mockResponse.data.meta.pagination,
+      });
+    });
+
+    it("should handle error when fetching rates", async () => {
+      mockedAxios.get.mockRejectedValue(new Error("Network Error"));
+
+      const response = await getRates(1, 10);
+
+      expect(mockedAxios.get).toHaveBeenCalled();
+      expect(response).toEqual({
+        message: "Error fetching rate data",
+        data: null,
+      });
     });
   });
 
   describe("createRateApi", () => {
-    it("should create a new rate and match snapshot", async () => {
-      const rateData: NewRateData = {
-        roomType: "Deluxe",
-        cancellationPolicy: "Flexible",
-        deals: "None",
-        dealPrice: "0",
-        rate: "200",
-        availability: "5",
-        totalOfRooms: 0,
-        totalOfBooked: 0,
-      };
-      const mockResponse = { data: { id: "1", attributes: { ...rateData } } };
+    it("should create a new rate successfully", async () => {
+      const newRateData = { roomType: "Deluxe", rate: 100 } as NewRateData;
+      const mockResponse = { data: { id: "1", ...newRateData } };
 
-      mock.onPost(`${BASE_URL}/rates`).reply(200, mockResponse);
+      mockedAxios.post.mockResolvedValue(mockResponse);
+
+      const response = await createRateApi(newRateData);
+
+      expect(mockedAxios.post).toHaveBeenCalledWith(`${BASE_URL}/rates`, {
+        data: newRateData,
+      });
+      expect(response).toEqual(mockResponse.data);
     });
 
-    it("should show error toast on failure", async () => {
-      const rateData: NewRateData = {
-        roomType: "Deluxe",
-        cancellationPolicy: "Flexible",
-        deals: "None",
-        dealPrice: "0",
-        rate: "200",
-        availability: "5",
-        totalOfRooms: 0,
-        totalOfBooked: 0,
-      };
-      mock.onPost(`${BASE_URL}/rates`).reply(500);
+    it("should handle error when creating a rate", async () => {
+      mockedAxios.post.mockRejectedValue(new Error("Network Error"));
 
-      await expect(createRateApi(rateData)).rejects.toThrow(
-        "Request failed with status code 500"
-      );
+      const response = await createRateApi({
+        roomType: "Deluxe",
+        rate: 100,
+      } as NewRateData);
+
+      expect(mockedAxios.post).toHaveBeenCalled();
+      expect(response).toEqual({
+        message: "Error updated rate details",
+        data: null,
+      });
     });
   });
 
   describe("updateRate", () => {
-    it("should update a rate by ID and match snapshot", async () => {
+    it("should update a rate successfully", async () => {
       const rateId = "1";
-      const rateData: NewRateData = {
-        roomType: "Updated Deluxe",
-        cancellationPolicy: "Moderate",
-        deals: "Spring Discount",
-        dealPrice: "20",
-        rate: "180",
-        availability: "3",
-        totalOfRooms: 0,
-        totalOfBooked: 0,
-      };
-      const mockResponse = {
-        data: { id: rateId, attributes: { ...rateData } },
-      };
+      const updatedRateData = { roomType: "Deluxe", rate: 150 } as NewRateData;
+      const mockResponse = { data: { id: rateId, ...updatedRateData } };
 
-      mock.onPut(`${BASE_URL}/rates/${rateId}`).reply(200, mockResponse);
+      mockedAxios.put.mockResolvedValue(mockResponse);
+
+      const response = await updateRate(rateId, updatedRateData);
+
+      expect(mockedAxios.put).toHaveBeenCalledWith(
+        `${BASE_URL}/rates/${rateId}`,
+        { data: updatedRateData }
+      );
+      expect(response).toEqual({
+        message: "Rate updated successfully",
+        data: mockResponse.data,
+      });
     });
 
-    it("should throw error if rateId is missing", async () => {
-      const rateData: NewRateData = {
-        roomType: "Updated Deluxe",
-        cancellationPolicy: "Moderate",
-        deals: "Spring Discount",
-        dealPrice: "20",
-        rate: "180",
-        availability: "3",
-        totalOfRooms: 0,
-        totalOfBooked: 0,
-      };
+    it("should throw an error for missing rate ID", async () => {
+      const updatedRateData = { roomType: "Deluxe", rate: 150 } as NewRateData;
 
-      await expect(updateRate("", rateData)).rejects.toThrow(
+      await expect(updateRate("", updatedRateData)).rejects.toThrow(
         "Missing document ID for rate update."
       );
     });
 
-    it("should show error toast on update failure", async () => {
+    it("should handle error when updating a rate", async () => {
       const rateId = "1";
-      const rateData: NewRateData = {
-        roomType: "Updated Deluxe",
-        cancellationPolicy: "Moderate",
-        deals: "Spring Discount",
-        dealPrice: "20",
-        rate: "180",
-        availability: "3",
-        totalOfRooms: 0,
-        totalOfBooked: 0,
-      };
+      const updatedRateData = { roomType: "Deluxe", rate: 150 } as NewRateData;
 
-      mock.onPut(`${BASE_URL}/rates/${rateId}`).reply(500);
+      mockedAxios.put.mockRejectedValue(new Error("Network Error"));
 
-      await expect(updateRate(rateId, rateData)).rejects.toThrow(
-        "Request failed with status code 500"
-      );
+      const response = await updateRate(rateId, updatedRateData);
+
+      expect(mockedAxios.put).toHaveBeenCalled();
+      expect(response).toEqual({
+        message: "Error updated rate details",
+        data: null,
+      });
     });
   });
 
   describe("deleteRate", () => {
-    it("should delete a rate by ID and match snapshot", async () => {
+    it("should delete a rate successfully", async () => {
       const rateId = "1";
-      const mockResponse = { message: "Rate deleted successfully" };
+      const mockResponse = { data: { id: rateId } };
 
-      mock.onDelete(`${BASE_URL}/rates/${rateId}`).reply(200, mockResponse);
+      mockedAxios.delete.mockResolvedValue(mockResponse);
 
-      const result = await deleteRate(rateId);
-      expect(result).toMatchSnapshot();
+      const response = await deleteRate(rateId);
+
+      expect(mockedAxios.delete).toHaveBeenCalledWith(
+        `${BASE_URL}/rates/${rateId}`
+      );
+      expect(response).toEqual({
+        message: "Rate deleted successfully",
+        data: mockResponse.data,
+      });
     });
 
-    it("should show error toast on delete failure", async () => {
+    it("should handle error when deleting a rate", async () => {
       const rateId = "1";
-      mock.onDelete(`${BASE_URL}/rates/${rateId}`).reply(404);
 
-      await expect(deleteRate(rateId)).rejects.toThrow(
-        "Request failed with status code 404"
+      mockedAxios.delete.mockRejectedValue(new Error("Network Error"));
+
+      const response = await deleteRate(rateId);
+
+      expect(mockedAxios.delete).toHaveBeenCalledWith(
+        `${BASE_URL}/rates/${rateId}`
       );
+      expect(response).toEqual({
+        message: "Error deleted rate details",
+        data: null,
+      });
     });
   });
 });

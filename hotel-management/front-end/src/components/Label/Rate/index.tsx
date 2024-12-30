@@ -10,7 +10,7 @@ export interface LabelRateProps {
   onAddRate: (roomData: NewRateData) => void;
   width: string;
 }
-const LabelRate = ({ onAddRate, width = "" }: LabelRateProps) => {
+const LabelRate = ({ onAddRate, width }: LabelRateProps) => {
   const closeModal = () => {};
 
   return (
@@ -21,4 +21,3 @@ const LabelRate = ({ onAddRate, width = "" }: LabelRateProps) => {
 };
 
 export default LabelRate;
-

@@ -1,5 +1,78 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`dealService createDealApi should create a new deal and match snapshot 1`] = `
+{
+  "data": {
+    "attributes": {
+      "dealName": "Special Offer",
+      "endDate": "2024-12-30T08:51:09.111Z",
+      "referenceNumber": "12345",
+      "reservationsLeft": 5,
+      "roomType": "Deluxe",
+      "startDate": "2024-12-30T08:51:09.111Z",
+      "statusDeal": "Active",
+    },
+    "id": "1",
+  },
+}
+`;
+
+exports[`dealService deleteDeal should delete a deal by ID and match snapshot 1`] = `
+{
+  "data": {
+    "message": "Deal deleted successfully",
+  },
+  "message": "Deal deleted successfully",
+}
+`;
+
+exports[`dealService getDeals should fetch deals with pagination and match snapshot 1`] = `
+{
+  "deals": [
+    {
+      "attributes": {
+        "dealName": "Deal 1",
+        "roomType": "Deluxe",
+      },
+      "id": "1",
+    },
+    {
+      "attributes": {
+        "dealName": "Deal 2",
+        "roomType": "Standard",
+      },
+      "id": "2",
+    },
+  ],
+  "pagination": {
+    "page": 1,
+    "pageCount": 1,
+    "pageSize": 10,
+    "total": 2,
+  },
+}
+`;
+
+exports[`dealService updateDeal should update a deal by ID and match snapshot 1`] = `
+{
+  "data": {
+    "data": {
+      "attributes": {
+        "dealName": "Updated Deal",
+        "endDate": "2024-12-30T08:51:09.121Z",
+        "referenceNumber": "54321",
+        "reservationsLeft": 3,
+        "roomType": "Suite",
+        "startDate": "2024-12-30T08:51:09.121Z",
+        "statusDeal": "Inactive",
+      },
+      "id": "1",
+    },
+  },
+  "message": "Deal updated successfully",
+}
+`;
+
 exports[`guestService createGuestApi should create a new guest and match snapshot 1`] = `
 {
   "data": {

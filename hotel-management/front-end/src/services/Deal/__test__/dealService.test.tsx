@@ -1,11 +1,6 @@
 import axios from "axios";
 import MockAdapter from "axios-mock-adapter";
-import {
-  getDeals,
-  createDealApi,
-  updateDeal,
-  deleteDeal,
-} from "@/services";
+import { getDeals, createDealApi, updateDeal, deleteDeal } from "@/services";
 import { NewDealData } from "@/interfaces";
 
 jest.mock("@chakra-ui/react", () => ({
@@ -43,7 +38,61 @@ describe("dealService", () => {
       mock.onGet(`${BASE_URL}/deals`).reply(500);
 
       const result = await getDeals(1, 10);
-      expect(result).toEqual({ message: "Error fetching deal data", data: null });
+      expect(result).toEqual({
+        message: "Error fetching deal data",
+        data: null,
+      });
+    });
+    it("should return response.data when API call is successful", async () => {
+      const mockResponse = {
+        data: [
+          { id: "1", attributes: { dealName: "Deal 1", roomType: "Deluxe" } },
+        ],
+      };
+      mock.onGet(`${BASE_URL}/deals`).reply(200, mockResponse);
+
+      const result = await getDeals(1, 10);
+      expect(result).toEqual(mockResponse.data);
+    });
+
+    it("should return an error when response.data is null", async () => {
+      mock.onGet(`${BASE_URL}/deals`).reply(200, null);
+
+      const result = await getDeals(1, 10);
+      expect(result).toEqual({
+        message: "Error fetching deal data",
+        data: null,
+      });
+    });
+  });
+
+  describe("Filters logic", () => {
+    it("should return correct filters when field and value are provided", () => {
+      const field = "status";
+      const value = "active";
+      const filters = field && value ? { [`filters[${field}]`]: value } : {};
+      expect(filters).toEqual({ "filters[status]": "active" });
+    });
+
+    it("should return empty filters when field is not provided", () => {
+      const field = "";
+      const value = "active";
+      const filters = field && value ? { [`filters[${field}]`]: value } : {};
+      expect(filters).toEqual({});
+    });
+
+    it("should return empty filters when value is not provided", () => {
+      const field = "status";
+      const value = "";
+      const filters = field && value ? { [`filters[${field}]`]: value } : {};
+      expect(filters).toEqual({});
+    });
+
+    it("should return empty filters when both field and value are not provided", () => {
+      const field = "";
+      const value = "";
+      const filters = field && value ? { [`filters[${field}]`]: value } : {};
+      expect(filters).toEqual({});
     });
   });
 
@@ -80,7 +129,10 @@ describe("dealService", () => {
       mock.onPost(`${BASE_URL}/deals`).reply(500);
 
       const result = await createDealApi(dealData);
-      expect(result).toEqual({ message: "Error updated deal details", data: null });
+      expect(result).toEqual({
+        message: "Error updated deal details",
+        data: null,
+      });
     });
   });
 
@@ -137,7 +189,10 @@ describe("dealService", () => {
       mock.onPut(`${BASE_URL}/deals/${dealId}`).reply(500);
 
       const result = await updateDeal(dealId, dealData);
-      expect(result).toEqual({ message: "Error updated deal details", data: null });
+      expect(result).toEqual({
+        message: "Error updated deal details",
+        data: null,
+      });
     });
   });
 
@@ -157,7 +212,10 @@ describe("dealService", () => {
       mock.onDelete(`${BASE_URL}/deals/${dealId}`).reply(500);
 
       const result = await deleteDeal(dealId);
-      expect(result).toEqual({ message: "Error deleted deal details", data: null });
+      expect(result).toEqual({
+        message: "Error deleted deal details",
+        data: null,
+      });
     });
   });
 });

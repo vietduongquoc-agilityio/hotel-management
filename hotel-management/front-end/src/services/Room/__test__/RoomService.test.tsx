@@ -12,6 +12,9 @@ import { NewRoomData } from "@/interfaces";
 const mock = new MockAdapter(axios);
 const BASE_URL = process.env.VITE_BASE_URL;
 
+jest.mock("axios");
+const mockedAxios = axios as jest.Mocked<typeof axios>;
+
 describe("roomService", () => {
   afterEach(() => {
     mock.reset();
@@ -39,6 +42,63 @@ describe("roomService", () => {
       await expect(getRooms(1, 10)).rejects.toThrow(
         "Request failed with status code 500"
       );
+    });
+
+    it("should handle filters correctly", async () => {
+      mockedAxios.get.mockResolvedValue({
+        data: {
+          data: [{ id: 1, name: "Room 1" }],
+          meta: { pagination: { page: 1, pageSize: 10 } },
+        },
+      });
+
+      const filters = { type: "deluxe", status: "available" };
+      const response = await getRooms(1, 10, filters);
+
+      expect(mockedAxios.get).toHaveBeenCalledWith(expect.any(String), {
+        params: {
+          "filters[type]": "deluxe",
+          "filters[status]": "available",
+          "sort[0]": "createdAt:desc",
+          "pagination[page]": 1,
+          "pagination[pageSize]": 10,
+        },
+      });
+      expect(response.rooms).toEqual([{ id: 1, name: "Room 1" }]);
+    });
+
+    it("should handle empty filters", async () => {
+      mockedAxios.get.mockResolvedValue({
+        data: {
+          data: [{ id: 1, name: "Room 1" }],
+          meta: { pagination: { page: 1, pageSize: 10 } },
+        },
+      });
+
+      const filters = {};
+      const response = await getRooms(1, 10, filters);
+
+      expect(mockedAxios.get).toHaveBeenCalledWith(expect.any(String), {
+        params: {
+          "sort[0]": "createdAt:desc",
+          "pagination[page]": 1,
+          "pagination[pageSize]": 10,
+        },
+      });
+      expect(response.rooms).toEqual([{ id: 1, name: "Room 1" }]);
+    });
+
+    it("should return response.data when pagination is missing", async () => {
+      mockedAxios.get.mockResolvedValue({
+        data: {
+          data: [{ id: 1, name: "Room 1" }],
+        },
+      });
+
+      const filters = {};
+      const response = await getRooms(1, 10, filters);
+
+      expect(response).toEqual({ data: [{ id: 1, name: "Room 1" }] });
     });
   });
 
@@ -76,25 +136,38 @@ describe("roomService", () => {
   });
 
   describe("getRoomById", () => {
-    it("should fetch room by ID", async () => {
-      const roomId = "1";
-      const mockResponse = {
-        data: { id: roomId, attributes: { name: "Room 1" } },
-      };
 
-      mock.onGet(`${BASE_URL}/rooms/${roomId}`).reply(200, mockResponse);
+    it("should return room details successfully", async () => {
+      const roomId = "123";
+      const mockRoomData = { id: roomId, name: "Room 1" };
 
-      const result = await getRoomById(roomId);
-      expect(result).toEqual(mockResponse);
+      mockedAxios.get.mockResolvedValue({ data: mockRoomData });
+
+      const response = await getRoomById(roomId);
+
+      expect(mockedAxios.get).toHaveBeenCalledWith(
+        `${BASE_URL}/rooms/${roomId}`
+      );
+      expect(response).toEqual({
+        message: "Room fetched successfully",
+        data: mockRoomData,
+      });
     });
 
-    it("should throw error for invalid room ID", async () => {
-      const roomId = "1";
-      mock.onGet(`${BASE_URL}/rooms/${roomId}`).reply(404);
+    it("should handle error when fetching room details", async () => {
+      const roomId = "123";
 
-      await expect(getRoomById(roomId)).rejects.toThrow(
-        "Request failed with status code 404"
+      mockedAxios.get.mockRejectedValue(new Error("Network Error"));
+
+      const response = await getRoomById(roomId);
+
+      expect(mockedAxios.get).toHaveBeenCalledWith(
+        `${BASE_URL}/rooms/${roomId}`
       );
+      expect(response).toEqual({
+        message: "Error fetching room details",
+        data: null,
+      });
     });
   });
 
@@ -116,6 +189,38 @@ describe("roomService", () => {
 
       const result = await updateRoom(roomId, roomData);
       expect(result).toEqual(mockResponse);
+    });
+    it("should update room successfully", async () => {
+      const roomId = "123";
+      const roomData = { name: "Updated Room", status: "Available" };
+
+      mockedAxios.put.mockResolvedValue({
+        data: { id: roomId, ...roomData },
+      });
+
+      const response = await updateRoom(roomId, roomData);
+
+      expect(mockedAxios.put).toHaveBeenCalledWith(
+        `${BASE_URL}/rooms/${roomId}`,
+        {
+          data: roomData,
+        }
+      );
+      expect(response).toEqual({
+        message: "Room updated successfully",
+        data: { id: roomId, ...roomData },
+      });
+    });
+
+    it("should throw an error for missing roomId", async () => {
+      const roomData = { name: "Updated Room", status: "Available" };
+
+      const response = await updateRoom("", roomData);
+
+      expect(response).toEqual({
+        message: "Error updated room details",
+        data: null,
+      });
     });
   });
 

@@ -52,6 +52,16 @@ describe("Table Component", () => {
     jest.clearAllMocks();
   });
 
+  it("renders 20% when no value is provided", () => {
+    const mockData = [
+      { documentId: "1", name: "Room 1", percentage: undefined },
+    ];
+    renderTable({ data: mockData });
+
+    // Assuming percentage is rendered somewhere
+    expect(screen.getByText("20%")).toBeInTheDocument();
+  });
+
   it("renders no data alert when data is empty", () => {
     renderTable();
 
@@ -76,6 +86,38 @@ describe("Table Component", () => {
     expect(screen.getByTestId("delete-room")).toBeInTheDocument();
   });
 
+  it("toggles the active menu when the menu button is clicked", () => {
+    const mockData = [{ documentId: "1", name: "Room 1" }];
+
+    renderTable({ data: mockData });
+
+    const menuButton = screen.getByTestId("menu-button");
+    fireEvent.click(menuButton);
+
+    // Check if the menu is displayed
+    expect(screen.getByTestId("edit-room")).toBeInTheDocument();
+
+    fireEvent.click(menuButton);
+
+    // Check if the menu is removed
+    expect(screen.queryByTestId("edit-room")).not.toBeInTheDocument();
+  });
+
+  it("closes the menu when clicking outside", () => {
+    const mockData = [{ documentId: "1", name: "Room 1" }];
+
+    renderTable({ data: mockData });
+
+    const menuButton = screen.getByTestId("menu-button");
+    fireEvent.click(menuButton);
+
+    const menu = screen.getByTestId("menu-button").closest("div");
+    fireEvent.click(document);
+
+    expect(menu).not.toContainElement(screen.getByTestId("edit-room"));
+    expect(menu).not.toContainElement(screen.getByTestId("delete-room"));
+  });
+
   it("calls onEdit with correct data when edit is triggered", () => {
     const mockData = [{ documentId: "1", name: "Room 1" }];
 
@@ -91,6 +133,26 @@ describe("Table Component", () => {
     expect(mockOnEdit).toHaveBeenCalledWith({});
   });
 
+  it("renders the correct modal for each type", () => {
+    const mockData = [{ documentId: "1", name: "Room 1" }];
+
+    // Test for Room type
+    renderTable({ data: mockData, type: "room" });
+    expect(screen.getByTestId("edit-room")).toBeInTheDocument();
+
+    // Test for Rate type
+    renderTable({ data: mockData, type: "rate" });
+    expect(screen.getByTestId("edit-rate")).toBeInTheDocument();
+
+    // Test for Guest type
+    renderTable({ data: mockData, type: "guest" });
+    expect(screen.getByTestId("edit-guest")).toBeInTheDocument();
+
+    // Test for Deal type
+    renderTable({ data: mockData, type: "deal" });
+    expect(screen.getByTestId("edit-deal")).toBeInTheDocument();
+  });
+
   it("calls onDelete with correct id when delete is triggered", () => {
     const mockData = [{ documentId: "1", name: "Room 1" }];
 
@@ -103,5 +165,35 @@ describe("Table Component", () => {
     fireEvent.click(deleteButton);
 
     expect(mockOnDelete).toHaveBeenCalledTimes(1);
+  });
+
+  it("renders the correct delete button for each type", () => {
+    const mockData = [{ documentId: "1", name: "Room 1" }];
+
+    // Test for Room type
+    renderTable({ data: mockData, type: "room" });
+    expect(screen.getByTestId("delete-room")).toBeInTheDocument();
+
+    // Test for Rate type
+    renderTable({ data: mockData, type: "rate" });
+    expect(screen.getByTestId("delete-rate")).toBeInTheDocument();
+
+    // Test for Guest type
+    renderTable({ data: mockData, type: "guest" });
+    expect(screen.getByTestId("delete-guest")).toBeInTheDocument();
+
+    // Test for Deal type
+    renderTable({ data: mockData, type: "deal" });
+    expect(screen.getByTestId("delete-deal")).toBeInTheDocument();
+  });
+
+  it("returns null when type is unknown", () => {
+    const mockData = [{ documentId: "1", name: "Room 1" }];
+
+    renderTable({ data: mockData, type: "unknown" });
+
+    // Check that no modal is rendered for unknown type
+    expect(screen.queryByTestId("edit-room")).not.toBeInTheDocument();
+    expect(screen.queryByTestId("delete-room")).not.toBeInTheDocument();
   });
 });

@@ -14,3 +14,33 @@ exports[`Button Component renders the button with the correct text 1`] = `
   />
 </div>
 `;
+
+exports[`Button Component renders the button with the correct text 2`] = `
+<div>
+  <button
+    class="chakra-button css-i8iae6"
+    type="button"
+  >
+    Click Me
+  </button>
+  <span
+    hidden=""
+    id="__chakra_env"
+  />
+</div>
+`;
+
+exports[`Button Component renders the button with the correct text 3`] = `
+<div>
+  <button
+    class="chakra-button css-kvt2wa"
+    type="button"
+  >
+    Click Me
+  </button>
+  <span
+    hidden=""
+    id="__chakra_env"
+  />
+</div>
+`;
